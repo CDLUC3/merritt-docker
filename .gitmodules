@@ -1,0 +1,15 @@
+[submodule "mrt-dependencies/mrt-core2"]
+	path = mrt-dependencies/mrt-core2
+	url = https://github.com/cdluc3/mrt-core2
+[submodule "mrt-dependencies/cdl-zk-queue"]
+	path = mrt-dependencies/cdl-zk-queue
+	url = https://github.com/cdluc3/cdl-zk-queue
+[submodule "mrt-dependencies/mrt-zoo"]
+	path = mrt-dependencies/mrt-zoo
+	url = https://github.com/cdluc3/mrt-zoo
+[submodule "mrt-dependencies/mrt-ingest"]
+	path = mrt-dependencies/mrt-ingest
+	url = https://github.com/cdluc3/mrt-ingest
+[submodule "mrt-services/ingest/mrt-ingest"]
+	path = mrt-services/ingest/mrt-ingest
+	url = https://github.com/cdluc3/mrt-ingest

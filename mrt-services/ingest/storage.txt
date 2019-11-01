@@ -1,0 +1,3 @@
+store.1: http://store:8080
+access.1: http://store:8080
+localID: http://inventory:8080/mrtinv

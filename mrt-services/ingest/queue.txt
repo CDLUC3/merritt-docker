@@ -1,0 +1,6 @@
+QueueService: zoo:2181
+QueueName: /ingest
+InventoryName: /mrt.inventory.full
+QueueHoldFile: /tdr/ingest/queue/HOLD
+PollingInterval: 10
+NumThreads: 5

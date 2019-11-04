@@ -1,0 +1,33 @@
+
+<assembly>
+  <id>archive</id>
+  <!-- <includeBaseDirectory>true</includeBaseDirectory> -->
+  <!-- <baseDirectory>ingest_home</baseDirectory> -->
+  <formats>
+    <format>zip</format>
+  </formats>
+
+  <!-- project artifact -->
+  <dependencySets>
+    <dependencySet>
+       <scope>provided</scope>
+       <useProjectArtifact>true</useProjectArtifact>
+       <outputDirectory>war</outputDirectory>
+    </dependencySet>
+  </dependencySets>
+
+  <!-- example config structure -->
+  <fileSets>
+    <fileSet>
+      <directory>src/main/ingest_home</directory>
+      <outputDirectory>ingest_home</outputDirectory>
+      <includes>
+        <include>*</include>
+        <include>*/*</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <files>
+  </files>
+
+</assembly>

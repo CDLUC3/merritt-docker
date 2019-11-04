@@ -6,6 +6,8 @@ FROM cdluc3/mrt-dependencies as build
 WORKDIR /tmp/mrt-ingest
 
 ADD mrt-ingest /tmp/mrt-ingest
+COPY batch-war.pom.xml /tmp/mrt-ingest/batch-war/pom.xml
+COPY batch-war.assembly.xml /tmp/mrt-ingest/batch-war/assembly.xml
 
 RUN mvn install -D=environment=local && \
     mvn clean
@@ -19,4 +21,4 @@ RUN mkdir -p /tdr/ingest /usr/local/tomcat/webapps/ingestqueue
 
 COPY ingest-info.txt /tdr/ingest/
 COPY queue.txt /tdr/ingest/
-COPY storage.txt /tdr/ingest/
+COPY stores.txt /tdr/ingest/

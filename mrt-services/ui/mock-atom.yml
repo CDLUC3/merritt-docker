@@ -1,0 +1,9 @@
+# Merritt Atom Configuration File
+default: &default
+  credentials: pretend-credentials
+
+stage:
+  <<: *default
+
+production:
+  <<: *default

@@ -1,0 +1,21 @@
+default: &default
+  host: localhost
+  adapter: mysql2
+  host: db-container
+  database: db-name
+  username: user
+  password: password
+  encoding: utf8   # schema won't load if it's utf8mb4
+
+development:
+  adapter: mysql2
+  encoding: utf8
+  host: db-container
+  database: db-name
+  pool: 5
+  port: 3306
+  username: user
+  password: password
+
+test:
+  <<: *default

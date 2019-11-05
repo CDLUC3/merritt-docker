@@ -13,3 +13,6 @@
 [submodule "mrt-services/ingest/mrt-ingest"]
 	path = mrt-services/ingest/mrt-ingest
 	url = https://github.com/cdluc3/mrt-ingest
+[submodule "mrt-services/ui/mrt-dashboard"]
+	path = mrt-services/ui/mrt-dashboard
+	url = https://github.com/CDLUC3/mrt-dashboard

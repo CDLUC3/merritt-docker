@@ -37,4 +37,36 @@ services:
     stdin_open: true
     tty: true
     #volumes:
-#volumes:
+  ui:
+    container_name: ui
+    image: cdluc3/mrt-dashboard
+    networks:
+      merrittnet:
+    depends_on:
+    - db-container
+    ports:
+    - published: 9292
+      target: 9292
+    stdin_open: true
+    tty: true
+    #volumes:
+  db-container:
+    container_name: db-container
+    image: cdluc3/mrt-database
+    build:
+      context: mysql
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db-name'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root-password'
+    ports:
+      - '3306:3306'
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:

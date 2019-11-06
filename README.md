@@ -4,7 +4,7 @@ The purpose of this repository is to build docker images for local developer tes
 
 | Component | Image Name | Where the component runs | Notes |
 | --------- | ---------- | ------------------------ | ----- |
-| Java dependencies | cdluc3/mrt-dependencies | Docker | Base image for other microservices. All properties are currently mocked in the jar file |
+| Java dependencies | cdluc3/mrt-dependencies | Docker | Base image for other microservices. All service properties are currently mocked in the jar file. |
 | Zookeeper | zookeeper | Docker | |
 | MySQL     | cdluc3/mrt-database | Docker or Server Instance | |
 | LDAP      | N/A | Server Instance | |
@@ -18,6 +18,12 @@ Details about docker image publishing are TBD.
 This repository uses git submodules to pull in code to be built.
 
 **TBD**: document submodule update process
+
+## Credential configuration
+
+Credentials for non-Docker services will be mounted from files within **mrt-services/no-track**.
+
+Files in this directory are not tracked by github.
 
 ## Build instructions
 

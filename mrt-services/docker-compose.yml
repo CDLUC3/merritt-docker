@@ -52,7 +52,7 @@ services:
       target: 9292
     volumes:
     # You must install this file with proper credentials
-    - ./no-track/ldap.yml:/var/www/app_name/config/ldap.yml
+    - ./no-track/ldap-stg.yml:/var/www/app_name/config/ldap.yml
     stdin_open: true
     tty: true
     #volumes:

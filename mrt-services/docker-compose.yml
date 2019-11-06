@@ -40,6 +40,9 @@ services:
   ui:
     container_name: ui
     image: cdluc3/mrt-dashboard
+    build:
+      context: ui
+      dockerfile: Dockerfile
     networks:
       merrittnet:
     depends_on:

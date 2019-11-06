@@ -1,0 +1,58 @@
+# merritt-docker
+
+The purpose of this repository is to build docker images for local developer testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
+
+| Component | Image Name | Where the component runs | Notes |
+| --------- | ---------- | ------------------------ | ----- |
+| Java dependencies | cdluc3/mrt-dependencies | Docker | Base image for other microservices. All properties are currently mocked in the jar file |
+| Zookeeper | zookeeper | Docker | |
+| MySQL     | cdluc3/mrt-database | Docker or Server Instance | |
+| LDAP      | N/A | Server Instance | |
+| UI        | cdluc3/mrt-dashboard | Docker | Database and LDAP connection info is passed in via an untracked file |
+| Ingest    | cdluc3/mrt-ingest | Docker | |
+
+## Docker Image Publishing
+Details about docker image publishing are TBD.
+
+## Git Submodules
+This repository uses git submodules to pull in code to be built.
+
+**TBD**: document submodule update process
+
+## Build instructions
+
+Java Dependencies
+```
+cd mrt-dependencies
+docker build -t cdluc3/mrt-dependencies .
+```
+
+Services
+
+```
+cd mrt-services
+docker-compose build
+```
+
+## Service Startup
+
+```
+docker-compose -p merritt up
+```
+
+To verify running processes
+```
+docker ps -a
+```
+
+To view persistent volumes
+```
+docker volume ls
+```
+
+
+## Service Stop
+
+```
+docker-compose -p merritt down
+```

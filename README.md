@@ -46,7 +46,7 @@ docker-compose build
 docker-compose -p merritt up
 ```
 
-To verify running processes
+To verify running processes and ports
 ```
 docker ps -a
 ```
@@ -56,9 +56,21 @@ To view persistent volumes
 docker volume ls
 ```
 
+To view the docker network
+```
+docker network ls
+```
 
 ## Service Stop
 
 ```
 docker-compose -p merritt down
 ```
+
+## Supported tasks
+
+- Open the UI home page
+  - http://localhost:9292/
+- Log into Merritt from the home page
+- View the status of the ingest service
+  - http://localhost:8080/ingest/help

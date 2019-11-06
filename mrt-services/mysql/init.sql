@@ -220,8 +220,6 @@ CREATE TABLE `inv_embargoes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1397 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `inv_ingests`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inv_ingests` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inv_object_id` int(10) unsigned NOT NULL,
@@ -244,11 +242,8 @@ CREATE TABLE `inv_ingests` (
   CONSTRAINT `inv_ingests_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `inv_ingests_ibfk_2` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=141538 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 DROP TABLE IF EXISTS `inv_localids`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inv_localids` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `inv_object_ark` varchar(255) NOT NULL,
@@ -261,15 +256,8 @@ CREATE TABLE `inv_localids` (
   KEY `id_idowa` (`inv_owner_ark`),
   KEY `id_idloc` (`local_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=81013 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `inv_metadatas`
---
 
 DROP TABLE IF EXISTS `inv_metadatas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inv_metadatas` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `inv_object_id` int(10) unsigned NOT NULL,
@@ -286,18 +274,8 @@ CREATE TABLE `inv_metadatas` (
   CONSTRAINT `inv_metadatas_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `inv_metadatas_ibfk_2` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=37508 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
-
-
---
--- Table structure for table `inv_nodes_inv_objects`
---
 
 DROP TABLE IF EXISTS `inv_nodes_inv_objects`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `inv_nodes_inv_objects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `inv_node_id` smallint(5) unsigned NOT NULL,

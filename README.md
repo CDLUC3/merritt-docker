@@ -66,11 +66,3 @@ docker network ls
 ```
 docker-compose -p merritt down
 ```
-
-## Supported tasks
-
-- Open the UI home page
-  - http://localhost:9292/
-- Log into Merritt from the home page
-- View the status of the ingest service
-  - http://localhost:8080/ingest/help

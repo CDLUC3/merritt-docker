@@ -1,4 +1,4 @@
-This image will allow you to run a standalone Merritt inventory database running in its own docker container on your desktop.
+This image will allow you to run a standalone Merritt inventory database running in its own docker container on in your docker environment.
 
 The following instructions will allow you to connect to that instance.
 

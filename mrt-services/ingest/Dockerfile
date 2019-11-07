@@ -22,3 +22,4 @@ RUN mkdir -p /tdr/ingest /usr/local/tomcat/webapps/ingestqueue
 COPY ingest-info.txt /tdr/ingest/
 COPY queue.txt /tdr/ingest/
 COPY stores.txt /tdr/ingest/
+COPY profiles /tdr/ingest/profiles/

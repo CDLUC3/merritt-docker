@@ -16,3 +16,6 @@
 [submodule "mrt-services/ui/mrt-dashboard"]
 	path = mrt-services/ui/mrt-dashboard
 	url = https://github.com/CDLUC3/mrt-dashboard
+[submodule "mrt-services/mrt-store"]
+	path = mrt-services/mrt-store
+	url = https://github.com/cdluc3/mrt-store

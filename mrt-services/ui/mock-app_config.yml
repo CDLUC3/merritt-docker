@@ -1,0 +1,37 @@
+defaults: &defaults
+  # maximum byte size threshold for download of object/versions without compression
+  max_archive_size:     1073741824  # 1073741824 bytes = 1 GiB
+  # maximum byte size threshold for any download whatsoever
+  max_download_size:    322122547200  # 322122547200 bytes = 300 GiB
+  dua_email_from:       no-reply-merritt@ucop.edu
+  mrt_dua_file:         producer/mrt-dua.txt
+
+development: &development
+  <<: *defaults
+  max_archive_size:     536870912  # 536870912 bytes = 512 MiB
+  max_download_size:    5368709120  # 5368709120 bytes = 5 GiB
+  dua_email_to:         [marisa.strong@ucop.edu]
+  lostorage_email_to:   [marisa.strong@ucop.edu]
+  lostorage_email_from: marisa.strong@ucop.edu
+  merritt_server:       "http://merritt-dev.cdlib.org"
+  container_url:        "http://merritt-dev.cdlib.org/cloudcontainer/"
+  n2t_uri:              "http://n2t-wf.cdlib.org/"
+  mint_service:         "http://merritt-dev.cdlib.org:33121/request-identifier"
+  ingest_service:       "http://merritt-dev.cdlib.org:33121/poster/submit/"
+  ingest_service_update: "http://merritt-dev.cdlib.org:33121/poster/update/"
+  uri_1:                "http://store-aws-dev.cdlib.org:35121/content/"
+  uri_2:                "http://store-aws-dev.cdlib.org:35121/producer/"
+  uri_3:                "http://store-aws-dev.cdlib.org:35121/manifest/"
+
+test:
+  <<: *development
+  max_archive_size:  999999  # 999999 bytes ~= 976.6 KiB
+  max_download_size: 104857600  # 10485760 bytes = 10 MiB
+  uri_1: "http://store.merritt.example.edu/content/"
+  uri_2: "http://store.merritt.example.edu/producer/"
+  ingest_service:       "http://ingest:8080/ingest/poster/submit/"
+  ingest_service_update: "http://ingest:8080/ingest/poster/update/"
+local:
+  <<: *development
+
+# TODO: rename uri_[1-3] to [content, producer, manifest]_uri or similar

@@ -53,6 +53,7 @@ services:
     volumes:
     # You must install this file with proper credentials
     - ./no-track/ldap-stg.yml:/var/www/app_name/config/ldap.yml
+    - ./no-track/database-stg.yml:/var/www/app_name/config/database.yml
     stdin_open: true
     tty: true
     #volumes:

@@ -22,3 +22,6 @@
 [submodule "mrt-dependencies/mrt-cloud"]
 	path = mrt-dependencies/mrt-cloud
 	url = https://github.com/CDLUC3/mrt-cloud
+[submodule "mrt-services/inventory/mrt-inventory"]
+	path = mrt-services/inventory/mrt-inventory
+	url = https://github.com/CDLUC3/mrt-inventory

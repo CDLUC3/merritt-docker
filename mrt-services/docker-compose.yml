@@ -45,6 +45,22 @@ services:
     - ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confstore/test-1.0-SNAPSHOT/mrt-confstore-test-1.0-SNAPSHOT.jar:/usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confstore-test-1.0-SNAPSHOT.jar
     stdin_open: true
     tty: true
+  inventory:
+    container_name: inventory
+    depends_on:
+    - zoo
+    image: cdluc3/mrt-inventory
+    build:
+      context: inventory
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 8082
+      target: 8080
+    #volumes:
+    stdin_open: true
+    tty: true
     #volumes:
   zoo:
     container_name: zoo

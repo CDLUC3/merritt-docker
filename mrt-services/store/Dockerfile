@@ -11,6 +11,9 @@ RUN mvn install -D=environment=local && \
     mvn clean
 
 FROM tomcat:8-jre8
-COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/store.war
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /tmp/store.war
+
+RUN mkdir /usr/local/tomcat/webapps/store && \
+    unzip -d /usr/local/tomcat/webapps/store /tmp/store.war
 
 EXPOSE 8080 8009

@@ -30,7 +30,7 @@ Files in this directory are not tracked by github.
 Java Dependencies
 ```
 cd mrt-dependencies
-docker build -t cdluc3/mrt-dependencies .
+docker-compose build
 ```
 
 Services

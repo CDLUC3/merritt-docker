@@ -14,6 +14,7 @@ services:
     container_name: ingest
     depends_on:
     - zoo
+    - store
     image: cdluc3/mrt-ingest
     build:
       context: ingest
@@ -22,6 +23,22 @@ services:
       merrittnet:
     ports:
     - published: 8080
+      target: 8080
+    stdin_open: true
+    tty: true
+    #volumes:
+  store:
+    container_name: store
+    depends_on:
+    - zoo
+    image: cdluc3/mrt-store
+    build:
+      context: store
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 8081
       target: 8080
     stdin_open: true
     tty: true

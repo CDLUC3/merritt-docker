@@ -8,6 +8,7 @@ FROM maven:3-jdk-8 as build
 WORKDIR /tmp
 
 ADD . /tmp
+COPY settings.xml /root/.m2/
 
 RUN cd mrt-conf-mock && mvn install && mvn clean
 RUN cd mrt-core2 && mvn install -DskipTests && mvn clean
@@ -18,3 +19,4 @@ RUN cd mrt-zoo && mvn install && mvn clean
 RUN cd mrt-ingest && \
     mvn install -D=environment=development -pl '!batch-war' && \
     mvn clean
+RUN cd mrt-cloud && mvn install -DskipTests && mvn clean

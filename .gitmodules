@@ -19,3 +19,6 @@
 [submodule "mrt-services/store/mrt-store"]
 	path = mrt-services/store/mrt-store
 	url = https://github.com/cdluc3/mrt-store
+[submodule "mrt-dependencies/mrt-cloud"]
+	path = mrt-dependencies/mrt-cloud
+	url = https://github.com/CDLUC3/mrt-cloud

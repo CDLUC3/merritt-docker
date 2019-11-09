@@ -1,0 +1,13 @@
+serviceScheme: Inv/1.0
+name: UC3
+identifier: inventory-docker
+description: UC3 storage micro-service docker
+baseURI: http://localhost:8082/mrtinv
+storageURI: http://store:8081
+
+#Zookeeper
+zooPollMilli=60000
+ZooThreadCount: 5
+QueueName: /mrt.inventory.full
+PollingInterval: 10
+QueueService: zoo:2181

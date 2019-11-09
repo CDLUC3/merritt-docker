@@ -1,3 +1,11 @@
+#
+# The contents of this file are subject to the license and copyright
+# detailed in the LICENSE and NOTICE files at the root of the source
+# tree and available online at
+#
+# http://www.dspace.org/license/
+#
+
 version: '3.7'
 networks:
   merrittnet:
@@ -55,6 +63,10 @@ services:
     ports:
     - published: 8082
       target: 8080
+    volumes:
+    - type: bind
+      source: ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confmysql/test-1.0-SNAPSHOT/mrt-confmysql-test-1.0-SNAPSHOT.jar
+      target: /usr/local/tomcat/webapps/inventory/WEB-INF/lib/mrt-confmysql-test-1.0-SNAPSHOT.jar
     stdin_open: true
     tty: true
   zoo:
@@ -84,6 +96,7 @@ services:
     volumes:
     # You must install this file with proper credentials
     - ./no-track/ldap-stg.yml:/var/www/app_name/config/ldap.yml
+    - ./no-track/database-stg.yml:/var/www/app_name/config/database.yml
     stdin_open: true
     tty: true
     #volumes:

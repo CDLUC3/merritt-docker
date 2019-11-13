@@ -104,7 +104,10 @@ services:
       MYSQL_ROOT_PASSWORD: 'root-password'
     ports:
       - '3306:3306'
-    volumes:
-      - my-db:/var/lib/mysql
-volumes:
-  my-db:
+    #volumes:
+    #  - my-db:/var/lib/mysql
+    #https://stackoverflow.com/questions/55559386/how-to-fix-mbind-operation-not-permitted-in-mysql-error-log
+    security_opt:
+      - seccomp:unconfined
+#volumes:
+#  my-db:

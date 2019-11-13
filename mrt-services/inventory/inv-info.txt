@@ -1,8 +1,8 @@
 serviceScheme: Inv/1.0
 name: UC3
-identifier: inventory-docker
+identifier: inventory
 description: UC3 storage micro-service docker
-baseURI: http://localhost:8082/mrtinv
+baseURI: http://localhost:8082/inventory
 storageURI: http://store:8081
 
 #Zookeeper

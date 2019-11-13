@@ -22,14 +22,14 @@ Handler.9: org.cdlib.mrt.ingest.handlers.HandlerDescribe
 Handler.10: org.cdlib.mrt.ingest.handlers.HandlerDocument
 Handler.11: org.cdlib.mrt.ingest.handlers.HandlerDigest
 Handler.12: org.cdlib.mrt.ingest.handlers.HandlerTransfer
-Handler.13: org.cdlib.mrt.ingest.handlers.HandlerNotification
-Handler.14: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
-Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCleanup
+#Handler.13: org.cdlib.mrt.ingest.handlers.HandlerNotification
+Handler.13: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
+Handler.14: org.cdlib.mrt.ingest.handlers.HandlerCleanup
 # --- handler queue submission processing
 HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
 HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
 HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
-StorageService: http://store:8081
+StorageService: http://store:8080
 StorageNode: 9001
 CreationDate: 2010-01-19T13:28:14-08:00
 ModificationDate: 2010-01-26T23:28:14-08:00

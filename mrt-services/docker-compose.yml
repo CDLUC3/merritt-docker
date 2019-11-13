@@ -22,7 +22,7 @@ services:
     volumes:
     - type: bind
       source: ./no-track/stores.txt
-      target: /tdr/inventory/stores.txt
+      target: /tdr/ingest/stores.txt
   store:
     container_name: store
     depends_on:

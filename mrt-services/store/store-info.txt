@@ -1,0 +1,17 @@
+serviceScheme: Store/1.0
+name: UC3-stg-docker
+identifier: localhost:8081
+description: UC3 storage micro-service
+supportURI: mailto:no-email@ucop.edu
+baseURI: http://localhost:8081
+producerFilter.1=mrt-erc.txt
+producerFilter.2=mrt-eml.txt
+producerFilter.3=mrt-dc.txt
+producerFilter.4=mrt-delete.txt
+producerFilter.5=mrt-dua.txt
+producerFilter.6=mrt-dataone-manifest.txt
+producerFilter.7=mrt-datacite.xml
+producerFilter.8=mrt-oaidc.xml
+producerFilter.9=stash-wrapper.xml
+archiveNodeName=nodes-docker-store
+archiveNode=7001

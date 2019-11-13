@@ -16,4 +16,8 @@ COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/m
 RUN mkdir /usr/local/tomcat/webapps/store && \
     unzip -d /usr/local/tomcat/webapps/store /tmp/store.war
 
+RUN mkdir -p /dpr2store/mrtHomes/store /dpr2store/
+
+COPY store-info.txt /dpr2store/mrtHomes/store
+
 EXPOSE 8080 8009

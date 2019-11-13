@@ -19,7 +19,10 @@ services:
       target: 8080
     stdin_open: true
     tty: true
-    #volumes:
+    volumes:
+    - type: bind
+      source: ./no-track/stores.txt
+      target: /tdr/inventory/stores.txt
   store:
     container_name: store
     depends_on:
@@ -37,9 +40,15 @@ services:
     - type: bind
       source: ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confs3/1.0-SNAPSHOT/mrt-confs3-1.0-SNAPSHOT.jar
       target: /usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confs3-1.0-SNAPSHOT.jar
+    #- type: bind
+    #  source: ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confstore/test-1.0-SNAPSHOT/mrt-confstore-test-1.0-SNAPSHOT.jar
+    #  target: /usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confstore-test-1.0-SNAPSHOT.jar
     - type: bind
-      source: ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confstore/test-1.0-SNAPSHOT/mrt-confstore-test-1.0-SNAPSHOT.jar
-      target: /usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confstore-test-1.0-SNAPSHOT.jar
+      source: ./no-track/nodes/repository
+      target: /dpr2store/repository
+    - type: bind
+      source: ./no-track/nodes/nodes.txt
+      target: /dpr2store/mrtHomes/store/nodes.txt
     stdin_open: true
     tty: true
   inventory:

@@ -17,7 +17,8 @@ COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-ingestwar/1.0-SNAPSHOT/
 
 EXPOSE 8080 8009
 
-RUN mkdir -p /tdr/ingest /usr/local/tomcat/webapps/ingestqueue
+RUN mkdir -p /tdr/ingest/queue && \
+    ln -s /tdr/ingest/queue /usr/local/tomcat/webapps/ingestqueue
 
 COPY ingest-info.txt /tdr/ingest/
 COPY queue.txt /tdr/ingest/

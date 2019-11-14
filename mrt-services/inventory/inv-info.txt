@@ -3,7 +3,7 @@ name: UC3
 identifier: inventory
 description: UC3 storage micro-service docker
 baseURI: http://localhost:8082/inventory
-storageURI: http://store:8080
+storageURI: http://store:8080/store
 
 #Zookeeper
 zooPollMilli=60000

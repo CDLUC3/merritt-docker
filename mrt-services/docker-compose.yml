@@ -19,10 +19,10 @@ services:
       target: 8080
     stdin_open: true
     tty: true
-    volumes:
-    - type: bind
-      source: ./no-track/stores.txt
-      target: /tdr/ingest/stores.txt
+    #volumes:
+    #- type: bind
+    #  source: ./no-track/stores.txt
+    #  target: /tdr/ingest/stores.txt
   store:
     container_name: store
     depends_on:

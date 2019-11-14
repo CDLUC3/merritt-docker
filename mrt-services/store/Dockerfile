@@ -20,4 +20,6 @@ RUN mkdir -p /dpr2store/mrtHomes/store /dpr2store/
 
 COPY store-info.txt /dpr2store/mrtHomes/store
 
+ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64"
+
 EXPOSE 8080 8009

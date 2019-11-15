@@ -68,7 +68,10 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: zookeeper:3.4
+    image: cdluc3/mrt-zookeeper
+    build:
+      context: zoo
+      dockerfile: Dockerfile
     networks:
       merrittnet:
     ports:

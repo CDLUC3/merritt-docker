@@ -1,6 +1,6 @@
 name: UC3 Docker Ingest
 identifier: ingest
-target: http://localhost
+target: http://localhost:9292
 description: UC3 ingest docker micro-service
 service-scheme: Ingest/0.1
 access-uri: http://ingest:8080

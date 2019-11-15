@@ -19,9 +19,8 @@ COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt
 RUN mkdir /usr/local/tomcat/webapps/inventory && \
     unzip -d /usr/local/tomcat/webapps/inventory /tmp/inventory.war
 
-RUN mkdir -p /apps/replic/tst/inv /tdr/tmpdir /apps/dpr2/mrtHomes/inv
+RUN mkdir -p /apps/replic/tst/inv/log /tdr/tmpdir
 
 COPY inv-info.txt /apps/replic/tst/inv/
-COPY inv-info.txt /apps/dpr2/mrtHomes/inv
 
 EXPOSE 8080 8009

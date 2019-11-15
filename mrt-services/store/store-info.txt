@@ -3,7 +3,7 @@ name: UC3-stg-docker
 identifier: localhost:8081
 description: UC3 storage micro-service
 supportURI: mailto:no-email@ucop.edu
-baseURI: http://localhost:8081
+baseURI: http://localhost:8081/store
 producerFilter.1=mrt-erc.txt
 producerFilter.2=mrt-eml.txt
 producerFilter.3=mrt-dc.txt

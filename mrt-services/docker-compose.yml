@@ -68,7 +68,7 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: zookeeper
+    image: zookeeper:3.4
     networks:
       merrittnet:
     ports:

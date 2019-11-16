@@ -10,24 +10,24 @@ https://github.com/terrywbrady/merritt-docker#dependencies
 
 +++
 
-## Git Submodules
+#### Git Submodules
 
 +++?code=.gitmodules&lang=plaintext
 @[1-3](Build Dependency - Core2)
 @[4-9](Build Dependency - Zookeeper Libs)
-@[19-21](Build Dependency - Cloud Library)
+@[22-24](Build Dependency - Cloud Library)
 @[10-12](Ingest Service has MANY jar dependencies)
 @[13-15](Ingest Service)
 @[16-18](UI Service)
-@[22-24](Storage Service)
+@[19-21](Storage Service)
 @[25-27](Inventory Service)
 
 ---
 
-## Build dependencies
+#### Build dependencies
 
-A base docker image **cdluc3/mrt-dependencies** will be built as a base for other services.
-This image contains a populated maven repo.
+- A base docker image **cdluc3/mrt-dependencies** will be built as a base for other services.
+- This image contains a populated maven repo.
 
 ```
 cd mrt-dependencies
@@ -57,9 +57,8 @@ docker run --rm -it cdluc3/mrt-dependencies find /root/.m2 -name "*jar"
 
 ## Build services
 
-An image will be built for each service to be run within Docker.
-
-These services are described and orchestrated with **docker-compose**
+- An image will be built for each service to be run within Docker.
+- These services are described and orchestrated with **docker-compose**
 
 ```
 cd mrt-services
@@ -67,3 +66,11 @@ docker-compose build
 ```
 
 +++?code=mrt-services/docker-compose.yml&lang=yml
+@[6-7](Define a container network)
+@[9-25](Ingest container)
+@[26-38](Storage container)
+@[40-51](Insert local credentials at runtime)
+@[54-68](Intentory container)
+@[69-81](Zookeeper container)
+@[83-98](UI container)
+@[102-118](MySQL container)

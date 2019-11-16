@@ -1,3 +1,3 @@
-code {
-  overflow: scroll;
+section pre code {
+  overflow: scroll!important;
 }

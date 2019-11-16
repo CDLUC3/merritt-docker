@@ -369,11 +369,13 @@ COPY batch-war.assembly.xml /tmp/mrt-ingest/batch-war/assembly.xml
 RUN mvn install -D=environment=local && \
     mvn clean
 ```
-@[1-2](STEP 1: Use base image to pre-load jars)
+@[1-2](Use base image to pre-load jars)
 @[4-12](Add code)
 @[10-11](Build and install jar)
 
 +++
+
+#### Dockerfile Step 2
 
 ```dockerfile
 FROM tomcat:8-jre8
@@ -389,7 +391,7 @@ COPY queue.txt /tdr/ingest/
 COPY stores.txt /tdr/ingest/
 COPY profiles /tdr/ingest/profiles/
 ```
-@[1](STEP 2: Use tomcat base image)
+@[1](Use tomcat base image)
 @[2](Install war file)
 @[4](Expose tomcat ports)
 @[6-7](Create ingestqueue download directory)
@@ -437,3 +439,227 @@ localID: http://inventory:8080/inventory
 ```
 @[1-2](Link to Storage container)
 @[3](Link to Inventory container)
+
+---
+#### Inventory Service
+
++++
+
+#### @gitlink[mrt-services/inventory/Dockerfile](mrt-services/inventory/Dockerfile)
+
+```dockerfile
+FROM cdluc3/mrt-dependencies as build
+WORKDIR /tmp/mrt-inventory
+
+ADD mrt-inventory /tmp/mrt-inventory
+
+RUN mvn install -D=environment=local && \
+    mvn clean
+```
++++
+#### Dockerfile Step 2
+
+```dockerfile
+FROM tomcat:8-jre8
+
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt-invwar-1.0-SNAPSHOT.war /tmp/inventory.war
+
+RUN mkdir /usr/local/tomcat/webapps/inventory && \
+    unzip -d /usr/local/tomcat/webapps/inventory /tmp/inventory.war
+
+RUN mkdir -p /apps/replic/tst/inv/log /tdr/tmpdir
+
+COPY inv-info.txt /apps/replic/tst/inv/
+
+ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64"
+
+EXPOSE 8080 8009
+```
+
++++
+#### @gitlink[mrt-services/inventory/inv-info.txt](mrt-services/inventory/inv-info.txt)
+```ini
+serviceScheme: Inv/1.0
+name: UC3
+identifier: inventory
+description: UC3 storage micro-service docker
+baseURI: http://localhost:8082/inventory
+storageURI: http://store:8080/store
+
+#Zookeeper
+zooPollMilli=60000
+ZooThreadCount: 5
+QueueName: /mrt.inventory.full
+PollingInterval: 10
+QueueService: zoo:2181
+```
+
+---
+#### Storage Service
+
++++
+
+#### @gitlink[mrt-services/store/Dockerfile](mrt-services/store/Dockerfile)
+
+```dockerfile
+FROM cdluc3/mrt-dependencies as build
+WORKDIR /tmp/mrt-store
+
+ADD mrt-store /tmp/mrt-store
+
+RUN mvn install -D=environment=local && \
+    mvn clean
+```
+
++++
+#### Dockerfile Step 2
+
+```dockerfile
+FROM tomcat:8-jre8
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /tmp/store.war
+
+RUN mkdir /usr/local/tomcat/webapps/store && \
+    unzip -d /usr/local/tomcat/webapps/store /tmp/store.war
+
+RUN mkdir -p /dpr2store/mrtHomes/store /dpr2store/
+
+COPY store-info.txt /dpr2store/mrtHomes/store
+
+ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64"
+
+EXPOSE 8080 8009
+```
+
++++
+#### @gitlink[mrt-services/store/store-info.txt](mrt-services/store/store-info.txt)
+```ini
+serviceScheme: Store/1.0
+name: UC3-stg-docker
+identifier: localhost:8081
+description: UC3 storage micro-service
+supportURI: mailto:no-email@ucop.edu
+baseURI: http://localhost:8081/store
+producerFilter.1=mrt-erc.txt
+producerFilter.2=mrt-eml.txt
+producerFilter.3=mrt-dc.txt
+producerFilter.4=mrt-delete.txt
+producerFilter.5=mrt-dua.txt
+producerFilter.6=mrt-dataone-manifest.txt
+producerFilter.7=mrt-datacite.xml
+producerFilter.8=mrt-oaidc.xml
+producerFilter.9=stash-wrapper.xml
+archiveNodeName=nodes-docker-store
+archiveNode=7001
+```
+
+---
+#### UI Service
+
++++
+
+#### @gitlink[mrt-services/ui/Dockerfile](mrt-services/ui/Dockerfile)
+
+```dockerfile
+FROM ruby:2.4.4
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+
+# Set an environment variable where the Rails app is installed to inside of Docker image
+ENV RAILS_ROOT /var/www/app_name
+RUN mkdir -p $RAILS_ROOT
+
+# Set working directory
+WORKDIR $RAILS_ROOT
+
+# Setting env up
+ENV RAILS_ENV='test'
+ENV RACK_ENV='test'
+```
+
++++
+#### Dockerfile continued
+
+```dockerfile
+# Adding gems
+COPY mrt-dashboard/Gemfile Gemfile
+COPY mrt-dashboard/Gemfile.lock Gemfile.lock
+
+RUN bundle install --jobs 20 --retry 5
+# Adding project files
+
+COPY mrt-dashboard .
+COPY mock-ldap.yml config/ldap.yml
+COPY mock-atom.yml config/atom.yml
+COPY database.yml.example config/database.yml
+COPY mock-app_config.yml config/app_config.yml
+
+RUN bundle exec rake assets:precompile
+EXPOSE 3000 9292
+CMD ["bundle", "exec", "puma", "-C", "config/application.rb"]
+```
+
++++
+
+#### UI Auxiliary files
+- @gitlink[mrt-services/ui/database.yml.example](mrt-services/ui/database.yml.example])
+- @gitlink[mrt-services/ui/mock-app_config.yml](mrt-services/ui/mock-app_config.yml)
+- @gitlink[mrt-services/ui/mock-atom.yml](mrt-services/ui/mock-atom.yml)
+- @gitlink[mrt-services/ui/mock-ldap.yml](mrt-services/ui/mock-ldap.yml)
+
+---
+#### Zookeeper Service
+
++++
+
+#### @gitlink[mrt-services/zoo/Dockerfile](mrt-services/zoo/Dockerfile)
+
+```dockerfile
+FROM cdluc3/mrt-dependencies as build
+```
+
++++
+#### Dockerfile Step 2
+
+```dockerfile
+FROM zookeeper:3.4
+
+RUN mkdir -p zkServer/tools
+
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/cdl-zk-queue/0.2-SNAPSHOT/cdl-zk-queue-0.2-SNAPSHOT.jar zkServer/tools
+
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-zoopub-src/1.0-SNAPSHOT/mrt-zoopub-src-1.0-SNAPSHOT.jar zkServer/tools
+
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-core/2.0-SNAPSHOT/mrt-core-2.0-SNAPSHOT.jar zkServer/tools
+
+COPY . zkServer/tools
+
+RUN chmod 555 zkServer/tools/*.sh
+
+ENV ZK=zookeeper-3.4.14
+ENV PATH=$PATH:/${ZK}/zkServer/tools
+
+EXPOSE 2181
+```
+
++++
+
+#### Merritt Queue Reader Script
+- @gitlink[mrt-services/zoo/listQueue.sh](mrt-services/zoo/listQueue.sh])
+
+---
+#### MySQL Service
+
++++
+
+#### @gitlink[mrt-services/mysql/Dockerfile](mrt-services/mysql/Dockerfile)
+
+```dockerfile
+FROM mysql:5.7
+
+COPY init.sql /docker-entrypoint-initdb.d/start.sql
+
+EXPOSE 3306 33060
+```
+
++++
+#### Merritt Schema Installation
+- @gitlink[mrt-services/mysql/init.sql](mrt-services/mysql/init.sql])

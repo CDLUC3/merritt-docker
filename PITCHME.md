@@ -75,15 +75,21 @@ docker-compose build
 +++?code=mrt-services/docker-compose.yml&lang=yml
 @[6-7](Define a container network)
 @[9-25](Ingest container)
+@[22](localhost:8080/ingest)
 @[26-38](Storage container)
+@[37](localhost:8081/store)
 @[40-51](Insert local credentials at runtime)
 @[54-68](Intentory container)
+@[65](localhost:8082/inventory)
 @[69-81](Zookeeper container)
+@[78](localhost:2181)
 @[83-98](UI container)
+@[94](localhost:9292)
 @[102-118](MySQL container)
+@[118](localhost:3306)
 
 +++?code=mrt-services/staging-db.yml&lang=yml
-@[16]Override compose file to use the staging DB
+@[16](Override compose file to use the staging DB)
 
 ---
 #### Ingest Service
@@ -95,10 +101,15 @@ docker-compose build
 @[21](Use tomcat base image)
 @[22](Install war file)
 @[24](Expose tomcat ports)
-@[26-27](Create ingestqueue directory)
+@[26-27](Create ingestqueue download directory)
 @[29-31](Install config files customized for Docker)
 @[32](Install demo collection profile)
 
 +++?code=mrt-services/ingest/ingest-info.txt&lang=plaintext
+@[7](Link to UI container)
+@[10](Link to ingest web server)
 +++?code=mrt-services/ingest/queue.txt&lang=plaintext
+@[5](Link to Zookeeper container)
 +++?code=mrt-services/ingest/stores.txt&lang=plaintext
+@[5-6](Link to Storage container)
+@[7](Link to Inventory container)

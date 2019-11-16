@@ -6,6 +6,10 @@ _All rights reserved_
 ## Purpose
 The purpose of this repository is to build docker images for local developer testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
 
+## Presentation
+
+https://gitpitch.com/terrywbrady/merritt-docker
+
 ## Dependencies
 The following dependencies are needed to build and run this repo.  The goal is to build a version of the system that can be run entirely from Docker.
 
@@ -33,8 +37,6 @@ Details about docker image publishing are TBD.
 
 ## Git Submodules
 This repository uses git submodules to pull in code to be built.
-
-**TBD**: document submodule update process
 
 ## Credential configuration
 

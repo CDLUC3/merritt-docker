@@ -119,7 +119,6 @@ RUN cd mrt-core2 && mvn install -DskipTests && mvn clean
 RUN cd cdl-zk-queue && mvn install && mvn clean
 RUN cd mrt-zoo && mvn install && mvn clean
 
-
 # The ingest service includes so many external libraries that it is built here
 # The batch-war artifact require errors out when calling git inside of Docker
 #  -pl '!batch-war'
@@ -130,11 +129,18 @@ RUN cd mrt-ingest && \
 # Add the cloud services jar file
 RUN cd mrt-cloud && mvn install -DskipTests && mvn clean
 ```
+@[1-2](Build mock property files)
+@[4-7](Build core and zookeeper jars)
+@[9-14](Install ingest dependencies)
+@[16-17](Build cloud library)
 
 +++
 #### List Jar Files in mrt-dependencies
 
-```
+- The mrt-dependencies image is not intended to be run, it will is the base image for other services.  
+- The following command will display the jar files built into the image.
+
+```bash
 docker run --rm -it cdluc3/mrt-dependencies find /root/.m2 -name "*jar"
 ```
 
@@ -208,7 +214,7 @@ store:
 
 +++
 
-#### Insert Local Credentials at Startup
+#### Insert Storage Config/Credentials at Startup
 ```yaml
 volumes:
 - type: bind
@@ -391,7 +397,7 @@ COPY queue.txt /tdr/ingest/
 COPY stores.txt /tdr/ingest/
 COPY profiles /tdr/ingest/profiles/
 ```
-@[1](Use tomcat base image)
+@[1](The service will run as a tomcat service)
 @[2](Install war file)
 @[4](Expose tomcat ports)
 @[6-7](Create ingestqueue download directory)
@@ -456,6 +462,10 @@ ADD mrt-inventory /tmp/mrt-inventory
 RUN mvn install -D=environment=local && \
     mvn clean
 ```
+@[1](Use base image for build)
+@[2-4](Install code)
+@[6-7](Build and install war file)
+
 +++
 #### Dockerfile Step 2
 
@@ -475,6 +485,11 @@ ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.AL
 
 EXPOSE 8080 8009
 ```
+@[1](The service will run as a tomcat service)
+@[2-5](Unzip and install war file)
+@[7-9](Install a mock inventory config file)
+@[11](Allow url encoded ark's to be part of a path name)
+@[13](Expose tomcat ports)
 
 +++
 #### @gitlink[mrt-services/inventory/inv-info.txt](mrt-services/inventory/inv-info.txt)
@@ -493,6 +508,10 @@ QueueName: /mrt.inventory.full
 PollingInterval: 10
 QueueService: zoo:2181
 ```
+@[5](Public URL for the inventory service)
+@[6](Storage service)
+@[11](Inventory queue name)
+@[13](Zookeeper service)
 
 ---
 #### Storage Service
@@ -510,6 +529,9 @@ ADD mrt-store /tmp/mrt-store
 RUN mvn install -D=environment=local && \
     mvn clean
 ```
+@[1](Use base image for build)
+@[2-4](Install code)
+@[6-7](Build and install war file)
 
 +++
 #### Dockerfile Step 2
@@ -529,6 +551,11 @@ ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.AL
 
 EXPOSE 8080 8009
 ```
+@[1](The service will run as a tomcat service)
+@[2-5](Unzip and install war file)
+@[7-9](Install a mock storage config file)
+@[11](Allow url encoded ark's to be part of a path name)
+@[13](Expose tomcat ports)
 
 +++
 #### @gitlink[mrt-services/store/store-info.txt](mrt-services/store/store-info.txt)
@@ -551,6 +578,8 @@ producerFilter.9=stash-wrapper.xml
 archiveNodeName=nodes-docker-store
 archiveNode=7001
 ```
+@[3](Public host for storage service)
+@[6](Public url for the storage service)
 
 ---
 #### UI Service
@@ -574,6 +603,7 @@ WORKDIR $RAILS_ROOT
 ENV RAILS_ENV='test'
 ENV RACK_ENV='test'
 ```
+@[1-2](Configure ruby image)
 
 +++
 #### Dockerfile continued
@@ -596,6 +626,13 @@ RUN bundle exec rake assets:precompile
 EXPOSE 3000 9292
 CMD ["bundle", "exec", "puma", "-C", "config/application.rb"]
 ```
+@[1-3](Add gem files)
+@[5-6](Install gems)
+@[8](Install code)
+@[9-12](Install mock config files)
+@[14](Build code)
+@[15](Expose web server port)
+@[16](Run puma)
 
 +++
 
@@ -615,6 +652,7 @@ CMD ["bundle", "exec", "puma", "-C", "config/application.rb"]
 ```dockerfile
 FROM cdluc3/mrt-dependencies as build
 ```
+@[1](Make Merritt code available to image)
 
 +++
 #### Dockerfile Step 2
@@ -639,6 +677,9 @@ ENV PATH=$PATH:/${ZK}/zkServer/tools
 
 EXPOSE 2181
 ```
+@[1](Standard Zookeeper image)
+@[3-15](Add Merritt Queue display code to tools dir)
+@[17](Expose Zookeeper port)
 
 +++
 
@@ -659,6 +700,9 @@ COPY init.sql /docker-entrypoint-initdb.d/start.sql
 
 EXPOSE 3306 33060
 ```
+@[1](Standard MySQL image)
+@[3](Install dump of Merritt database schema)
+@[5](Expose MySQL port)
 
 +++
 #### Merritt Schema Installation

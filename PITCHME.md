@@ -1,10 +1,10 @@
-## Running Merritt in Docker
+#### Running Merritt in Docker
 
 https://github.com/terrywbrady/merritt-docker
 
 +++
 
-## Dependencies for running these containers
+#### Dependencies for running these containers
 
 https://github.com/terrywbrady/merritt-docker#dependencies
 
@@ -29,6 +29,9 @@ https://github.com/terrywbrady/merritt-docker#dependencies
 - A base docker image **cdluc3/mrt-dependencies** will be built as a base for other services.
 - This image contains a populated maven repo.
 
++++
+
+#### Build command
 ```
 cd mrt-dependencies
 docker-compose build
@@ -47,7 +50,7 @@ docker-compose build
 @[36-37](Build code, install jars)
 
 +++
-## List Jar Files in mrt-dependencies
+#### List Jar Files in mrt-dependencies
 
 ```
 docker run --rm -it cdluc3/mrt-dependencies find /root/.m2 -name "*jar"
@@ -55,10 +58,14 @@ docker run --rm -it cdluc3/mrt-dependencies find /root/.m2 -name "*jar"
 
 ---
 
-## Build services
+#### Build services
 
 - An image will be built for each service to be run within Docker.
 - These services are described and orchestrated with **docker-compose**
+
++++
+
+#### Build command
 
 ```
 cd mrt-services
@@ -74,3 +81,24 @@ docker-compose build
 @[69-81](Zookeeper container)
 @[83-98](UI container)
 @[102-118](MySQL container)
+
++++?code=mrt-services/staging-db.yml&lang=yml
+@[16]Override compose file to use the staging DB
+
+---
+#### Ingest Service
+
++++?code=mrt-services/ingest/Dockerfile&lang=dockerfile
+@[9-10](Use base image to pre-load jars)
+@[12-16](Add code)
+@[18-19](Build and install jar)
+@[21](Use tomcat base image)
+@[22](Install war file)
+@[24](Expose tomcat ports)
+@[26-27](Create ingestqueue directory)
+@[29-31](Install config files customized for Docker)
+@[32](Install demo collection profile)
+
++++?code=mrt-services/ingest/ingest-info.txt&lang=plaintext
++++?code=mrt-services/ingest/queue.txt&lang=plaintext
++++?code=mrt-services/ingest/stores.txt&lang=plaintext

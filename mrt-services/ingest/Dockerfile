@@ -10,6 +10,8 @@ FROM cdluc3/mrt-dependencies as build
 WORKDIR /tmp/mrt-ingest
 
 ADD mrt-ingest /tmp/mrt-ingest
+
+# The following dependencies help the service build in Docker
 COPY batch-war.pom.xml /tmp/mrt-ingest/batch-war/pom.xml
 COPY batch-war.assembly.xml /tmp/mrt-ingest/batch-war/assembly.xml
 

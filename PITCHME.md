@@ -63,6 +63,9 @@ docker run --rm -it cdluc3/mrt-dependencies find /root/.m2 -name "*jar"
 - An image will be built for each service to be run within Docker.
 - These services are described and orchestrated with **docker-compose**
 
+@gitlink(mrt-services/docker-compose.yml)
+@gitlink[mrt-services/docker-compose.yml](mrt-services/docker-compose.yml)
+
 +++
 
 #### Build command
@@ -87,6 +90,10 @@ docker-compose build
 @[94](localhost:9292)
 @[102-118](MySQL container)
 @[118](localhost:3306)
+
+@snap[north span-100]
+#### docker-compose
+@snapend
 
 +++?code=mrt-services/staging-db.yml&lang=yml
 @[16](Override compose file to use the staging DB)

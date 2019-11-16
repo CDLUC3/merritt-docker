@@ -89,7 +89,7 @@ To view logs for a specific container
 docker logs ingest
 ```
 
-To view logs for a specific container
+Tail view logs for a specific container
 ```bash
 docker logs -f inventory
 ```
@@ -111,11 +111,6 @@ docker-compose -p merritt down
 
 ```bash
 docker-compose -f docker-compose.yml -f staging-db.yml -p merritt up
-```
-
-To verify running processes and ports
-```
-docker ps -a
 ```
 
 ### Service Stop

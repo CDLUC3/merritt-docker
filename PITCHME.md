@@ -663,3 +663,147 @@ EXPOSE 3306 33060
 +++
 #### Merritt Schema Installation
 - @gitlink[mrt-services/mysql/init.sql](mrt-services/mysql/init.sql])
+
+---
+
+#### Docker Commands
+
++++
+
+#### Build Dependencies
+```bash
+cd mrt-dependencies
+docker-compose build
+```
+
++++
+
+#### Build Services
+```bash
+cd mrt-services
+docker-compose build
+```
+
++++
+
+#### Service Commands
+
+Run these commands from the mrt-services directory.
+
+#### Service Start
+
+```bash
+docker-compose -p merritt up
+```
+
++++
+
+#### Verify running processes and ports
+```bash
+docker ps -a
+```
+
++++
+
+#### Process Output
+
+```plaintext
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                        NAMES
+e972f92c7913        cdluc3/mrt-ingest      "catalina.sh run"        21 hours ago        Up 19 seconds       8009/tcp, 0.0.0.0:8080->8080/tcp             ingest
+71d98c0d5fa0        cdluc3/mrt-dashboard   "bundle exec puma -C…"   21 hours ago        Up 21 seconds       3000/tcp, 0.0.0.0:9292->9292/tcp             ui
+36c45357390b        cdluc3/mrt-store       "catalina.sh run"        21 hours ago        Up 21 seconds       8009/tcp, 0.0.0.0:8081->8080/tcp             store
+2985d892850e        cdluc3/mrt-inventory   "catalina.sh run"        21 hours ago        Up 21 seconds       8009/tcp, 0.0.0.0:8082->8080/tcp             inventory
+7e81f87d0872        cdluc3/mrt-database    "docker-entrypoint.s…"   21 hours ago        Up 24 seconds       0.0.0.0:3306->3306/tcp, 33060/tcp            db-container
+c5b83fb4d3b9        cdluc3/mrt-zookeeper   "/docker-entrypoint.…"   21 hours ago        Up 24 seconds       2888/tcp, 0.0.0.0:2181->2181/tcp, 3888/tcp   zoo
+```
+@[2](Ingest on 8080)
+@[3](UI on 9292)
+@[4](Storage on 8081)
+@[5](Inventory on 8082)
+@[6](MySQL on 3306)
+@[7](Zookeeper on 2181)
+
++++
+
+#### View logs for a specific container
+```bash
+docker logs ingest
+```
+
++++
+
+#### Tail logs for a specific container
+```bash
+docker logs -f inventory
+```
+
++++
+
+#### List docker networks
+```bash
+docker network ls
+```
+
++++
+#### Service Stop
+
+```bash
+docker-compose -p merritt down
+```
+
++++
+#### Service Start Using Staging Database
+
+```bash
+docker-compose -f docker-compose.yml -f staging-db.yml -p merritt up
+```
+
+++++
+#### Service Stop Using Staging Database
+
+```
+docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
+```
+
++++
+
+#### List Zookeeper Queues
+`docker exec -it zoo zkCli.sh ls /`
+
++++
+#### Dump the ingest queue
+`docker exec -it zoo listIngest.sh`
+
++++
+#### Dump the inventory queue
+`docker exec -it zoo listInventory.sh`
+
++++
+#### Mysql Session
+`docker exec -it db-container mysql -u user --password=password --database=db-name`
+
+---
+
+#### Containerization Next Steps
+
+- Create "disposable" Merritt Storage Node that uses Docker volumes
+- Containerize test LDAP service
+- Containerize Merritt mail service
+- Eliminate dependency on CDL maven store for dependency image
+- For pure development testing, eliminate the need for localized config properties
+
+---
+
+#### Additional Ideas
+
+- For storage testing, run docker containers behind the AWS firewall
+- Orchestrate Merritt containers with Dryad containers
+- Make docker nodes replicable for horizontal scaling
+
+---
+
+#### Want to test it?
+
+- Install Docker desktop
+- Clone merritt-docker
+- Contact Terry for help setting up local properties

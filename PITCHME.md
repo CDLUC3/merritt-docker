@@ -758,7 +758,7 @@ docker-compose -p merritt down
 docker-compose -f docker-compose.yml -f staging-db.yml -p merritt up
 ```
 
-++++
++++
 #### Service Stop Using Staging Database
 
 ```
@@ -796,7 +796,10 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 
 #### Additional Ideas
 
-- For storage testing, run docker containers behind the AWS firewall
+- Run docker containers behind the AWS firewall
+  - For storage testing
+  - For more compute power for testing
+- Create automated test suites that create/destroy docker containers
 - Orchestrate Merritt containers with Dryad containers
 - Make docker nodes replicable for horizontal scaling
 

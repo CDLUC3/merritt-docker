@@ -12,7 +12,49 @@ https://github.com/terrywbrady/merritt-docker#dependencies
 
 #### Git Submodules
 
-+++?code=.gitmodules&lang=plaintext
+- @gitlink[.gitmodules](.gitmodules)
+
++++
+#### Build dependency submodules
+
+```ini
+[submodule "mrt-dependencies/mrt-core2"]
+	path = mrt-dependencies/mrt-core2
+	url = https://github.com/cdluc3/mrt-core2
+[submodule "mrt-dependencies/cdl-zk-queue"]
+	path = mrt-dependencies/cdl-zk-queue
+	url = https://github.com/cdluc3/cdl-zk-queue
+[submodule "mrt-dependencies/mrt-zoo"]
+	path = mrt-dependencies/mrt-zoo
+	url = https://github.com/cdluc3/mrt-zoo
+[submodule "mrt-dependencies/mrt-ingest"]
+	path = mrt-dependencies/mrt-ingest
+	url = https://github.com/cdluc3/mrt-ingest
+[submodule "mrt-dependencies/mrt-cloud"]
+	path = mrt-dependencies/mrt-cloud
+	url = https://github.com/CDLUC3/mrt-cloud
+```
+
++++
+#### Microservice submodules
+
+```ini
+	url = https://github.com/cdluc3/mrt-ingest
+[submodule "mrt-services/ingest/mrt-ingest"]
+	path = mrt-services/ingest/mrt-ingest
+	url = https://github.com/cdluc3/mrt-ingest
+[submodule "mrt-services/ui/mrt-dashboard"]
+	path = mrt-services/ui/mrt-dashboard
+	url = https://github.com/CDLUC3/mrt-dashboard
+[submodule "mrt-services/store/mrt-store"]
+	path = mrt-services/store/mrt-store
+	url = https://github.com/cdluc3/mrt-store
+[submodule "mrt-services/inventory/mrt-inventory"]
+	path = mrt-services/inventory/mrt-inventory
+	url = https://github.com/CDLUC3/mrt-inventory
+```
+
++++?code=.gitmodules&lang=ini
 @[1-3](Build Dependency - Core2)
 @[4-9](Build Dependency - Zookeeper Libs)
 @[22-24](Build Dependency - Cloud Library)
@@ -32,14 +74,26 @@ https://github.com/terrywbrady/merritt-docker#dependencies
 +++
 
 #### Build command
-```
+```bash
 cd mrt-dependencies
 docker-compose build
 ```
 
-+++?code=mrt-dependencies/docker-compose.yml&lang=yml
-@[9](Image Name)
-@[10-12](Dockerfile location)
++++
+#### Dependency docker-compose
+- @gitlink[mrt-dependencies/docker-compose.yml](mrt-dependencies/docker-compose.yml)
+
+```yaml
+image: cdluc3/mrt-dependencies
+build:
+  context: .
+  dockerfile: Dockerfile
+```
+
++++
+#### Dependency Dockerfile
+- @gitlink[mrt-dependencies/Dockerfile](mrt-dependencies/Dockerfile)
+
 
 +++?code=mrt-dependencies/Dockerfile&lang=dockerfile
 @[11-12](Create a Maven Docker Image)
@@ -63,8 +117,7 @@ docker run --rm -it cdluc3/mrt-dependencies find /root/.m2 -name "*jar"
 - An image will be built for each service to be run within Docker.
 - These services are described and orchestrated with **docker-compose**
 
-@gitlink(mrt-services/docker-compose.yml)
-@gitlink[mrt-services/docker-compose.yml](mrt-services/docker-compose.yml)
+- @gitlink[mrt-services/docker-compose.yml](mrt-services/docker-compose.yml)
 
 +++
 

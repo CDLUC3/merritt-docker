@@ -45,14 +45,14 @@ Files in this directory are not tracked by github.
 ## Build instructions
 
 Java Dependencies
-```
+```bash
 cd mrt-dependencies
 docker-compose build
 ```
 
 Services
 
-```
+```bash
 cd mrt-services
 docker-compose build
 ```
@@ -70,38 +70,38 @@ docker-compose build
 
 ### Service Start
 
-```
+```bash
 docker-compose -p merritt up
 ```
 
 To verify running processes and ports
-```
+```bash
 docker ps -a
 ```
 
 To view persistent volumes
-```
+```bash
 docker volume ls
 ```
 
 To view logs for a specific container
-```
+```bash
 docker logs ingest
 ```
 
 To view logs for a specific container
-```
+```bash
 docker logs -f inventory
 ```
 
 To view the docker network
-```
+```bash
 docker network ls
 ```
 
 ### Service Stop
 
-```
+```bash
 docker-compose -p merritt down
 ```
 
@@ -109,7 +109,7 @@ docker-compose -p merritt down
 
 ### Service Start
 
-```
+```bash
 docker-compose -f docker-compose.yml -f staging-db.yml -p merritt up
 ```
 

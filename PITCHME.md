@@ -369,6 +369,9 @@ COPY batch-war.assembly.xml /tmp/mrt-ingest/batch-war/assembly.xml
 RUN mvn install -D=environment=local && \
     mvn clean
 ```
+@[1-2](STEP 1: Use base image to pre-load jars)
+@[4-12](Add code)
+@[10-11](Build and install jar)
 
 +++
 
@@ -386,24 +389,51 @@ COPY queue.txt /tdr/ingest/
 COPY stores.txt /tdr/ingest/
 COPY profiles /tdr/ingest/profiles/
 ```
+@[1](STEP 2: Use tomcat base image)
+@[2](Install war file)
+@[4](Expose tomcat ports)
+@[6-7](Create ingestqueue download directory)
+@[9-11](Install config files customized for Docker)
+@[12](Install demo collection profile)
 
++++
 
-+++?code=mrt-services/ingest/Dockerfile&lang=dockerfile
-@[9-10](Use base image to pre-load jars)
-@[12-16](Add code)
-@[18-19](Build and install jar)
-@[21](Use tomcat base image)
-@[22](Install war file)
-@[24](Expose tomcat ports)
-@[26-27](Create ingestqueue download directory)
-@[29-31](Install config files customized for Docker)
-@[32](Install demo collection profile)
+#### @gitlink[mrt-services/ingest/ingest-info.txt](mrt-services/ingest/ingest-info.txt)
 
-+++?code=mrt-services/ingest/ingest-info.txt&lang=plaintext
-@[7](Link to UI container)
-@[10](Link to ingest web server)
-+++?code=mrt-services/ingest/queue.txt&lang=plaintext
-@[5](Link to Zookeeper container)
-+++?code=mrt-services/ingest/stores.txt&lang=plaintext
-@[5-6](Link to Storage container)
-@[7](Link to Inventory container)
+```ini
+name: UC3 Docker Ingest
+identifier: ingest
+target: http://localhost:9292
+description: UC3 ingest docker micro-service
+service-scheme: Ingest/0.1
+access-uri: http://ingest:8080
+support-uri: http://www.cdlib.org/services/uc3/contact.html
+admin:
+purl: http://n2t.net/
+ezid: merritt:merritt
+```
+@[3](Link to UI container)
+@[6](Link to ingest web server)
+
++++
+
+#### @gitlink[mrt-services/ingest/queue.txt](mrt-services/ingest/queue.txt)
+```ini
+QueueService: zoo:2181
+QueueName: /ingest
+InventoryName: /mrt.inventory.full
+QueueHoldFile: /tdr/ingest/queue/HOLD
+PollingInterval: 10
+NumThreads: 5
+```
+@[1](Link to Zookeeper container)
++++
+
+#### @gitlink[mrt-services/ingest/stores.txt](mrt-services/ingest/stores.txt)
+```ini
+store.1: http://store:8080/store
+access.1: http://store:8080/store
+localID: http://inventory:8080/inventory
+```
+@[1-2](Link to Storage container)
+@[3](Link to Inventory container)

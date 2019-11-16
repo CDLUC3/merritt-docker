@@ -1,3 +1,8 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+
 # docker build -t cdluc3/mrt-zookeeper .
 
 FROM cdluc3/mrt-dependencies as build

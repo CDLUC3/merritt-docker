@@ -1,3 +1,7 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 version: '3.7'
 networks:
   merrittnet:
@@ -19,10 +23,6 @@ services:
       target: 8080
     stdin_open: true
     tty: true
-    #volumes:
-    #- type: bind
-    #  source: ./no-track/stores.txt
-    #  target: /tdr/ingest/stores.txt
   store:
     container_name: store
     depends_on:
@@ -118,7 +118,6 @@ services:
       - '3306:3306'
     #volumes:
     #  - my-db:/var/lib/mysql
-    #https://stackoverflow.com/questions/55559386/how-to-fix-mbind-operation-not-permitted-in-mysql-error-log
     security_opt:
       - seccomp:unconfined
 #volumes:

@@ -1,4 +1,8 @@
 #!/bin/sh
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 export CP=/$ZK/zkServer/tools/cdl-zk-queue-0.2-SNAPSHOT.jar
 CP=$CP:/$ZK/zkServer/tools/mrt-zoopub-src-1.0-SNAPSHOT.jar
 CP=$CP:/$ZK/zkServer/tools/mrt-core-2.0-SNAPSHOT.jar

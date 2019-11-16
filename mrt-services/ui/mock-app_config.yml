@@ -1,3 +1,7 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 defaults: &defaults
   # maximum byte size threshold for download of object/versions without compression
   max_archive_size:     1073741824  # 1073741824 bytes = 1 GiB
@@ -10,9 +14,9 @@ development: &development
   <<: *defaults
   max_archive_size:     536870912  # 536870912 bytes = 512 MiB
   max_download_size:    5368709120  # 5368709120 bytes = 5 GiB
-  dua_email_to:         [marisa.strong@ucop.edu]
-  lostorage_email_to:   [marisa.strong@ucop.edu]
-  lostorage_email_from: marisa.strong@ucop.edu
+  dua_email_to:         [no-email@ucop.edu]
+  lostorage_email_to:   [no-email@ucop.edu]
+  lostorage_email_from: no-email@ucop.edu
   merritt_server:       "http://merritt-dev.cdlib.org"
   container_url:        "http://merritt-dev.cdlib.org/cloudcontainer/"
   n2t_uri:              "http://n2t-wf.cdlib.org/"

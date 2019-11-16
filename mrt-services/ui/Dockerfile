@@ -1,3 +1,7 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 # See https://itnext.io/docker-rails-puma-nginx-postgres-999cd8866b18
 #   docker build -t cdluc3/mrt-dashboard .
 

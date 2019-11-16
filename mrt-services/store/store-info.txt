@@ -1,3 +1,7 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 serviceScheme: Store/1.0
 name: UC3-stg-docker
 identifier: localhost:8081

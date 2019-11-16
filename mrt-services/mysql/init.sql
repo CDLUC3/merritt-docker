@@ -1,3 +1,7 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 DROP TABLE IF EXISTS `inv_nodes`;
 CREATE TABLE `inv_nodes` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,

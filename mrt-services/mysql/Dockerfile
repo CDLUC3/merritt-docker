@@ -1,3 +1,7 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 # docker build -t cdluc3/mrt-database .
 
 FROM mysql:5.7

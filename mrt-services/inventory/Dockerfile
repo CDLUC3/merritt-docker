@@ -1,3 +1,7 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 # Publish as cdluc3/mrt-inventory
 
 #   docker build -t cdluc3/mrt-inventory .

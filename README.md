@@ -1,16 +1,19 @@
 # merritt-docker
 
+_Copyright 2019 Regents of the University of California_
+_All rights reserved_
+
 ## Purpose
 The purpose of this repository is to build docker images for local developer testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
 
 ## Dependencies
 The following dependencies are needed to build and run this repo.  The goal is to build a version of the system that can be run entirely from Docker.
 
-- Access to the CDL maven repo.
+- Access to the CDL maven repo for a couple of pre-built jars
+  - TODO: build these from source in the Dockerfile
 - CDL LDAP access
 - A local maven repo build of mrt-conf jar files
-- CDL LDAP access
-- CDL Inventory DB access
+- Access to storage services
 
 ## Component Overview
 
@@ -81,6 +84,16 @@ To view persistent volumes
 docker volume ls
 ```
 
+To view logs for a specific container
+```
+docker logs ingest
+```
+
+To view logs for a specific container
+```
+docker logs -f inventory
+```
+
 To view the docker network
 ```
 docker network ls
@@ -110,3 +123,17 @@ docker ps -a
 ```
 docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 ```
+
+## Other useful tasks
+
+### List Zookeeper Queues
+`docker exec -it zoo zkCli.sh ls /`
+
+### Dump the ingest queue
+`docker exec -it zoo listIngest.sh`
+
+### Dump the inventory queue
+`docker exec -it zoo listInventory.sh`
+
+### Mysql Session
+`docker exec -it db-container mysql -u user --password=password --database=db-name`

@@ -1,3 +1,7 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
 name: UC3 Docker Ingest
 identifier: ingest
 target: http://localhost:9292

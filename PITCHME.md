@@ -6,16 +6,24 @@ https://github.com/terrywbrady/merritt-docker
 
 #### Dependencies for running these containers
 
-https://github.com/terrywbrady/merritt-docker#dependencies
+- Docker and Docker Compose install |
+- Access to the CDL maven repo for a couple of pre-built jars |
+  - TODO: build these from source in the Dockerfile
+- CDL LDAP access |
+- A local maven repo build of mrt-conf jar files |
+- Access to storage services |
+- Access to config properties |
+  - Locally stored in **/mrt-services/no-track**
 
 +++
 
 #### Git Submodules
 
-- @gitlink[.gitmodules](.gitmodules)
+- Dependencies
+- Microservice code
 
 +++
-#### Build dependency submodules
+#### Build dependency submodules @gitlink[.gitmodules](.gitmodules)
 
 ```ini
 [submodule "mrt-dependencies/mrt-core2"]
@@ -36,7 +44,7 @@ https://github.com/terrywbrady/merritt-docker#dependencies
 ```
 
 +++
-#### Microservice submodules
+#### Microservice submodules @gitlink[.gitmodules](.gitmodules)
 
 ```ini
 [submodule "mrt-services/ingest/mrt-ingest"]
@@ -486,10 +494,10 @@ ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.AL
 EXPOSE 8080 8009
 ```
 @[1](The service will run as a tomcat service)
-@[2-5](Unzip and install war file)
-@[7-9](Install a mock inventory config file)
-@[11](Allow url encoded ark's to be part of a path name)
-@[13](Expose tomcat ports)
+@[3-6](Unzip and install war file)
+@[8-10](Install a mock inventory config file)
+@[12](Allow url encoded ark's to be part of a path name)
+@[14](Expose tomcat ports)
 
 +++
 #### @gitlink[mrt-services/inventory/inv-info.txt](mrt-services/inventory/inv-info.txt)
@@ -678,8 +686,8 @@ ENV PATH=$PATH:/${ZK}/zkServer/tools
 EXPOSE 2181
 ```
 @[1](Standard Zookeeper image)
-@[3-15](Add Merritt Queue display code to tools dir)
-@[17](Expose Zookeeper port)
+@[3-16](Add Merritt Queue display code to tools dir)
+@[18](Expose Zookeeper port)
 
 +++
 
@@ -701,7 +709,7 @@ COPY init.sql /docker-entrypoint-initdb.d/start.sql
 EXPOSE 3306 33060
 ```
 @[1](Standard MySQL image)
-@[3](Install dump of Merritt database schema)
+@[3](Install dump of Merritt database schema - runs after container creation)
 @[5](Expose MySQL port)
 
 +++
@@ -733,6 +741,8 @@ docker-compose build
 #### Service Commands
 
 Run these commands from the mrt-services directory.
+
++++
 
 #### Service Start
 
@@ -805,47 +815,56 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt up
 +++
 #### Service Stop Using Staging Database
 
-```
+```bash
 docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 ```
 
 +++
 
 #### List Zookeeper Queues
-`docker exec -it zoo zkCli.sh ls /`
+```bash
+docker exec -it zoo zkCli.sh ls /
+```
 
 +++
 #### Dump the ingest queue
-`docker exec -it zoo listIngest.sh`
+```bash
+docker exec -it zoo listIngest.sh
+```
 
 +++
 #### Dump the inventory queue
-`docker exec -it zoo listInventory.sh`
+```bash
+docker exec -it zoo listInventory.sh
+```
 
 +++
 #### Mysql Session
-`docker exec -it db-container mysql -u user --password=password --database=db-name`
+```bash
+docker exec -it db-container mysql -u user --password=password --database=db-name
+```
 
 ---
 
 #### Containerization Next Steps
 
-- Create "disposable" Merritt Storage Node that uses Docker volumes
-- Containerize test LDAP service
-- Containerize Merritt mail service
-- Eliminate dependency on CDL maven store for dependency image
-- For pure development testing, eliminate the need for localized config properties
+- Create "disposable" Merritt Storage Node that uses Docker volumes |
+- Containerize test LDAP service |
+- Containerize Merritt mail service |
+- Eliminate dependency on CDL maven store for dependency image |
+- For pure development testing, eliminate the need for localized config properties |
 
 ---
 
 #### Additional Ideas
 
-- Run docker containers behind the AWS firewall
+- Run docker containers behind the AWS firewall |
   - For storage testing
   - For more compute power for testing
-- Create automated test suites that create/destroy docker containers
-- Orchestrate Merritt containers with Dryad containers
-- Make docker nodes replicable for horizontal scaling
+- Create automated test suites that create/destroy docker containers |
+- Orchestrate Merritt containers with Dryad containers |
+- Make docker images replicable for horizontal scaling |
+- Kubernetes orchestration |
 
 ---
 

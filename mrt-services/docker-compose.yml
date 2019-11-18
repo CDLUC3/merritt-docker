@@ -120,5 +120,23 @@ services:
     #  - my-db:/var/lib/mysql
     security_opt:
       - seccomp:unconfined
+  merritt-init:
+    container_name: merritt-init
+    image: cdluc3/mrt-init
+    build:
+      context: merritt-init
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    entrypoint:
+      - /bin/bash
+      - '-c'
+      - |
+          echo "*** Pause 30 seconds then init the inventory service"
+          sleep 30
+          echo "*** Starting the inventory service"
+          curl -X POST http://inventory:8080/inventory/service/start?t=json
+          echo "*** Service Init Complete"
+          sleep 5000
 #volumes:
 #  my-db:

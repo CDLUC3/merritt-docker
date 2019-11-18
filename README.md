@@ -13,11 +13,14 @@ https://gitpitch.com/terrywbrady/merritt-docker
 ## Dependencies
 The following dependencies are needed to build and run this repo.  The goal is to build a version of the system that can be run entirely from Docker.
 
+- Docker and Docker Compose install
 - Access to the CDL maven repo for a couple of pre-built jars
   - TODO: build these from source in the Dockerfile
 - CDL LDAP access
 - A local maven repo build of mrt-conf jar files
 - Access to storage services
+- Access to config properties
+  - Locally stored in **/mrt-services/no-track**
 
 ## Component Overview
 

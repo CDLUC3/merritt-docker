@@ -69,6 +69,8 @@ https://github.com/terrywbrady/merritt-docker
 git submodule status
 ```
 
++++
+
 #### Status Output
 
 ```plaintext
@@ -401,7 +403,7 @@ db-container:
     - published: 3306
       target: 3306
 ```
-@[17-18](localhost:3306)
+@[17](localhost:3306)
 
 +++
 
@@ -416,6 +418,7 @@ smtp:
   - published: 25
     target: 25
 ```
+@[7](SMTP port 25)
 
 +++
 
@@ -444,8 +447,8 @@ merritt-init:
 ```
 @[12-14](Run bash script)
 @[15-16](Wait 30 seconds to allow services to start)
-@[17](POST to inventory service to start processing)
-@[19](Sleep for a long time)
+@[18](POST to inventory service to start processing)
+@[20](Sleep for a long time)
 
 +++
 
@@ -501,7 +504,7 @@ RUN mvn install -D=environment=local && \
     mvn clean
 ```
 @[1-2](Use base image to pre-load jars)
-@[4-12](Add code)
+@[4-8](Add code)
 @[10-11](Build and install jar)
 
 +++
@@ -769,7 +772,7 @@ CMD ["bundle", "exec", "puma", "-C", "config/application.rb"]
 
 +++
 
-#### @gitlink[mrt-services/ui/database.yml.example](mrt-services/ui/database.yml.example])
+#### @gitlink[mrt-services/ui/mock-app_config.yml](mrt-services/ui/mock-app_config.yml])
 ```yml
 test:
   <<: *development

@@ -115,11 +115,20 @@ services:
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'root-password'
     ports:
-      - '3306:3306'
+    - published: 3306
+      target: 3306
     #volumes:
     #  - my-db:/var/lib/mysql
     security_opt:
       - seccomp:unconfined
+  smtp:
+    container_name: smtp
+    image: namshi/smtp
+    networks:
+      merrittnet:
+    ports:
+    - published: 25
+      target: 25
   merritt-init:
     container_name: merritt-init
     image: cdluc3/mrt-init

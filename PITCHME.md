@@ -326,9 +326,54 @@ db-container:
     MYSQL_PASSWORD: 'password'
     MYSQL_ROOT_PASSWORD: 'root-password'
   ports:
-    - '3306:3306'
+    - published: 3306
+      target: 3306
 ```
-@[17](localhost:3306)
+@[17-18](localhost:3306)
+
++++
+
+#### Define the SMTP container
+```yaml
+smtp:
+  container_name: smtp
+  image: namshi/smtp
+  networks:
+    merrittnet:
+  ports:
+  - published: 25
+    target: 25
+```
+
++++
+
+#### Define the Merritt Init Container
+```yaml
+merritt-init:
+  container_name: merritt-init
+  image: cdluc3/mrt-init
+  depends_on:
+  - inventory
+  build:
+    context: merritt-init
+    dockerfile: Dockerfile
+  networks:
+    merrittnet:
+  entrypoint:
+    - /bin/bash
+    - '-c'
+    - |
+        echo "*** Pause 30 seconds then init the inventory service"
+        sleep 30
+        echo "*** Starting the inventory service"
+        curl -X POST http://inventory:8080/inventory/service/start?t=json
+        echo "*** Service Init Complete"
+        sleep 5000
+```
+@[12-14](Run bash script)
+@[15-16](Wait 30 seconds to allow services to start)
+@[17](POST to inventory service to start processing)
+@[19](Sleep for a long time)
 
 +++
 
@@ -650,6 +695,25 @@ CMD ["bundle", "exec", "puma", "-C", "config/application.rb"]
 - @gitlink[mrt-services/ui/mock-atom.yml](mrt-services/ui/mock-atom.yml)
 - @gitlink[mrt-services/ui/mock-ldap.yml](mrt-services/ui/mock-ldap.yml)
 
++++
+
+#### @gitlink[mrt-services/ui/database.yml.example](mrt-services/ui/database.yml.example])
+```yml
+test:
+  <<: *development
+  max_archive_size:     536870912  # 536870912 bytes = 512 MiB
+  max_download_size:    5368709120  # 5368709120 bytes = 5 GiB
+  uri_1: "http://store:8080/store/content/"
+  uri_2: "http://store:8080/store/producer/"
+  ingest_service:       "http://ingest:8080/ingest/poster/submit/"
+  ingest_service_update: "http://ingest:8080/ingest/poster/update/"
+  #large object download url
+  container_url:        "http://localhost:8081/container/"
+```
+@[5-6](Storage Service URL)
+@[7-8](Ingest Service URL)
+@[9-10](Large Object Async Download URL)
+
 ---
 #### Zookeeper Service
 
@@ -715,6 +779,21 @@ EXPOSE 3306 33060
 +++
 #### Merritt Schema Installation
 - @gitlink[mrt-services/mysql/init.sql](mrt-services/mysql/init.sql])
+
+---
+#### Merritt Init Service
+
++++
+
+#### @gitlink[mrt-services/merritt-init/Dockerfile](mrt-services/merritt-init/Dockerfile)
+
+```dockerfile
+FROM ubuntu
+
+# Add curl to image
+RUN apt-get update && apt-get install -y curl
+```
+@[4](Add curl to base image)
 
 ---
 

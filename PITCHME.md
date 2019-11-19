@@ -61,6 +61,78 @@ https://github.com/terrywbrady/merritt-docker
 	url = https://github.com/CDLUC3/mrt-inventory
 ```
 
++++
+
+#### Git submodule Status
+
+```bash
+git submodule status
+```
+
+#### Status Output
+
+```plaintext
+ 9defbdaff6220d6b3ed2368f74bddbc974d524bf mrt-dependencies/cdl-zk-queue (heads/master)
+ 6112a4dcb4b93970d5ee723b50b9bc025d98c8e9 mrt-dependencies/mrt-cloud (heads/master)
+ 88f6022e3e622b5aef4fac43be3cc27eedf8f714 mrt-dependencies/mrt-core2 (heads/master)
+ 082fd890cc74d6aeea03ee84da384d7ad9d6ed94 mrt-dependencies/mrt-ingest (heads/master)
+ 275773ebcc558c2fab74d30353362b7fb5656d76 mrt-dependencies/mrt-zoo (heads/master)
+ 082fd890cc74d6aeea03ee84da384d7ad9d6ed94 mrt-services/ingest/mrt-ingest (heads/master)
+ a74d942521a25a6edc0897b2d60a87a4800a4d90 mrt-services/inventory/mrt-inventory (PT164702206-4-ga74d942)
+ 7cd33facd0ed1c758996734c79e8a32a15cf1bed mrt-services/store/mrt-store (heads/master)
+ fb4f92c00e68e5a3af93846959a4aeda1df8f222 mrt-services/ui/mrt-dashboard (2019.2-1-gfb4f92c0)
+```
+@[9](FYI: This repo has been modified)
+
++++
+
+#### Updating a git submodule
+```bash
+git submodule update --remote mrt-services/ui/mrt-dashboard
+```
+
++++
+
+#### Submodule Update
+```plaintext
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 47 (delta 3), reused 3 (delta 3), pack-reused 40
+Unpacking objects: 100% (47/47), done.
+From https://github.com/CDLUC3/mrt-dashboard
+   fb4f92c0..15f32156  master                           -> origin/master
+ * [new branch]        dependabot/bundler/loofah-2.3.1  -> origin/dependabot/bundler/loofah-2.3.1
+ * [new branch]        dependabot/bundler/rubyzip-1.3.0 -> origin/dependabot/bundler/rubyzip-1.3.0
+ * [new branch]        issue-167_email_recipients       -> origin/issue-167_email_recipients
+Submodule path 'mrt-services/ui/mrt-dashboard': checked out '15f32156d04cd0c03b20a5ce4bd6f47b8bf3234d'
+```
+
++++
+
+#### Submodule update status
+
+```bash
+git submodule status
+```
+
++++
+
+#### Status Output
+
+```plaintext
+ 9defbdaff6220d6b3ed2368f74bddbc974d524bf mrt-dependencies/cdl-zk-queue (heads/master)
+ 6112a4dcb4b93970d5ee723b50b9bc025d98c8e9 mrt-dependencies/mrt-cloud (heads/master)
+ 88f6022e3e622b5aef4fac43be3cc27eedf8f714 mrt-dependencies/mrt-core2 (heads/master)
+ 082fd890cc74d6aeea03ee84da384d7ad9d6ed94 mrt-dependencies/mrt-ingest (heads/master)
+ 275773ebcc558c2fab74d30353362b7fb5656d76 mrt-dependencies/mrt-zoo (heads/master)
+ 082fd890cc74d6aeea03ee84da384d7ad9d6ed94 mrt-services/ingest/mrt-ingest (heads/master)
+ a74d942521a25a6edc0897b2d60a87a4800a4d90 mrt-services/inventory/mrt-inventory (PT164702206-4-ga74d942)
+ 7cd33facd0ed1c758996734c79e8a32a15cf1bed mrt-services/store/mrt-store (heads/master)
++15f32156d04cd0c03b20a5ce4bd6f47b8bf3234d mrt-services/ui/mrt-dashboard (2019.2-15-g15f32156)
+```
+@[9](Notice the modification - new commit hash is in place)
+
 ---
 
 #### Build dependencies

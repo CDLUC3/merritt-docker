@@ -1,6 +1,6 @@
 #### Running Merritt in Docker
 
-https://github.com/terrywbrady/merritt-docker
+https://github.com/cdluc3/merritt-docker
 
 +++
 

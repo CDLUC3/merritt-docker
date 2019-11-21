@@ -7,6 +7,8 @@ https://github.com/cdluc3/merritt-docker
 #### Dependencies for running these containers
 
 - Docker and Docker Compose install |
+- Access to the CDL maven repo for a couple of pre-built jars |
+  - TODO: build these from source in the Dockerfile
 - CDL LDAP access |
 - A local maven repo build of mrt-conf jar files |
 - Access to storage services |
@@ -1007,6 +1009,7 @@ docker exec -it db-container mysql -u user --password=password --database=db-nam
 - Create "disposable" Merritt Storage Node that uses Docker volumes |
 - Containerize test LDAP service |
 - Containerize Merritt mail service |
+- Eliminate dependency on CDL maven store for dependency image |
 - For pure development testing, eliminate the need for localized config properties |
 
 ---

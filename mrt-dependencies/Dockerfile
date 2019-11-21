@@ -14,10 +14,6 @@ WORKDIR /tmp
 # Add all submodule code to the dockerfile
 ADD . /tmp
 
-# There are 2 jar dependencies that are not yet linked as source.
-# Pull these from the maven repo
-COPY settings.xml /root/.m2/
-
 # Mock the system properties that are bundled into Merritt services
 RUN cd mrt-conf-mock && mvn install && mvn clean
 

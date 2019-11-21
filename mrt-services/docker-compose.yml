@@ -21,6 +21,10 @@ services:
     ports:
     - published: 8080
       target: 8080
+    volumes:
+    - type: bind
+      source: ./no-track/ingest-info.txt
+      target: /tdr/ingest/ingest-info.txt
     stdin_open: true
     tty: true
   store:

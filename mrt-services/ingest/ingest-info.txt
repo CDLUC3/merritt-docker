@@ -11,4 +11,4 @@ access-uri: http://ingest:8080
 support-uri: http://www.cdlib.org/services/uc3/contact.html
 admin:
 purl: http://n2t.net/
-ezid: merritt:merritt
+ezid: example:value

@@ -271,9 +271,13 @@ ingest:
   ports:
   - published: 8080
     target: 8080
+  volumes:
+  - type: bind
+    source: ./no-track/ingest-info.txt
+    target: /tdr/ingest/ingest-info.txt
 ```
 @[14](localhost:8080/ingest)
-
+@[16-19](supply runtime values to ingest service)
 +++
 
 #### Define the Storage Container
@@ -546,7 +550,7 @@ access-uri: http://ingest:8080
 support-uri: http://www.cdlib.org/services/uc3/contact.html
 admin:
 purl: http://n2t.net/
-ezid: merritt:merritt
+ezid: example:value
 ```
 @[3](Link to UI container)
 @[6](Link to ingest web server)

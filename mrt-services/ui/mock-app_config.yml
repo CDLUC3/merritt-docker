@@ -29,14 +29,14 @@ development: &development
 
 test:
   <<: *development
-  max_archive_size:     536870912  # 536870912 bytes = 512 MiB
-  max_download_size:    5368709120  # 5368709120 bytes = 5 GiB
+  max_archive_size:  200000  # 9999 bytes ~= 99 KiB
+  max_download_size: 3000000  # 1048576 bytes = 1 MiB
   uri_1: "http://store:8080/store/content/"
   uri_2: "http://store:8080/store/producer/"
   ingest_service:       "http://ingest:8080/ingest/poster/submit/"
   ingest_service_update: "http://ingest:8080/ingest/poster/update/"
   #large object download url
-  container_url:        "http://localhost:8081/container/"
+  container_url:        "http://localhost:8081/cloudcontainer/"
 local:
   <<: *development
 

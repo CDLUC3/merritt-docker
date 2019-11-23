@@ -17,5 +17,7 @@ producerFilter.6=mrt-dataone-manifest.txt
 producerFilter.7=mrt-datacite.xml
 producerFilter.8=mrt-oaidc.xml
 producerFilter.9=stash-wrapper.xml
-archiveNodeName=nodes-docker-store
-archiveNode=7001
+# The following will be used for cloud storage for async download
+# nodes io table.  Override this at runtime.
+archiveNodeName=
+archiveNode=

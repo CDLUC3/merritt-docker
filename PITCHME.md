@@ -707,12 +707,14 @@ producerFilter.6=mrt-dataone-manifest.txt
 producerFilter.7=mrt-datacite.xml
 producerFilter.8=mrt-oaidc.xml
 producerFilter.9=stash-wrapper.xml
-archiveNodeName=nodes-docker-store
-archiveNode=7001
+# The following will be used for cloud storage for async download
+# nodes io table.  Override this at runtime.
+archiveNodeName=
+archiveNode=
 ```
 @[3](Public host for storage service)
 @[6](Public url for the storage service)
-
+@[16-19](Cloud container node for large object (async) downloads)
 ---
 #### UI Service
 
@@ -1001,6 +1003,50 @@ docker exec -it zoo listInventory.sh
 ```bash
 docker exec -it db-container mysql -u user --password=password --database=db-name
 ```
+
+---
+
+#### Useful URL's
+
+Service | URL
+------- | ---
+UI | http://localhost:9292
+Ingest | http://localhost:8080/ingest/state/
+Storage | http://localhost:8081/store/state
+Inventory | http://localhost:8082/inventory/state
+
++++
+
+#### UI URL's
+
+- http://localhost:9292/m/ARG
+  - Replace ARK - urlencode the value
+  - Stream Object download through the UI
+
++++
+
+#### Ingest URL's
+
+- A web server serves up the contents of the ingest queue
+- http://localhost:8080/ingestqueue/BID/JID/system/mrt-manifest.txt
+  - Replace BID
+  - Replace JID
+
++++
+
+#### Storage URL's
+
+- http://localhost:8081/store/state/NODE
+  - Replace NODE
+- http://localhost:8081/store/state/NODE/ARK
+  - Replace NODE, ARK - urlencode the value
+  - Object status
+- http://localhost:8081/store/content/NODE/ARK
+  - Download object
+- http://localhost:8081/cloudcontainer/store/TAR.tar.gz
+  - Replace TAR - random value
+  - Async Large object download
+
 
 ---
 

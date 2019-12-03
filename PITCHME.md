@@ -374,7 +374,7 @@ ui:
   depends_on:
   - db-container
   ports:
-  - published: 9292
+  - published: 8089
     target: 9292
   volumes:
   # You must install this file with proper credentials
@@ -382,7 +382,7 @@ ui:
   stdin_open: true
   tty: true
 ```
-@[12](localhost:9292)
+@[12](localhost:8089)
 
 +++
 
@@ -418,11 +418,10 @@ smtp:
   image: namshi/smtp
   networks:
     merrittnet:
-  ports:
-  - published: 25
-    target: 25
+  #ports:
+  #- published: 25
+  #  target: 25
 ```
-@[7](SMTP port 25)
 
 +++
 
@@ -543,7 +542,7 @@ COPY profiles /tdr/ingest/profiles/
 ```ini
 name: UC3 Docker Ingest
 identifier: ingest
-target: http://localhost:9292
+target: http://localhost:8089
 description: UC3 ingest docker micro-service
 service-scheme: Ingest/0.1
 access-uri: http://ingest:8080
@@ -924,14 +923,14 @@ docker ps -a
 ```plaintext
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                        NAMES
 e972f92c7913        cdluc3/mrt-ingest      "catalina.sh run"        21 hours ago        Up 19 seconds       8009/tcp, 0.0.0.0:8080->8080/tcp             ingest
-71d98c0d5fa0        cdluc3/mrt-dashboard   "bundle exec puma -C…"   21 hours ago        Up 21 seconds       3000/tcp, 0.0.0.0:9292->9292/tcp             ui
+71d98c0d5fa0        cdluc3/mrt-dashboard   "bundle exec puma -C…"   21 hours ago        Up 21 seconds       3000/tcp, 0.0.0.0:8089->9292/tcp             ui
 36c45357390b        cdluc3/mrt-store       "catalina.sh run"        21 hours ago        Up 21 seconds       8009/tcp, 0.0.0.0:8081->8080/tcp             store
 2985d892850e        cdluc3/mrt-inventory   "catalina.sh run"        21 hours ago        Up 21 seconds       8009/tcp, 0.0.0.0:8082->8080/tcp             inventory
 7e81f87d0872        cdluc3/mrt-database    "docker-entrypoint.s…"   21 hours ago        Up 24 seconds       0.0.0.0:3306->3306/tcp, 33060/tcp            db-container
 c5b83fb4d3b9        cdluc3/mrt-zookeeper   "/docker-entrypoint.…"   21 hours ago        Up 24 seconds       2888/tcp, 0.0.0.0:2181->2181/tcp, 3888/tcp   zoo
 ```
 @[2](Ingest on 8080)
-@[3](UI on 9292)
+@[3](UI on 8089)
 @[4](Storage on 8081)
 @[5](Inventory on 8082)
 @[6](MySQL on 3306)
@@ -1010,7 +1009,7 @@ docker exec -it db-container mysql -u user --password=password --database=db-nam
 
 Service | URL
 ------- | ---
-UI | http://localhost:9292
+UI | http://localhost:8089
 Ingest | http://localhost:8080/ingest/state/
 Storage | http://localhost:8081/store/state
 Inventory | http://localhost:8082/inventory/state
@@ -1019,7 +1018,7 @@ Inventory | http://localhost:8082/inventory/state
 
 #### UI URL's
 
-- http://localhost:9292/m/ARG
+- http://localhost:8089/m/ARG
   - Replace ARK - urlencode the value
   - Stream Object download through the UI
 

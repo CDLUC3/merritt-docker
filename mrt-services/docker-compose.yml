@@ -100,7 +100,7 @@ services:
     depends_on:
     - db-container
     ports:
-    - published: 9292
+    - published: 8089
       target: 9292
     volumes:
     # You must install this file with proper credentials
@@ -135,9 +135,9 @@ services:
     image: namshi/smtp
     networks:
       merrittnet:
-    ports:
-    - published: 25
-      target: 25
+    #ports:
+    #- published: 25
+    #  target: 25
   merritt-init:
     container_name: merritt-init
     image: cdluc3/mrt-init

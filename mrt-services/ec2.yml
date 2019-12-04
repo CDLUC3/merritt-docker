@@ -1,0 +1,11 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.7'
+services:
+  store:
+    volumes:
+    - type: bind
+      source: ../../mrt-confs3-1.0-SNAPSHOT.jar
+      target: /usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confs3-1.0-SNAPSHOT.jar

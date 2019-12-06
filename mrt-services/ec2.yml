@@ -12,3 +12,8 @@ services:
     - type: bind
       source: ./no-track/store-info-ec2.txt
       target: /dpr2store/mrtHomes/store/store-info.txt
+  ui:
+    volumes:
+    - type: bind
+      source: ./no-track/app-config-ec2.txt
+      target: /var/www/app_name/config/app_config.yml

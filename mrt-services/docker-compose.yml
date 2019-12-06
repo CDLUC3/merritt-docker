@@ -46,9 +46,6 @@ services:
     - type: bind
       source: ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confs3/1.0-SNAPSHOT/mrt-confs3-1.0-SNAPSHOT.jar
       target: /usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confs3-1.0-SNAPSHOT.jar
-    #- type: bind
-    #  source: ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confstore/test-1.0-SNAPSHOT/mrt-confstore-test-1.0-SNAPSHOT.jar
-    #  target: /usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confstore-test-1.0-SNAPSHOT.jar
     - type: bind
       source: ./no-track/store-info.txt
       target: /dpr2store/mrtHomes/store/store-info.txt

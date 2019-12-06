@@ -9,9 +9,13 @@ services:
     - type: volume
       source: my-pairtree
       target: /opt/storage/
+    #- type: volume
+    #  source: my-cloudcontainer
+    #  target: /usr/local/tomcat/webapps/cloudcontainer/store
   db-container:
     volumes:
       - my-db:/var/lib/mysql
 volumes:
   my-db:
   my-pairtree:
+  #my-cloudcontainer

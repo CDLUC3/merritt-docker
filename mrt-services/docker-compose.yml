@@ -85,7 +85,6 @@ services:
       target: 2181
     stdin_open: true
     tty: true
-    #volumes:
   ui:
     container_name: ui
     image: cdluc3/mrt-dashboard
@@ -104,7 +103,6 @@ services:
     - ./no-track/ldap-stg.yml:/var/www/app_name/config/ldap.yml
     stdin_open: true
     tty: true
-    #volumes:
   db-container:
     container_name: db-container
     image: cdluc3/mrt-database
@@ -123,8 +121,6 @@ services:
     ports:
     - published: 3306
       target: 3306
-    #volumes:
-    #  - my-db:/var/lib/mysql
     security_opt:
       - seccomp:unconfined
   smtp:
@@ -132,9 +128,6 @@ services:
     image: namshi/smtp
     networks:
       merrittnet:
-    #ports:
-    #- published: 25
-    #  target: 25
   merritt-init:
     container_name: merritt-init
     image: cdluc3/mrt-init

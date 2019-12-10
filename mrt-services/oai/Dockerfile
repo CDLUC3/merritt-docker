@@ -18,3 +18,10 @@ FROM tomcat:8-jre8
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-oaiwar/1.0-SNAPSHOT/mrt-oaiwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/oai.war
 
 EXPOSE 8080 8009
+
+RUN mkdir -p /replic/mrtHomes/oai/log/ /apps/replic/mrtHomes/oai
+
+COPY oai-info.txt /replic/mrtHomes/oai
+COPY oai-info.txt /apps/replic/mrtHomes/oai
+
+ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64"

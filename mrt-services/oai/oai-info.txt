@@ -1,0 +1,12 @@
+repositoryName: Merritt
+baseURL: http://localhost:8083/oai/v2
+protocolVersion: 2.0
+adminEmail: no-email@ucop.edu
+earliestDate: 2013-05-22 09:47:24
+granularity: YYYY-MM-DDThh:mm:ssZ
+deletedMethod: NO
+maxListIdentifiers: 10000
+maxListRecords: 10000
+maxListSets: 100
+name:UC3
+identifier: mrtoai-docker

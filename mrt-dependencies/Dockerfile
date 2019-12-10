@@ -35,3 +35,6 @@ RUN cd mrt-ingest && \
 
 # Add the cloud services jar file
 RUN cd mrt-cloud && mvn install -DskipTests && mvn clean
+
+# OAI and Sword depend on inventory
+RUN cd mrt-inventory && mvn install && mvn clean

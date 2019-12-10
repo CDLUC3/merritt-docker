@@ -18,3 +18,7 @@ FROM tomcat:8-jre8
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-swordwarpub/1.0-SNAPSHOT/mrt-swordwarpub-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/sword.war
 
 EXPOSE 8080 8009
+
+RUN mkdir -p /apps/replic/tst/sword/mrtHomes/sword
+
+COPY sword-info.txt /apps/replic/tst/sword/mrtHomes/sword

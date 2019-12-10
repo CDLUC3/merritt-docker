@@ -1,0 +1,9 @@
+maxUploadSize=100000000
+jssecacert=**TBD**
+ldapHost=**TBD**
+link=http://localhost:8084/sword/v2/object/
+editmedia=http://localhost:8089/d/
+edit=http://http://localhost:8084/sword/edit/
+ingestUrlAdd=http://localhost:8080/ingest/submit-object
+ingestUrlUpdate=http://localhost:8080/ingest/update-object
+retainTargetUrl=true

@@ -103,32 +103,6 @@ services:
     - ./no-track/ldap-stg.yml:/var/www/app_name/config/ldap.yml
     stdin_open: true
     tty: true
-  oai:
-    container_name: oai
-    image: cdluc3/mrt-oai
-    build:
-      context: oai
-      dockerfile: Dockerfile
-    networks:
-      merrittnet:
-    ports:
-    - published: 8083
-      target: 8080
-    stdin_open: true
-    tty: true
-  sword:
-    container_name: sword
-    image: cdluc3/mrt-sword
-    build:
-      context: sword
-      dockerfile: Dockerfile
-    networks:
-      merrittnet:
-    ports:
-    - published: 8084
-      target: 8080
-    stdin_open: true
-    tty: true
   db-container:
     container_name: db-container
     image: cdluc3/mrt-database
@@ -172,5 +146,3 @@ services:
           curl -X POST http://inventory:8080/inventory/service/start?t=json
           echo "*** Service Init Complete"
           sleep 5000
-#volumes:
-#  my-db:

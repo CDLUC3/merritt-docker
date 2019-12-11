@@ -1,0 +1,164 @@
+defaults: &DEFAULTS
+  google_analytics_id: null
+  metadata_engine: StashDatacite
+  shared_resource_model: StashEngine::Resource
+  repository: Stash::Merritt::Repository
+  stash_mount: /stash
+  ezid:
+    host: ezid.cdlib.org
+    port: 443
+  google_maps_api_key:
+  contact_us_uri: http://www.cdlib.org/services/uc3/contact.html # TODO, change this
+  # sandbox orcid credentials
+  orcid:
+    site: https://sandbox.orcid.org/
+    authorize_url: https://sandbox.orcid.org/oauth/authorize
+    token_url: https://api.sandbox.orcid.org/oauth/token
+    key:
+    secret:
+    member: true
+    sandbox: true
+    api: https://api.sandbox.orcid.org
+  submission_error_email: ["no-email@ucop.edu"]
+  submission_bc_emails: [""]
+  contact_email: ["no-email@datadryad.org"]
+  helpdesk_email: dryad.helpdesk@mailinator.com
+  send_journal_published_notices: false
+  default_tenant: dryad
+  old_dryad_access_token:
+  old_dryad_url: https://v1.datadryad.org
+  payments:
+    service: stripe
+    key:
+    data_processing_charge: 12000 # charge in cents
+    large_file_size: 5.0e+10 # 50 GB
+    additional_storage_chunk_size: 1.0e+10 # 10 GB
+    additional_storage_chunk_cost: 5000 # in cents
+  merritt_express_base_url: http://express:8080
+  merritt_max_submission_threads: 5
+  crossref_base_url: https://api.crossref.org
+  crossref_mailto: no-email@ucop.edu
+  fee_waiver_countries:
+    - 'Afghanistan'
+    - 'Guinea-Bissau'
+    - 'Sierra Leone'
+    - 'Benin'
+    - 'Haiti'
+    - 'Somalia'
+    - 'Burkina Faso'
+    - 'North Korea'
+    - 'South Sudan'
+    - 'Burundi Liberia'
+    - 'Syria'
+    - 'Central African Republic'
+    - 'Madagascar'
+    - 'Tajikistan'
+    - 'Chad'
+    - 'Malawi'
+    - 'Tanzania'
+    - 'Comoros'
+    - 'Mali'
+    - 'Togo'
+    - 'Republic of the Congo'
+    - 'Democratic Republic of the Congo'
+    - 'Mozambique'
+    - 'Uganda'
+    - 'Eritrea'
+    - 'Nepal'
+    - 'Yemen'
+    - 'Ethiopia'
+    - 'Niger'
+    - 'Zimbabwe'
+    - 'Gambia'
+    - 'Rwanda'
+    - 'Guinea'
+    - 'Senegal'
+    - 'Angola'
+    - 'Indonesia'
+    - 'Papua New Guinea'
+    - 'Bangladesh'
+    - 'Kenya'
+    - 'Philippines'
+    - 'Bhutan'
+    - 'Kiribati'
+    - 'Sao Tome and Principe'
+    - 'Bolivia'
+    - 'Kosovo'
+    - 'Solomon Islands'
+    - 'Cabo Verde'
+    - 'Kyrgyzstan'
+    - 'Sri Lanka'
+    - 'Cambodia'
+    - 'Laos'
+    - 'Sudan'
+    - 'Cameroon'
+    - 'Lesotho'
+    - 'Swaziland'
+    - 'Congo'
+    - 'Mauritania'
+    - 'East Timor'
+    - 'Ivory Coast'
+    - 'Micronesia'
+    - 'Tunisia'
+    - 'Djibouti'
+    - 'Moldova'
+    - 'Ukraine'
+    - 'Egypt'
+    - 'Mongolia'
+    - 'Uzbekistan'
+    - 'El Salvador'
+    - 'Morocco'
+    - 'Vanuatu'
+    - 'Georgia'
+    - 'Myanmar'
+    - 'Vietnam'
+    - 'Ghana'
+    - 'Nicaragua'
+    - 'State of Palestine'
+    - 'Honduras'
+    - 'Nigeria'
+    - 'Zambia'
+    - 'India'
+    - 'Pakistan'
+  link_out:
+    # LinkOut FTP information for Europe PubMed Central
+    labslink:
+      ftp_host:
+      ftp_dir:
+      ftp_username:
+      ftp_password:
+      ftp_provider_id:
+    # LinkOut FTP information for NCBI
+    pubmed:
+      ftp_host:
+      ftp_dir:
+      ftp_username:
+      ftp_password:
+      ftp_provider_id:
+      api_key:
+
+# We need to be sure our local basic config files reflect what is is dryad-config-example since that is what travis uses.
+# I hope this will save us from some of the problems of a local test environment and the travis test environment working
+# differently.
+<%= YamlHelper.output_test_section(example_filename: 'app_config.yml') %>
+
+development: &DEVELOPMENT
+  <<: *DEFAULTS
+  submission_error_email: [no-email@ucop.edu]
+  shib_sp_host:
+  page_error_email: ~
+  feedback_email_from: no-reply-dryad-dev@datadryad.org
+  send_journal_published_notices: false
+  collection_uri: http://sword:8080/sword/
+  google_analytics_id:
+
+local:
+  <<: *DEVELOPMENT
+  send_journal_published_notices: false
+
+local_dev:
+  <<: *DEVELOPMENT
+
+test:
+  <<: *DEVELOPMENT
+  send_journal_published_notices: false

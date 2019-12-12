@@ -38,6 +38,10 @@ services:
       dockerfile: Dockerfile
     networks:
       merrittnet:
+    volumes:
+    - type: bind
+      source: ./no-track/dryad/app_config.yml
+      target: /var/www/app_name/config/app_config.yml
     ports:
     - published: 8085
       target: 3000

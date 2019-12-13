@@ -30,6 +30,10 @@ services:
       target: 8080
     stdin_open: true
     tty: true
+    volumes:
+    - type: bind
+      source: ./no-track/sword-info.txt
+      target: /apps/replic/tst/sword/mrtHomes/sword/sword-info.txt
   dryad:
     container_name: dryad
     image: cdluc3/dryad
@@ -42,8 +46,11 @@ services:
     - type: bind
       source: ./no-track/dryad/app_config.yml
       target: /var/www/app_name/config/app_config.yml
+    - type: bind
+      source: ./no-track/dryad/tenants/dryad.yml
+      target: /var/www/app_name/config/tenants/dryad.yml
     ports:
-    - published: 8085
+    - published: 3000
       target: 3000
     stdin_open: true
     tty: true

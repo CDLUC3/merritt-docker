@@ -31,6 +31,8 @@ RUN bundle install --jobs 20 --retry 5
 
 COPY dryad-app .
 COPY *.yml config/
+RUN mkdir -p config/tenants
+COPY tenants/dryad.yml config/tenants/
 
 RUN bundle exec rake assets:precompile --trace
 EXPOSE 3000 9292

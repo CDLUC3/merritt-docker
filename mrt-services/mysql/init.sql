@@ -314,3 +314,8 @@ GRANT ALL ON *.* to 'user'@'%';
 ALTER USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
 
 flush privileges;
+
+insert into inv_collections(ark,name,mnemonic,harvest_privilege)
+select 'ark:/13030/m5rn35s8','demo','demo','public'
+union
+select 'ark:/13030/m5qv8jks','cdl_dryaddev','cdl_dryaddev','public';

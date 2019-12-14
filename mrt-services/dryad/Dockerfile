@@ -26,8 +26,12 @@ COPY dryad-app .
 COPY *.yml config/
 RUN mkdir -p config/tenants
 COPY tenants/dryad.yml config/tenants/
+COPY stash-notifier/notifier.yml stash/stash-notifier/config/
 
-RUN bundle install --jobs 20 --retry 5
-RUN bundle exec rake assets:precompile --trace
+RUN bundle install --jobs 20 --retry 5 && \
+    bundle exec rake assets:precompile --trace && \
+    cd stash/stash-notifier && \
+    bundle install
+
 EXPOSE 3000 9292
 CMD ["bundle", "exec", "passenger", "start"]

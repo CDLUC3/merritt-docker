@@ -4,14 +4,110 @@ https://github.com/cdluc3/merritt-docker
 
 +++
 
-#### Dependencies for running these containers
+#### Why Run Merritt in Docker?
+
+- Create a development environment on-demand
+  - Completely disposable, no servers provisioned
+  - Docker is portable: MacOS, Windows, Linux
+- Can containerize all dependencies including databases, SOLR, Zookeeper
+  - Run isolated from CDL network
+- Create an automated test environment on-demand
+  - Dispose and re-create as often as needed
+
++++
+
+#### Docker Concepts
+- Docker Image
+- Docker Container
+- Container Orchestration
+
++++
+
+#### A Docker Image
+- Configured in a Dockerfile
+  - Configuration as code
+- Built from a base image
+  - Examples: tomcat, apache, ruby, mysql
+- Rebuilt when any configuration change is made
+- Contains the minimal set of dependencies to perform a service
+- Deployed as a Docker Container
+
++++
+
+#### A Docker Container
+- A running instance of a Docker image
+- Runs with a docker network
+  - Can talk to other containers in that network
+- Performs a specific service
+  - Ports and storage can be bound to the host environment
+- Destroyed and recreated from the image as needed
+  - Maintain the image, not the container
+
++++
+
+#### Container Orchestration
+- Connect multiple docker containers to create a system
+  - Example: database container + web server container
+- Define container dependencies
+- Orchestration Options
+  - Docker Desktop
+    - Windows, MacOS, Linux
+  - Docker Swarm (deprecated)
+  - Kubernetes
+    - Generally offered by a Cloud Provider
+    - Some Desktop Tools
+
++++
+
+#### Basic commands
+- `docker build` creates an image from a dockerfile
+- `docker run` creates a container from an image and starts the container
+  - `docker stop` stops a running container
+  - `docker rm` destroys a stopped container
+- `docker exec` runs a command inside a running container
+- `docker-compose up` performs `docker run` on a collection of interdependent containers
+- `docker-compose down` performs `docker stop` and `docker rm` on a collection of interdependent containers
+
++++
+
+#### Docker Storage Options
+
+- Ephemeral - storage is destroyed when containers are destroyed
+  - This is the default option
+- Docker Volumes
+  - Create and dispose interdependent storage volumes with docker commands
+- Bind Docker Volumes to "Real" Storage
+  - Mount to local disk with Docker Compose
+  - Mount to storage services with Kubernetes
+
++++
+
+#### Dockerizing Merritt
+- Great way to learn the system and the dependencies
+- Create a Dockerfile for each Microservice
+  - Base image is either Tomcat or Ruby
+- Create a Dockerfile for other Merritt components
+  - Database
+  - Zookeeper
+- Assemble components with docker-compose
+
++++
+
+#### Presentation Notes
+- This presentation dives into each configuration file and explains its purpose
+- Contact Terry if you would like a detailed overview of those details
+- The Dryad configuration is a work in progress
+  - That configuration has not yet been added to this presentation
+
+---  
+
+#### Dependencies for running Merritt containers
 
 - Docker and Docker Compose install |
 - Access to the CDL maven repo for a couple of pre-built jars |
   - TODO: build these from source in the Dockerfile
 - CDL LDAP access |
 - A local maven repo build of mrt-conf jar files |
-- Access to storage services |
 - Access to config properties |
   - Locally stored in **/mrt-services/no-track**
 
@@ -19,8 +115,12 @@ https://github.com/cdluc3/merritt-docker
 
 #### Git Submodules
 
-- Dependencies
-- Microservice code
+- Code: https://github.com/cdluc3/merritt-docker
+- merritt-dependencies
+  - Base docker image (based on Maven) used to build other microservices
+- merritt-services
+  - Merritt Microservice code
+  - Dryad services can be optionally added
 
 +++
 #### Build dependency submodules @gitlink[.gitmodules](.gitmodules)
@@ -877,6 +977,13 @@ RUN apt-get update && apt-get install -y curl
 
 ---
 
+#### Dryad Service Configuration
+
+- @gitlink[mrt-services/dryad.yml](mrt-services/dryad.yml)
+- This work is in progress
+
+---
+
 #### Docker Commands
 
 +++
@@ -965,17 +1072,17 @@ docker-compose -p merritt down
 ```
 
 +++
-#### Service Start Using Staging Database
+#### Service Start Including Dryad
 
 ```bash
-docker-compose -f docker-compose.yml -f staging-db.yml -p merritt up
+docker-compose -f docker-compose.yml -f dyad.yml -p merritt up
 ```
 
 +++
-#### Service Stop Using Staging Database
+#### Service Stop (Including Dryad)
 
 ```bash
-docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
+docker-compose -f docker-compose.yml -f dryad.yml -p merritt down
 ```
 
 +++
@@ -1018,7 +1125,7 @@ Inventory | http://localhost:8082/inventory/state
 
 #### UI URL's
 
-- http://localhost:8089/m/ARG
+- http://localhost:8089/m/ARK
   - Replace ARK - urlencode the value
   - Stream Object download through the UI
 

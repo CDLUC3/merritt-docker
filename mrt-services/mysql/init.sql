@@ -308,12 +308,14 @@ CREATE TABLE `sha_dublinkernels` (
   FULLTEXT KEY `value` (`value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
-CREATE USER user@'%';
+#CREATE USER user@'%';
 GRANT ALL ON *.* to 'user'@'%';
 
 ALTER USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
 
 flush privileges;
+
+# Configure content
 
 insert into inv_collections(ark,name,mnemonic,harvest_privilege)
 select 'ark:/13030/m5rn35s8','demo','demo','public'

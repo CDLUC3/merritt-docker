@@ -34,3 +34,12 @@
 [submodule "mrt-services/sword/mrt-sword"]
 	path = mrt-services/sword/mrt-sword
 	url = https://github.com/cdluc3/mrt-sword
+[submodule "mrt-services/dryad/dryad-app"]
+	path = mrt-services/dryad/dryad-app
+	url = https://github.com/CDL-Dryad/dryad-app
+[submodule "mrt-services/audit/mrt-audit"]
+	path = mrt-services/audit/mrt-audit
+	url = https://github.com/cdluc3/mrt-audit
+[submodule "mrt-services/replic/mrt-replic"]
+	path = mrt-services/replic/mrt-replic
+	url = https://github.com/cdluc3/mrt-replic

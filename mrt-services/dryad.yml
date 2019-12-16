@@ -30,3 +30,62 @@ services:
       target: 8080
     stdin_open: true
     tty: true
+    volumes:
+    - type: bind
+      source: ./no-track/sword-info.txt
+      target: /apps/replic/tst/sword/mrtHomes/sword/sword-info.txt
+  dryad:
+    container_name: dryad
+    image: cdluc3/dryad
+    build:
+      context: dryad
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    volumes:
+    - type: bind
+      source: ./no-track/dryad/app_config.yml
+      target: /var/www/app_name/config/app_config.yml
+    - type: bind
+      source: ./no-track/dryad/tenants/dryad.yml
+      target: /var/www/app_name/config/tenants/dryad.yml
+    ports:
+    - published: 3000
+      target: 3000
+    stdin_open: true
+    tty: true
+    entrypoint:
+      - /bin/bash
+      - '-c'
+      - |
+          bundle exec rake db:migrate
+          bundle exec passenger start
+  dryad-db:
+    container_name: dryad-db
+    image: mysql:5.7
+    networks:
+      merrittnet:
+    restart: always
+    entrypoint: ['docker-entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
+    environment:
+      MYSQL_DATABASE: 'dryad'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root-password'
+    ports:
+    - published: 3307
+      target: 3306
+    security_opt:
+      - seccomp:unconfined
+  solr:
+    container_name: solr
+    image: cdluc3/dryad-solr
+    build:
+      context: dryad-solr
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    restart: always
+    ports:
+    - published: 8983
+      target: 8983

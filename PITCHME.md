@@ -6,12 +6,12 @@ https://github.com/cdluc3/merritt-docker
 
 #### Why Run Merritt in Docker?
 
-- Create a development environment on-demand
+- Create a development environment on-demand |
   - Completely disposable, no servers provisioned
   - Docker is portable: MacOS, Windows, Linux
-- Can containerize all dependencies including databases, SOLR, Zookeeper
+- Can containerize all dependencies including databases, SOLR, Zookeeper |
   - Run isolated from CDL network
-- Create an automated test environment on-demand
+- Create an automated test environment on-demand |
   - Dispose and re-create as often as needed
 
 +++
@@ -24,36 +24,38 @@ https://github.com/cdluc3/merritt-docker
 +++
 
 #### A Docker Image
-- Configured in a Dockerfile
+- Configured in a Dockerfile |
   - Configuration as code
-- Built from a base image
+- Built from a base image |
   - Examples: tomcat, apache, ruby, mysql
-- Rebuilt when any configuration change is made
-- Contains the minimal set of dependencies to perform a service
-- Deployed as a Docker Container
+- Rebuilt when any configuration change is made |
+- Contains the minimal set of dependencies to perform a service |
+- Deployed as a Docker Container |
 
 +++
 
 #### A Docker Container
-- A running instance of a Docker image
-- Runs with a docker network
+- A running instance of a Docker image |
+- Runs with a docker network |
   - Can talk to other containers in that network
-- Performs a specific service
+- Performs a specific service |
   - Ports and storage can be bound to the host environment
-- Destroyed and recreated from the image as needed
+- Destroyed and recreated from the image as needed |
   - Maintain the image, not the container
 
 +++
 
 #### Container Orchestration
-- Connect multiple docker containers to create a system
-  - Example: database container + web server container
-- Define container dependencies
-- Orchestration Options
-  - Docker Desktop
+- Connect multiple docker containers to create a system |
+  - Example: database container + web server container |
+- Define container dependencies |
+
++++
+#### Orchestration Options
+  - Docker Compose |
     - Windows, MacOS, Linux
-  - Docker Swarm (deprecated)
-  - Kubernetes
+  - Docker Swarm (deprecated) |
+  - Kubernetes |
     - Generally offered by a Cloud Provider
     - Some Desktop Tools
 
@@ -65,6 +67,10 @@ https://github.com/cdluc3/merritt-docker
   - `docker stop` stops a running container
   - `docker rm` destroys a stopped container
 - `docker exec` runs a command inside a running container
+
++++
+
+#### Docker Compose Commands
 - `docker-compose up` performs `docker run` on a collection of interdependent containers
 - `docker-compose down` performs `docker stop` and `docker rm` on a collection of interdependent containers
 
@@ -72,31 +78,33 @@ https://github.com/cdluc3/merritt-docker
 
 #### Docker Storage Options
 
-- Ephemeral - storage is destroyed when containers are destroyed
+- Ephemeral - storage is destroyed when containers are destroyed |
   - This is the default option
-- Docker Volumes
+- Docker Volumes |
   - Create and dispose interdependent storage volumes with docker commands
-- Bind Docker Volumes to "Real" Storage
+- Bind Docker Volumes to "Real" Storage |
   - Mount to local disk with Docker Compose
   - Mount to storage services with Kubernetes
 
 +++
 
 #### Dockerizing Merritt
-- Great way to learn the system and the dependencies
-- Create a Dockerfile for each Microservice
+- Great way to learn the system and the dependencies |
+- Create a Dockerfile for each Microservice |
   - Base image is either Tomcat or Ruby
-- Create a Dockerfile for other Merritt components
+- Create a Dockerfile for other Merritt components |
   - Database
   - Zookeeper
-- Assemble components with docker-compose
+- Assemble components with docker-compose |
 
 +++
 
 #### Presentation Notes
-- This presentation dives into each configuration file and explains its purpose
-- Contact Terry if you would like a detailed overview of those details
-- The Dryad configuration is a work in progress
+- This presentation dives into each configuration file and explains its purpose |
+- Contact Terry |
+  - if you would like a detailed overview of those details
+  - would like to run this yourself
+- The Dryad configuration is a work in progress |
   - That configuration has not yet been added to this presentation
 
 ---  

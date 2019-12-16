@@ -45,6 +45,14 @@ https://github.com/cdluc3/merritt-docker
 
 +++
 
+#### Docker Image Management
+- Images can be published to a Container Registry |
+- DockerHub is the common location for open source images |
+- AWS offers Elastic Container Registry |
+  - This will likely be a good choice for Merritt
+
++++
+
 #### Container Orchestration
 - Connect multiple docker containers to create a system |
   - Example: database container + web server container |
@@ -62,17 +70,25 @@ https://github.com/cdluc3/merritt-docker
 +++
 
 #### Basic commands
-- `docker build` creates an image from a dockerfile
-- `docker run` creates a container from an image and starts the container
+- `docker build` creates an image from a dockerfile |
+- `docker run` creates a container from an image and starts the container |
   - `docker stop` stops a running container
   - `docker rm` destroys a stopped container
-- `docker exec` runs a command inside a running container
+- `docker exec` runs a command inside a running container |
+
++++
+
+#### Container Registry commands
+- `docker login` authenticates to a container registry |
+- `docker pull` pulls an image from a registry |
+- `docker push` pushes an image from a registry |
 
 +++
 
 #### Docker Compose Commands
-- `docker-compose up` performs `docker run` on a collection of interdependent containers
-- `docker-compose down` performs `docker stop` and `docker rm` on a collection of interdependent containers
+- `docker-compose build` performs `docker build` on a collection of interdependent containers |
+- `docker-compose up` performs `docker run` on a collection of interdependent containers |
+- `docker-compose down` performs `docker stop` and `docker rm` on a collection of interdependent containers |
 
 +++
 
@@ -123,10 +139,10 @@ https://github.com/cdluc3/merritt-docker
 
 #### Git Submodules
 
-- Code: https://github.com/cdluc3/merritt-docker
-- merritt-dependencies
+- Code: https://github.com/cdluc3/merritt-docker  |
+- merritt-dependencies |
   - Base docker image (based on Maven) used to build other microservices
-- merritt-services
+- merritt-services |
   - Merritt Microservice code
   - Dryad services can be optionally added
 
@@ -1166,9 +1182,7 @@ Inventory | http://localhost:8082/inventory/state
 
 #### Containerization Next Steps
 
-- Create "disposable" Merritt Storage Node that uses Docker volumes |
 - Containerize test LDAP service |
-- Containerize Merritt mail service |
 - Eliminate dependency on CDL maven store for dependency image |
 - For pure development testing, eliminate the need for localized config properties |
 

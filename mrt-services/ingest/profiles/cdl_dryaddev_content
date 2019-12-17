@@ -26,8 +26,8 @@ Handler.9: org.cdlib.mrt.ingest.handlers.HandlerDescribe
 Handler.10: org.cdlib.mrt.ingest.handlers.HandlerDocument
 Handler.11: org.cdlib.mrt.ingest.handlers.HandlerDigest
 Handler.12: org.cdlib.mrt.ingest.handlers.HandlerTransfer
-Handler.13: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
-Handler.14: org.cdlib.mrt.ingest.handlers.HandlerNotification
+Handler.13: org.cdlib.mrt.ingest.handlers.HandlerNotification
+Handler.14: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
 Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCleanup
 # --- handler queue submission processing
 HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate

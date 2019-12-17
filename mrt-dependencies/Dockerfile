@@ -38,3 +38,18 @@ RUN cd mrt-cloud && mvn install -DskipTests && mvn clean
 
 # OAI and Sword depend on inventory
 RUN cd mrt-inventory && mvn install && mvn clean
+
+ADD http://mvn.cdlib.org/content/groups/public/com/lyncode/xoai-data-provider/4.1.1-SNAPSHOT/xoai-data-provider-4.1.1-SNAPSHOT.jar /tmp
+ADD http://mvn.cdlib.org/content/groups/public/com/lyncode/xoai-common/4.1.1-SNAPSHOT/xoai-common-4.1.1-SNAPSHOT.jar /tmp
+ADD http://mvn.cdlib.org/content/groups/public/com/lyncode/xoai-data-provider/4.1.1-SNAPSHOT/xoai-data-provider-4.1.1-SNAPSHOT.pom /tmp
+ADD http://mvn.cdlib.org/content/groups/public/com/lyncode/xoai-common/4.1.1-SNAPSHOT/xoai-common-4.1.1-SNAPSHOT.pom /tmp
+ADD http://mvn.cdlib.org/content/groups/public/com/lyncode/xoai/4.1.1-SNAPSHOT/xoai-4.1.1-SNAPSHOT.pom /tmp
+
+RUN mvn install:install-file -Dfile=/tmp/xoai-data-provider-4.1.1-SNAPSHOT.jar -DgroupId=com.lyncode \
+       -DartifactId=xoai-data-provider -Dversion=4.1.1-SNAPSHOT -Dpackaging=jar \
+       -DpomFile=/tmp/xoai-data-provider-4.1.1-SNAPSHOT.pom && \
+    mvn install:install-file -Dfile=/tmp/xoai-common-4.1.1-SNAPSHOT.jar -DgroupId=com.lyncode \
+       -DartifactId=xoai-common -Dversion=4.1.1-SNAPSHOT -Dpackaging=jar \
+       -DpomFile=/tmp/xoai-common-4.1.1-SNAPSHOT.pom
+    mvn install:install-file -Dfile=/tmp/xoai-4.1.1-SNAPSHOT.pom -DgroupId=com.lyncode \
+       -DartifactId=xoai -Dversion=4.1.1-SNAPSHOT -Dpackaging=pom

@@ -1,0 +1,29 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.7'
+services:
+  store:
+    volumes:
+    - type: volume
+      source: my-pairtree
+      target: /opt/storage/
+    - type: volume
+      source: my-cloudcontainer
+      target: /usr/local/tomcat/webapps/cloudcontainer/store
+  db-container:
+    volumes:
+      - my-db:/var/lib/mysql
+  dryad-db:
+    volumes:
+      - dryad-db:/var/lib/mysql
+  dryad-solr:
+    volumes:
+      - dryad-solr:/var/solr/data/geoblacklight/data
+volumes:
+  my-db:
+  my-pairtree:
+  my-cloudcontainer:
+  dryad-db:
+  dryad-solr:

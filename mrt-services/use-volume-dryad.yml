@@ -18,7 +18,7 @@ services:
   dryad-db:
     volumes:
       - dryad-db:/var/lib/mysql
-  dryad-solr:
+  solr:
     volumes:
       - dryad-solr:/var/solr/data/geoblacklight/data
 volumes:

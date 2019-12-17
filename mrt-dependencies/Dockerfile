@@ -50,6 +50,6 @@ RUN mvn install:install-file -Dfile=/tmp/xoai-data-provider-4.1.1-SNAPSHOT.jar -
        -DpomFile=/tmp/xoai-data-provider-4.1.1-SNAPSHOT.pom && \
     mvn install:install-file -Dfile=/tmp/xoai-common-4.1.1-SNAPSHOT.jar -DgroupId=com.lyncode \
        -DartifactId=xoai-common -Dversion=4.1.1-SNAPSHOT -Dpackaging=jar \
-       -DpomFile=/tmp/xoai-common-4.1.1-SNAPSHOT.pom
+       -DpomFile=/tmp/xoai-common-4.1.1-SNAPSHOT.pom && \
     mvn install:install-file -Dfile=/tmp/xoai-4.1.1-SNAPSHOT.pom -DgroupId=com.lyncode \
        -DartifactId=xoai -Dversion=4.1.1-SNAPSHOT -Dpackaging=pom

@@ -33,9 +33,5 @@ RUN bundle install --jobs 20 --retry 5 && \
     cd stash/stash-notifier && \
     bundle install
 
-RUN apt-get -y install cron && \
-    echo "* * * * * cd /var/www/app_name/stash/stash-notifier;bundle exec main.rb" > /tmp/cron && \
-    crontab /tmp/cron
-
 EXPOSE 3000 9292
 CMD ["bundle", "exec", "passenger", "start"]

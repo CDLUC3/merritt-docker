@@ -10,8 +10,8 @@ https://github.com/cdluc3/merritt-docker
   - Completely disposable, no servers provisioned
   - Docker is portable: MacOS, Windows, Linux
 - Can containerize all dependencies including databases, SOLR, Zookeeper |
-  - Run isolated from CDL network
-- Create an automated test environment on-demand |
+  - Run isolated from CDL network (Goal)
+- Create an automated test environment on-demand (Goal) |
   - Dispose and re-create as often as needed
 
 +++
@@ -36,7 +36,7 @@ https://github.com/cdluc3/merritt-docker
 
 #### A Docker Container
 - A running instance of a Docker image |
-- Runs with a docker network |
+- Runs within a docker network |
   - Can talk to other containers in that network
 - Performs a specific service |
   - Ports and storage can be bound to the host environment
@@ -70,25 +70,32 @@ https://github.com/cdluc3/merritt-docker
 +++
 
 #### Basic commands
+
+@ul
 - `docker build` creates an image from a dockerfile |
 - `docker run` creates a container from an image and starts the container |
   - `docker stop` stops a running container
   - `docker rm` destroys a stopped container
 - `docker exec` runs a command inside a running container |
+@ulend
 
 +++
 
 #### Container Registry commands
+@ul
 - `docker login` authenticates to a container registry |
 - `docker pull` pulls an image from a registry |
 - `docker push` pushes an image from a registry |
+@ulend
 
 +++
 
 #### Docker Compose Commands
+@ul
 - `docker-compose build` performs `docker build` on a collection of interdependent containers |
 - `docker-compose up` performs `docker run` on a collection of interdependent containers |
 - `docker-compose down` performs `docker stop` and `docker rm` on a collection of interdependent containers |
+@ulend
 
 +++
 

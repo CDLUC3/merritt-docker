@@ -72,29 +72,29 @@ https://github.com/cdluc3/merritt-docker
 #### Basic commands
 
 @ul
-- `docker build` creates an image from a dockerfile |
-- `docker run` creates a container from an image and starts the container |
+- `docker build` creates an image from a dockerfile
+- `docker run` creates a container from an image and starts the container
   - `docker stop` stops a running container
   - `docker rm` destroys a stopped container
-- `docker exec` runs a command inside a running container |
+- `docker exec` runs a command inside a running container
 @ulend
 
 +++
 
 #### Container Registry commands
 @ul
-- `docker login` authenticates to a container registry |
-- `docker pull` pulls an image from a registry |
-- `docker push` pushes an image from a registry |
+- `docker login` authenticates to a container registry
+- `docker pull` pulls an image from a registry
+- `docker push` pushes an image from a registry
 @ulend
 
 +++
 
 #### Docker Compose Commands
 @ul
-- `docker-compose build` performs `docker build` on a collection of interdependent containers |
-- `docker-compose up` performs `docker run` on a collection of interdependent containers |
-- `docker-compose down` performs `docker stop` and `docker rm` on a collection of interdependent containers |
+- `docker-compose build` performs `docker build` on a collection of interdependent containers
+- `docker-compose up` performs `docker run` on a collection of interdependent containers
+- `docker-compose down` performs `docker stop` and `docker rm` on a collection of interdependent containers
 @ulend
 
 +++
@@ -1106,7 +1106,7 @@ docker-compose -p merritt down
 #### Service Start Including Dryad
 
 ```bash
-docker-compose -f docker-compose.yml -f dyad.yml -p merritt up
+docker-compose -f docker-compose.yml -f dyrad.yml -p merritt up
 ```
 
 +++

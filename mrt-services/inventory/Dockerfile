@@ -29,4 +29,8 @@ COPY inv-info.txt /apps/replic/tst/inv/
 
 ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64"
 
+# https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 EXPOSE 8080 8009

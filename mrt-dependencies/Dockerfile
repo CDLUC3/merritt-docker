@@ -53,3 +53,7 @@ RUN mvn install:install-file -Dfile=/tmp/xoai-data-provider-4.1.1-SNAPSHOT.jar -
        -DpomFile=/tmp/xoai-common-4.1.1-SNAPSHOT.pom && \
     mvn install:install-file -Dfile=/tmp/xoai-4.1.1-SNAPSHOT.pom -DgroupId=com.lyncode \
        -DartifactId=xoai -Dversion=4.1.1-SNAPSHOT -Dpackaging=pom
+
+# https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone

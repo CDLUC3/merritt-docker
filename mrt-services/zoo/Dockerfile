@@ -24,4 +24,8 @@ RUN chmod 555 zkServer/tools/*.sh
 ENV ZK=zookeeper-3.4.14
 ENV PATH=$PATH:/${ZK}/zkServer/tools
 
+# https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 EXPOSE 2181

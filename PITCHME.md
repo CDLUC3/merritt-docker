@@ -50,6 +50,7 @@ https://github.com/cdluc3/merritt-docker
 - DockerHub is the common location for open source images |
 - AWS offers Elastic Container Registry |
   - This will likely be a good choice for Merritt
+  - [docker login with AWS credentials](https://aws.amazon.com/blogs/compute/authenticating-amazon-ecr-repositories-for-docker-cli-with-credential-helper/)
 
 +++
 
@@ -127,8 +128,6 @@ https://github.com/cdluc3/merritt-docker
 - Contact Terry |
   - if you would like a detailed overview of those details
   - would like to run this yourself
-- The Dryad configuration is a work in progress |
-  - That configuration has not yet been added to this presentation
 
 ---  
 
@@ -350,7 +349,7 @@ RUN cd mrt-cloud && mvn install -DskipTests && mvn clean
 +++
 #### List Jar Files in mrt-dependencies
 
-- The mrt-dependencies image is not intended to be run, it will is the base image for other services.  
+- The mrt-dependencies image is not intended to be run, it will be the base image for other services.  
 - The following command will display the jar files built into the image.
 
 ```bash
@@ -584,38 +583,125 @@ merritt-init:
 @[18](POST to inventory service to start processing)
 @[20](Sleep for a long time)
 
-+++
+---
 
-### Alternate docker-compose file to use the staging database
+### Additional docker-compose file to start Dryad Services
 
-- @gitlink[mrt-services/staging-db.yml](mrt-services/staging-db.yml)
-
-+++
-
-```yml
-version: '3.7'
-networks:
-  merrittnet:
-services:
-  inventory:
-    volumes:
-    - type: bind
-      source: ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confmysql/test-1.0-SNAPSHOT/mrt-confmysql-test-1.0-SNAPSHOT.jar
-      target: /usr/local/tomcat/webapps/inventory/WEB-INF/lib/mrt-confmysql-test-1.0-SNAPSHOT.jar
-  ui:
-    volumes:
-    - ./no-track/database-stg.yml:/var/www/app_name/config/database.yml
-```
-
-@[12](Override compose file to use the staging DB)
+- @gitlink[mrt-services/dryad.yml](mrt-services/dryad.yml)
 
 +++
 
 ### Run Alterntate docker-compose file
 
 ```bash
-docker-compose -f docker-compose.yml -f staging-db.yml -p merritt up
+docker-compose -f docker-compose.yml -f dryad.yml -p merritt up
 ```
+
++++
+
+#### OAI Service
+```yaml
+oai:
+  container_name: oai
+  image: cdluc3/mrt-oai
+  build:
+    context: oai
+    dockerfile: Dockerfile
+  networks:
+    merrittnet:
+  ports:
+  - published: 8083
+    target: 8080
+  stdin_open: true
+  tty: true
+```
+
++++
+
+#### Sword Service
+```yaml
+sword:
+  container_name: sword
+  image: cdluc3/mrt-sword
+  build:
+    context: sword
+    dockerfile: Dockerfile
+  networks:
+    merrittnet:
+  ports:
+  - published: 8084
+    target: 8080
+  stdin_open: true
+  tty: true
+  volumes:
+  - type: bind
+    source: ./no-track/sword-info.txt
+    target: /apps/replic/tst/sword/mrtHomes/sword/sword-info.txt
+```
+
++++
+
+#### Dryad UI Service
+```yaml
+dryad:
+  container_name: dryad
+  image: cdluc3/dryad
+  build:
+    context: dryad
+    dockerfile: Dockerfile
+  networks:
+    merrittnet:
+  volumes:
+  - type: bind
+    source: ./no-track/dryad/app_config.yml
+    target: /var/www/app_name/config/app_config.yml
+  - type: bind
+    source: ./no-track/dryad/tenants/dryad.yml
+    target: /var/www/app_name/config/tenants/dryad.yml
+  ports:
+  - published: 3000
+    target: 3000
+```
+
++++
+
+#### Dryad MySQL Service
+```yaml
+dryad-db:
+  container_name: dryad-db
+  image: mysql:5.7
+  networks:
+    merrittnet:
+  restart: always
+  entrypoint: ['docker-entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
+  environment:
+    MYSQL_DATABASE: 'dryad'
+    MYSQL_USER: 'user'
+    MYSQL_PASSWORD: 'password'
+    MYSQL_ROOT_PASSWORD: 'root-password'
+  ports:
+  - published: 3307
+    target: 3306
+```
+
++++
+
+#### Dryad SOLR Service
+```yaml
+solr:
+  container_name: solr
+  image: cdluc3/dryad-solr
+  build:
+    context: dryad-solr
+    dockerfile: Dockerfile
+  networks:
+    merrittnet:
+  restart: always
+  ports:
+  - published: 8983
+    target: 8983
+```
+
 
 ---
 #### Ingest Service
@@ -1154,36 +1240,14 @@ Inventory | http://localhost:8082/inventory/state
 
 +++
 
-#### UI URL's
+#### Dryad URL's
 
-- http://localhost:8089/m/ARK
-  - Replace ARK - urlencode the value
-  - Stream Object download through the UI
-
-+++
-
-#### Ingest URL's
-
-- A web server serves up the contents of the ingest queue
-- http://localhost:8080/ingestqueue/BID/JID/system/mrt-manifest.txt
-  - Replace BID
-  - Replace JID
-
-+++
-
-#### Storage URL's
-
-- http://localhost:8081/store/state/NODE
-  - Replace NODE
-- http://localhost:8081/store/state/NODE/ARK
-  - Replace NODE, ARK - urlencode the value
-  - Object status
-- http://localhost:8081/store/content/NODE/ARK
-  - Download object
-- http://localhost:8081/cloudcontainer/store/TAR.tar.gz
-  - Replace TAR - random value
-  - Async Large object download
-
+Service | URL
+------- | ---
+Dryad UI | http://localhost:3000
+OAI | http://localhost:8083/oai/oai/v2?verb=Identify
+Sword | http://localhost:8084/sword/collection/cdl_dryaddev
+SOLR | http://localhost:8983
 
 ---
 

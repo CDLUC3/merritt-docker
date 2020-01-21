@@ -24,16 +24,23 @@ The following dependencies are needed to build and run this repo.  The goal is t
 
 ## Component Overview
 
-| Component | Image Name | Where the component runs | Notes |
-| --------- | ---------- | ------------------------ | ----- |
+| Component   | Image Name | Where the component runs | Notes |
+| ----------- | ---------- | ------------------------ | ----- |
 | Java dependencies | cdluc3/mrt-dependencies | Docker | Base image for other microservices. All service properties are currently mocked in the jar file. |
-| Zookeeper | zookeeper | Docker | |
-| MySQL     | cdluc3/mrt-database | Docker or Server Instance | |
-| LDAP      | N/A | Server Instance | |
-| UI        | cdluc3/mrt-dashboard | Docker | Database and LDAP connection info is passed in via an untracked file |
-| Ingest    | cdluc3/mrt-ingest | Docker | |
-| Storage    | cdluc3/mrt-storage | Docker | |
-| Inventory    | cdluc3/mrt-inventory | Docker | |
+| Zookeeper   | zookeeper | Docker | |
+| MySQL       | cdluc3/mrt-database | Docker | |
+| LDAP        | N/A | Server Instance | |
+| UI          | cdluc3/mrt-dashboard | Docker | LDAP connection info is passed in via an untracked file |
+| Ingest      | cdluc3/mrt-ingest | Docker | |
+| Storage     | cdluc3/mrt-storage | Docker | |
+| Inventory   | cdluc3/mrt-inventory | Docker | |
+| OAI         | cdluc3/mrt-oai | Docker | Runs with Dryad |
+| Sword       | cdluc3/mrt-sword | Docker | Runs with Dryad |
+| Dryad UI    | cdluc3/mrt-dryad | Docker | |
+| Dryad MySQL | mysql:5.7 | Docker | Populated with Rails Migration Script |
+| Dryad SOLR  | cdluc3/dryad-solr | Docker | |
+| Audit       | | | Not yet containerized |
+| Replic      | | | Not yet containerized |
 
 ## Docker Image Publishing
 Details about docker image publishing are TBD.

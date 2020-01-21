@@ -69,17 +69,6 @@ cd mrt-services
 docker-compose build
 ```
 
-## Service Configuration Options
-| Config Name | LDAP | DB | Storage Node | Note |
-| ------------- | ------ | -- | --------------- | ---- |
-|Docker DB - Staging Storage | Staging | Docker | Staging - single node recommended by David | In Progress |
-|Staging DB & Storage | Staging | Staging | Staging - single node recommended by David | In Progress |
-|Docker DB - Isolated Storage | Staging | Docker | Isolated storage node that is distinct from Staging | TBD |
-|Isolation| Docker | Docker | Isolated storage node that is distinct from Staging | TBD, create standalone or mock LDAP |
-
-
-## Docker DB - Staging Storage
-
 ### Service Start
 
 ```bash

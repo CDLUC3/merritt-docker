@@ -3,7 +3,6 @@
 #   All rights reserved
 #*********************************************************************
 test:
-  # admin_password: ahz6ap2I
   admin_password: ----
   admin_user:     cn=Directory Manager
   group_base:     ou=mrt-classes,ou=uc3,dc=cdlib,dc=org

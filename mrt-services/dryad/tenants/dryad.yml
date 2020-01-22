@@ -9,7 +9,7 @@ default: &default
   repository:
     username: "submitter.username"
     password: "submitter.password"
-    domain: sword:8080
+    domain: localhost:8089
     endpoint: "http://sword:8080/sword/collection/cdl_dryaddev"
   abbreviation: "dryad"
   short_name: "Dryad"

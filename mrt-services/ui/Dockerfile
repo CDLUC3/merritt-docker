@@ -39,4 +39,4 @@ EXPOSE 3000 9292
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-CMD ["bundle", "exec", "puma", "-C", "config/application.rb"]
+CMD ["bundle", "exec", "puma", "-C", "--debug", "config/application.rb"]

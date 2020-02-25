@@ -9,34 +9,32 @@ defaults: &defaults
   max_download_size:    322122547200  # 322122547200 bytes = 300 GiB
   dua_email_from:       no-reply-merritt@ucop.edu
   mrt_dua_file:         producer/mrt-dua.txt
+  get_storage_key_file: "/api/get-storage-key-file"
+  proto_force:          ""
 
-development: &development
+docker: &docker
   <<: *defaults
-  max_archive_size:     536870912  # 536870912 bytes = 512 MiB
-  max_download_size:    5368709120  # 5368709120 bytes = 5 GiB
+  max_archive_size:  200000  # 9999 bytes ~= 99 KiB
+  max_download_size: 3000000  # 1048576 bytes = 1 MiB
   dua_email_to:         [no-email@ucop.edu]
   lostorage_email_to:   [no-email@ucop.edu]
   lostorage_email_from: no-email@ucop.edu
-  merritt_server:       "http://merritt-dev.cdlib.org"
-  container_url:        "http://merritt-dev.cdlib.org/cloudcontainer/"
+  merritt_server:       "http://localhost:8089"
+  container_url:        "http://localhost:8081/cloudcontainer/"
   n2t_uri:              "http://n2t-wf.cdlib.org/"
+  # Note that the following service is no longer available
   mint_service:         "http://merritt-dev.cdlib.org:33121/request-identifier"
-  ingest_service:       "http://merritt-dev.cdlib.org:33121/poster/submit/"
-  ingest_service_update: "http://merritt-dev.cdlib.org:33121/poster/update/"
-  uri_1:                "http://store-aws-dev.cdlib.org:35121/content/"
-  uri_2:                "http://store-aws-dev.cdlib.org:35121/producer/"
-  uri_3:                "http://store-aws-dev.cdlib.org:35121/manifest/"
+  ingest_service:       "http://ingest:8080/ingest/poster/submit/"
+  ingest_service_update: "http://ingest:8080/ingest/poster/update/"
+  uri_1: "http://store:8080/store/content/"
+  uri_2: "http://store:8080/store/producer/"
+  uri_3: "http://store:8080/store/manifest/"
+  storage_presign_file: "http://storage:8080/presign-file"
 
 test:
   <<: *development
-  max_archive_size:  200000  # 9999 bytes ~= 99 KiB
-  max_download_size: 3000000  # 1048576 bytes = 1 MiB
-  uri_1: "http://store:8080/store/content/"
-  uri_2: "http://store:8080/store/producer/"
-  ingest_service:       "http://ingest:8080/ingest/poster/submit/"
-  ingest_service_update: "http://ingest:8080/ingest/poster/update/"
-  #large object download url
-  container_url:        "http://localhost:8081/cloudcontainer/"
+  max_archive_size:     536870912  # 536870912 bytes = 512 MiB
+  max_download_size:    5368709120  # 5368709120 bytes = 5 GiB
 local:
   <<: *development
 

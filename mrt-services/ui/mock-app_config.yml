@@ -31,6 +31,9 @@ docker: &docker
   uri_3: "http://store:8080/store/manifest/"
   storage_presign_file: "http://storage:8080/presign-file"
 
+development:
+  <<: *docker
+
 test:
   <<: *development
   max_archive_size:     536870912  # 536870912 bytes = 512 MiB

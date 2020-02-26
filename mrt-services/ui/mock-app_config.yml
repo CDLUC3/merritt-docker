@@ -29,7 +29,7 @@ docker: &docker
   uri_1: "http://store:8080/store/content/"
   uri_2: "http://store:8080/store/producer/"
   uri_3: "http://store:8080/store/manifest/"
-  storage_presign_file: "http://store:8080/presign-file"
+  storage_presign_file: "http://store:8080/store/presign-file"
 
 development: &development
   <<: *docker

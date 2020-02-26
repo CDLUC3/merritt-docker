@@ -31,7 +31,7 @@ docker: &docker
   uri_3: "http://store:8080/store/manifest/"
   storage_presign_file: "http://storage:8080/presign-file"
 
-development:
+development: &development
   <<: *docker
 
 test:

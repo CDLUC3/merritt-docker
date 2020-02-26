@@ -9,7 +9,7 @@ defaults: &defaults
   max_download_size:    322122547200  # 322122547200 bytes = 300 GiB
   dua_email_from:       no-reply-merritt@ucop.edu
   mrt_dua_file:         producer/mrt-dua.txt
-  get_storage_key_file: "/api/get-storage-key-file"
+  get_storage_key_file: "http:/api/get-storage-key-file"
   proto_force:          ""
 
 docker: &docker

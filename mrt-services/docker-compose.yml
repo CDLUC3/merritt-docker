@@ -128,6 +128,17 @@ services:
     image: namshi/smtp
     networks:
       merrittnet:
+  apache:
+    container_name: apache
+    image: cdluc3/mrt-apache
+    build:
+      context: apache
+      dockerfile: Dockerfile
+    ports:
+    - published: 8086
+      target: 80
+    networks:
+      merrittnet:
   merritt-init:
     container_name: merritt-init
     image: cdluc3/mrt-init
@@ -155,5 +166,5 @@ services:
           do
             echo "*** Pause 60 seconds then run dryad notifier"
             sleep 60
-            docker exec -w /var/www/app_name/stash/stash-notifier dryad bundle exec main.rb 
+            docker exec -w /var/www/app_name/stash/stash-notifier dryad bundle exec main.rb
           done

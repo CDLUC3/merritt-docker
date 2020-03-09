@@ -16,8 +16,8 @@ RUN mkdir -p $RAILS_ROOT
 WORKDIR $RAILS_ROOT
 
 # Setting env up
-ENV RAILS_ENV='test'
-ENV RACK_ENV='test'
+ENV RAILS_ENV='development'
+ENV RACK_ENV='development'
 
 # Adding gems
 COPY mrt-dashboard/Gemfile Gemfile

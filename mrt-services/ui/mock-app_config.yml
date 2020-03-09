@@ -20,7 +20,10 @@ docker: &docker
   lostorage_email_to:   [no-email@ucop.edu]
   lostorage_email_from: no-email@ucop.edu
   merritt_server:       "http://localhost:8089"
-  container_url:        "http://localhost:8081/cloudcontainer/"
+  # In stage/prod, this url points to an Apache rule in the UI load balancer
+  # that redirects to storge.
+  # In Docker, point to an apache container
+  container_url:        "http://localhost:8086/cloudcontainer/"
   n2t_uri:              "http://n2t-wf.cdlib.org/"
   # Note that the following service is no longer available
   mint_service:         "http://merritt-dev.cdlib.org:33121/request-identifier"

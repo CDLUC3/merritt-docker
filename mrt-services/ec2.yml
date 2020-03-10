@@ -17,3 +17,8 @@ services:
     - type: bind
       source: ./no-track/app-config-ec2.yml
       target: /var/www/app_name/config/app_config.yml
+  apache:
+    volumes:
+    - type: bind
+      source: ./no-track/mrt-ec2.conf
+      target: /usr/local/apache2/conf/conf.d/mrt.conf

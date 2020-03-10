@@ -25,7 +25,7 @@ RUN mkdir -p /dpr2store/mrtHomes/store \
     /opt/storage/ && \
     touch /opt/storage/test.txt
 
-RUN mkdir /usr/local/tomcat/webapps/cloudcontainer/store
+RUN mkdir -p /usr/local/tomcat/webapps/cloudcontainer/store
 
 COPY store-info.txt /dpr2store/mrtHomes/store
 

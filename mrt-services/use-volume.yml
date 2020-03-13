@@ -12,6 +12,10 @@ services:
   db-container:
     volumes:
       - my-db:/var/lib/mysql
+  minio:
+    volumes:
+      - my-minio:/data
 volumes:
   my-db:
   my-pairtree:
+  my-minio:

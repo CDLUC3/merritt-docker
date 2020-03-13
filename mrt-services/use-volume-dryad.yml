@@ -12,6 +12,9 @@ services:
   db-container:
     volumes:
       - my-db:/var/lib/mysql
+  minio:
+    volumes:
+      - my-minio:/data
   dryad-db:
     volumes:
       - dryad-db:/var/lib/mysql
@@ -21,5 +24,6 @@ services:
 volumes:
   my-db:
   my-pairtree:
+  my-minio:
   dryad-db:
   dryad-solr:

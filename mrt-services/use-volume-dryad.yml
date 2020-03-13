@@ -9,9 +9,6 @@ services:
     - type: volume
       source: my-pairtree
       target: /opt/storage/
-    - type: volume
-      source: my-cloudcontainer
-      target: /usr/local/tomcat/webapps/cloudcontainer/store
   db-container:
     volumes:
       - my-db:/var/lib/mysql
@@ -24,6 +21,5 @@ services:
 volumes:
   my-db:
   my-pairtree:
-  my-cloudcontainer:
   dryad-db:
   dryad-solr:

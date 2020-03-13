@@ -112,7 +112,6 @@ services:
     networks:
       merrittnet:
     restart: always
-    entrypoint: ['docker-entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
     environment:
       MYSQL_DATABASE: 'db-name'
       MYSQL_USER: 'user'
@@ -121,8 +120,6 @@ services:
     ports:
     - published: 3306
       target: 3306
-    security_opt:
-      - seccomp:unconfined
   smtp:
     container_name: smtp
     image: namshi/smtp

@@ -142,7 +142,7 @@ services:
     image: minio/minio
     ports:
     - published: 8088
-      target: 9000
+      target: 8088
     command: server /data
     networks:
       merrittnet:
@@ -153,7 +153,7 @@ services:
     entrypoint: >
       /bin/sh -c "
       sleep 15;
-      mc config host add docker http://minio:9000 minioadmin minioadmin;
+      mc config host add docker http://minio:8088 minioadmin minioadmin;
       mc mb docker/my-bucket;
       "
     networks:

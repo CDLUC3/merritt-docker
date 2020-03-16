@@ -141,7 +141,7 @@ services:
     container_name: minio
     image: minio/minio
     ports:
-    - published: 8088
+    - published: 9000
       target: 9000
     command: server /data
     networks:

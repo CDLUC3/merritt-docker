@@ -4,18 +4,8 @@
 #*********************************************************************
 version: '3.7'
 services:
-  store:
+  ui:
     volumes:
-    - type: volume
-      source: my-pairtree
-      target: /opt/storage/
-  db-container:
-    volumes:
-      - my-db:/var/lib/mysql
-  minio:
-    volumes:
-      - my-minio:/data
-volumes:
-  my-db:
-  my-pairtree:
-  my-minio:
+    # You must install this file with proper credentials
+    - ../../mrt-dashboard/app:/var/www/app_name/app
+    - ../../mrt-dashboard/config/routes.rb:/var/www/app_name/config/routes.rb

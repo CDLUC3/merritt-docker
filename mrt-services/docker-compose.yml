@@ -146,6 +146,8 @@ services:
     command: server /data
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
   # When initializing the minio container for the first time, you will need to create an initial bucket named my-bucket.
   minio-mc:
     container_name: minio-mc

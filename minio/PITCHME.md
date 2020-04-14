@@ -120,3 +120,9 @@ endPoint=http://uc3-mrtdocker2-stg.cdlib.org:8088
 accessKey=minioadmin
 secretKey=minioadmin
 ```
+
++++
+
+#### Hostname Troubleshooting with the Minio Container
+
+- https://stackoverflow.com/a/61214488/3846548

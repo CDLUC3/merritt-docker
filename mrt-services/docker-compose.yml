@@ -136,7 +136,7 @@ services:
       target: 80
     networks:
       merrittnet:
-  # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect minio:9000 to localhost:9000.
+  # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect my-minio-localhost-alias:9000 to localhost:9000.
   minio:
     container_name: minio
     image: minio/minio
@@ -146,6 +146,9 @@ services:
     command: server /data
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}
   # When initializing the minio container for the first time, you will need to create an initial bucket named my-bucket.
   minio-mc:
     container_name: minio-mc

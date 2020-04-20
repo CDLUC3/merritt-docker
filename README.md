@@ -141,6 +141,7 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 ## Helper docker-compose Files
 
 | Debug java applications | [debug-ingest.yml](mrt-services/debug-ingest.yml) | Configures JPDA Debug Port |
+| -- | -- | -- |
 |  | [debug-inventory.yml](mrt-services/debug-inventory.yml) |
 |  | [debug-oai.yml](mrt-services/debug-oai.yml) |
 |  | [debug-storage.yml](mrt-services/debug-storage.yml) |

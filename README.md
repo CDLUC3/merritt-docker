@@ -41,6 +41,10 @@ The following dependencies are needed to build and run this repo.  The goal is t
 | Dryad SOLR  | cdluc3/dryad-solr | Docker | |
 | Audit       | | | Not yet containerized |
 | Replic      | | | Not yet containerized |
+| Merritt Init| cdluc3/mrt-init | Docker | Init OAI and inventory services.  Run Dryad notifier. |
+| Apache      | cdluc3/mrt-apache | Docker | Supports cloudhost retrieval of assembled versions and objects |
+| Minio       | minio/minio | Docker | Containerized storage service - for testing presigned functionality |
+| Minio Cmd   | minio/mc | Docker | Initialized bucket in Minio container |
 
 ## Docker Image Publishing
 Details about docker image publishing are TBD.
@@ -133,3 +137,17 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 
 ### Mysql Session
 `docker exec -it db-container mysql -u user --password=password --database=db-name`
+
+## Helper docker-compose Files
+
+| Debug java applications | [debug-ingest.yml](mrt-services/debug-ingest.yml) | Configures JPDA Debug Port |
+|  | [debug-inventory.yml](mrt-services/debug-inventory.yml) |
+|  | [debug-oai.yml](mrt-services/debug-oai.yml) |
+|  | [debug-storage.yml](mrt-services/debug-storage.yml) |
+| UI Testing from mrt-dasboard branch | [debug-ui.yml](mrt-services/debug-ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
+| Volume Config | [use-volume.yml](mrt-services/use-volume.yml) | Persist mysql, pairtree, minio to Docker volumes |
+| Localhost Volume Config | [with-host-volume.yml](mrt-services/with-host-volume.yml) | Persist pairtree storage to a localhost volume |
+| EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume overrides to support EC2 dns and paths |
+| Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
+| Dryad Volume Config | [dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume
+| Dryad on EC2 | [dryad.yml](mrt-services/ec2-dryad.yml) | Volume overrides to support EC2 dns and paths |

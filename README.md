@@ -150,5 +150,5 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 | Localhost Volume Config | [with-host-volume.yml](mrt-services/with-host-volume.yml) | Persist pairtree storage to a localhost volume |
 | EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume overrides to support EC2 dns and paths |
 | Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
-| Dryad Volume Config | [dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume
-| Dryad on EC2 | [dryad.yml](mrt-services/ec2-dryad.yml) | Volume overrides to support EC2 dns and paths |
+| Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume
+| Dryad on EC2 | [ec2-dryad.yml](mrt-services/ec2-dryad.yml) | Volume overrides to support EC2 dns and paths |

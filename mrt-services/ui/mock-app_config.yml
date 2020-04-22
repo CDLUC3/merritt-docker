@@ -33,7 +33,7 @@ docker: &docker
   uri_2:                "http://store:8080/store/producer/"
   uri_3:                "http://store:8080/store/manifest/"
   storage_presign_file: "http://store:8080/store/presign-file/"
-  storage_presign_obj:  "http://store:8080/store/presign-obj/"
+  storage_presign_obj:  "http://store:8080/store/assemble-obj/"
   storage_presign_token: "http://store:8080/store/presign-obj-by-token/"
 
 development: &development

@@ -9,3 +9,4 @@ services:
     # You must install this file with proper credentials
     - ../../mrt-dashboard/app:/var/www/app_name/app
     - ../../mrt-dashboard/config/routes.rb:/var/www/app_name/config/routes.rb
+    - ../../mrt-dashboard/public/javascripts:/var/www/app_name/public/javascripts

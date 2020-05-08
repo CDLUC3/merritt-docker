@@ -32,7 +32,7 @@ COPY mock-atom.yml config/atom.yml
 COPY database.yml.example config/database.yml
 COPY mock-app_config.yml config/app_config.yml
 
-RUN bundle exec rake assets:precompile
+# RUN bundle exec rake assets:precompile
 EXPOSE 3000 9292
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes

@@ -15,7 +15,7 @@ defaults: &defaults
 docker: &docker
   <<: *defaults
   max_archive_size:  10000000  # 9999 bytes ~= 99 KiB
-  max_download_size: 20000000  # 1048576 bytes = 1 MiB
+  max_download_size: 500000000  # 1048576 bytes = 1 MiB
   dua_email_to:         [no-email@ucop.edu]
   lostorage_email_to:   [no-email@ucop.edu]
   lostorage_email_from: no-email@ucop.edu

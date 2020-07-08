@@ -21,7 +21,3 @@ services:
     ports:
     - published: 8087
       target: 3000
-    volumes:
-    - type: bind
-      source: ./no-track/dryad/tenants/dryad-ec2.yml
-      target: /var/www/app_name/tenants/dryad.yml

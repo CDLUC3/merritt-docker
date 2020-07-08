@@ -19,10 +19,10 @@ COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-oaiwar/1.0-SNAPSHOT/mrt
 
 EXPOSE 8080 8009
 
-RUN mkdir -p /replic/mrtHomes/oai/log/ /apps/replic/mrtHomes/oai
+RUN mkdir -p /apps/replic/stg/oai/mrtHomes/oai/log/ /apps/replic/stg/oai/mrtHomes/oai
 
-COPY oai-info.txt /replic/mrtHomes/oai
-COPY oai-info.txt /apps/replic/mrtHomes/oai
+# COPY oai-info.txt /replic/mrtHomes/oai
+COPY oai-info.txt /apps/replic/stg/oai/mrtHomes/oai
 
 ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64"
 

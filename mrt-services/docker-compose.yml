@@ -146,6 +146,8 @@ services:
     ports:
     - published: 9000
       target: 9000
+    - published: 8088
+      target: 9000
     command: server /data
     networks:
       merrittnet:

@@ -33,10 +33,10 @@ COPY database.yml.example config/database.yml
 COPY mock-app_config.yml config/app_config.yml
 
 # RUN bundle exec rake assets:precompile
-EXPOSE 3000 9292
+EXPOSE 3000 8089
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-CMD ["bundle", "exec", "puma", "-C", "config/application.rb"]
+CMD ["bundle", "exec", "puma", "-C", "config/application.rb", "-p", "8089"]

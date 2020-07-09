@@ -93,11 +93,14 @@ services:
       dockerfile: Dockerfile
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}
     depends_on:
     - db-container
     ports:
     - published: 8089
-      target: 9292
+      target: 8089
     volumes:
     # You must install this file with proper credentials
     - ./no-track/ldap-stg.yml:/var/www/app_name/config/ldap.yml

@@ -42,6 +42,9 @@ services:
       dockerfile: Dockerfile
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}
     volumes:
     - type: bind
       source: ./no-track/dryad/app_config.yml

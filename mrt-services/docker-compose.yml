@@ -46,6 +46,12 @@ services:
       SSM_SKIP_RESOLUTION: Y
       NODE_TABLE: nodes-pairtree-docker
       MERRITT_STORE_INFO: store-info-docker
+      MRT_MINIO_PORT: 8088
+    networks:
+      merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}
     stdin_open: true
     tty: true
   inventory:

@@ -4,16 +4,7 @@
 #*********************************************************************
 version: '3.7'
 services:
-  store:
-    volumes:
-    - type: bind
-      source: ../../mrt-confs3-1.0-SNAPSHOT.jar
-      target: /usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confs3-1.0-SNAPSHOT.jar
-    - type: bind
-      source: ./no-track/store-info-ec2.txt
-      target: /dpr2store/mrtHomes/store/store-info.txt
-  ui:
-    volumes:
+  volumes:
     - type: bind
       source: ./no-track/app-config-ec2.yml
       target: /var/www/app_name/config/app_config.yml

@@ -42,19 +42,17 @@ services:
     ports:
     - published: 8081
       target: 8080
-    volumes:
-    - type: bind
-      source: ${HOME}/.m2/repository/org/cdlib/mrt/mrt-confs3/1.0-SNAPSHOT/mrt-confs3-1.0-SNAPSHOT.jar
-      target: /usr/local/tomcat/webapps/store/WEB-INF/lib/mrt-confs3-1.0-SNAPSHOT.jar
-    - type: bind
-      source: ./no-track/store-info.txt
-      target: /dpr2store/mrtHomes/store/store-info.txt
-    - type: bind
-      source: ./no-track/nodes/repository
-      target: /dpr2store/repository
-    - type: bind
-      source: ./no-track/nodes/nodes.txt
-      target: /dpr2store/mrtHomes/store/nodes.txt
+    environment:
+      SSM_SKIP_RESOLUTION: Y
+      NODE_TABLE: nodes-pairtree-docker
+      MERRITT_STORE_INFO: store-info-docker
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      MRT_MINIO_PORT: 8088
+    networks:
+      merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}
     stdin_open: true
     tty: true
   inventory:

@@ -152,3 +152,10 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 | Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
 | Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume
 | Dryad on EC2 | [ec2-dryad.yml](mrt-services/ec2-dryad.yml) | Volume overrides to support EC2 dns and paths |
+
+## Repo Init
+
+```
+git submodule update --remote --recursive --init -- .
+git submodule update --remote --recursive -- .
+```

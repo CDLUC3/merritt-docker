@@ -159,3 +159,5 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 git submodule update --remote --recursive --init -- .
 git submodule update --remote --recursive -- .
 ```
+
+## Notes

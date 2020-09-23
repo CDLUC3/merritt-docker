@@ -100,6 +100,7 @@ services:
     - published: 8089
       target: 8089
     environment:
+      SSM_SKIP_RESOLUTION: Y
       MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
     volumes:
     # You must install this file with proper credentials

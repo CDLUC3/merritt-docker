@@ -99,6 +99,8 @@ services:
     ports:
     - published: 8089
       target: 8089
+    environment:
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
     volumes:
     # You must install this file with proper credentials
     - ./no-track/ldap-stg.yml:/var/www/app_name/config/ldap.yml

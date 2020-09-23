@@ -27,10 +27,6 @@ RUN bundle install --jobs 20 --retry 5
 # Adding project files
 
 COPY mrt-dashboard .
-COPY mock-ldap.yml config/ldap.yml
-COPY mock-atom.yml config/atom.yml
-COPY database.yml.example config/database.yml
-COPY mock-app_config.yml config/app_config.yml
 
 # RUN bundle exec rake assets:precompile
 EXPOSE 3000 8089

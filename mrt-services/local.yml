@@ -11,24 +11,24 @@ services:
       target: /usr/local/apache2/conf/conf.d/mrt.conf
   store:
     environment:
-      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      MRT_DOCKER_HOST: localhost
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-          ${HOSTNAME}.cdlib.org
+          localhost
   ui:
     environment:
-      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      MRT_DOCKER_HOST: localhost
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-          ${HOSTNAME}.cdlib.org
+          localhost
   minio:
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-          ${HOSTNAME}.cdlib.org
+          localhost
 

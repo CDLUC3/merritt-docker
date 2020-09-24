@@ -159,4 +159,33 @@ git submodule update --remote --recursive --init -- .
 git submodule update --remote --recursive -- .
 ```
 
-## Notes
+## Common Usage
+
+Localhost run
+
+```
+docker-compose -p merritt_a -f docker-compose.yml -f use-volume.yml -f local.yml up -d
+```
+
+Localhost run with local ui overrides
+
+```
+docker-compose -p merritt_a -f docker-compose.yml -f use-volume.yml -f local.yml -f ui.yml up -d
+```
+
+Localhost run with Dryad
+
+```
+docker-compose -p merritt_a -f docker-compose.yml -f dryad.yml -f use-volume-dryad.yml -f local.yml up -d
+```
+
+EC2 run
+
+```
+sudo docker-compose -f docker-compose.yml -f use-volume.yml -f ec2.yml -p merritt up -d
+```
+
+EC2 run with Dryad
+```
+udo docker-compose -f docker-compose.yml -f dryad.yml -f use-volume-dryad.yml -f ec2.yml -p merritt up -d
+```

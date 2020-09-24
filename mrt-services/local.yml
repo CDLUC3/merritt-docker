@@ -4,11 +4,6 @@
 #*********************************************************************
 version: '3.7'
 services:
-  apache:
-    volumes:
-    - type: bind
-      source: ./no-track/mrt-ec2.conf
-      target: /usr/local/apache2/conf/conf.d/mrt.conf
   store:
     environment:
       MRT_DOCKER_HOST: localhost

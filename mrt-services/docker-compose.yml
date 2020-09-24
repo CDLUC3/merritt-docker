@@ -46,13 +46,13 @@ services:
       SSM_SKIP_RESOLUTION: Y
       NODE_TABLE: nodes-pairtree-docker
       MERRITT_STORE_INFO: store-info-docker
-      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      MRT_DOCKER_HOST: ${HOSTNAME}${DOMAINNAME}
       MRT_MINIO_PORT: 8088
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-        - ${HOSTNAME}
+        - ${HOSTNAME}${DOMAINNAME}
     stdin_open: true
     tty: true
   inventory:
@@ -93,7 +93,7 @@ services:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-        - ${HOSTNAME}
+        - ${HOSTNAME}${DOMAINNAME}
     depends_on:
     - db-container
     ports:
@@ -101,7 +101,7 @@ services:
       target: 8089
     environment:
       SSM_SKIP_RESOLUTION: Y
-      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      MRT_DOCKER_HOST: ${HOSTNAME}${DOMAINNAME}
     volumes:
     # You must install this file with proper credentials
     - ./no-track/ldap-stg.yml:/var/www/app_name/config/ldap.yml
@@ -154,7 +154,7 @@ services:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-        - ${HOSTNAME}
+        - ${HOSTNAME}${DOMAINNAME}
   # When initializing the minio container for the first time, you will need to create an initial bucket named my-bucket.
   minio-mc:
     container_name: minio-mc

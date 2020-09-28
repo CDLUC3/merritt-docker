@@ -146,12 +146,11 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 |  | [debug-oai.yml](mrt-services/debug-oai.yml) |
 |  | [debug-storage.yml](mrt-services/debug-storage.yml) |
 | UI Testing from mrt-dasboard branch | [debug-ui.yml](mrt-services/debug-ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
-| Volume Config | [use-volume.yml](mrt-services/use-volume.yml) | Persist mysql, pairtree, minio to Docker volumes |
-| Localhost Volume Config | [with-host-volume.yml](mrt-services/with-host-volume.yml) | Persist pairtree storage to a localhost volume |
-| EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume overrides to support EC2 dns and paths |
+| Volume Config | [use-volume.yml](mrt-services/use-volume.yml) | Persist mysql, pairtree, minio to Docker volumes |a localhost volume |
+| EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume and hostname overrides EC2 dns and paths |
+| Localhost Config | [ec2.yml](mrt-services/local.yml) | hostname |
 | Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
-| Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume
-| Dryad on EC2 | [ec2-dryad.yml](mrt-services/ec2-dryad.yml) | Volume overrides to support EC2 dns and paths |
+| Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
 
 ## Repo Init
 
@@ -160,5 +159,33 @@ git submodule update --remote --recursive --init -- .
 git submodule update --remote --recursive -- .
 ```
 
-## Notes
-test
+## Common Usage
+
+Localhost run
+
+```
+docker-compose -p merritt_a -f docker-compose.yml -f use-volume.yml -f local.yml up -d
+```
+
+Localhost run with local ui overrides
+
+```
+docker-compose -p merritt_a -f docker-compose.yml -f use-volume.yml -f local.yml -f ui.yml up -d
+```
+
+Localhost run with Dryad
+
+```
+docker-compose -p merritt_a -f docker-compose.yml -f dryad.yml -f use-volume-dryad.yml -f local.yml up -d
+```
+
+EC2 run
+
+```
+sudo docker-compose -f docker-compose.yml -f use-volume.yml -f ec2.yml -p merritt up -d
+```
+
+EC2 run with Dryad
+```
+udo docker-compose -f docker-compose.yml -f dryad.yml -f use-volume-dryad.yml -f ec2.yml -p merritt up -d
+```

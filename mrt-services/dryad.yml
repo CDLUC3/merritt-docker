@@ -53,7 +53,7 @@ services:
       source: ./no-track/dryad/tenants/dryad.yml
       target: /var/www/app_name/config/tenants/dryad.yml
     ports:
-    - published: 3000
+    - published: 8087
       target: 3000
     stdin_open: true
     tty: true

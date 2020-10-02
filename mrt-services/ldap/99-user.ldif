@@ -1,0 +1,35 @@
+dn: cn=schema
+objectClass: top
+objectClass: ldapSubentry
+objectClass: subschema
+cn: schema
+attributeTypes: ( gid-oid NAME 'gid' SUP uid EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( crossrefMail-oid NAME 'crossrefMail' DESC 'Email address(es) to which CrossRef errors and warnings will be sent' EQUALITY caseIgnoreIA5Match SUBSTR caseIgnoreIA5SubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256} USAGE userApplications )
+attributeTypes: ( ezidRealm-attr-oid NAME 'ezidRealm' DESC 'EZID realm to which group belongs' EQUALITY distinguishedNameMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.12 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( agreementOnFile-oid NAME 'agreementOnFile' EQUALITY booleanMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( isEzidGroupAdministrator-oid NAME 'isEzidGroupAdministrator' DESC 'If present and true, the user is an administrator of its EZID group' EQUALITY booleanMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( tzregion-oid NAME 'tzRegion' DESC 'The Linux Timezone based on its list of cities and regions' EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( isEzidRealmAdministrator-oid NAME 'isEzidRealmAdministrator' DESC 'If present and true, the user is an administrator of its EZID realm' EQUALITY booleanMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( ezidOwnerGroup-oid NAME 'ezidOwnerGroup' DESC 'EZID owner group' EQUALITY distinguishedNameMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.12 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( crossrefSendMailOnError-oid NAME 'crossrefSendMailOnError' DESC 'If true, errors and warnings received from CrossRef are mailed' EQUALITY booleanMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( crossrefEnabled-oid NAME 'crossrefEnabled' DESC 'If true, registration of identifiers with CrossRef is enabled' EQUALITY booleanMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.7 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( submissionprofile-oid NAME 'submissionProfile' DESC 'The submission profile associated with a group' EQUALITY caseIgnoreMatch ORDERING caseIgnoreOrderingMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( institution-oid NAME 'institution' DESC 'DN of institution that this user is a member of.' SUP distinguishedName EQUALITY distinguishedNameMatch SUBSTR caseIgnoreSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.12 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( shoulderList-oid NAME 'shoulderList' DESC 'List of identifier shoulder labels separated by spaces and/or commas' EQUALITY caseExactMatch ORDERING caseExactOrderingMatch SUBSTR caseExactSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( arkId-oid NAME 'arkId' DESC 'ARK identifier, must begin with ark:/' EQUALITY caseExactMatch ORDERING caseExactOrderingMatch SUBSTR caseExactSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE USAGE userApplications )
+attributeTypes: ( groupArkId-oid NAME 'groupArkId' DESC 'ARK identifier, must begin with ark:/' SUP arkId EQUALITY caseExactMatch ORDERING caseExactOrderingMatch SUBSTR caseExactSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE USAGE userApplications )
+attributeTypes: (ezidCoOwners-oid NAME 'ezidCoOwners' DESC 'List of uids separated by spaces and/or commas' EQUALITY caseExactMatch ORDERING caseExactOrderingMatch SUBSTR caseExactSubstringsMatch SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 SINGLE-VALUE USAGE userApplications )
+objectClasses: ( ezidRealm-oid NAME 'ezidRealm' DESC 'EZID realm' SUP top AUXILIARY MUST ( objectClass $ name ) )
+objectClasses: ( merrittuser-oid NAME 'merrittUser' DESC 'Users of the Merritt system' SUP top AUXILIARY MUST ( objectClass $ arkId ) MAY ( tzRegion $ institution ) )
+objectClasses: ( merrittClass-oid NAME 'merrittClass' DESC 'Merritt Class' SUP top AUXILIARY MUST ( objectClass $ arkId ) MAY submissionProfile )
+objectClasses: ( testOfReplication2-oid NAME 'testOfReplication2' SUP top STRUCTURAL MUST objectClass MAY ( audio $ uid $ cn $ mail ) )
+objectClasses: ( dmpuser-oid NAME 'dmpUser' DESC 'User of DMPTool' SUP top AUXILIARY MUST ( objectClass $ arkId ) MAY ( institution $ tzRegion ) )
+objectClasses: ( ezidGroup-oid NAME 'ezidGroup' DESC 'EZID group' SUP top AUXILIARY MUST ( objectClass $ shoulderList ) MAY ( groupArkId $ arkId $ uid $ gid $ agreementOnFile $ crossrefEnabled $   crossrefMail $ crossrefSendMailOnError $ ezidRealm ) )
+objectClasses: ( ezidUser-oid NAME 'ezidUser' DESC 'EZID user' SUP top AUXILIARY MUST ( objectClass $ arkId $ uid $ ezidOwnerGroup ) MAY ( shoulderList $ isEzidGroupAdministrator $ isEzidRealmAdministrator $   ezidCoOwners ) )
+ds-sync-state: 0000014a553ccb16007600000014
+ds-sync-state: 0000012b9c8ab1d213da00000001
+ds-sync-state: 00000132640345d922c300000005
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20110913181848Z
+ds-sync-generation-id: 8468
+

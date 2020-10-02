@@ -116,6 +116,23 @@ services:
     ports:
     - published: 3306
       target: 3306
+  ldap:
+    container_name: openDJ
+    image: cdluc3/mrt-opendj
+    build:
+      context: ldap
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 1389
+      target: 1389
+    - published: 1636
+      target: 1636
+    - published: 4444
+      target: 4444
+    stdin_open: true
+    tty: true
   smtp:
     container_name: smtp
     image: namshi/smtp

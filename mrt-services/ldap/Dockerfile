@@ -1,0 +1,45 @@
+# https://github.com/ghchinoy/forgerock-docker
+FROM java:latest
+
+WORKDIR /opt
+
+RUN apt-get install -y wget unzip
+
+RUN curl --silent -LO https://github.com/OpenIdentityPlatform/OpenDJ/releases/download/4.4.5/opendj-4.4.5.zip && unzip -q opendj-4.4.5.zip && rm -r opendj-4.4.5.zip
+
+# Merritt data
+COPY barebones.ldif /opt/barebones.ldif
+
+# Entrypoint script
+COPY start_import.sh /opt/start_import.sh
+RUN chmod +x /opt/start_import.sh
+
+# import script
+COPY import.sh /opt/opendj/import.sh
+RUN chmod +x /opt/opendj/import.sh
+
+WORKDIR /opt/opendj
+
+RUN ./setup \
+          --cli \
+          --no-prompt \
+          --acceptLicense \
+          --backendType je \
+          --baseDN ou=uc3,dc=cdlib,dc=org \
+          --baseDN ou=healthcheck,dc=cdlib,dc=org \
+          --ldapPort 1389 \
+          --adminConnectorPort 4444 \
+          --rootUserDN cn=Directory\ Manager \
+          --rootUserPassword password \
+          --generateSelfSignedCertificate \
+          --enableStartTLS \
+          --ldapsPort 1636 \
+          --certNickname server-cert \
+          --noPropertiesFile
+
+# Schema data
+COPY 99-user.ldif /opt/opendj/config/schema/99-user.ldif
+
+EXPOSE 1389
+
+ENTRYPOINT ["/opt/start_import.sh"]

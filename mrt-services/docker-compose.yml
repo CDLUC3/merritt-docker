@@ -117,7 +117,7 @@ services:
     - published: 3306
       target: 3306
   ldap:
-    container_name: openDJ
+    container_name: ldap
     image: cdluc3/mrt-opendj
     build:
       context: ldap

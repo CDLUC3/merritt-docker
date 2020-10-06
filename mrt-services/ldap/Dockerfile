@@ -14,9 +14,13 @@ COPY barebones.ldif /opt/barebones.ldif
 COPY start_import.sh /opt/start_import.sh
 RUN chmod +x /opt/start_import.sh
 
-# import script
+# Import script
 COPY import.sh /opt/opendj/import.sh
 RUN chmod +x /opt/opendj/import.sh
+
+# Self signed cert
+COPY keystore /opt/opendj/keystore
+COPY keystore.pin /opt/opendj/keystore.pin
 
 WORKDIR /opt/opendj
 
@@ -31,10 +35,11 @@ RUN ./setup \
           --adminConnectorPort 4444 \
           --rootUserDN cn=Directory\ Manager \
           --rootUserPassword password \
-          --generateSelfSignedCertificate \
           --enableStartTLS \
           --ldapsPort 1636 \
-          --certNickname server-cert \
+	  --useJavaKeystore /opt/opendj/keystore \
+	  --keyStorePasswordFile /opt/opendj/keystore.pin \
+	  --hostname ldap \
           --noPropertiesFile
 
 # Schema data

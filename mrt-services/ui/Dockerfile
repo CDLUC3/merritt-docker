@@ -35,4 +35,9 @@ EXPOSE 3000 8089
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+# CA cert for LDAP SSL access
+RUN mkdir /usr/local/share/ca-certificates/extra
+COPY ldap-ca.crt /usr/local/share/ca-certificates/extra/ldap-ca.crt
+RUN /usr/sbin/update-ca-certificates
+
 CMD ["bundle", "exec", "puma", "-C", "config/application.rb", "-p", "8089"]

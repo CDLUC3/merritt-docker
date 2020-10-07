@@ -6,12 +6,13 @@ version: '3.7'
 services:
   store:
     environment:
-      MRT_DOCKER_HOST: localhost
+      MRT_DOCKER_HOST: my-minio-localhost-alias
+      MRT_MINIO_PORT: 9000
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-          localhost
+        - ${HOSTNAME:-localhost}
   ui:
     environment:
       MRT_DOCKER_HOST: localhost
@@ -19,11 +20,11 @@ services:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-          localhost
+        - ${HOSTNAME:-localhost}
   minio:
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-          localhost
+        - ${HOSTNAME:-localhost}
 

@@ -28,8 +28,8 @@ The following dependencies are needed to build and run this repo.  The goal is t
 | ----------- | ---------- | ------------------------ | ----- |
 | Java dependencies | cdluc3/mrt-dependencies | Docker | Base image for other microservices. All service properties are currently mocked in the jar file. |
 | Zookeeper   | zookeeper | Docker | |
+| OpenDJ      | ldap      | Docker | |
 | MySQL       | cdluc3/mrt-database | Docker | |
-| LDAP        | N/A | Server Instance | |
 | UI          | cdluc3/mrt-dashboard | Docker | LDAP connection info is passed in via an untracked file |
 | Ingest      | cdluc3/mrt-ingest | Docker | |
 | Storage     | cdluc3/mrt-storage | Docker | |

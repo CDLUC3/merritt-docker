@@ -5,7 +5,7 @@
 # See https://itnext.io/docker-rails-puma-nginx-postgres-999cd8866b18
 #   docker build -t cdluc3/mrt-dashboard .
 
-FROM ruby:2.6
+FROM ruby:2.6.6
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 
 # Set an environment variable where the Rails app is installed to inside of Docker image
@@ -23,6 +23,7 @@ ENV RACK_ENV='development'
 COPY mrt-dashboard/Gemfile Gemfile
 COPY mrt-dashboard/Gemfile.lock Gemfile.lock
 
+RUN gem install bundler
 RUN bundle install --jobs 20 --retry 5
 # Adding project files
 

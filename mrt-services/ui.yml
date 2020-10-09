@@ -8,6 +8,6 @@ services:
     volumes:
     # You must install this file with proper credentials
     - ../../mrt-dashboard/app:/var/www/app_name/app
-    - ../../mrt-dashboard/config/routes.rb:/var/www/app_name/config/routes.rb
-    - ../../mrt-dashboard/config/initializers:/var/www/app_name/config/initializers
+    - ../../mrt-dashboard/lib:/var/www/app_name/lib
+    - ../../mrt-dashboard/config:/var/www/app_name/config
     - ../../mrt-dashboard/public:/var/www/app_name/public

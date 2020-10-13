@@ -134,17 +134,6 @@ services:
     image: namshi/smtp
     networks:
       merrittnet:
-  apache:
-    container_name: apache
-    image: cdluc3/mrt-apache
-    build:
-      context: apache
-      dockerfile: Dockerfile
-    ports:
-    - published: 8086
-      target: 80
-    networks:
-      merrittnet:
   # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect my-minio-localhost-alias:8088 to localhost:8088.
   minio:
     container_name: minio

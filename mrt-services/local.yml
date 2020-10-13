@@ -7,7 +7,6 @@ services:
   store:
     environment:
       MRT_DOCKER_HOST: my-minio-localhost-alias
-      MRT_MINIO_PORT: 9000
     networks:
       merrittnet:
         aliases:

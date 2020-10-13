@@ -34,8 +34,7 @@ HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
 HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
 #HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
 StorageService: http://store:8080/store
-#StorageNode: 9001
-StorageNode: 8012
+StorageNode: 7777
 CreationDate: 2010-01-19T13:28:14-08:00
 ModificationDate: 2010-01-26T23:28:14-08:00
 ObjectMinterURL: https://ezid.cdlib.org/shoulder/ark:/99999/fk4

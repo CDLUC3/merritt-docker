@@ -12,7 +12,7 @@ services:
   store:
     environment:
       MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
-      MRT_MINIO_PORT: 8088
+      MRT_MINIO_HOST: ${HOSTNAME}.cdlib.org
     networks:
       merrittnet:
         aliases:

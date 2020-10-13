@@ -4,11 +4,6 @@
 #*********************************************************************
 version: '3.7'
 services:
-  store:
-    volumes:
-    - type: volume
-      source: my-pairtree
-      target: /opt/storage/
   db-container:
     volumes:
       - my-db:/var/lib/mysql
@@ -17,5 +12,4 @@ services:
       - my-minio:/data
 volumes:
   my-db:
-  my-pairtree:
   my-minio:

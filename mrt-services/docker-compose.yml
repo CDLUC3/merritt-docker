@@ -95,7 +95,7 @@ services:
       SSM_SKIP_RESOLUTION: Y
     volumes:
     - "./docker.html:/var/www/app_name/public/docker.html"
-     stdin_open: true
+    stdin_open: true
     tty: true
   db-container:
     container_name: db-container

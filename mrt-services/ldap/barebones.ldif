@@ -16,6 +16,28 @@ modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: 4a605ee7-8c91-48b4-8676-cb6ba778b178
 createTimestamp: 20100910200452Z
 
+dn: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: merrittUser
+objectClass: organizationalPerson
+objectClass: person
+mail: uc3@ucop.edu
+sn: Test
+tzRegion: America/Los_Angeles
+cn: Merritt Test
+arkId: ark:/99166/p9hd7ns0t
+givenName: Merritt
+userPassword: {SSHA}STBNF3Pt2wb5/gltSyiz2W7+JB3m+sePFZ5ewg==
+displayName: Merritt Test
+uid: merritt-test
+createTimestamp: 20130924153118Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+pwdChangedTime: 20130924153118.231Z
+modifyTimestamp: 20130924214644Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: ad36029c-a2fe-4c64-abe9-512d1222b0da
+
 dn: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
 objectClass: top
 objectClass: inetOrgPerson
@@ -24,6 +46,7 @@ objectClass: organizationalPerson
 objectClass: person
 mail: uc3@ucop.edu
 sn: User
+tzRegion: America/Los_Angeles
 cn: Guest
 arkId: ark:/99166/p9qz22h0p
 givenName: Anonymous
@@ -36,7 +59,6 @@ pwdChangedTime: 20111117190459.467Z
 modifyTimestamp: 20120717191641Z
 modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: 3a7838db-1825-4b42-9f76-1f1a0ee2ff00
-createTimestamp: 20100910200452Z
 
 dn: ou=merritt_demo,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top
@@ -184,28 +206,6 @@ objectClass: top
 objectClass: organizationalunit
 ou: People
 entryUUID: cf0b297e-53c9-3d1b-a714-a09afbc512ec
-
-dn: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
-objectClass: top
-objectClass: inetOrgPerson
-objectClass: merrittUser
-objectClass: organizationalPerson
-objectClass: person
-mail: uc3@ucop.edu
-sn: Test
-tzRegion: America/Los_Angeles
-cn: Merritt Test
-arkId: ark:/99166/p9hd7ns0t
-givenName: Merritt
-userPassword: {SSHA}STBNF3Pt2wb5/gltSyiz2W7+JB3m+sePFZ5ewg==
-displayName: Merritt Test
-uid: merritt-test
-createTimestamp: 20130924153118Z
-creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
-pwdChangedTime: 20130924153118.231Z
-modifyTimestamp: 20130924214644Z
-modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
-entryUUID: ad36029c-a2fe-4c64-abe9-512d1222b0da
 
 dn: ou=healthcheck,dc=cdlib,dc=org
 objectClass: top

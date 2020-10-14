@@ -10,4 +10,4 @@ services:
     - ../../mrt-dashboard/app:/var/www/app_name/app
     - ../../mrt-dashboard/lib:/var/www/app_name/lib
     - ../../mrt-dashboard/config:/var/www/app_name/config
-    - ../../mrt-dashboard/public:/var/www/app_name/public
+    - ../../mrt-dashboard/public/assets:/var/www/app_name/public/assets

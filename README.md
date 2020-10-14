@@ -110,20 +110,6 @@ docker network ls
 docker-compose -p merritt down
 ```
 
-## Staging DB & Storage
-
-### Service Start
-
-```bash
-docker-compose -f docker-compose.yml -f staging-db.yml -p merritt up
-```
-
-### Service Stop
-
-```
-docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
-```
-
 ## Other useful tasks
 
 ### List Zookeeper Queues
@@ -143,7 +129,7 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 | Goal | File | Comment |
 | -- | -- | -- |
 | Debug java applications | in Eclipse | Use JPDA Debug on Port 8000 |
-|  | in VSCode | Launch a remote debugger (launch.json)[launch.json] |
+|  | in VSCode | Launch a remote debugger [launch.json](launch.json) |
 |  | [debug-ingest.yml](mrt-services/debug-ingest.yml) |  |
 |  | [debug-inventory.yml](mrt-services/debug-inventory.yml) |
 |  | [debug-oai.yml](mrt-services/debug-oai.yml) |

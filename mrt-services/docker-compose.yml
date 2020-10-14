@@ -93,7 +93,9 @@ services:
       target: 8089
     environment:
       SSM_SKIP_RESOLUTION: Y
-    stdin_open: true
+    volumes:
+    - "./docker.html:/var/www/app_name/public/docker.html"
+     stdin_open: true
     tty: true
   db-container:
     container_name: db-container

@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Merritt Docker Index</title>
+        <script	src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript">
+          $(document).ready(
+              function(){
+                  var host = document.location.host.replace(/:.*$/,'');
+                  $("a.ref").each(function(){
+                      $(this).attr("href", "http://"+host+$(this).attr("data"));
+                  });
+              }
+          );
+        </script>
+    </head>
+    <body>
+        <h1>Merritt Docker Index</h1>
+        <div>
+            <h2>Core Merritt Containers</h2>
+            <ul>
+                <li><a class="ref" data=":8089">Merritt UI</a></li>
+                <li><a class="ref" data=":8080/ingest/state">Ingest Service State</a></li>
+                <li><a class="ref" data=":8081/store/state">Storage Service State</a></li>
+                <li><a class="ref" data=":8082/inventory/state">Inventory Service State</a></li>
+                <li><a class="ref" data=":8088">Minio Service</a></li>
+            </ul>
+            <h2>Dryad Containers (If enabled)</h2>
+            <ul>
+                <li><a class="ref" data=":8083/oai/oai/v2?verb=Identify">OAI Service State</a></li>
+                <li><a class="ref" data=":8084/sword">Sword Service State</a></li>
+                <li><a class="ref" data=":8087">Dryad UI</a></li>
+                <li><a class="ref" data=":8085">Dryad Solr</a></li>
+            </ul>
+            <h2>Useful Commands</h2>
+            <a href="https://github.com/cdluc3/merritt-docker#other-useful-tasks">Useful Tasks</a>
+        </div>
+    </body>
+</html>

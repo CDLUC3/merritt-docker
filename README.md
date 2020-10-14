@@ -140,12 +140,15 @@ docker-compose -f docker-compose.yml -f staging-db.yml -p merritt down
 
 ## Helper docker-compose Files
 
-| Debug java applications | [debug-ingest.yml](mrt-services/debug-ingest.yml) | Configures JPDA Debug Port |
+| Goal | File | Comment |
 | -- | -- | -- |
+| Debug java applications | in Eclipse | Use JPDA Debug on Port 8000 |
+|  | in VSCode | Launch a remote debugger (launch.json)[launch.json] |
+|  | [debug-ingest.yml](mrt-services/debug-ingest.yml) |  |
 |  | [debug-inventory.yml](mrt-services/debug-inventory.yml) |
 |  | [debug-oai.yml](mrt-services/debug-oai.yml) |
 |  | [debug-storage.yml](mrt-services/debug-storage.yml) |
-| UI Testing from mrt-dasboard branch | [debug-ui.yml](mrt-services/debug-ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
+| UI Testing from mrt-dasboard branch | [ui.yml](mrt-services/ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
 | Volume Config | [use-volume.yml](mrt-services/use-volume.yml) | Persist mysql, pairtree, minio to Docker volumes |a localhost volume |
 | EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume and hostname overrides EC2 dns and paths |
 | Localhost Config | [ec2.yml](mrt-services/local.yml) | hostname |

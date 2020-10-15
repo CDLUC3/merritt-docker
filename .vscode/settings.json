@@ -55,6 +55,10 @@
             "label": "merritt ec2 -- rebuild",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/ec2.yml up -d --build"
         },
+        {
+            "label": "merritt+dryad ec2",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/use-volume-dryad.yml -f mrt-services/ec2.yml up -d"
+        },
     ],
     "docker.commands.composeDown": [
         {

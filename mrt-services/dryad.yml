@@ -90,5 +90,5 @@ services:
       merrittnet:
     restart: always
     ports:
-    - published: 8983
+    - published: 8085
       target: 8983

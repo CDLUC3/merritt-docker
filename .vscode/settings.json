@@ -5,5 +5,70 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "docker.commands.composeUp": [
+        {
+            "label": "default",
+            "template": "docker-compose -${configurationFile} up -d"
+        },
+        {
+            "label": "default - rebuild",
+            "template": "docker-compose ${configurationFile} up -d --build"
+        },
+        {
+            "label": "merritt local",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/local.yml up -d"
+        },
+        {
+            "label": "merritt local -- debug ingest",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/local.yml -f mrt-services/debug-ingest.yml up -d"
+        },
+        {
+            "label": "merritt local -- debug inventory",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/local.yml -f mrt-services/debug-inventory.yml up -d"
+        },
+        {
+            "label": "merritt local -- debug storage",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/local.yml -f mrt-services/debug-storage.yml up -d"
+        },
+        {
+            "label": "merritt+dryad local",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/use-volume-dryad.yml -f mrt-services/local.yml up -d"
+        },
+        {
+            "label": "merritt+dryad local -- debug oai",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/use-volume-dryad.yml -f mrt-services/local.yml -f mrt-services/debug-oai.yml up -d"
+        },
+        {
+            "label": "merritt local -- rebuild",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/local.yml up -d --build"
+        },
+        {
+            "label": "merritt local with ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/local.yml -f mrt-services/ui.yml up -d"
+        },
+        {
+            "label": "merritt ec2",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/ec2.yml up -d"
+        },
+        {
+            "label": "merritt ec2 -- rebuild",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml -f mrt-services/ec2.yml up -d --build"
+        },
+    ],
+    "docker.commands.composeDown": [
+        {
+            "label": "default",
+            "template": "docker-compose ${configurationFile} down"
+        },
+        {
+            "label": "merritt",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/use-volume.yml down"
+        },
+        {
+            "label": "merritt+dryad",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/use-volume-dryad.yml down"
+        },
+    ],
+
 }

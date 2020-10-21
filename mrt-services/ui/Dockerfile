@@ -29,7 +29,7 @@ RUN bundle install --jobs 20 --retry 5
 
 COPY mrt-dashboard .
 
-# RUN bundle exec rake assets:precompile
+RUN bundle exec rake assets:precompile
 EXPOSE 3000 8089
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes

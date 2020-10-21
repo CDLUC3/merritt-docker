@@ -29,6 +29,7 @@ RUN bundle install --jobs 20 --retry 5
 
 COPY mrt-dashboard .
 
+ENV SSM_SKIP_RESOLUTION=Y
 RUN bundle exec rake assets:precompile
 EXPOSE 3000 8089
 

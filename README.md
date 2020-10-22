@@ -135,7 +135,6 @@ docker-compose -p merritt down
 |  | [debug-oai.yml](mrt-services/debug-oai.yml) |
 |  | [debug-storage.yml](mrt-services/debug-storage.yml) |
 | UI Testing from mrt-dasboard branch | [ui.yml](mrt-services/ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
-| Volume Config | [use-volume.yml](mrt-services/use-volume.yml) | Persist mysql, pairtree, minio to Docker volumes |a localhost volume |
 | EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume and hostname overrides EC2 dns and paths |
 | Localhost Config | [ec2.yml](mrt-services/local.yml) | hostname |
 | Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
@@ -153,28 +152,28 @@ git submodule update --remote --recursive -- .
 Localhost run
 
 ```
-docker-compose -p merritt_a -f docker-compose.yml -f use-volume.yml -f local.yml up -d
+docker-compose -p merritt_a -f docker-compose.yml -f local.yml up -d
 ```
 
 Localhost run with local ui overrides
 
 ```
-docker-compose -p merritt_a -f docker-compose.yml -f use-volume.yml -f local.yml -f ui.yml up -d
+docker-compose -p merritt_a -f docker-compose.yml -f local.yml -f ui.yml up -d
 ```
 
 Localhost run with Dryad
 
 ```
-docker-compose -p merritt_a -f docker-compose.yml -f dryad.yml -f use-volume-dryad.yml -f local.yml up -d
+docker-compose -p merritt_a -f docker-compose.yml -f dryad.yml -f local.yml up -d
 ```
 
 EC2 run
 
 ```
-sudo docker-compose -f docker-compose.yml -f use-volume.yml -f ec2.yml -p merritt up -d
+sudo docker-compose -f docker-compose.yml -f ec2.yml -p merritt up -d
 ```
 
 EC2 run with Dryad
 ```
-udo docker-compose -f docker-compose.yml -f dryad.yml -f use-volume-dryad.yml -f ec2.yml -p merritt up -d
+udo docker-compose -f docker-compose.yml -f dryad.yml -f ec2.yml -p merritt up -d
 ```

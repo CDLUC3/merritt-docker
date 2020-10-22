@@ -5,6 +5,9 @@
 version: '3.7'
 networks:
   merrittnet:
+volumes:
+  my-db:
+  my-minio:
 services:
   ingest:
     container_name: ingest
@@ -88,6 +91,9 @@ services:
       merrittnet:
     depends_on:
     - db-container
+    - ldap
+    - minio
+    - store
     ports:
     - published: 8089
       target: 8089
@@ -114,6 +120,8 @@ services:
     ports:
     - published: 3306
       target: 3306
+    volumes:
+    - my-db:/var/lib/mysql
   ldap:
     container_name: ldap
     image: cdluc3/mrt-opendj
@@ -132,7 +140,7 @@ services:
     stdin_open: true
     tty: true
   smtp:
-    container_name: smtp
+    container_name: smtp 
     image: namshi/smtp
     networks:
       merrittnet:
@@ -146,6 +154,8 @@ services:
     command: server /data --address :8088
     networks:
       merrittnet:
+    volumes:
+    - my-minio:/data
   # When initializing the minio container for the first time, you will need to create an initial bucket named my-bucket.
   minio-mc:
     container_name: minio-mc

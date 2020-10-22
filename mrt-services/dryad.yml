@@ -3,6 +3,9 @@
 #   All rights reserved
 #*********************************************************************
 version: '3.7'
+volumes:
+  dryad-db:
+  dryad-solr:
 services:
   oai:
     container_name: oai
@@ -80,6 +83,8 @@ services:
       target: 3306
     security_opt:
       - seccomp:unconfined
+    volumes:
+    - dryad-db:/var/lib/mysql
   solr:
     container_name: solr
     image: cdluc3/dryad-solr
@@ -92,3 +97,6 @@ services:
     ports:
     - published: 8085
       target: 8983
+    volumes:
+    - dryad-solr:/var/solr/data/geoblacklight/data
+  

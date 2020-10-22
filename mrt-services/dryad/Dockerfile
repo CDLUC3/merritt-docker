@@ -28,6 +28,7 @@ RUN mkdir -p config/tenants
 COPY tenants/dryad.yml config/tenants/
 COPY stash-notifier/notifier.yml stash/stash-notifier/config/
 
+RUN gem install bundler
 RUN bundle install --jobs 20 --retry 5 && \
     bundle exec rake assets:precompile --trace && \
     cd stash/stash-notifier && \

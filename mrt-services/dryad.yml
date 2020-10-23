@@ -18,6 +18,7 @@ services:
     ports:
     - published: 8083
       target: 8080
+    restart: unless-stopped
     stdin_open: true
     tty: true
   sword:
@@ -31,6 +32,7 @@ services:
     ports:
     - published: 8084
       target: 8080
+    restart: unless-stopped
     stdin_open: true
     tty: true
     volumes:
@@ -58,6 +60,7 @@ services:
     ports:
     - published: 8087
       target: 3000
+    restart: unless-stopped
     stdin_open: true
     tty: true
     entrypoint:

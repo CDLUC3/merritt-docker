@@ -168,6 +168,14 @@ services:
       "
     networks:
       merrittnet:
+  ezid:
+    container_name: ezid
+    image: cdluc3/ezid_mock
+    build: 
+      context: ezid_mock
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
   merritt-init:
     container_name: merritt-init
     image: cdluc3/mrt-init

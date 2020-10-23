@@ -24,10 +24,6 @@ services:
     ports:
     - published: 8080
       target: 8080
-    volumes:
-    - type: bind
-      source: ./no-track/ingest-info.txt
-      target: /tdr/ingest/ingest-info.txt
     stdin_open: true
     tty: true
   store:
@@ -174,6 +170,9 @@ services:
     build: 
       context: ezid_mock
       dockerfile: Dockerfile
+    ports:
+    - published: 4567
+      target: 4567
     networks:
       merrittnet:
   merritt-init:

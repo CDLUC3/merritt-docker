@@ -37,6 +37,6 @@ StorageService: http://store:8080/store
 StorageNode: 7777
 CreationDate: 2010-01-19T13:28:14-08:00
 ModificationDate: 2010-01-26T23:28:14-08:00
-ObjectMinterURL: https://ezid.cdlib.org/shoulder/ark:/99999/fk4
+ObjectMinterURL: http://ezid:4567/shoulder/ark:/99999/fk4
 NotificationType: additional
 Context: cdl_dryaddev

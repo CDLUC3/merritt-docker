@@ -24,10 +24,6 @@ services:
     ports:
     - published: 8080
       target: 8080
-    volumes:
-    - type: bind
-      source: ./no-track/ingest-info.txt
-      target: /tdr/ingest/ingest-info.txt
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -172,6 +168,17 @@ services:
       mc config host add docker http://minio:8088 minioadmin minioadmin;
       mc mb docker/my-bucket;
       "
+    networks:
+      merrittnet:
+  ezid:
+    container_name: ezid
+    image: cdluc3/ezid_mock
+    build: 
+      context: ezid_mock
+      dockerfile: Dockerfile
+    ports:
+    - published: 4567
+      target: 4567
     networks:
       merrittnet:
   merritt-init:

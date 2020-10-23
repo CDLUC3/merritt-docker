@@ -28,6 +28,7 @@ services:
     - type: bind
       source: ./no-track/ingest-info.txt
       target: /tdr/ingest/ingest-info.txt
+    restart: unless-stopped
     stdin_open: true
     tty: true
   store:
@@ -40,8 +41,6 @@ services:
     build:
       context: store
       dockerfile: Dockerfile
-    networks:
-      merrittnet:
     ports:
     - published: 8081
       target: 8080
@@ -51,6 +50,7 @@ services:
       MERRITT_STORE_INFO: store-info-docker
     networks:
       merrittnet:
+    restart: unless-stopped
     stdin_open: true
     tty: true
   inventory:
@@ -66,6 +66,7 @@ services:
     ports:
     - published: 8082
       target: 8080
+    restart: unless-stopped
     stdin_open: true
     tty: true
   zoo:
@@ -79,6 +80,7 @@ services:
     ports:
     - published: 2181
       target: 2181
+    restart: unless-stopped
     stdin_open: true
     tty: true
   ui:
@@ -101,6 +103,7 @@ services:
       SSM_SKIP_RESOLUTION: Y
     volumes:
     - "./docker.html:/var/www/app_name/public/docker.html"
+    restart: unless-stopped
     stdin_open: true
     tty: true
   db-container:
@@ -137,6 +140,7 @@ services:
       target: 1636
     - published: 4444
       target: 4444
+    restart: unless-stopped
     stdin_open: true
     tty: true
   smtp:
@@ -144,6 +148,7 @@ services:
     image: namshi/smtp
     networks:
       merrittnet:
+    restart: unless-stopped
   # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect my-minio-localhost-alias:8088 to localhost:8088.
   minio:
     container_name: minio
@@ -156,6 +161,7 @@ services:
       merrittnet:
     volumes:
     - my-minio:/data
+    restart: unless-stopped
   # When initializing the minio container for the first time, you will need to create an initial bucket named my-bucket.
   minio-mc:
     container_name: minio-mc

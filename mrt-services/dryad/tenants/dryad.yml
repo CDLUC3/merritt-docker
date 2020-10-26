@@ -15,6 +15,8 @@ default: &default
   short_name: "Dryad"
   long_name: "Dryad Digital Repository"
   publisher_id: isni:0000000446638050
+  ror_ids:
+    - https://ror.org/00x6h5n95
   tenant_id: dryad
   identifier_service:
     provider: datacite
@@ -31,11 +33,15 @@ default: &default
   campus_contacts: ["norah.sliger@example.org"]
   data_deposit_agreement: false
   partner_display: false
+  covers_dpc: false
 
-development:
+development: &DEVELOPMENT
   <<: *default
   #Add any items that need to override the defaults here
 
+local_dev:
+  <<: *DEVELOPMENT
+  
 local:
   <<: *default
 

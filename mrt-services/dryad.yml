@@ -60,6 +60,8 @@ services:
     ports:
     - published: 8087
       target: 3000
+    environment:
+      TEST_LOGIN: 'test'
     restart: unless-stopped
     stdin_open: true
     tty: true

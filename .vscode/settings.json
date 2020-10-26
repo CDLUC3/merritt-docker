@@ -78,5 +78,31 @@
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml down"
         },
     ],
+    "docker.commands.attach": [
+        {
+            "label": "default",
+            "template": "docker exec -it ${containerId} ${shellCommand}"
+        },
+        {
+            "label": "check oai",
+            "template": "docker exec merritt-init curl http://oai:8080/oai/oai/v2?verb=Identify"
+        },
+         {
+            "label": "dryad notifier",
+            "template": "docker exec -w /var/www/app_name/stash/stash-notifier dryad bundle exec main.rb"
+        },
+        {
+            "label": "list ingest queue",
+            "template": "docker exec -it zoo listIngest.sh"
+        },
+        {
+            "label": "list inventory queue",
+            "template": "docker exec -it zoo listInventory.sh"
+        },
+        {
+            "label": "list mysql processes",
+            "template": "docker exec -it db-container mysql -u user --password=password --database=db-name -e 'show processlist; '"
+        },
+    ],
 
 }

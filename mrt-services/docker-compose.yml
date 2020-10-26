@@ -189,8 +189,8 @@ services:
       dockerfile: Dockerfile
     networks:
       merrittnet:
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+    # volumes:
+    #  - "/var/run/docker.sock:/var/run/docker.sock"
     entrypoint:
       - /bin/bash
       - '-c'
@@ -204,9 +204,10 @@ services:
           echo "*** Prompt OAI service"
           curl http://oai:8080/oai/oai/v2?verb=Identify
           echo "*** Service Init Complete"
+          # --- comment out since this does not run in all environments ---
           while(true)
           do
-            echo "*** Pause 60 seconds then run dryad notifier"
+            # echo "*** Pause 60 seconds then run dryad notifier"
             sleep 60
-            docker exec -w /var/www/app_name/stash/stash-notifier dryad bundle exec main.rb
+            # docker exec -w /var/www/app_name/stash/stash-notifier dryad bundle exec main.rb
           done

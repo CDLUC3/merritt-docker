@@ -124,6 +124,4 @@
             "template": "docker exec -it db-container mysql -u user --password=password --database=db-name -e 'show processlist; '"
         },
     ],
-    "java.home": "/usr/lib/jvm/java-11-openjdk",
-
 }

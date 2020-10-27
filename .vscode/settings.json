@@ -33,7 +33,11 @@
         },
         {
             "label": "merritt+dryad local",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml-f mrt-services/local.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/local.yml up -d"
+        },
+        {
+            "label": "merritt+dryad local - rebuild",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/local.yml up -d --build"
         },
         {
             "label": "merritt+dryad local -- debug oai",

@@ -31,7 +31,7 @@ COPY mrt-dashboard .
 
 ENV SSM_SKIP_RESOLUTION=Y
 RUN bundle exec rake assets:precompile
-EXPOSE 3000 8089
+EXPOSE 3000 8089 1234
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
 ENV TZ=America/Los_Angeles

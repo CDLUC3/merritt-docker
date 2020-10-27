@@ -52,6 +52,10 @@
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/ui.yml up -d"
         },
         {
+            "label": "merritt local -- with ui + debug",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/debug-ui.yml up -d"
+        },
+        {
             "label": "merritt ec2",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml up -d"
         },

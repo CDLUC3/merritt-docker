@@ -1,0 +1,29 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: "3.7"
+services:
+  ui:
+    ports:
+      - published: 1234
+        target: 1234
+    entrypoint:
+      [
+        "bundle",
+        "exec",
+        "rdebug-ide",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "1234",
+        "--dispatcher-port",
+        "26162",
+        "--",
+        "/var/www/app_name/bin/rails",
+        "s",
+        "-b",
+        "0.0.0.0",
+        "-p",
+        "8089"
+      ]

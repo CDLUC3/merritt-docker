@@ -21,3 +21,23 @@ export PATH=$JAVA_HOME/bin:$HOME/bin:$PATH
 
 ## Using VSCode with your own git credentials
 
+## Start Services
+
+- Navigate to mrt-services/docker-compose.yml
+- Right click, select Compose Up
+- Choose your configuration to start
+
+## Start Java Debug Session
+
+- Start a compose configuration including a debug container
+- From the Debug tag, start "Debug Attach Remote"
+- Add a breakpoint in the appropriate code base
+- Navigate to the proper endpoint to trigger the debug
+
+## Start Ruby Debug Session
+
+- Start a compose configuration including a Ruby container (UI)
+- From the Debug tag, start "Listen for rdebug-ide"
+  - Note that the service will not start until the debugger is active
+- Add a breakpoint in the appropriate code base
+- Navigate to the proper endpoint to trigger the debug

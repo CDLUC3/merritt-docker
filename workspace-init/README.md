@@ -18,6 +18,7 @@ export PATH=$JAVA_HOME/bin:$HOME/bin:$PATH
 - Connect to the remote host as the role account
 - Open the folder ~/merritt-docker to create the workspace.
   - This will load the settings in .~/merritt-docker/vscode directory.
+- The project contains extension recommendations.  Accept those recommendations.
 
 ## Using VSCode with your own git credentials
 

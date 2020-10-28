@@ -36,6 +36,18 @@
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/debug-storage.yml up -d"
         },
         {
+            "label": "LOCAL merritt -- debug ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/debug-ui.yml up -d"
+        },
+        {
+            "label": "LOCAL merritt with ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/ui.yml up -d"
+        },
+        {
+            "label": "LOCAL merritt with ui -- debug ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/ui.yml -f mrt-services/debug-ui.yml up -d"
+        },
+        {
             "label": "LOCAL merritt+dryad",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/local.yml up -d"
         },
@@ -46,10 +58,6 @@
         {
             "label": "LOCAL merritt+dryad -- debug oai",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/local.yml -f mrt-services/debug-oai.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt with ui",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/ui.yml up -d"
         },
         {
             "label": "EC2 merritt",
@@ -70,6 +78,18 @@
         {
             "label": "EC2 merritt -- debug storage",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/debug-storage.yml up -d"
+        },
+        {
+            "label": "EC2 merritt -- debug ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/debug-ui.yml up -d"
+        },
+        {
+            "label": "EC2 merritt with ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/ui.yml up -d"
+        },
+        {
+            "label": "EC2 merritt with ui -- debug ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/ui.yml -f mrt-services/debug-ui.yml up -d"
         },
         {
             "label": "EC2 merritt+dryad",

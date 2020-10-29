@@ -10,7 +10,8 @@
 
 - Clone the init script into the role account directory
 ```
-git clone git clone https://github.com/CDLUC3/merritt-docker workspace-init
+curl -o merritt-docker-dev-init.sh https://raw.githubusercontent.com/CDLUC3/merritt-docker/master/workspace-init/merritt-docker-dev-init.sh
+chmod 744 merritt-docker-dev-init.sh
 ```
 
 - [x] Ensure that the environment variables are set

@@ -3,7 +3,7 @@
 ## Pre-requisites
 
 - Remove github_rsa and github_rsa.pub for the role account.
-  - [x] Terry will remove these.
+  - [x] Terry will remove these..
 
 - Install public keys for the team in ~/.ssh/authorized_keys.
   - [ ] Ashley will move this to puppet control

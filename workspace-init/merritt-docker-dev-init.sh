@@ -22,7 +22,7 @@ git pull
 
 cd ../mrt-cloud
 git fetch
-git checkout minio-8088-only
+git checkout master
 git pull
 
 cd ../mrt-core2

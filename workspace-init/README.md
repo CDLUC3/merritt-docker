@@ -27,8 +27,14 @@ ssh-add -l
 
 - Run the init script from the role account using established git credentials
 ```
-./workspace-init/merritt-docker-dev-init.sh
+~/merritt-docker-dev-init.sh
 ```
+
+- Run the build script from the role account using established git credentials
+```
+~/merritt-workspace/merritt-docker/workspace-init/merritt-docker-dev-build.sh
+```
+
 
 ## VSCode Setup
 - Connect to the remote host as the role account

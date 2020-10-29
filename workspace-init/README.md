@@ -2,16 +2,31 @@
 
 ## Pre-requisites
 
-- Install github_rsa and github_rsa.pub for the role account.
+- Remove github_rsa and github_rsa.pub for the role account.
+  - [ ] Terry will remove these
+
 - Install public keys for the team in ~/.ssh/authorized_keys.
-- Clone the merritt-docker repo into the role account directory
+  - [ ] Ashley will move this to puppet control
+
+- Clone the init script into the role account directory
 ```
-git clone git@github.com:CDLUC3/merritt-docker.git
+git clone git clone https://github.com/CDLUC3/merritt-docker workspace-init
 ```
-- Ensure that the environment variables are set
+
+- [x] Ensure that the environment variables are set
 ```
 export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
 export PATH=$JAVA_HOME/bin:$HOME/bin:$PATH
+```
+
+- Confirm that ssh credentials have been carried into the session
+```
+ssh-add -l
+```
+
+- Run the init script from the role account using established git credentials
+```
+./workspace-init/merritt-docker-dev-init.sh
 ```
 
 ## VSCode Setup

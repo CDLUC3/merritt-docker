@@ -1,0 +1,17 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.7'
+services:
+  ui:
+    environment:
+      SSM_SKIP_RESOLUTION: 
+      SSM_ROOT_PATH: /uc3/mrt/dev/
+      RAILS_ENV: development
+      RACK_ENV: development
+  inventory:
+    environment:
+      SSM_SKIP_RESOLUTION: 
+      SSM_ROOT_PATH: /uc3/mrt/dev/
+      DOCKER_ENV: development

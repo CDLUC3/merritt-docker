@@ -105,6 +105,8 @@ services:
     volumes:
     - dryad-solr:/var/solr/data/geoblacklight/data
   merritt-init:
+    depends_on:
+    - oai
     entrypoint:
       - /bin/bash
       - '-c'
@@ -114,17 +116,13 @@ services:
           echo "*** Pause 30 seconds then init the inventory service"
           sleep 30
           echo "*** Starting the inventory service"
-          curl -X POST http://inventory:8080/inventory/service/start?t=json
+          curl -v -X POST http://inventory:8080/inventory/service/start?t=json
           echo "*** Pause 30 seconds then ping the OAI service"
           sleep 30
           echo "*** Prompt OAI service"
-          curl http://oai:8080/oai/oai/v2?verb=Identify
+          curl -v -H "Content-Type: application/xml" http://oai:8080/oai/oai/v2?verb=Identify
+          sleep 30
+          echo "*** Prompt OAI service - repeat"
+          curl -v -H "Content-Type: application/xml" http://oai:8080/oai/oai/v2?verb=Identify
           echo "*** Service Init Complete"
-          # --- comment out since this does not run in all environments ---
-          while(true)
-          do
-            # echo "*** Pause 60 seconds then run dryad notifier"
-            sleep 60
-            # docker exec -w /var/www/app_name/stash/stash-notifier dryad bundle exec main.rb
-          done
-  
+

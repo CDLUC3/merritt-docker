@@ -203,4 +203,4 @@ services:
           echo "*** Pause 30 seconds then init the inventory service"
           sleep 30
           echo "*** Starting the inventory service"
-          curl -X POST http://inventory:8080/inventory/service/start?t=json
+          curl -v -X POST http://inventory:8080/inventory/service/start?t=json

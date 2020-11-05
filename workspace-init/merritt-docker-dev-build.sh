@@ -30,7 +30,7 @@ git pull
 
 cd ../mrt-inventory
 git fetch
-git checkout master
+git checkout invssm
 git pull
 
 cd ../mrt-zoo
@@ -57,7 +57,7 @@ git pull
 
 cd ../../inventory/mrt-inventory
 git fetch
-git checkout master
+git checkout invssm
 git pull
 
 cd ../../oai/mrt-oai

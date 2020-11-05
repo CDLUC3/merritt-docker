@@ -25,8 +25,6 @@ RUN mkdir /usr/local/tomcat/webapps/inventory && \
 
 RUN mkdir -p /apps/replic/tst/inv/log /tdr/tmpdir
 
-COPY inv-info.txt /apps/replic/tst/inv/
-
 ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64"
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes

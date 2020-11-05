@@ -14,4 +14,4 @@ services:
     environment:
       SSM_SKIP_RESOLUTION: 
       SSM_ROOT_PATH: /uc3/mrt/dev/
-      DOCKER_ENV: development
+      MERRITT_INV_INFO: inv-info-docker-dev

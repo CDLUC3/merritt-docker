@@ -1,6 +1,6 @@
 #! /bin/sh
 
-cd ~/merritt-workspace
+cd ~dpr2/merritt-workspace
 
 rm -rf merritt-docker merritt-docker-prv
 

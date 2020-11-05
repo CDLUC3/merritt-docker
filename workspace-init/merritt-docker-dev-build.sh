@@ -1,6 +1,6 @@
 #! /bin/sh
 
-cd ~/merritt-workspace/merritt-docker
+cd ~dpr2/merritt-workspace/merritt-docker
 
 git fetch
 git checkout master

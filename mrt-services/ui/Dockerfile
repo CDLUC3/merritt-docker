@@ -28,6 +28,8 @@ RUN bundle install --jobs 20 --retry 5
 # Adding project files
 
 COPY mrt-dashboard .
+# Build a discardable master.key and credentials.yml.enc file for docker deployment
+RUN EDITOR=nano rails credentials:edit
 
 ENV SSM_SKIP_RESOLUTION=Y
 RUN bundle exec rake assets:precompile

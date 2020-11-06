@@ -87,8 +87,8 @@ git pull
 # The following gems will run locally on the server to support debug
 # gem install bundler:2.1.4
 # gem install ruby-debug-ide --pre
-gem install mysql2 -v '0.5.3' --source 'http://rubygems.org/'
-bundle install --path vendor/bundle
+# gem install mysql2 -v '0.5.3' --source 'http://rubygems.org/'
+# bundle install --path vendor/bundle
 
 cd ../../../mrt-dependencies
 docker-compose build

@@ -2,16 +2,10 @@
 
 ## Pre-requisites
 
-- Remove github_rsa and github_rsa.pub for the role account.
-  - [x] Terry will remove these..
-
-- Install public keys for the team in ~/.ssh/authorized_keys.
-  - [ ] Ashley will move this to puppet control
-
 - Clone the init script into the role account directory
 ```
-curl -o merritt-docker-dev-init.sh https://raw.githubusercontent.com/CDLUC3/merritt-docker/master/workspace-init/merritt-docker-dev-init.sh
-chmod 744 merritt-docker-dev-init.sh
+curl -o ~dpr2/bin/merritt-docker-dev-init.sh https://raw.githubusercontent.com/CDLUC3/merritt-docker/master/workspace-init/merritt-docker-dev-init.sh
+chmod 754 ~dpr2/bin/merritt-docker-dev-init.sh
 ```
 
 - [x] Ensure that the environment variables are set
@@ -25,20 +19,26 @@ export PATH=$JAVA_HOME/bin:$HOME/bin:$PATH
 ssh-add -l
 ```
 
-- Run the init script from the role account using established git credentials
+- Run the init script from personal user account using established git credentials
 ```
-~/merritt-docker-dev-init.sh
+~/bin/merritt-docker-dev-init.sh
 ```
 
-- Run the build script from the role account using established git credentials
+_If this is to be run in VSCode:_ 
+- make an ssh connection from user account 
+- run this in a terminal 
+- THEN add a folder to VSCode project ~dpr2/merritt-workspace/merritt-docker
+
+- Run the build script from user account using established git credentials
 ```
-~/merritt-workspace/merritt-docker/workspace-init/merritt-docker-dev-build.sh
+~dpr2/merritt-workspace/merritt-docker/workspace-init/merritt-docker-dev-build.sh
 ```
 
 
 ## VSCode Setup
-- Connect to the remote host as the role account
-- Open the folder ~/merritt-docker to create the workspace.
+- Connect to the remote host as user account
+  - be sure to ssh -A to bring github credentials
+- Open the folder ~dpr2/merritt-workspace/merritt-docker to create the workspace.
   - This will load the settings in .~/merritt-docker/vscode directory.
 - The project contains extension recommendations.  Accept those recommendations.
 

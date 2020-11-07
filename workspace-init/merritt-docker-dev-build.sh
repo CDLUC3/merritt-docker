@@ -84,11 +84,14 @@ cd ../../ui/mrt-dashboard
 git fetch
 git checkout rails5-5.2conf
 git pull
-# The following gems will run locally on the server to support debug
+# Consider: scripting the following to enable irb, rubocop, etc
+# mkdir -p ~/gems
+# export GEM_HOME=~/gems
+# export RAILS_ENV=docker
+# export GEM_PATH=~/gems
+# bundle install
 # gem install bundler:2.1.4
-# gem install ruby-debug-ide --pre
-# gem install mysql2 -v '0.5.3' --source 'http://rubygems.org/'
-# bundle install --path vendor/bundle
+# ~/.gem/ruby/gems/bundler-2.1.4/exe/bundler exec irb
 
 cd ../../../mrt-dependencies
 docker-compose build

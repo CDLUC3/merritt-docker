@@ -88,6 +88,14 @@
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/debug-ui.yml up -d"
         },
         {
+            "label": "EC2 merritt with ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/ui.yml up -d"
+        },
+        {
+            "label": "EC2 merritt with ui -- debug ui",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/ui.yml -f mrt-services/debug-ui.yml up -d"
+        },
+        {
             "label": "EC2 merritt+dryad",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/ec2.yml up -d"
         },

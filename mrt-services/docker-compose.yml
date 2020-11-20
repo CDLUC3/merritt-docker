@@ -119,9 +119,6 @@ services:
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'root-password'
-    ports:
-    - published: 3306
-      target: 3306
     volumes:
     - my-db:/var/lib/mysql
   ldap:

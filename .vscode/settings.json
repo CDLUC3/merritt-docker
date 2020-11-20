@@ -16,6 +16,10 @@
             "template": "docker-compose ${configurationFile} up -d --build"
         },
         {
+            "label": "mysql-rspec",
+            "template": "docker-compose -f mrt-services/mysql-rspec.yml up -d"
+        },
+        {
             "label": "LOCAL merritt",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml up -d"
         },

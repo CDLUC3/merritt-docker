@@ -84,6 +84,18 @@ cd ../../ui/mrt-dashboard
 git fetch
 git checkout rails5-5.2conf
 git pull
+
+export RAILS_ENV=test
+bundle install
+gem install colorize
+gem install capybara
+gem install webmock
+gem install capybara-webmock
+gem install json
+gem install equivalent-xml
+gem install diffy
+gem install factory_bot
+gem install chrome
 # Consider: scripting the following to enable irb, rubocop, etc
 # mkdir -p ~/gems
 # export GEM_HOME=~/gems

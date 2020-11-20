@@ -1,0 +1,25 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+
+# mysql -h 127.0.0.1 -P 3306 -u root
+ 
+version: '3.7'
+services:
+  mysql-rspec:
+    container_name: mysql-rspec
+    image: cdluc3/mrt-database
+    build:
+      context: mysql
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'mrt_dashboard_test'
+      MYSQL_USER: 'travis'
+      MYSQL_PASSWORD: ''
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: Y
+    ports:
+    - published: 3306
+      target: 3306

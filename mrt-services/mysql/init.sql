@@ -311,6 +311,9 @@ CREATE TABLE `sha_dublinkernels` (
 #CREATE USER user@'%';
 GRANT ALL ON *.* to 'user'@'%';
 
+CREATE USER travis@'%';
+GRANT ALL ON *.* to 'travis'@'%';
+
 ALTER USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
 
 flush privileges;

@@ -181,6 +181,7 @@ services:
       target: 4567
     networks:
       merrittnet:
+    restart: unless-stopped
   merritt-init:
     container_name: merritt-init
     image: cdluc3/mrt-init

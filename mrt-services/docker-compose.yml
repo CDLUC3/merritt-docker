@@ -53,6 +53,7 @@ services:
     container_name: inventory
     depends_on:
     - zoo
+    - ezid
     image: cdluc3/mrt-inventory
     build:
       context: inventory

@@ -20,3 +20,6 @@ services:
       SSM_SKIP_RESOLUTION: 
       NODE_TABLE: nodes-dev
       MERRITT_STORE_INFO: store-info-dev-docker
+  ingest:
+    volumes:
+    - ./ingest/profiles-dev/:/tdr/ingest/profiles/

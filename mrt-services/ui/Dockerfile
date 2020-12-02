@@ -34,7 +34,9 @@ COPY mrt-dashboard .
 RUN EDITOR=nano rails credentials:edit
 
 ENV SSM_SKIP_RESOLUTION=Y
-RUN bundle exec rake assets:precompile
+RUN bundle exec rake assets:precompile && \
+    bundle exec rails dev:cache
+    
 EXPOSE 3000 8089 1234
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes

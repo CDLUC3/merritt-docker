@@ -6,7 +6,7 @@ rm -rf merritt-docker merritt-docker-prv
 
 git clone git@github.com:CDLUC3/merritt-docker.git
 git clone git@github.com:cdlib/merritt-docker-prv.git
-git clone git@github.com:cdlib/mrt-integ-tests.git
+git clone git@github.com:cdluc3/mrt-integ-tests.git
 
 mkdir merritt-docker/mrt-services/no-track
 cp -r merritt-docker-prv/* merritt-docker/mrt-services/no-track

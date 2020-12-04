@@ -17,7 +17,7 @@ services:
     environment:
       MYSQL_DATABASE: 'mrt_dashboard_test'
       MYSQL_USER: 'travis'
-      MYSQL_PASSWORD: ''
+      MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: Y
     ports:

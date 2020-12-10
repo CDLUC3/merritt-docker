@@ -12,10 +12,10 @@ WORKDIR /tmp/mrt-ingest
 ADD mrt-ingest /tmp/mrt-ingest
 
 # The following dependencies help the service build in Docker
-COPY batch-war.pom.xml /tmp/mrt-ingest/batch-war/pom.xml
-COPY batch-war.assembly.xml /tmp/mrt-ingest/batch-war/assembly.xml
+COPY batch-war.pom.xml /tmp/mrt-ingest/ingest-war/pom.xml
+COPY batch-war.assembly.xml /tmp/mrt-ingest/ingest-war/assembly.xml
 
-RUN mvn install -D=environment=local -Denforcer.skip=true && \
+RUN mvn install -Denforcer.skip=true && \
     mvn clean
 
 FROM tomcat:8-jre8
@@ -26,9 +26,6 @@ EXPOSE 8080 8009
 RUN mkdir -p /tdr/ingest/queue && \
     ln -s /tdr/ingest/queue /usr/local/tomcat/webapps/ingestqueue
 
-COPY ingest-info.txt /tdr/ingest/
-COPY queue.txt /tdr/ingest/
-COPY stores.txt /tdr/ingest/
 COPY profiles /tdr/ingest/profiles/
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes

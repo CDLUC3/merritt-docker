@@ -31,7 +31,7 @@ RUN cd mrt-zoo && mvn install && mvn clean
 # The ingest-war artifact require errors out when calling git inside of Docker
 #  -pl '!ingest-war'
 RUN cd mrt-ingest && \
-    mvn install -D=environment=development  -Denforcer.skip=true -pl '!ingest-war' && \
+    mvn install -Denforcer.skip=true -pl '!ingest-war' && \
     mvn clean
 
 # Add the cloud services jar file

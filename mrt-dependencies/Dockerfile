@@ -28,10 +28,10 @@ RUN cd cdl-zk-queue && mvn install && mvn clean
 RUN cd mrt-zoo && mvn install && mvn clean
 
 # The ingest service includes so many external libraries that it is built here
-# The batch-war artifact require errors out when calling git inside of Docker
-#  -pl '!batch-war'
+# The ingest-war artifact require errors out when calling git inside of Docker
+#  -pl '!ingest-war'
 RUN cd mrt-ingest && \
-    mvn install -D=environment=development  -Denforcer.skip=true -pl '!batch-war' && \
+    mvn install -D=environment=development  -Denforcer.skip=true -pl '!ingest-war' && \
     mvn clean
 
 # Add the cloud services jar file

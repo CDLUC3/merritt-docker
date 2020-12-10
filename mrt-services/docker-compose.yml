@@ -19,6 +19,9 @@ services:
     build:
       context: ingest
       dockerfile: Dockerfile
+    environment:
+      SSM_SKIP_RESOLUTION: Y
+      MERRITT_INGEST: ingest-docker
     networks:
       merrittnet:
     ports:

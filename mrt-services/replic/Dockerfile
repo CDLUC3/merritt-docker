@@ -17,6 +17,8 @@ RUN mvn install && \
 FROM tomcat:8-jre8
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-replicationwar/1.0-SNAPSHOT/mrt-replicationwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/replic.war
 
+RUN mkdir -p /tdr/tmpdir/logs 
+
 EXPOSE 8080 8009
 
 ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64"

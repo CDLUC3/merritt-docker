@@ -15,6 +15,10 @@ services:
     ports:
     - published: 8092
       target: 8080
+    environment:
+      SSM_SKIP_RESOLUTION: Y
+      MERRITT_REPLIC_INFO: replic-info-docker
+      NODE_TABLE: nodes-pairtree-docker
     restart: unless-stopped
     stdin_open: true
     tty: true

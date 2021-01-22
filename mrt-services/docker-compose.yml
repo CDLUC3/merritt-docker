@@ -171,6 +171,7 @@ services:
       sleep 15;
       mc config host add docker http://minio:8088 minioadmin minioadmin;
       mc mb docker/my-bucket;
+      mc mb docker/my-bucket-repl;
       "
     networks:
       merrittnet:

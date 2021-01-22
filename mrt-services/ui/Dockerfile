@@ -48,4 +48,6 @@ RUN mkdir /usr/local/share/ca-certificates/extra
 COPY ldap-ca.crt /usr/local/share/ca-certificates/extra/ldap-ca.crt
 RUN /usr/sbin/update-ca-certificates
 
+RUN echo Docker Build `date` > .version
+
 CMD ["bundle", "exec", "puma", "-C", "config/application.rb", "-p", "8089"]

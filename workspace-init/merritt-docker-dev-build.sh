@@ -67,7 +67,7 @@ git pull
 
 cd ../../replic/mrt-replic
 git fetch
-git checkout master
+git checkout replicssm
 git pull
 
 cd ../../store/mrt-store

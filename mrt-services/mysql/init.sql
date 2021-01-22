@@ -362,6 +362,55 @@ and not inv_dublinkernels.value='(:unas)';
 # Configure content
 
 insert into inv_collections(ark,name,mnemonic,harvest_privilege)
-select 'ark:/13030/m5rn35s8','demo','demo','public'
+select 'ark:/13030/m5rn35s8','demo','merritt_demo','public'
 union
 select 'ark:/13030/m5qv8jks','cdl_dryaddev','cdl_dryaddev','public';
+
+insert into inv_nodes(
+  number,
+  media_type,
+  media_connectivity,
+  access_mode,
+  access_protocol,
+  node_form,
+  node_protocol,
+  logical_volume,
+  external_provider,
+  verify_on_read,
+  verify_on_write,
+  base_url
+)
+select
+  7777,
+  'magnetic-disk',
+  'cloud',
+  'on-line',
+  's3',
+  'physical',
+  'http',
+  'yaml:7777',
+  'nodeio',
+  1,
+  1,
+  'http://store:8080/store'
+union
+select
+  8888,
+  'magnetic-disk',
+  'cloud',
+  'on-line',
+  's3',
+  'physical',
+  'http',
+  'yaml:8888',
+  'nodeio',
+  1,
+  1,
+  'http://store:8080/store'
+;
+
+insert into inv_collections_inv_nodes(inv_collection_id, inv_node_id)
+select 
+  (select id from inv_collections where name='demo'),
+  (select id from inv_nodes where number='8888')
+;

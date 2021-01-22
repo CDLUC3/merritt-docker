@@ -402,7 +402,7 @@ select
   's3',
   'physical',
   'http',
-  'yaml:8888',
+  'yaml:|8888',
   'nodeio',
   1,
   1,

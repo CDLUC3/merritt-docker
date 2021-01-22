@@ -7,11 +7,19 @@
               function(){
                   var host = document.location.host.replace(/:.*$/,'');
                   $("a.ref").each(function(){
-                      $(this).attr("href", "http://"+host+$(this).attr("data"));
+                    $(this).attr("href", "http://"+host+$(this).attr("data"));
+                  });
+                  $("form.ref").each(function(){
+                    $(this).attr("action", "http://"+host+$(this).attr("data"));
                   });
               }
           );
-        </script>
+       </script>
+       <style type="text/css">
+         form.ref {
+             display: inline;
+         }
+       </style>
     </head>
     <body>
         <h1>Merritt Docker Index</h1>
@@ -27,7 +35,14 @@
             </ul>
             <h2>Audit/Replic Containers (If enabled)</h2>
             <ul>
-                <li><a class="ref" data=":8092/replic/state">Replic Service State</a></li>
+                <li>
+                    <a class="ref" data=":8092/replic/state">Replic Service State</a>
+                    <fieldset>
+                        <legend>The service must be started/stopped explicitly</legend>
+                        <form class="ref" data=":8092/replic/service/start" method="POST"><input type="submit" value="Replic Service Start"/></form>
+                        <form class="ref" data=":8092/replic/service/pause" method="POST"><input type="submit" value="Replic Service Pause"/></form>
+                    </fieldset>
+                </li>
             </ul>
             <h2>Dryad Containers (If enabled)</h2>
             <ul>

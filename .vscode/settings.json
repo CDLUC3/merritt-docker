@@ -64,6 +64,14 @@
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/local.yml -f mrt-services/debug-oai.yml up -d"
         },
         {
+            "label": "LOCAL merritt+audit/replic",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/local.yml up -d"
+        },
+        {
+            "label": "LOCAL merritt+audit/replic - rebuild",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/local.yml up -d --build"
+        },
+        {
             "label": "EC2 merritt",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml up -d"
         },
@@ -115,6 +123,14 @@
             "label": "EC2 merritt+dryad -- debug oai",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/ec2.yml -f mrt-services/debug-oai.yml up -d"
         },
+        {
+            "label": "EC2 merritt+audit/replic",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/ec2.yml up -d"
+        },
+        {
+            "label": "EC2 merritt+audit/replic -- rebuild",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/ec2.yml up -d --build"
+        },
     ],
     "docker.commands.composeDown": [
         {
@@ -128,6 +144,10 @@
         {
             "label": "merritt+dryad",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml down"
+        },
+        {
+            "label": "merritt+audit/replic",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml down"
         },
     ],
     "docker.commands.attach": [

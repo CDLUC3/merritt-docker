@@ -1,0 +1,20 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.7'
+services:
+  replic:
+    container_name: replic
+    image: cdluc3/mrt-replic
+    build:
+      context: replic
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 8092
+      target: 8080
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

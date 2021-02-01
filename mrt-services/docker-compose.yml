@@ -207,3 +207,38 @@ services:
           sleep 30
           echo "*** Starting the inventory service"
           curl -v -X POST http://inventory:8080/inventory/service/start?t=json
+  lambda-container:
+    image: cdluc3/uc3-mrt-colladmin-lambda
+    build:
+      context: mrt-admin-lambda/src-colladmin
+      dockerfile: Dockerfile
+    environment:
+      SSM_SKIP_RESOLUTION: Y
+      MERRITT_ADMIN_CONFIG: development
+      USE_MYSQL: N
+      USE_S3: N
+      INGEST_SERVICES: "http://ingest:8080/ingest/"
+    stdin_open: true
+    tty: true
+    ports:
+    - published: 8090
+      target: 8080
+    networks:
+      merrittnet:
+  alb-simulate:
+    container_name: alb-simulate
+    image: cdluc3/simulate-lambda-alb
+    build:
+      context: mrt-admin-lambda/simulate-lambda-alb
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    environment:
+      LAMBDA_DOCKER_HOST: http://lambda-container:8080
+    ports:
+    - published: 8091
+      target: 8091
+    depends_on:
+    - lambda-container
+    volumes:
+    - "./mrt-admin-lambda/web/:/web/"

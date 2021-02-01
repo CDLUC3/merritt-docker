@@ -83,7 +83,18 @@ git fetch
 git checkout rails5-5.2conf
 git pull
 
-cd ../../../mrt-dependencies
+cd ../../mrt-admin-lambda
+git fetch
+git checkout main
+git pull
+
+cd ../../mrt-dependencies
 docker-compose build
+
 cd ../mrt-services
 docker-compose build
+
+cd mrt-admin-lambda
+docker-compose build
+docker-compose -f docker-compose.yml -f admintool.yml build
+docker-compose -f docker-compose.yml -f colladmin.yml build

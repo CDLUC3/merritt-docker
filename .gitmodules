@@ -43,3 +43,6 @@
 [submodule "mrt-services/replic/mrt-replic"]
 	path = mrt-services/replic/mrt-replic
 	url = git@github.com:cdluc3/mrt-replic
+[submodule "mrt-services/mrt-admin-lambda"]
+	path = mrt-services/mrt-admin-lambda
+	url = git@github.com:CDLUC3/mrt-admin-lambda

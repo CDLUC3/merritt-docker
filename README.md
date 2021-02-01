@@ -60,7 +60,11 @@ This repository uses git submodules to pull in code to be built.
 
 Credentials for non-Docker services will be mounted from files within **mrt-services/no-track**.
 
-Files in this directory are not tracked by github.
+Files in this directory are not tracked by github.  These dependencies have been almost entirely eliminated due to the SSM refactoring of merritt services.
+
+## Build and Start Services in VSCode
+
+See [.vscode/settings.json](.vscode/settings.json) for build and stack initiation configurations.
 
 ## Build instructions
 
@@ -140,9 +144,10 @@ docker-compose -p merritt down
 |  | [debug-storage.yml](mrt-services/debug-storage.yml) |
 | UI Testing from mrt-dasboard branch | [ui.yml](mrt-services/ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
 | EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume and hostname overrides EC2 dns and paths |
-| Localhost Config | [ec2.yml](mrt-services/local.yml) | hostname |
+| Localhost Config | [local.yml](mrt-services/local.yml) | hostname |
 | Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
 | Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
+| Audit Replic | [audit-replic.yml](mrt-services/audit-replic.yml) | Configuration of Audit Replic services for Merritt |
 
 ## Repo Init
 

@@ -46,3 +46,4 @@
 [submodule "mrt-services/mrt-admin-lambda"]
 	path = mrt-services/mrt-admin-lambda
 	url = git@github.com:CDLUC3/mrt-admin-lambda
+	branch = main

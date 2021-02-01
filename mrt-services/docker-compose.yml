@@ -208,6 +208,8 @@ services:
           echo "*** Starting the inventory service"
           curl -v -X POST http://inventory:8080/inventory/service/start?t=json
   lambda-container:
+    # The Merritt Admin Tool needs only the database to run. It does not need this stack to run.
+    # The Merritt Collection Admin Tool can be tested from this application stack.
     image: cdluc3/uc3-mrt-colladmin-lambda
     build:
       context: mrt-admin-lambda/src-colladmin

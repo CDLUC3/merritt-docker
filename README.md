@@ -24,13 +24,15 @@ The following dependencies are needed to build and run this repo.  The goal is t
 
 ## Component Overview
 
+The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI and it provides access to individual containers.
+
 | Component   | Image Name | Where the component runs | Notes |
 | ----------- | ---------- | ------------------------ | ----- |
 | Java dependencies | cdluc3/mrt-dependencies | Docker | Base image for other microservices. All service properties are currently mocked in the jar file. |
 | Zookeeper   | zookeeper | Docker | |
 | OpenDJ      | ldap      | Docker | |
 | MySQL       | cdluc3/mrt-database | Docker | |
-| UI          | cdluc3/mrt-dashboard | Docker | LDAP connection info is passed in via an untracked file |
+| UI          | cdluc3/mrt-dashboard | Docker | |
 | Ingest      | cdluc3/mrt-ingest | Docker | |
 | Storage     | cdluc3/mrt-storage | Docker | |
 | Inventory   | cdluc3/mrt-inventory | Docker | |
@@ -40,11 +42,13 @@ The following dependencies are needed to build and run this repo.  The goal is t
 | Dryad MySQL | mysql:5.7 | Docker | Populated with Rails Migration Script |
 | Dryad SOLR  | cdluc3/dryad-solr | Docker | |
 | Audit       | | | Not yet containerized |
-| Replic      | | | Not yet containerized |
+| Replic      | | | Runs as part of the Audit/Replic Stack |
 | Merritt Init| cdluc3/mrt-init | Docker | Init OAI and inventory services.  Run Dryad notifier. |
 | Apache      | cdluc3/mrt-apache | Docker | Supports cloudhost retrieval of assembled versions and objects |
 | Minio       | minio/minio | Docker | Containerized storage service - for testing presigned functionality |
 | Minio Cmd   | minio/mc | Docker | Initialized bucket in Minio container |
+| ALB Simulator | cdluc3/simulate-lambda-alb | Docker | Simulates an ALB running in front of a Lambda for Collection Admin |
+| Collection Admin | cdluc3/uc3-mrt-colladmin-lambda | Docker | Merritt collection admin tool |
 
 ## Docker Image Publishing
 Details about docker image publishing are TBD.
@@ -56,7 +60,11 @@ This repository uses git submodules to pull in code to be built.
 
 Credentials for non-Docker services will be mounted from files within **mrt-services/no-track**.
 
-Files in this directory are not tracked by github.
+Files in this directory are not tracked by github.  These dependencies have been almost entirely eliminated due to the SSM refactoring of merritt services.
+
+## Build and Start Services in VSCode
+
+See [.vscode/settings.json](.vscode/settings.json) for build and stack initiation configurations.
 
 ## Build instructions
 
@@ -136,9 +144,10 @@ docker-compose -p merritt down
 |  | [debug-storage.yml](mrt-services/debug-storage.yml) |
 | UI Testing from mrt-dasboard branch | [ui.yml](mrt-services/ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
 | EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume and hostname overrides EC2 dns and paths |
-| Localhost Config | [ec2.yml](mrt-services/local.yml) | hostname |
+| Localhost Config | [local.yml](mrt-services/local.yml) | hostname |
 | Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
 | Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
+| Audit Replic | [audit-replic.yml](mrt-services/audit-replic.yml) | Configuration of Audit Replic services for Merritt |
 
 ## Repo Init
 

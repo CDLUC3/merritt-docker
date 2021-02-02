@@ -1,7 +1,8 @@
 #! /bin/sh
 
 git fetch
-git checkout master
+# do not overwrite merritt-docker branch
+# git checkout master
 git pull
 
 cd mrt-dependencies

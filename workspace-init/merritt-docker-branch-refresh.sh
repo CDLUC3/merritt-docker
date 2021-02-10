@@ -51,12 +51,12 @@ git pull
 
 cd ../../ingest/mrt-ingest
 git fetch
-git checkout master
+git checkout admin
 git pull
 
 cd ../../inventory/mrt-inventory
 git fetch
-git checkout master
+git checkout admin
 git pull
 
 cd ../../oai/mrt-oai
@@ -81,12 +81,12 @@ git pull
 
 cd ../../ui/mrt-dashboard
 git fetch
-git checkout rails5-5.2conf
+git checkout master
 git pull
 
 cd ../../mrt-admin-lambda
 git fetch
-git checkout main
+git checkout collad-ingest
 git pull
 
 cd ../../mrt-dependencies

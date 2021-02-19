@@ -19,12 +19,12 @@ git pull
 
 cd ../mrt-core2
 git fetch
-git checkout master
+git checkout ingest-admin
 git pull
 
 cd ../mrt-ingest
 git fetch
-git checkout master
+git checkout admin
 git pull
 
 cd ../mrt-inventory
@@ -56,7 +56,7 @@ git pull
 
 cd ../../inventory/mrt-inventory
 git fetch
-git checkout admin
+git checkout master
 git pull
 
 cd ../../oai/mrt-oai
@@ -86,16 +86,8 @@ git pull
 
 cd ../../mrt-admin-lambda
 git fetch
-git checkout collad-ingest
+git checkout main
 git pull
 
-cd ../../mrt-dependencies
-docker-compose build
+cd ../..
 
-cd ../mrt-services
-docker-compose build
-
-cd mrt-admin-lambda
-docker-compose build
-docker-compose -f docker-compose.yml -f admintool.yml build
-docker-compose -f docker-compose.yml -f colladmin.yml build

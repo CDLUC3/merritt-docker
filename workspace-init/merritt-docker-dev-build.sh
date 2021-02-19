@@ -5,6 +5,17 @@ cd ~dpr2/merritt-workspace/merritt-docker
 # Pull in the appropriate branches for each repo
 . workspace-init/merritt-docker-branch-refresh.sh
 
+cd mrt-dependencies
+docker-compose build
+
+cd ../mrt-services
+docker-compose build
+
+cd mrt-admin-lambda
+docker-compose build
+docker-compose -f docker-compose.yml -f admintool.yml build
+docker-compose -f docker-compose.yml -f colladmin.yml build
+
 cd mrt-services/ui
 
 export RAILS_ENV=test

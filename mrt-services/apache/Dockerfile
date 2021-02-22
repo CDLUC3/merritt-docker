@@ -1,7 +1,11 @@
 FROM httpd:2.4
-RUN apt-get update -qq && apt-get install -y build-essential curl vim
+RUN apt-get update -qq && apt-get install -y build-essential curl vim ruby
 
 COPY mrt.conf /usr/local/apache2/conf/conf.d/mrt.conf
+RUN mkdir /usr/local/apache2/redirect
+COPY customEncode.rb /usr/local/apache2/redirect/
+RUN chmod +x /usr/local/apache2/redirect/customEncode.rb
+
 EXPOSE 8099
 
 RUN sed -i \

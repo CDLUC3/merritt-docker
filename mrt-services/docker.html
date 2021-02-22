@@ -34,7 +34,7 @@
                 <li><a class="ref" data=":8088">Minio Service</a></li>
                 <li><a class="ref" data=":8091/web/collAdmin.html">Coll Admin Tool</a></li>
             </ul>
-            <h2>Audit/Replic Containers (If enabled)</h2>
+            <h2>Audit/Replic Containers (If enabled)*</h2>
             <ul>
                 <li>
                     <a class="ref" data=":8092/replic/state">Replic Service State</a>
@@ -49,7 +49,7 @@
                     <fieldset>
                         <legend>The service must be started/stopped explicitly</legend>
                         <form class="ref" data=":8093/audit/service/start" method="POST"><input type="submit" value="Audit Service Start"/></form>
-                        <form class="ref" data=":8093/audit/service/pause" method="POST"><input type="submit" value="Audit Service Pause"/></form>
+                        <form class="ref" data=":8093/audit/service/stop" method="POST"><input type="submit" value="Audit Service Stop"/></form>
                     </fieldset>
                 </li>
             </ul>

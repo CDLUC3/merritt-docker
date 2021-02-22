@@ -2,7 +2,7 @@ FROM httpd:2.4
 RUN apt-get update -qq && apt-get install -y build-essential curl vim
 
 COPY mrt.conf /usr/local/apache2/conf/conf.d/mrt.conf
-EXPOSE 18080
+EXPOSE 8099
 
 RUN sed -i \
         -e 's/^#\(LoadModule .*mod_rewrite.so\)/\1/' \

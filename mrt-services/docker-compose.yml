@@ -20,8 +20,8 @@ services:
     networks:
       merrittnet:
     ports:
-    - published: 18080
-      target: 18080
+    - published: 8099
+      target: 8099
     restart: unless-stopped
     stdin_open: true
     tty: true

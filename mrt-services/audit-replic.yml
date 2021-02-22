@@ -22,3 +22,21 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
+  audit:
+    container_name: audit
+    image: cdluc3/mrt-audit
+    build:
+      context: audit
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 8093
+      target: 8080
+    environment:
+      SSM_SKIP_RESOLUTION: Y
+      MERRITT_AUDIT_INFO: audit-info-docker
+      NODE_TABLE: nodes-pairtree-docker
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

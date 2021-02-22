@@ -69,6 +69,11 @@ git fetch
 git checkout master
 git pull
 
+cd ../../audit/mrt-audit
+git fetch
+git checkout audityaml
+git pull
+
 cd ../../store/mrt-store
 git fetch
 git checkout master

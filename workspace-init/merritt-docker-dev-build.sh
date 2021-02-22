@@ -16,7 +16,7 @@ docker-compose build
 docker-compose -f docker-compose.yml -f admintool.yml build
 docker-compose -f docker-compose.yml -f colladmin.yml build
 
-cd mrt-services/ui
+cd ../ui/mrt-dashboard
 
 export RAILS_ENV=test
 bundle install

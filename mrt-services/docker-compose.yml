@@ -9,6 +9,22 @@ volumes:
   my-db:
   my-minio:
 services:
+  apache:
+    container_name: apache
+    depends_on:
+    - ui
+    image: cdluc3/mrt-apache
+    build:
+      context: apache
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 8099
+      target: 8099
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
   ingest:
     container_name: ingest
     depends_on:

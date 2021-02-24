@@ -260,3 +260,38 @@ services:
     - lambda-container
     volumes:
     - "./mrt-admin-lambda/web/:/web/"
+  # Audit/Replic Placeholders using scratch container
+  replic:
+    container_name: replic
+    image: cdluc3/scratch
+    build:
+      context: scratch
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 8092
+      target: 8080
+    environment:
+      SSM_SKIP_RESOLUTION: Y
+      MERRITT_REPLIC_INFO: replic-info-docker
+      NODE_TABLE: nodes-pairtree-docker
+    stdin_open: true
+    tty: true
+  audit:
+    container_name: audit
+    image: cdluc3/scratch
+    build:
+      context: scratch
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 8093
+      target: 8080
+    environment:
+      SSM_SKIP_RESOLUTION: Y
+      MERRITT_AUDIT_INFO: audit-info-docker
+      NODE_TABLE: nodes-pairtree-docker
+    stdin_open: true
+    tty: true

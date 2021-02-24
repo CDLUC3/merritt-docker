@@ -175,5 +175,17 @@
             "label": "list mysql processes",
             "template": "docker exec -it db-container mysql -u user --password=password --database=db-name -e 'show processlist; '"
         },
+        {
+            "label": "mysql session",
+            "template": "docker exec -it db-container mysql -u user --password=password --database=db-name"
+        },
+        {
+            "label": "tail audit log",
+            "template": "docker exec -it audit tail -f /tdr/tmpdir/logs/audit`date +'%y%m%d'`.log"
+        },
+        {
+            "label": "tail replic log",
+            "template": "docker exec -it replic tail -f /tdr/tmpdir/logs/inv`date +'%y%m%d'`.log"
+        },
     ],
 }

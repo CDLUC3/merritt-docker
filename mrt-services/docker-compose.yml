@@ -293,5 +293,9 @@ services:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_AUDIT_INFO: audit-info-docker
       NODE_TABLE: nodes-pairtree-docker
+      # Uncomment the followign lines to increase throughput of the audit service
+      # AUDIT_THREAD_POOL: 5
+      # AUDIT_SLEEP_MS: 100
+      # AUDIT_QUEUE_CAPACITY: 300
     stdin_open: true
     tty: true

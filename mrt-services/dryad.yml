@@ -35,10 +35,6 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
-    volumes:
-    - type: bind
-      source: ./no-track/sword-info.txt
-      target: /apps/replic/tst/sword/mrtHomes/sword/sword-info.txt
   dryad:
     container_name: dryad
     image: cdluc3/dryad

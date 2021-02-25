@@ -116,8 +116,8 @@ services:
     - minio
     - store
     ports:
-    - published: 8089
-      target: 8089
+    - published: 8086
+      target: 8086
     environment:
       SSM_SKIP_RESOLUTION: Y
     volumes:

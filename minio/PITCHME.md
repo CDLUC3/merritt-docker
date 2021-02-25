@@ -2,7 +2,7 @@
 
 A Merritt Development environment exists in Docker
 - https://github.com/cdluc3/merritt-docker
-- [Merritt Docker - CDL Network](http://uc3-mrtdocker2-stg.cdlib.org:8089/)
+- [Merritt Docker - CDL Network](http://uc3-mrtdocker2-stg.cdlib.org:8086/)
 
 +++
 
@@ -38,7 +38,7 @@ A Merritt Development environment exists in Docker
 #### Exploring a Minio backed Merritt Collection in Docker
 (need Merritt permissions)
 
-- [Merritt Collection Page](http://uc3-mrtdocker2-stg.cdlib.org:8089/m/cdl_dryaddev)
+- [Merritt Collection Page](http://uc3-mrtdocker2-stg.cdlib.org:8086/m/cdl_dryaddev)
 
 +++
 

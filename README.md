@@ -41,14 +41,36 @@ The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI and
 | Dryad UI    | cdluc3/mrt-dryad | Docker | |
 | Dryad MySQL | mysql:5.7 | Docker | Populated with Rails Migration Script |
 | Dryad SOLR  | cdluc3/dryad-solr | Docker | |
-| Audit       | | | Not yet containerized |
-| Replic      | | | Runs as part of the Audit/Replic Stack |
+| Audit       | cdluc3/mrt-audit | Docker | No-op by default, runs in audit-replic stack |
+| Replic      | cdluc3/mrt-audit | Dockdr | No-op by default, runs in audit-replic stack |
 | Merritt Init| cdluc3/mrt-init | Docker | Init OAI and inventory services.  Run Dryad notifier. |
-| Apache      | cdluc3/mrt-apache | Docker | Supports cloudhost retrieval of assembled versions and objects |
+| Apache      | cdluc3/mrt-apache | Docker | Simulates character encoding settings in Merritt Apache |
 | Minio       | minio/minio | Docker | Containerized storage service - for testing presigned functionality |
 | Minio Cmd   | minio/mc | Docker | Initialized bucket in Minio container |
 | ALB Simulator | cdluc3/simulate-lambda-alb | Docker | Simulates an ALB running in front of a Lambda for Collection Admin |
 | Collection Admin | cdluc3/uc3-mrt-colladmin-lambda | Docker | Merritt collection admin tool |
+
+## Port usage
+- 8080: Ingest
+- 8081: Store
+- 8082: Inventory
+- 8083: OAI
+- 8084: Sword
+- 8085: Dryad Solr
+- 8086: UI
+- 8087: Dryad UI
+- 8088: Minio
+- 8089: CDL Reserved, do not use
+- 8090: Lambda Container, Collection Admin
+- 8091: ALB Simulator in front of Lambda Container
+- 8092: Replic
+- 8093: Audit
+- 8094:
+- 8095:
+- 8096:
+- 8097:
+- 8098:
+- 8099: Apache
 
 ## Docker Image Publishing
 Details about docker image publishing are TBD.

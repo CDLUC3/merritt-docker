@@ -37,7 +37,7 @@ ENV SSM_SKIP_RESOLUTION=Y
 RUN bundle exec rake assets:precompile && \
     bundle exec rails dev:cache
     
-EXPOSE 3000 8089 1234
+EXPOSE 3000 8086 1234
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
 ENV TZ=America/Los_Angeles
@@ -50,4 +50,4 @@ RUN /usr/sbin/update-ca-certificates
 
 RUN echo Docker Build `date` > .version
 
-CMD ["bundle", "exec", "puma", "-C", "config/application.rb", "-p", "8089"]
+CMD ["bundle", "exec", "puma", "-C", "config/application.rb", "-p", "8086"]

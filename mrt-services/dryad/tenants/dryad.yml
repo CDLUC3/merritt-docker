@@ -9,7 +9,7 @@ default: &default
   repository:
     username: "submitter.username"
     password: "submitter.password"
-    domain: http://my-minio-localhost-alias:8089
+    domain: http://my-minio-localhost-alias:8086
     endpoint: "http://sword:8080/sword/collection/cdl_dryaddev"
   abbreviation: "dryad"
   short_name: "Dryad"

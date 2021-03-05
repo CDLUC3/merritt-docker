@@ -1,0 +1,37 @@
+# ${DESCRIPTION} - ${ARK}
+ProfileID: ${NAME}
+ProfileDescription: ${DESCRIPTION}
+Identifier-scheme: ARK
+Identifier-namespace: 13030
+Collection.1: ${COLLECTION}
+Type: MRT-curatorial
+Role: MRT-class
+Aggregate: 
+Owner: ${OWNER}
+Notification.${NOTIFICATIONENUM}: ${NOTIFICATION}
+# --- handler ingest processing
+Handler.1: org.cdlib.mrt.ingest.handlers.HandlerInitialize
+Handler.2: org.cdlib.mrt.ingest.handlers.HandlerAccept
+Handler.3: org.cdlib.mrt.ingest.handlers.HandlerVerify
+Handler.4: org.cdlib.mrt.ingest.handlers.HandlerDisaggregate
+Handler.5: org.cdlib.mrt.ingest.handlers.HandlerRetrieve
+Handler.6: org.cdlib.mrt.ingest.handlers.HandlerCorroborate
+Handler.7: org.cdlib.mrt.ingest.handlers.HandlerCharacterize
+Handler.8: org.cdlib.mrt.ingest.handlers.HandlerMinter
+Handler.9: org.cdlib.mrt.ingest.handlers.HandlerDescribe
+Handler.10: org.cdlib.mrt.ingest.handlers.HandlerDocument
+Handler.11: org.cdlib.mrt.ingest.handlers.HandlerDigest
+Handler.12: org.cdlib.mrt.ingest.handlers.HandlerTransfer
+Handler.13: org.cdlib.mrt.ingest.handlers.HandlerNotification
+Handler.14: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
+Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCleanup
+# --- handler queue submission processing
+HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
+HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
+HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
+StorageService: http://store-stage.cdlib.org:35121
+StorageNode: ${STORAGENODE}
+CreationDate: ${CREATIONDATE}
+ModificationDate: ${MODIFICATIONDATE}
+ObjectMinterURL: https://ezid.cdlib.org/shoulder/ark:/99999/fk4
+Context: ${CONTEXT}

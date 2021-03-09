@@ -243,6 +243,7 @@ services:
       target: 8080
     networks:
       merrittnet:
+    restart: unless-stopped
   alb-simulate:
     container_name: alb-simulate
     image: cdluc3/simulate-lambda-alb
@@ -260,6 +261,7 @@ services:
     - lambda-container
     volumes:
     - "./mrt-admin-lambda/web/:/web/"
+    restart: unless-stopped
   # Audit/Replic Placeholders using scratch container
   replic:
     container_name: replic

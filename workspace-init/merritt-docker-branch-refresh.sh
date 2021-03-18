@@ -19,12 +19,12 @@ git pull
 
 cd ../mrt-core2
 git fetch
-git checkout ingest-admin
+git checkout master
 git pull
 
 cd ../mrt-ingest
 git fetch
-git checkout admin
+git checkout master
 git pull
 
 cd ../mrt-inventory
@@ -51,7 +51,7 @@ git pull
 
 cd ../../ingest/mrt-ingest
 git fetch
-git checkout admin
+git checkout master
 git pull
 
 cd ../../inventory/mrt-inventory
@@ -71,7 +71,7 @@ git pull
 
 cd ../../audit/mrt-audit
 git fetch
-git checkout audityaml
+git checkout master
 git pull
 
 cd ../../store/mrt-store

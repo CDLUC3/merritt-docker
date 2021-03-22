@@ -8,6 +8,7 @@ networks:
 volumes:
   my-db:
   my-minio:
+  my-ingest-folder:
 services:
   apache:
     container_name: apache
@@ -43,6 +44,8 @@ services:
     ports:
     - published: 8080
       target: 8080
+    volumes:
+    - my-ingest-folder:/tdr/ingest
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -232,9 +235,7 @@ services:
       dockerfile: Dockerfile
     environment:
       SSM_SKIP_RESOLUTION: Y
-      MERRITT_ADMIN_CONFIG: development
-      USE_MYSQL: N
-      USE_S3: N
+      MERRITT_ADMIN_CONFIG: docker
       INGEST_SERVICES: "http://ingest:8080/ingest/"
     stdin_open: true
     tty: true

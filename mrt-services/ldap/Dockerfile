@@ -45,6 +45,6 @@ RUN ./setup \
 # Schema data
 COPY 99-user.ldif /opt/opendj/config/schema/99-user.ldif
 
-EXPOSE 1389
+EXPOSE 1389 1636 4444
 
 ENTRYPOINT ["/opt/start_import.sh"]

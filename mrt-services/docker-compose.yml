@@ -169,6 +169,27 @@ services:
       merrittnet:
     restart: unless-stopped
   # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect my-minio-localhost-alias:8088 to localhost:8088.
+  ldap-admin:
+    container_name: ldap-admin
+    image: ldapaccountmanager/lam
+    networks:
+      merrittnet:
+    ports:
+    - published: 8094
+      target: 80
+    environment:
+      LDAP_SERVER: ldap://ldap:1389
+      # LDAP_USER: cn=Directory Manager
+      LDAP_USER: cn=Directory Manager
+      LAM_LANG: en_US
+      LAM_PASSWORD: password
+      # LDAP_DOMAIN: cdlib.org
+      LDAP_BASE_DN: ou=uc3,dc=cdlib,dc=org
+      LDAP_GROUPS_DN: ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+      #ou=uc3,dc=cdlib,dc=org
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
   minio:
     container_name: minio
     image: minio/minio

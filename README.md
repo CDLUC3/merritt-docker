@@ -3,14 +3,14 @@
 _Copyright 2019 Regents of the University of California_
 _All rights reserved_
 
-![](https://github.com/CDLUC3/mrt-doc/raw/master/diagrams/docker.mmd.svg)
-
 ## Purpose
 The purpose of this repository is to build docker images for local developer testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
 
 ## Presentation
 
 https://gitpitch.com/cdluc3/merritt-docker
+
+![](https://github.com/CDLUC3/mrt-doc/raw/master/diagrams/docker.mmd.svg)
 
 ## Dependencies
 The following dependencies are needed to build and run this repo.  The goal is to build a version of the system that can be run entirely from Docker.

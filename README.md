@@ -1,7 +1,6 @@
-# merritt-docker
+# Merritt Docker Images and Orchestration
 
-_Copyright 2019 Regents of the University of California_
-_All rights reserved_
+This library is part of the [Merritt Preservation System](https://github.com/CDLUC3/mrt-doc).
 
 ## Purpose
 The purpose of this repository is to build docker images for local developer testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).

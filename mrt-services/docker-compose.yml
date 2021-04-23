@@ -45,7 +45,7 @@ services:
     - published: 8080
       target: 8080
     volumes:
-    - my-ingest-folder:/tdr/ingest
+    - my-ingest-folder:/tdr/ingest/queue
     restart: unless-stopped
     stdin_open: true
     tty: true

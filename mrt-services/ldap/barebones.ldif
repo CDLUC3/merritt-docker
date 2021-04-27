@@ -244,7 +244,6 @@ dn: cn=read,ou=escholarship,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top
 objectClass: groupOfUniqueNames
 uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
-uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
 cn: read
 creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
 modifyTimestamp: 20200409222232Z
@@ -256,7 +255,6 @@ dn: cn=download,ou=escholarship,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top
 objectClass: groupOfUniqueNames
 uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
-uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
 cn: download
 creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
 modifyTimestamp: 20200409222232Z

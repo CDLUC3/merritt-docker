@@ -86,7 +86,7 @@ git pull
 
 cd ../../ui/mrt-dashboard
 git fetch
-git checkout master
+git checkout main
 git pull
 
 cd ../../mrt-admin-lambda

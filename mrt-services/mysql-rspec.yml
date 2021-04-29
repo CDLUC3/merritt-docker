@@ -3,7 +3,11 @@
 #   All rights reserved
 #*********************************************************************
 
-# mysql -h 127.0.0.1 -P 3306 -u root
+# docker-compose -f mrt-services/mysql-rspec.yml up -d
+# from the ui directory...  if needed, set RAILS_ENV=test 
+# bundle exec rspec
+# bundle exec rails coverage
+# bundle exec rubocop
  
 version: '3.7'
 services:

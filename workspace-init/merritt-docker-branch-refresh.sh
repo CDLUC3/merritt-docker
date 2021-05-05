@@ -24,7 +24,7 @@ git pull
 
 cd ../mrt-ingest
 git fetch
-git checkout master
+git checkout main
 git pull
 
 cd ../mrt-inventory
@@ -51,7 +51,7 @@ git pull
 
 cd ../../ingest/mrt-ingest
 git fetch
-git checkout master
+git checkout main
 git pull
 
 cd ../../inventory/mrt-inventory

@@ -10,6 +10,7 @@
 [submodule "mrt-dependencies/mrt-ingest"]
 	path = mrt-dependencies/mrt-ingest
 	url = git@github.com:cdluc3/mrt-ingest
+	branch = main
 [submodule "mrt-dependencies/mrt-inventory"]
 	path = mrt-dependencies/mrt-inventory
 	url = git@github.com:cdluc3/mrt-inventory
@@ -19,9 +20,11 @@
 [submodule "mrt-services/ingest/mrt-ingest"]
 	path = mrt-services/ingest/mrt-ingest
 	url = git@github.com:cdluc3/mrt-ingest
+	branch = main
 [submodule "mrt-services/ui/mrt-dashboard"]
 	path = mrt-services/ui/mrt-dashboard
 	url = git@github.com:CDLUC3/mrt-dashboard
+	branch = main
 [submodule "mrt-services/store/mrt-store"]
 	path = mrt-services/store/mrt-store
 	url = git@github.com:cdluc3/mrt-store

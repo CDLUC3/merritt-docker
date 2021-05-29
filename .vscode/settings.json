@@ -8,8 +8,8 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "docker.commands.composeUp": [
         {
-            "label": "DockerCon Demo",
-            "template": "docker-compose -p dockercon -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml up -d"
+            "label": "OR2021 Demo",
+            "template": "docker-compose -p or2021 -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml up -d"
         },
         {
             "label": "default",

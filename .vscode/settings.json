@@ -8,7 +8,7 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "docker.commands.composeUp": [
         {
-            "label": "OR2021 Demo",
+            "label": "OR 2021 Demo",
             "template": "docker-compose -p or2021 -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml up -d"
         },
         {
@@ -142,8 +142,8 @@
     ],
     "docker.commands.composeDown": [
         {
-            "label": "DockerCon Demo",
-            "template": "docker-compose -p dockercon -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml down"
+            "label": "OR 2021 Demo",
+            "template": "docker-compose -p or2021 -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml down"
         },
         {
             "label": "default",

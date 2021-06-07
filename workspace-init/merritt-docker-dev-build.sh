@@ -29,6 +29,7 @@ gem install equivalent-xml
 gem install diffy
 gem install factory_bot
 gem install chrome
+gem install aws-sdk-s3
 # Consider: scripting the following to enable irb, rubocop, etc
 # mkdir -p ~/gems
 # export GEM_HOME=~/gems

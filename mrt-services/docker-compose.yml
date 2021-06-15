@@ -66,6 +66,7 @@ services:
       SSM_SKIP_RESOLUTION: Y
       NODE_TABLE: nodes-pairtree-docker
       MERRITT_STORE_INFO: store-info-docker
+      LOG_STORE: /dpr2store/mrtHomes/logs
     networks:
       merrittnet:
     restart: unless-stopped

@@ -62,6 +62,8 @@ services:
     ports:
     - published: 8081
       target: 8080
+    volumes:
+    - my-ingest-folder:/tdr/ingest/queue
     environment:
       SSM_SKIP_RESOLUTION: Y
       NODE_TABLE: nodes-pairtree-docker

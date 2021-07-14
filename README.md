@@ -5,7 +5,7 @@ This library is part of the [Merritt Preservation System](https://github.com/CDL
 ## Purpose
 The purpose of this repository is to build docker images for local developer testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
 
-## Presentation
+## Presentation 
 
 ![](https://github.com/CDLUC3/mrt-doc/raw/main/diagrams/docker.mmd.svg)
 

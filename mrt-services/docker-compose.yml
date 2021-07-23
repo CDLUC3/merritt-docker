@@ -279,13 +279,15 @@ services:
       merrittnet:
     environment:
       LAMBDA_DOCKER_HOST: http://lambda-container:8080
+      #AWS_LAMBDA_FUNCTION_TIMEOUT: 60
+      #AWS_LAMBDA_FUNCTION_MEMORY_SIZE: 1000
     ports:
     - published: 8091
       target: 8091
     depends_on:
     - lambda-container
-    volumes:
-    - "./mrt-admin-lambda/web/:/web/"
+    #volumes:
+    #- "./mrt-admin-lambda/web/:/web/"
     restart: unless-stopped
   # Audit/Replic Placeholders using scratch container
   replic:

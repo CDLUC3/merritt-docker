@@ -3,11 +3,12 @@ ProfileID: ${NAME}
 ProfileDescription: ${DESCRIPTION}
 Identifier-scheme: ARK
 Identifier-namespace: 13030
-Collection.1: ark:/13030/j27p88qw
-Type: MRT-curatorial
+Collection.1: ark:/13030/j2cc0900
+Collection.2: ${COLLECTION}
+Type: MRT-owner
 Role: MRT-class
 Aggregate: MRT-collection
-Owner: ${OWNER}
+Owner: ark:/13030/j2rn30xp
 Notification.${NOTIFICATIONENUM}: ${NOTIFICATION}
 # --- handler ingest processing
 Handler.1: org.cdlib.mrt.ingest.handlers.HandlerInitialize

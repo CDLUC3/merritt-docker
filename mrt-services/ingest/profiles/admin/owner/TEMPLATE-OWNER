@@ -5,9 +5,9 @@ Identifier-scheme: ARK
 Identifier-namespace: 13030
 Collection.1: ark:/13030/j2cc0900
 Collection.2: ${COLLECTION}
-Type: MRT-owner
+Type: MRT-curatorial
 Role: MRT-class
-Aggregate: MRT-collection
+Aggregate: MRT-owner
 Owner: ark:/13030/j2rn30xp
 Notification.${NOTIFICATIONENUM}: ${NOTIFICATION}
 # --- handler ingest processing
@@ -30,7 +30,7 @@ Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCleanup
 HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
 HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
 HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
-StorageService: http://store-stage.cdlib.org:35121
+StorageService: http://storage.cdlib.org:35121
 StorageNode: ${STORAGENODE}
 CreationDate: ${CREATIONDATE}
 ModificationDate: ${MODIFICATIONDATE}

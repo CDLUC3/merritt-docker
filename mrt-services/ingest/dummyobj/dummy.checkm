@@ -1,0 +1,5 @@
+#%checkm_0.7
+#%profile | http://uc3.cdlib.org/registry/ingest/manifest/mrt-single-file-batch-manifest
+#%columns | nfo:fileURL | nfo:hashAlgorithm | nfo:hashValue | nfo:fileSize | nfo:fileLastModified | nfo:fileName | mrt:primaryIdentifier | mrt:localIdentifier | mrt:creator | mrt:title | mrt:date
+https://merritt-aws-stg.cdlib.org/README | | | | | | ark:/99999/fk4b29b2 | | | Dummy object object
+#%EOF

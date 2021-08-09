@@ -29,8 +29,8 @@ Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCleanup
 HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
 HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
 HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
-StorageService: http://store-stage.cdlib.org:35121
+StorageService: http://store:8080/store
 StorageNode: ${STORAGENODE}
 CreationDate: ${CREATIONDATE}
 ModificationDate: ${MODIFICATIONDATE}
-ObjectMinterURL: https://ezid.cdlib.org/shoulder/ark:/99999/fk4
+ObjectMinterURL: http://ezid:4567/shoulder/ark:/99999/fk4

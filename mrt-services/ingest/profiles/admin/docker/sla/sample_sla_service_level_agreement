@@ -1,6 +1,6 @@
-# ${DESCRIPTION} - ${ARK}
-ProfileID: ${NAME}
-ProfileDescription: ${DESCRIPTION}
+# Sample SLA - 
+ProfileID: sample_sla_service_level_agreement
+ProfileDescription: Sample SLA
 Identifier-scheme: ARK
 Identifier-namespace: 13030
 Collection.1: ark:/13030/j2h41690
@@ -8,7 +8,7 @@ Type: MRT-curatorial
 Role: MRT-class
 Aggregate: MRT-service-level-agreement
 Owner: ark:/13030/j2rn30xp
-Notification.${NOTIFICATIONENUM}: ${NOTIFICATION}
+Notification.1: 
 # --- handler ingest processing
 Handler.1: org.cdlib.mrt.ingest.handlers.HandlerInitialize
 Handler.2: org.cdlib.mrt.ingest.handlers.HandlerAccept
@@ -30,7 +30,7 @@ HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
 HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
 HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
 StorageService: http://store:8080/store
-StorageNode: ${STORAGENODE}
-CreationDate: ${CREATIONDATE}
-ModificationDate: ${MODIFICATIONDATE}
+StorageNode: 7777
+CreationDate: 2021-08-09T14:30:44-0700
+ModificationDate: 2021-08-09T14:30:44-0700
 ObjectMinterURL: http://ezid:4567/shoulder/ark:/99999/fk4

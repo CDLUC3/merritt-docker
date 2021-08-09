@@ -260,6 +260,7 @@ services:
     environment:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_ADMIN_CONFIG: docker
+      FORMENV: docker
       INGEST_SERVICES: "http://ingest:8080/ingest/"
     stdin_open: true
     tty: true

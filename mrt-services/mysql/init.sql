@@ -370,7 +370,7 @@ select 'ark:/13030/j27p88qw','Merritt Curatorial Classes',null,'none'
 union
 select 'ark:/13030/m5rn35s8','demo','merritt_demo','public'
 union
-select 'ark:/13030/m5qv8jks','cdl_dryaddev','cdl_dryaddev','public';
+select 'ark:/13030/m5qv8jks','cdl_dryaddev','cdl_dryaddev','public' 
 union
 select 'ark:/13030/m5154f09','escholarship','escholarship','none';
 

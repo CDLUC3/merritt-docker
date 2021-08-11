@@ -27,7 +27,7 @@ RUN mkdir -p /tdr/ingest/queue && \
     ln -s /tdr/ingest/queue /usr/local/tomcat/webapps/ingestqueue
 
 COPY profiles /tdr/ingest/profiles/
-COPY dummyobj /tdr/ingest/dummyobj
+COPY admin-submit /tdr/ingest/admin-submit
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
 ENV TZ=America/Los_Angeles

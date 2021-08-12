@@ -33,4 +33,4 @@ StorageService: http://store:8080/store
 StorageNode: ${STORAGENODE}
 CreationDate: ${CREATIONDATE}
 ModificationDate: ${MODIFICATIONDATE}
-ObjectMinterURL: http://ezid:4567/shoulder/ark:/99999/fk4
+ObjectMinterURL: http://ezid:4567/shoulder/ark:/13030/j2

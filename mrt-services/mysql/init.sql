@@ -362,11 +362,13 @@ and not inv_dublinkernels.value='(:unas)';
 # Configure content
 
 insert into inv_collections(ark,name,mnemonic,harvest_privilege)
-select 'ark:/13030/j2cc0900','Merritt Owners',null, 'none'
+select 'ark:/13030/j2cc0900','Merritt owners',null, 'none'
 union
-select 'ark:/13030/j2h41690','Merritt SLAS',null,'none'
+select 'ark:/13030/j2h41690','Merritt service level agreements',null,'none'
 union
-select 'ark:/13030/j27p88qw','Merritt Curatorial Classes',null,'none'
+select 'ark:/13030/j27p88qw','Merritt curatorial classes','mrt_curatorial_classes','none'
+union
+select 'ark:/13030/j2mw23mp','Merritt system classes','mrt_system_classes','none'
 union
 select 'ark:/13030/m5rn35s8','demo','merritt_demo','public'
 union

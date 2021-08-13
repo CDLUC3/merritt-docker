@@ -27,4 +27,7 @@ services:
         aliases:
         - my-minio-localhost-alias
         - ${HOSTNAME}.cdlib.org
+  lambda-container:
+    environment:
+      COLLADMIN_ALB_URL: http://${HOSTNAME}.cdlib.org:8091
 

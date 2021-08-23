@@ -3,6 +3,9 @@
 #   All rights reserved
 #*********************************************************************
 
+# mysql -h localhost -P 3306 -u root -D mrt_dashboard_test --protocol=TCP
+# mysql -h 127.0.0.1 -P 3306 -u root -D mrt_dashboard_test
+
 # docker-compose -f mrt-services/mysql-rspec.yml up -d
 # from the ui directory...  if needed, set RAILS_ENV=test 
 # bundle exec rspec

@@ -8,10 +8,6 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "docker.commands.composeUp": [
         {
-            "label": "EC2 merritt (Conference)",
-            "template": "docker-compose -p conference -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml up -d"
-        },
-        {
             "label": "default",
             "template": "docker-compose -${configurationFile} up -d"
         },
@@ -144,10 +140,6 @@
        {
             "label": "default",
             "template": "docker-compose ${configurationFile} down"
-        },
-        {
-            "label": "merritt (Conference)",
-            "template": "docker-compose -p conference -f mrt-services/docker-compose.yml down"
         },
         {
             "label": "merritt",

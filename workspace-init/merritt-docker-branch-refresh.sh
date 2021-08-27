@@ -9,27 +9,27 @@ cd mrt-dependencies
 
 cd cdl-zk-queue
 git fetch
-git checkout master
+git checkout build-refactor
 git pull
 
 cd ../mrt-cloud
 git fetch
-git checkout master
+git checkout build-refactor
 git pull
 
 cd ../mrt-core2
 git fetch
-git checkout master
+git checkout build-refactor
 git pull
 
 cd ../mrt-ingest
 git fetch
-git checkout main
+git checkout build-refactor
 git pull
 
 cd ../mrt-inventory
 git fetch
-git checkout master
+git checkout build-refactor
 git pull
 
 cd ../mrt-zoo
@@ -51,12 +51,12 @@ git pull
 
 cd ../../ingest/mrt-ingest
 git fetch
-git checkout main
+git checkout build-refactor
 git pull
 
 cd ../../inventory/mrt-inventory
 git fetch
-git checkout master
+git checkout build-refactor
 git pull
 
 cd ../../oai/mrt-oai
@@ -76,7 +76,7 @@ git pull
 
 cd ../../store/mrt-store
 git fetch
-git checkout master
+git checkout build-refactor
 git pull
 
 cd ../../sword/mrt-sword

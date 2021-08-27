@@ -1,6 +1,6 @@
 #! /bin/sh
 
-cd ~dpr2/merritt-workspace/merritt-docker
+cd /workspaces/merritt-docker 
 
 # Pull in the appropriate branches for each repo
 . workspace-init/merritt-docker-branch-refresh.sh

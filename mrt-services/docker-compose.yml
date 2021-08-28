@@ -253,10 +253,10 @@ services:
   lambda-container:
     # The Merritt Admin Tool needs only the database to run. It does not need this stack to run.
     # The Merritt Collection Admin Tool can be tested from this application stack.
-    image: cdluc3/uc3-mrt-colladmin-lambda
     container_name: colladmin
+    image: cdluc3/scratch
     build:
-      context: mrt-admin-lambda/src-colladmin
+      context: scratch
       dockerfile: Dockerfile
     environment:
       SSM_SKIP_RESOLUTION: Y
@@ -273,9 +273,9 @@ services:
     restart: unless-stopped
   alb-simulate:
     container_name: alb-simulate
-    image: cdluc3/simulate-lambda-alb
+    image: cdluc3/scratch
     build:
-      context: mrt-admin-lambda/simulate-lambda-alb
+      context: scratch
       dockerfile: Dockerfile
     networks:
       merrittnet:

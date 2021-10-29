@@ -328,3 +328,16 @@ services:
       # AUDIT_QUEUE_CAPACITY: 300
     stdin_open: true
     tty: true
+  callback:
+    container_name: callback
+    image: cdluc3/callback
+    build:
+      context: callback
+      dockerfile: Dockerfile
+    networks:
+      merrittnet:
+    ports:
+    - published: 8098
+      target: 8098
+    stdin_open: true
+    tty: true

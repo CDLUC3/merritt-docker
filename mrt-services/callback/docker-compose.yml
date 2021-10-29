@@ -1,0 +1,21 @@
+#*********************************************************************
+#   Copyright 2020 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.7'
+networks:
+  merrittnet:
+services:
+  callback:
+    networks:
+      merrittnet:
+    container_name: callback
+    image: cdluc3/callback
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - published: 8098
+      target: 8098
+    stdin_open: true
+    tty: true

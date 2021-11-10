@@ -40,6 +40,6 @@ CreationDate: 2010-01-19T13:28:14-08:00
 ModificationDate: 2010-01-26T23:28:14-08:00
 ObjectMinterURL: http://ezid:4567/shoulder/ark:/99999/fk4
 # ObjectMinterURL: http://callback:8098/status/502
-CallbackURL: http://callback:8098/201
+CallbackURL: http://callback:8098
 NotificationType: additional
 Context: merritt_demo

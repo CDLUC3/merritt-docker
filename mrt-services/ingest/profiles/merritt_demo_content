@@ -12,8 +12,7 @@ Type: MRT-curatorial
 Role: MRT-content
 Aggregate:
 Owner: ark:/13030/j2rn30xp
-# Notification.1: terrence.brady@ucop.edu
-Notification.1: skidly_2@yahoo.com
+Notification.1: terrence.brady@ucop.edu
 # --- handler ingest processing
 Handler.1: org.cdlib.mrt.ingest.handlers.HandlerInitialize
 Handler.2: org.cdlib.mrt.ingest.handlers.HandlerAccept

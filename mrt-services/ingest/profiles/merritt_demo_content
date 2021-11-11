@@ -12,7 +12,8 @@ Type: MRT-curatorial
 Role: MRT-content
 Aggregate:
 Owner: ark:/13030/j2rn30xp
-Notification.1: terrence.brady@ucop.edu
+# Notification.1: terrence.brady@ucop.edu
+Notification.1: skidly_2@yahoo.com
 # --- handler ingest processing
 Handler.1: org.cdlib.mrt.ingest.handlers.HandlerInitialize
 Handler.2: org.cdlib.mrt.ingest.handlers.HandlerAccept
@@ -26,9 +27,9 @@ Handler.9: org.cdlib.mrt.ingest.handlers.HandlerDescribe
 Handler.10: org.cdlib.mrt.ingest.handlers.HandlerDocument
 Handler.11: org.cdlib.mrt.ingest.handlers.HandlerDigest
 Handler.12: org.cdlib.mrt.ingest.handlers.HandlerTransfer
-Handler.13: org.cdlib.mrt.ingest.handlers.HandlerCallback
-Handler.14: org.cdlib.mrt.ingest.handlers.HandlerNotification
-Handler.15: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
+Handler.13: org.cdlib.mrt.ingest.handlers.HandlerNotification
+Handler.14: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
+Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCallback
 Handler.16: org.cdlib.mrt.ingest.handlers.HandlerCleanup
 # --- handler queue submission processing
 HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate

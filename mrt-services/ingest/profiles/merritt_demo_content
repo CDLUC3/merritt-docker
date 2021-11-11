@@ -28,7 +28,8 @@ Handler.11: org.cdlib.mrt.ingest.handlers.HandlerDigest
 Handler.12: org.cdlib.mrt.ingest.handlers.HandlerTransfer
 Handler.13: org.cdlib.mrt.ingest.handlers.HandlerNotification
 Handler.14: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
-Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCleanup
+Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCallback
+Handler.16: org.cdlib.mrt.ingest.handlers.HandlerCleanup
 # --- handler queue submission processing
 HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
 HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
@@ -39,5 +40,6 @@ CreationDate: 2010-01-19T13:28:14-08:00
 ModificationDate: 2010-01-26T23:28:14-08:00
 ObjectMinterURL: http://ezid:4567/shoulder/ark:/99999/fk4
 # ObjectMinterURL: http://callback:8098/status/502
+CallbackURL: http://callback:8098
 NotificationType: additional
 Context: merritt_demo

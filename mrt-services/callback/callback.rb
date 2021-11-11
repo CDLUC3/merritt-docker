@@ -34,5 +34,5 @@ end
 
 post '*' do
   puts "POST #{params['splat'][0]}"
-  puts "\t#{params}"
+  puts request.body.read
 end

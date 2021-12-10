@@ -47,7 +47,7 @@ The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI and
 | Minio       | minio/minio | Docker | Containerized storage service - for testing presigned functionality |
 | Minio Cmd   | minio/mc | Docker | Initialized bucket in Minio container |
 | ALB Simulator | cdluc3/simulate-lambda-alb | Docker | Simulates an ALB running in front of a Lambda for Collection Admin |
-| Collection Admin | cdluc3/uc3-mrt-colladmin-lambda | Docker | Merritt collection admin tool |
+| Collection Admin | ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/uc3-mrt-colladmin-lambda | Docker | Merritt collection admin tool |
 
 ## Port usage
 - 8080: Ingest

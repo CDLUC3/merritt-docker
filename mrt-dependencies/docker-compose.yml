@@ -3,10 +3,10 @@
 #   All rights reserved
 #*********************************************************************
 
-version: '3.7'
+version: '3.9'
 services:
   dependencies:
-    image: cdluc3/mrt-dependencies
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-dependencies
     build:
       context: .
       dockerfile: Dockerfile

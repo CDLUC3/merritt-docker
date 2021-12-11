@@ -1,22 +1,6 @@
-[submodule "mrt-dependencies/mrt-core2"]
-	path = mrt-dependencies/mrt-core2
+[submodule "mrt-services/dep_core/mrt-core2"]
+	path = mrt-services/dep_core/mrt-core2
 	url = git@github.com:cdluc3/mrt-core2
-[submodule "mrt-dependencies/cdl-zk-queue"]
-	path = mrt-dependencies/cdl-zk-queue
-	url = git@github.com:cdluc3/cdl-zk-queue
-[submodule "mrt-dependencies/mrt-zoo"]
-	path = mrt-dependencies/mrt-zoo
-	url = git@github.com:cdluc3/mrt-zoo
-[submodule "mrt-dependencies/mrt-ingest"]
-	path = mrt-dependencies/mrt-ingest
-	url = git@github.com:cdluc3/mrt-ingest
-	branch = main
-[submodule "mrt-dependencies/mrt-inventory"]
-	path = mrt-dependencies/mrt-inventory
-	url = git@github.com:cdluc3/mrt-inventory
-[submodule "mrt-dependencies/mrt-cloud"]
-	path = mrt-dependencies/mrt-cloud
-	url = git@github.com:CDLUC3/mrt-cloud
 [submodule "mrt-services/ingest/mrt-ingest"]
 	path = mrt-services/ingest/mrt-ingest
 	url = git@github.com:cdluc3/mrt-ingest
@@ -49,4 +33,12 @@
 [submodule "mrt-services/mrt-admin-lambda"]
 	path = mrt-services/mrt-admin-lambda
 	url = git@github.com:CDLUC3/mrt-admin-lambda
-	branch = paginate
+[submodule "mrt-services/dep_cloud/mrt-cloud"]
+	path = mrt-services/dep_cloud/mrt-cloud
+	url = git@github.com:cdluc3/mrt-cloud
+[submodule "mrt-services/dep_cdlzk/cdl-zk-queue"]
+	path = mrt-services/dep_cdlzk/cdl-zk-queue
+	url = git@github.com:cdluc3/cdl-zk-queue
+[submodule "mrt-services/dep_zoo/mrt-zoo"]
+	path = mrt-services/dep_zoo/mrt-zoo
+	url = git@github.com:cdluc3/mrt-zoo

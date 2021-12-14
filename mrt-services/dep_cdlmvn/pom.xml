@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>mrt-cdlmvn</artifactId>
+    <groupId>org.cdlib.mrt</groupId>
+
+    <packaging>pom</packaging>
+    <version>2.0-SNAPSHOT</version>
+    <name>CDL_Maven</name>
+    <description>CDL Maven Dependencies</description>
+    <url>http://uc3.cdlib.org</url>
+
+    <repositories>
+        <repository>
+          <id>thirdparty</id>
+          <name>CDL Snapshot Repository</name>
+          <url>http://mvn.cdlib.org/content/repositories/thirdparty/</url>
+        </repository>
+        <repository>
+          <id>central</id>
+          <name>CDL Central</name>
+          <url>http://mvn.cdlib.org/content/repositories/central/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+      <dependency>
+        <groupId>jargs</groupId>
+        <artifactId>jargs</artifactId>
+        <version>1.1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-xml</artifactId>
+        <version>11.0.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven.doxia</groupId>
+        <artifactId>doxia-module-markdown</artifactId>
+        <version>1.4</version>
+      </dependency>
+    </dependencies>
+
+</project>

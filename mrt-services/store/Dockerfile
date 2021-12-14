@@ -2,23 +2,31 @@
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-# Publish as cdluc3/mrt-store
 
-#   docker build -t cdluc3/mrt-store .
+# docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-store:dev .
+# aws ecr create-repository --repository-name mrt-store
+# docker push ${ECR_REGISTRY}/mrt-store:dev
 
-FROM cdluc3/mrt-dependencies as build
-WORKDIR /tmp/mrt-store
+ARG ECR_REGISTRY=ecr_registry_not_set
 
-ADD mrt-store /tmp/mrt-store
+# FROM ${ECR_REGISTRY}/dep-cdlmvn:dev as cdlmvn
+
+FROM ${ECR_REGISTRY}/mrt-cloud:dev as build
+
+WORKDIR /build/mrt-store
+
+COPY settings.xml /root/.m2/
+
+ADD mrt-store /build/mrt-store
 
 RUN mvn install && \
     mvn clean
 
 FROM tomcat:8-jre8
-COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /tmp/store.war
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /build/store.war
 
 RUN mkdir /usr/local/tomcat/webapps/store && \
-    unzip -d /usr/local/tomcat/webapps/store /tmp/store.war
+    unzip -d /usr/local/tomcat/webapps/store /build/store.war
 
 RUN mkdir -p /dpr2store/mrtHomes/store \
     /dpr2store/mrtHomes/logs \

@@ -10,27 +10,15 @@
 
 ARG ECR_REGISTRY=ecr_registry_not_set
 
-# FROM ${ECR_REGISTRY}/dep-cdlmvn:dev as cdlmvn
-
 FROM ${ECR_REGISTRY}/mrt-zoo:dev as build
 
 WORKDIR /build/mrt-ingest
 
-COPY settings.xml /root/.m2/
-
-# RUN find /root/.m2/repository | wc -l
-
-# COPY --from=cdlmvn /root/.m2/repository /root/.m2/repository/
-
-# RUN find /root/.m2/repository | wc -l
-
-# RUN find /root/.m2/repository | grep -c jargs
-
 ADD mrt-ingest /build/mrt-ingest
 
 # The following dependencies help the service build in Docker
-COPY batch-war.pom.xml /build/mrt-ingest/ingest-war/pom.xml
-COPY batch-war.assembly.xml /build/mrt-ingest/ingest-war/assembly.xml
+# COPY batch-war.pom.xml /build/mrt-ingest/ingest-war/pom.xml
+# COPY batch-war.assembly.xml /build/mrt-ingest/ingest-war/assembly.xml
 
 RUN mvn install -Denforcer.skip=true && \
     mvn clean

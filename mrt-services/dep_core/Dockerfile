@@ -3,11 +3,13 @@
 #   All rights reserved
 #*********************************************************************
 
-# docker build -t ${ECR_REGISTRY}/mrt-core2:dev .
+# docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-core2:dev .
 # aws ecr create-repository --repository-name mrt-core2
 # docker push ${ECR_REGISTRY}/mrt-core2:dev
 
-FROM maven:3-jdk-8 as build
+ARG ECR_REGISTRY=ecr_registry_not_set
+
+FROM ${ECR_REGISTRY}/dep-cdlmvn:dev
 
 WORKDIR /build/mrt-core2
 

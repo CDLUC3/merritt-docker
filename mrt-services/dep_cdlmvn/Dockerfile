@@ -7,23 +7,27 @@
 # aws ecr create-repository --repository-name dep-cdlmvn
 # docker push ${ECR_REGISTRY}/dep-cdlmvn:dev
 
-FROM maven:3.3.1-jdk-8 as build
+FROM maven:3-jdk-8 as build
 
 WORKDIR /build
 
-# RUN mvn dependency:get -DgroupId=org.apache.maven.doxia -DartifactId=doxia-module-markdown -Dversion=1.4 -Dpackaging=jar
+RUN mvn dependency:get -DgroupId=jargs -DartifactId=jargs -Dversion=1.1.1 -Dpackaging=jar \
+  -DrepoUrl=https://mvn.cdlib.org/content/repositories/thirdparty/
 
-COPY settings.xml /root/.m2/
+RUN mvn dependency:get -DgroupId=jargs -DartifactId=jargs -Dversion=1.1.1 -Dpackaging=pom \
+  -DrepoUrl=https://mvn.cdlib.org/content/repositories/thirdparty/
 
-COPY pom.xml .
-# RUN mvn dependency:get -Dartifact=org.eclipse.jetty:jetty-xml:11.0.7
+RUN mvn dependency:get -DgroupId=org.cdlib.mrt -DartifactId=mrt-dataonesrc -Dversion=1.0-SNAPSHOT \
+  -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
 
+RUN mvn dependency:get -DgroupId=org.cdlib.mrt -DartifactId=mrt-dataonesrc -Dversion=1.0-SNAPSHOT \
+  -Dpackaging=pom -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
 
-# RUN mvn dependency:get -Dartifact=jargs:jargs:1.1.1
+RUN mvn dependency:get -DgroupId=org.cdlib.mrt -DartifactId=mrt-jena -Dversion=1.0-SNAPSHOT \
+  -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
 
+RUN mvn dependency:get -DgroupId=org.cdlib.mrt -DartifactId=mrt-jena -Dversion=1.0-SNAPSHOT \
+  -Dpackaging=pom -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
 
-# RUN mvn dependency:get -Dartifact=org.apache.maven.doxia:doxia-module-markdown:jar:1.4
-
-RUN mvn dependency:go-offline 
-
-RUN find /root/.m2/repository -name "jargs*"
+RUN mvn dependency:get -DgroupId=org.apache.maven.doxia -DartifactId=doxia-module-markdown -Dversion=1.4 -Dpackaging=jar \
+  -DrepoUrl=https://repo1.maven.org/maven2/

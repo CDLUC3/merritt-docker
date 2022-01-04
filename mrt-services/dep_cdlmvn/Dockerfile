@@ -31,3 +31,5 @@ RUN mvn dependency:get -DgroupId=org.cdlib.mrt -DartifactId=mrt-jena -Dversion=1
 
 RUN mvn dependency:get -DgroupId=org.apache.maven.doxia -DartifactId=doxia-module-markdown -Dversion=1.4 -Dpackaging=jar \
   -DrepoUrl=https://repo1.maven.org/maven2/
+
+RUN find /root/.m2 -name _remote.repositories | xargs rm 

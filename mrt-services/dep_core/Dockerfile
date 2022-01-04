@@ -22,4 +22,6 @@ RUN mkdir appdir && \
     cp */target/*.jar appdir && \
     mvn clean 
 
+RUN find /root/.m2 -name _remote.repositories | xargs rm 
+
 ENTRYPOINT [ "ls", "appdir" ]

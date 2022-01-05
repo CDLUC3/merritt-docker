@@ -9,13 +9,9 @@
 
 ARG ECR_REGISTRY=ecr_registry_not_set
 
-# FROM ${ECR_REGISTRY}/dep-cdlmvn:dev as cdlmvn
-
 FROM ${ECR_REGISTRY}/mrt-cloud:dev as build
 
 WORKDIR /build/mrt-store
-
-COPY settings.xml /root/.m2/
 
 ADD mrt-store /build/mrt-store
 
@@ -32,7 +28,6 @@ RUN mkdir -p /dpr2store/mrtHomes/store \
     /dpr2store/mrtHomes/logs \
     /opt/storage/ && \
     touch /opt/storage/test.txt
-
 RUN mkdir -p /usr/local/tomcat/webapps/cloudcontainer/store
 
 ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -d64 -DAccessDaemon=1"

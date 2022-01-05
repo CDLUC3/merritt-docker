@@ -9,7 +9,7 @@
 
 ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM ${ECR_REGISTRY}/mrt-core2:dev
+FROM ${ECR_REGISTRY}/mrt-zoo:dev
 
 WORKDIR /build/mrt-cloud
 
@@ -21,7 +21,5 @@ RUN mkdir appdir && \
     mvn install -DskipTests && \
     cp */target/*.jar appdir && \
     mvn clean 
-
-RUN find /root/.m2 -name _remote.repositories | xargs rm 
 
 ENTRYPOINT [ "ls", "appdir" ]

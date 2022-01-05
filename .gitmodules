@@ -36,9 +36,9 @@
 [submodule "mrt-services/dep_cloud/mrt-cloud"]
 	path = mrt-services/dep_cloud/mrt-cloud
 	url = git@github.com:cdluc3/mrt-cloud
-[submodule "mrt-services/dep_cdlzk/cdl-zk-queue"]
-	path = mrt-services/dep_cdlzk/cdl-zk-queue
-	url = git@github.com:cdluc3/cdl-zk-queue
 [submodule "mrt-services/dep_zoo/mrt-zoo"]
 	path = mrt-services/dep_zoo/mrt-zoo
 	url = git@github.com:cdluc3/mrt-zoo
+[submodule "mrt-services/dep_cdlzk/cdl-zk-queue"]
+	path = mrt-services/dep_cdlzk/cdl-zk-queue
+	url = git@github.com:cdluc3/cdl-zk-queue

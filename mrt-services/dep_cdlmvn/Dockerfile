@@ -15,27 +15,13 @@ WORKDIR /build
 RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=jargs -DartifactId=jargs -Dversion=1.1.1 -Dpackaging=jar \
   -DrepoUrl=https://mvn.cdlib.org/content/repositories/thirdparty/
 
-RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=jargs -DartifactId=jargs -Dversion=1.1.1 -Dpackaging=pom \
-  -DrepoUrl=https://mvn.cdlib.org/content/repositories/thirdparty/
+RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=org.cdlib.mrt -DartifactId=mrt-dataonesrc -Dversion=1.0-SNAPSHOT \
+  -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
 
-# net.sf:jargs:jar:1.0
+# storage uses this
 RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=net.sf -DartifactId=jargs -Dversion=1.0 -Dpackaging=jar \
   -DrepoUrl=https://mvn.cdlib.org/content/repositories/public/
 
-RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=net.sf -DartifactId=jargs -Dversion=1.0 -Dpackaging=pom \
-  -DrepoUrl=https://mvn.cdlib.org/content/repositories/public/
-
-RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=org.cdlib.mrt -DartifactId=mrt-dataonesrc -Dversion=1.0-SNAPSHOT \
-  -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
-
-RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=org.cdlib.mrt -DartifactId=mrt-dataonesrc -Dversion=1.0-SNAPSHOT \
-  -Dpackaging=pom -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
-
+# Used by several repos
 RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=org.cdlib.mrt -DartifactId=mrt-jena -Dversion=1.0-SNAPSHOT \
   -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
-
-RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=org.cdlib.mrt -DartifactId=mrt-jena -Dversion=1.0-SNAPSHOT \
-  -Dpackaging=pom -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
-
-RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=org.apache.maven.doxia -DartifactId=doxia-module-markdown -Dversion=1.4 -Dpackaging=jar \
-  -DrepoUrl=https://repo1.maven.org/maven2/

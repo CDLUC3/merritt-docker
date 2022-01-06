@@ -5,10 +5,8 @@ cd ~dpr2/merritt-workspace/merritt-docker
 # Pull in the appropriate branches for each repo
 . workspace-init/merritt-docker-branch-refresh.sh
 
-cd mrt-dependencies
-docker-compose build
-
 cd ../mrt-services
+./dep_build.sh
 docker-compose build
 
 cd mrt-admin-lambda

@@ -5,41 +5,29 @@ git fetch
 # git checkout master
 git pull
 
-cd mrt-dependencies
+cd mrt-services
 
-cd cdl-zk-queue
+cd dep_cdlzk/cdl-zk-queue
 git fetch
 git checkout master
 git pull
 
-cd ../mrt-cloud
+cd ../../dep_cloud/mrt-cloud
 git fetch
 git checkout master
 git pull
 
-cd ../mrt-core2
+cd ../../dep_core/mrt-core2
 git fetch
 git checkout master
 git pull
 
-cd ../mrt-ingest
-git fetch
-git checkout main
-git pull
-
-cd ../mrt-inventory
+cd ../../dep_zoo/mrt-zoo
 git fetch
 git checkout master
 git pull
 
-cd ../mrt-zoo
-git fetch
-git checkout master
-git pull
-
-cd ../../mrt-services
-
-cd audit/mrt-audit
+cd ../../audit/mrt-audit
 git fetch
 git checkout master
 git pull

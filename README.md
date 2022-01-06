@@ -27,7 +27,6 @@ The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI and
 
 | Component   | Image Name | Where the component runs | Notes |
 | ----------- | ---------- | ------------------------ | ----- |
-| Java dependencies | cdluc3/mrt-dependencies | Docker | Base image for other microservices. All service properties are currently mocked in the jar file. |
 | Zookeeper   | zookeeper | Docker | |
 | OpenDJ      | ldap      | Docker | |
 | MySQL       | cdluc3/mrt-database | Docker | |
@@ -88,12 +87,6 @@ Files in this directory are not tracked by github.  These dependencies have been
 See [.vscode/settings.json](.vscode/settings.json) for build and stack initiation configurations.
 
 ## Build instructions
-
-Java Dependencies
-```bash
-cd mrt-dependencies
-docker-compose build
-```
 
 Services
 

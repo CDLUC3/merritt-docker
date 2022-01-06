@@ -3,9 +3,9 @@
 #   All rights reserved
 #*********************************************************************
 
-# docker build -t cdluc3/mrt-zookeeper .
+ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM cdluc3/mrt-dependencies as build
+FROM ${ECR_REGISTRY}/mrt-zoo:dev as build
 
 FROM zookeeper:3.4
 

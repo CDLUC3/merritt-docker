@@ -2,14 +2,23 @@
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-# Publish as cdluc3/mrt-oai
+# docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-oai:dev .
+# aws ecr create-repository --repository-name mrt-oai
+# docker push ${ECR_REGISTRY}/mrt-oai:dev
 
-#   docker build -t cdluc3/mrt-oai .
+ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM cdluc3/mrt-dependencies as build
-WORKDIR /tmp/mrt-oai
+FROM ${ECR_REGISTRY}/mrt-inventory-src:dev as build
 
-ADD mrt-oai /tmp/mrt-oai
+RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=com.lyncode -DartifactId=xoai-data-provider -Dversion=4.1.1-SNAPSHOT \
+  -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/ 
+
+RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=com.lyncode -DartifactId=xoai-common -Dversion=4.1.1-SNAPSHOT \
+  -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/ 
+
+WORKDIR /build/mrt-oai
+
+ADD mrt-oai /build/mrt-oai
 
 RUN mvn install -DskipTests && \
     mvn clean

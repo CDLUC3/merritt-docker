@@ -25,3 +25,11 @@ RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=net.sf -DartifactI
 # Used by several repos
 RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=org.cdlib.mrt -DartifactId=mrt-jena -Dversion=1.0-SNAPSHOT \
   -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/
+
+# for OAI and Sword, mock the conf file creation until those services are migrated to use SSM
+WORKDIR /build/mysqlconf
+
+ADD . /build/mysqlconf/
+
+RUN mvn install && \
+    mvn clean

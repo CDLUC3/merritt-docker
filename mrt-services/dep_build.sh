@@ -46,3 +46,11 @@ docker push ${ECR_REGISTRY}/mrt-audit:dev || die "FAIL"
 docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-replic:dev replic || die "FAIL"
 
 docker push ${ECR_REGISTRY}/mrt-replic:dev || die "FAIL"
+
+docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-oai:dev oai || die "FAIL"
+
+docker push ${ECR_REGISTRY}/mrt-oai:dev || die "FAIL"
+
+docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-sword:dev sword || die "FAIL"
+
+docker push ${ECR_REGISTRY}/mrt-sword:dev || die "FAIL"

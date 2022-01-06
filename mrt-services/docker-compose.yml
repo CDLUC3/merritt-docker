@@ -32,10 +32,12 @@ services:
     - zoo
     - store
     - inventory
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-ingest
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-ingest:dev
     build:
       context: ingest
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     environment:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_INGEST: ingest-docker
@@ -55,10 +57,12 @@ services:
     hostname: store
     depends_on:
     - zoo
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-store
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-store:dev
     build:
       context: store
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     ports:
     - published: 8081
       target: 8080
@@ -79,10 +83,12 @@ services:
     depends_on:
     - zoo
     - ezid
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-inventory
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-inventory:dev
     build:
       context: inventory
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
     ports:
@@ -96,10 +102,12 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-zookeeper
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-zookeeper:dev
     build:
       context: zoo
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
     ports:

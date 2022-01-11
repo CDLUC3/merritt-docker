@@ -193,10 +193,10 @@ docker-compose -p merritt_a -f docker-compose.yml -f dryad.yml -f local.yml up -
 EC2 run
 
 ```
-sudo docker-compose -f docker-compose.yml -f ec2.yml -p merritt up -d
+docker-compose -f docker-compose.yml -f ec2.yml -p merritt up -d
 ```
 
 EC2 run with Dryad
 ```
-udo docker-compose -f docker-compose.yml -f dryad.yml -f ec2.yml -p merritt up -d
+docker-compose -f docker-compose.yml -f dryad.yml -f ec2.yml -p merritt up -d
 ```

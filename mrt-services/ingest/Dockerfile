@@ -9,7 +9,7 @@
 
 ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM ${ECR_REGISTRY}/mrt-zoo:dev as build
+FROM ${ECR_REGISTRY}/cdl-zk-queue:dev as build
 
 WORKDIR /build/mrt-ingest
 

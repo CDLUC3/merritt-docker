@@ -1,0 +1,160 @@
+________________________________________________________________________________
+2/10/2022
+
+https://prog.world/centralized-docker-logging-using-elk-stack/
+https://opensearch.org/docs/latest/opensearch/install/docker/
+
+docker pull docker.elastic.co/beats/filebeat:7.17.0
+
+mkdir filebeat
+cd filebeat/
+filebeat> vi Dockerfile
+filebeat> vi filebeat.yml
+filebeat> docker build -t filebeatimage .
+
+filebeat> docker imagesREPOSITORY                         TAG       IMAGE ID       CREATED          SIZE
+filebeatimage                      latest    8d0248f4a66e   22 seconds ago   268MB
+docker.elastic.co/beats/filebeat   7.17.0    45eb8bd6ea02   13 days ago      268MB
+ubuntu                             latest    d13c942271d6   4 weeks ago      72.8MB
+hello-world                        latest    feb5d9fea6a5   4 months ago     13.3kB
+
+---
+
+https://opensearch.org/docs/latest/opensearch/install/docker/
+https://hub.docker.com/u/opensearchproject
+https://hub.docker.com/r/opensearchproject/opensearch/tags
+https://hub.docker.com/r/opensearchproject/opensearch-dashboards/tags
+
+
+> docker pull opensearchproject/opensearch:1.2.4
+1.2.4: Pulling from opensearchproject/opensearch
+Digest: sha256:0b6c57dbbfbf941f159b469ee755ea46014cd3735c446f616f59daef0b45c7d5
+Status: Downloaded newer image for opensearchproject/opensearch:1.2.4
+docker.io/opensearchproject/opensearch:1.2.4
+
+> docker pull opensearchproject/opensearch-dashboards:1.2.0
+1.2.0: Pulling from opensearchproject/opensearch-dashboards
+Digest: sha256:84da9a524e2cbda97f1a960f6ef6453c79b83fb1821cd88b74571da3b01d45c1
+Status: Downloaded newer image for opensearchproject/opensearch-dashboards:1.2.0
+docker.io/opensearchproject/opensearch-dashboards:1.2.0
+
+> docker pull opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.3
+7.16.3: Pulling from opensearchproject/logstash-oss-with-opensearch-output-plugin
+Digest: sha256:f74a3d34ebc4764b8f9a2dccd4a1cac07af614108af7c28ffa8366911ae7ac65
+Status: Downloaded newer image for opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.3
+docker.io/opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.3
+
+
+
+> mkdir -p docker_elk/{opensearch,dashboard,logstash}
+> cd docker_elk/opensearch
+docker_elk/opensearch> vi Dockerfile
+docker_elk/opensearch> docker build -t opensearch .
+docker_elk/opensearch> docker run -name opensearch -p 9200:9200 -p 9600:9600 -e "discovery.type=single-node" opensearch
+
+# from another xterm:
+> curl -XGET https://localhost:9200 -u 'admin:admin' --insecure
+{
+  "name" : "a51e884e9fce",
+  "cluster_name" : "docker-cluster",
+  "cluster_uuid" : "C1nhE1m6RmOM5WcfA3zJ0w",
+  "version" : {
+    "distribution" : "opensearch",
+    "number" : "1.2.4",
+    "build_type" : "tar",
+    "build_hash" : "e505b10357c03ae8d26d675172402f2f2144ef0f",
+    "build_date" : "2022-01-14T03:38:06.881862Z",
+    "build_snapshot" : false,
+    "lucene_version" : "8.10.1",
+    "minimum_wire_compatibility_version" : "6.8.0",
+    "minimum_index_compatibility_version" : "6.0.0-beta1"
+  },
+  "tagline" : "The OpenSearch Project: https://opensearch.org/"
+}
+
+> curl -XGET https://localhost:9200/_cat/nodes?v -u 'admin:admin' --insecure
+ip         heap.percent ram.percent cpu load_1m load_5m load_15m node.role master name
+172.17.0.2           15          97   3    0.36    0.36     0.37 dimr      *      a51e884e9fce
+
+> curl -XGET https://localhost:9200/_cat/plugins?v -u 'admin:admin' --insecure
+name         component                            version
+a51e884e9fce opensearch-alerting                  1.2.4.0
+a51e884e9fce opensearch-anomaly-detection         1.2.4.0
+a51e884e9fce opensearch-asynchronous-search       1.2.4.0
+a51e884e9fce opensearch-cross-cluster-replication 1.2.4.0
+a51e884e9fce opensearch-index-management          1.2.4.0
+a51e884e9fce opensearch-job-scheduler             1.2.4.0
+a51e884e9fce opensearch-knn                       1.2.4.0
+a51e884e9fce opensearch-observability             1.2.4.0
+a51e884e9fce opensearch-performance-analyzer      1.2.4.0
+a51e884e9fce opensearch-reports-scheduler         1.2.4.0
+a51e884e9fce opensearch-security                  1.2.4.0
+a51e884e9fce opensearch-sql                       1.2.4.0
+
+
+docker_elk/opensearch> docker stop opensearch
+docker_elk/opensearch> docker rm opensearch
+
+docker_elk> vi docker-compose.yml
+docker_elk> docker-compose up --detach
+docker_elk> docker-compose down
+docker_elk> docker ps
+docker_elk> docker ps -a
+docker_elk> docker logs opensearch-node1 
+docker_elk> docker help network
+docker_elk> docker network ls
+docker_elk> docker network inspect docker_elk_opensearch-net
+
+---
+
+docker_elk> docker-compose up --detach
+docker_elk> docker logs opensearch-node1
+
+opensearch-node1 exits with the following log error:
+
+[2022-02-10T20:38:31,013][INFO ][o.o.b.BootstrapChecks    ] [opensearch-node1] bound or publishing to a non-loopback address, enforcing bootstrap checks
+ERROR: [1] bootstrap checks failed
+[1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+ERROR: OpenSearch did not exit normally - check the logs at /usr/share/opensearch/logs/opensearch-cluster.log
+[2022-02-10T20:38:31,017][INFO ][o.o.n.Node               ] [opensearch-node1] stopping ...
+
+Google search on this error says to adjust kernel setting for `vm.max_map_count` and
+then restart docker deamon:
+
+> sudo sysctl -w vm.max_map_count=262144
+vm.max_map_count = 262144
+> sudo systemctl restart docker
+
+better
+
+---
+
+Next error.  I am now only running one node.  I have set
+"discovery.type=single-node".  opensearch node crashes with following:
+
+uncaught exception in thread [main]
+java.lang.IllegalStateException: cannot start with [discovery.type] set to [single-node] when local node {opensearch-node1}{_BgLctDkRuyYxeDNfg_hUA}{Gc5icGQzSKiUt9zrLAwgKw}{172.20.0.2}{172.20.0.2:9300}{dimr}{shard_indexing_pressure_enabled=true} does not have quorum in voting configuration VotingConfiguration{Oduce8TlTAa8at5si0_xVA}
+
+Google search says an existing cluster was running two nodes.  I need to delete my
+docker volumes from previous docker-compose run:
+
+agould@localhost:~/cdl/uc3ops/opensearch/local_poc/prog_world_demo/docker_elk> docker-compose down
+Stopping opensearch-dashboards ... done
+Stopping opensearch-node1      ... done
+Removing opensearch-dashboards ... done
+Removing opensearch-node1      ... done
+Removing network docker_elk_opensearch-net
+agould@localhost:~/cdl/uc3ops/opensearch/local_poc/prog_world_demo/docker_elk> docker volume ls
+DRIVER    VOLUME NAME
+local     docker_elk_opensearch-data1
+local     docker_elk_opensearch-data2
+agould@localhost:~/cdl/uc3ops/opensearch/local_poc/prog_world_demo/docker_elk> docker volume prune
+WARNING! This will remove all local volumes not used by at least one container.
+Are you sure you want to continue? [y/N] y
+Deleted Volumes:
+docker_elk_opensearch-data1
+docker_elk_opensearch-data2
+
+Total reclaimed space: 139.8kB
+
+

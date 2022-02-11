@@ -63,7 +63,7 @@ The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI and
 - 8091: ALB Simulator in front of Lambda Container
 - 8092: Replic
 - 8093: Audit
-- 8094:
+- 8094: Opensearch Dashboards
 - 8095:
 - 8096:
 - 8097:

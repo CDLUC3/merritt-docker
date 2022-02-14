@@ -47,6 +47,7 @@ The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI and
 | Minio Cmd   | minio/mc | Docker | Initialized bucket in Minio container |
 | ALB Simulator | cdluc3/simulate-lambda-alb | Docker | Simulates an ALB running in front of a Lambda for Collection Admin |
 | Collection Admin | ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/uc3-mrt-colladmin-lambda | Docker | Merritt collection admin tool |
+| Opensearch Dashboard |opensearchproject/opensearch-dashboards | Docker | Full ELK stack for indexing and quering container logs. |
 
 ## Port usage
 - 8080: Ingest
@@ -162,7 +163,7 @@ docker-compose -p merritt down
 | Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
 | Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
 | Audit Replic | [audit-replic.yml](mrt-services/audit-replic.yml) | Configuration of Audit Replic services for Merritt |
-
+| Opensearch Dashboards | [opensearch.yml](mrt-services/opensearch.yml) | Configuration of Full Opensearch stack |
 ## Repo Init
 
 ```
@@ -199,4 +200,9 @@ docker-compose -f docker-compose.yml -f ec2.yml -p merritt up -d
 EC2 run with Dryad
 ```
 docker-compose -f docker-compose.yml -f dryad.yml -f ec2.yml -p merritt up -d
+```
+
+EC2 run with Opensearch Dashboards
+```
+docker-compose -f docker-compose.yml -f opensearch.yml -f ec2.yml -p merritt up -d
 ```

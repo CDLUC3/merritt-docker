@@ -9,17 +9,17 @@ cd mrt-services
 
 cd dep_cdlzk/cdl-zk-queue
 git fetch
-git checkout master
+git checkout java-refactor
 git pull
 
 cd ../../dep_cloud/mrt-cloud
 git fetch
-git checkout master
+git checkout java-refactor
 git pull
 
 cd ../../dep_core/mrt-core2
 git fetch
-git checkout master
+git checkout java-refactor
 git pull
 
 cd ../../dep_zoo/mrt-zoo
@@ -29,7 +29,7 @@ git pull
 
 cd ../../audit/mrt-audit
 git fetch
-git checkout master
+git checkout java-refactor
 git pull
 
 cd ../../dryad/dryad-app
@@ -39,12 +39,12 @@ git pull
 
 cd ../../ingest/mrt-ingest
 git fetch
-git checkout main
+git checkout java-refactor
 git pull
 
 cd ../../inventory/mrt-inventory
 git fetch
-git checkout master
+git checkout java-refactor
 git pull
 
 cd ../../oai/mrt-oai
@@ -54,17 +54,17 @@ git pull
 
 cd ../../replic/mrt-replic
 git fetch
-git checkout master
+git checkout java-refactor
 git pull
 
 cd ../../audit/mrt-audit
 git fetch
-git checkout master
+git checkout java-refactor
 git pull
 
 cd ../../store/mrt-store
 git fetch
-git checkout master
+git checkout java-refactor
 git pull
 
 cd ../../sword/mrt-sword

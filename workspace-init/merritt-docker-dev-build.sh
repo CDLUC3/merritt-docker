@@ -3,7 +3,7 @@
 cd ~dpr2/merritt-workspace/merritt-docker
 
 # Pull in the appropriate branches for each repo
-. workspace-init/merritt-docker-branch-refresh.sh
+./workspace-init/merritt-docker-branch-refresh.sh
 
 cd ../mrt-services
 ./dep_build.sh

@@ -31,8 +31,8 @@ services:
     #- 9600:9600 # required for Performance Analyzer
     networks:
       merrittnet:
-    labels:
-        co.elastic.logs/enabled: "false"
+    #labels:
+    #    co.elastic.logs/enabled: "false"
 
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:1.2.0
@@ -46,8 +46,8 @@ services:
       - 'OPENSEARCH_HOSTS=["https://opensearch-node1:9200"]'
     networks:
       merrittnet:
-    labels:
-        co.elastic.logs/enabled: "false"
+    #labels:
+    #    co.elastic.logs/enabled: "false"
 
   logstash:
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/logstash-oss:dev
@@ -62,8 +62,8 @@ services:
       merrittnet:
     depends_on:
     - opensearch-node1
-    labels:
-        co.elastic.logs/enabled: "false"
+    #labels:
+    #    co.elastic.logs/enabled: "false"
 
   filebeat:
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/filebeat:dev
@@ -74,11 +74,11 @@ services:
     user: root
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
-    - /apps/dpr2/docker-system-storage/5071.5651/containers:/var/lib/docker/containers:ro
+    - /apps/dpr2/docker-system-storage/5071.5161/containers:/var/lib/docker/containers:ro
     #- /var/lib/docker/containers:/var/lib/docker/containers:ro
     networks:
       merrittnet:
     #restart: unless-stopped
-    labels:
-        co.elastic.logs/enabled: "false"
+    #labels:
+    #    co.elastic.logs/enabled: "false"
 

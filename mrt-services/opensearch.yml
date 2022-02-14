@@ -3,6 +3,9 @@ version: '3'
 volumes:
   opensearch-data1:
 
+networks:
+  merrittnet:
+
 services:
   opensearch-node1:
     image: opensearchproject/opensearch:1.2.4
@@ -25,12 +28,11 @@ services:
     ports:
     - published: 9200
       target: 9200
-    #- 9200:9200
     #- 9600:9600 # required for Performance Analyzer
     networks:
-    - merrittnet:
-    labels:
-        co.elastic.logs/enabled: "false"
+      merrittnet:
+    #labels:
+    #    co.elastic.logs/enabled: "false"
 
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:1.2.0
@@ -38,20 +40,17 @@ services:
     ports:
     - published: 8094
       target: 5601
-    #- 5601:5601
     expose:
-      - "8095"
+      - "8094"
     environment:
       - 'OPENSEARCH_HOSTS=["https://opensearch-node1:9200"]'
     networks:
-    - merrittnet:
-      - opensearch-net
-    labels:
-        co.elastic.logs/enabled: "false"
+      merrittnet:
+    #labels:
+    #    co.elastic.logs/enabled: "false"
 
   logstash:
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/logstash-oss:dev
-    #image: opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.3
     container_name: logstash
     build:
       context: opensearch/logstash
@@ -60,14 +59,14 @@ services:
     - published: 5044
       target: 5044
     networks:
-    - merrittnet:
+      merrittnet:
     depends_on:
     - opensearch-node1
-    labels:
-        co.elastic.logs/enabled: "false"
+    #labels:
+    #    co.elastic.logs/enabled: "false"
 
   filebeat:
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/logstash-oss:dev
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/filebeat:dev
     container_name: filebeat
     build:
       context: opensearch/filebeat
@@ -75,11 +74,11 @@ services:
     user: root
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock:ro
-    - /apps/dpr2/docker-system-storage/5071.5071/containers:/var/lib/docker/containers:ro
+    - /apps/dpr2/docker-system-storage/5071.5161/containers:/var/lib/docker/containers:ro
     #- /var/lib/docker/containers:/var/lib/docker/containers:ro
     networks:
-    - merrittnet:
+      merrittnet:
     #restart: unless-stopped
-    labels:
-        co.elastic.logs/enabled: "false"
+    #labels:
+    #    co.elastic.logs/enabled: "false"
 

@@ -1,56 +1,69 @@
 aws ecr get-login-password --region us-west-2 | \
   docker login --username AWS \
-    --password-stdin ${ECR_REGISTRY} || die "FAIL"
+    --password-stdin ${ECR_REGISTRY} || exit 1
 
-docker build -t ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn || die "FAIL"
+echo
+echo "Running docker build -t ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn"
+docker build --force-rm -t ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn || exit 1
+docker push ${ECR_REGISTRY}/dep-cdlmvn:dev || exit 1
 
-docker push ${ECR_REGISTRY}/dep-cdlmvn:dev || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-core2:dev dep_core"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-core2:dev dep_core || exit 1
+docker push ${ECR_REGISTRY}/mrt-core2:dev || exit 1
 
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-core2:dev dep_core || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/cdl-zk-queue:dev dep_cdlzk"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/cdl-zk-queue:dev dep_cdlzk || exit 1
+docker push ${ECR_REGISTRY}/cdl-zk-queue:dev || exit 1
 
-docker push ${ECR_REGISTRY}/mrt-core2:dev || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-zoo:dev dep_zoo"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-zoo:dev dep_zoo || exit 1
+docker push ${ECR_REGISTRY}/mrt-zoo:dev || exit 1
 
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/cdl-zk-queue:dev dep_cdlzk || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-cloud:dev dep_cloud"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-cloud:dev dep_cloud || exit 1
+docker push ${ECR_REGISTRY}/mrt-cloud:dev || exit 1
 
-docker push ${ECR_REGISTRY}/cdl-zk-queue:dev || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-ingest:dev ingest"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-ingest:dev ingest || exit 1
+docker push ${ECR_REGISTRY}/mrt-ingest:dev || exit 1
 
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-zoo:dev dep_zoo || die "FAIL"
+echo
+echo "Running docker build -f inventory/Dockerfile-jar --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory-src:dev inventory"
+docker build --force-rm -f inventory/Dockerfile-jar --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
+  -t ${ECR_REGISTRY}/mrt-inventory-src:dev inventory || exit 1
+docker push ${ECR_REGISTRY}/mrt-inventory-src:dev || exit 1
 
-docker push ${ECR_REGISTRY}/mrt-zoo:dev || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory:dev inventory"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory:dev inventory || exit 1
+docker push ${ECR_REGISTRY}/mrt-inventory:dev || exit 1
 
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-cloud:dev dep_cloud || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-store:dev store"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-store:dev store || exit 1
+docker push ${ECR_REGISTRY}/mrt-store:dev || exit 1
 
-docker push ${ECR_REGISTRY}/mrt-cloud:dev || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-audit:dev audit"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-audit:dev audit || exit 1
+docker push ${ECR_REGISTRY}/mrt-audit:dev || exit 1
 
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-ingest:dev ingest || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-replic:dev replic"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-replic:dev replic || exit 1
+docker push ${ECR_REGISTRY}/mrt-replic:dev || exit 1
 
-docker push ${ECR_REGISTRY}/mrt-ingest:dev || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-oai:dev oai"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-oai:dev oai || exit 1
+docker push ${ECR_REGISTRY}/mrt-oai:dev || exit 1
 
-docker build -f inventory/Dockerfile-jar --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
-  -t ${ECR_REGISTRY}/mrt-inventory-src:dev inventory || die "FAIL"
-
-docker push ${ECR_REGISTRY}/mrt-inventory-src:dev || die "FAIL"
-
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory:dev inventory || die "FAIL"
-
-docker push ${ECR_REGISTRY}/mrt-inventory:dev || die "FAIL"
-
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-store:dev store || die "FAIL"
-
-docker push ${ECR_REGISTRY}/mrt-store:dev || die "FAIL"
-
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-audit:dev audit || die "FAIL"
-
-docker push ${ECR_REGISTRY}/mrt-audit:dev || die "FAIL"
-
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-replic:dev replic || die "FAIL"
-
-docker push ${ECR_REGISTRY}/mrt-replic:dev || die "FAIL"
-
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-oai:dev oai || die "FAIL"
-
-docker push ${ECR_REGISTRY}/mrt-oai:dev || die "FAIL"
-
-docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-sword:dev sword || die "FAIL"
-
-docker push ${ECR_REGISTRY}/mrt-sword:dev || die "FAIL"
+echo
+echo "Running docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-sword:dev sword"
+docker build --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-sword:dev sword || exit 1
+docker push ${ECR_REGISTRY}/mrt-sword:dev || exit 1

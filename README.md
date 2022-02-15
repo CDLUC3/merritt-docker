@@ -2,12 +2,40 @@
 
 This library is part of the [Merritt Preservation System](https://github.com/CDLUC3/mrt-doc).
 
+
+## Installation
+
+Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as normal user.
+
+1. Ensure user writable directory from which to do initial cloning:
+   ```
+   cd /dpr2/merritt-workspace
+   mkdir $USER
+   cd $USER
+   ```
+
+1. Clone merritt-docker repo and pull in submodules:
+   ```
+   $BRANCH=java-refactor.ashley
+   git clone git@github.com:CDLUC3/merritt-docker.git -b $BRANCH \
+     --remote-submodules --recurse-submodules
+   ```
+
+1. Build dependencies:
+   ```
+   cd merritt-docker
+   bin/dep_build.sh
+   ```
+
+
+
 ## Purpose
 The purpose of this repository is to build docker images for local developer testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
 
 ## Presentation 
 
 ![](https://github.com/CDLUC3/mrt-doc/raw/main/diagrams/docker.mmd.svg)
+
 
 ## Dependencies
 The following dependencies are needed to build and run this repo.  The goal is to build a version of the system that can be run entirely from Docker.
@@ -82,6 +110,7 @@ This repository uses git submodules to pull in code to be built.
 Credentials for non-Docker services will be mounted from files within **mrt-services/no-track**.
 
 Files in this directory are not tracked by github.  These dependencies have been almost entirely eliminated due to the SSM refactoring of merritt services.
+
 
 ## Build and Start Services in VSCode
 

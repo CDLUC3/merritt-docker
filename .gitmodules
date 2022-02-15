@@ -1,10 +1,13 @@
 [submodule "mrt-services/dep_core/mrt-core2"]
 	path = mrt-services/dep_core/mrt-core2
 	url = git@github.com:cdluc3/mrt-core2
+	branch = java-refactor
+	#branch = master
 [submodule "mrt-services/ingest/mrt-ingest"]
 	path = mrt-services/ingest/mrt-ingest
 	url = git@github.com:cdluc3/mrt-ingest
-	branch = main
+	branch = java-refactor
+	#branch = main
 [submodule "mrt-services/ui/mrt-dashboard"]
 	path = mrt-services/ui/mrt-dashboard
 	url = git@github.com:CDLUC3/mrt-dashboard
@@ -12,33 +15,49 @@
 [submodule "mrt-services/store/mrt-store"]
 	path = mrt-services/store/mrt-store
 	url = git@github.com:cdluc3/mrt-store
+	branch = java-refactor
+	#branch = master
 [submodule "mrt-services/inventory/mrt-inventory"]
 	path = mrt-services/inventory/mrt-inventory
 	url = git@github.com:CDLUC3/mrt-inventory
+	branch = java-refactor
+	#branch = master
 [submodule "mrt-services/oai/mrt-oai"]
 	path = mrt-services/oai/mrt-oai
 	url = git@github.com:cdluc3/mrt-oai
+	branch = master
 [submodule "mrt-services/sword/mrt-sword"]
 	path = mrt-services/sword/mrt-sword
 	url = git@github.com:cdluc3/mrt-sword
+	branch = master
 [submodule "mrt-services/dryad/dryad-app"]
 	path = mrt-services/dryad/dryad-app
 	url = git@github.com:CDL-Dryad/dryad-app
+	branch = main
 [submodule "mrt-services/audit/mrt-audit"]
 	path = mrt-services/audit/mrt-audit
 	url = git@github.com:cdluc3/mrt-audit
+	branch = java-refactor
+	#branch = master
 [submodule "mrt-services/replic/mrt-replic"]
 	path = mrt-services/replic/mrt-replic
 	url = git@github.com:cdluc3/mrt-replic
+	branch = java-refactor
+	#branch = master
 [submodule "mrt-services/mrt-admin-lambda"]
 	path = mrt-services/mrt-admin-lambda
 	url = git@github.com:CDLUC3/mrt-admin-lambda
+	branch = main
 [submodule "mrt-services/dep_cloud/mrt-cloud"]
 	path = mrt-services/dep_cloud/mrt-cloud
 	url = git@github.com:cdluc3/mrt-cloud
+	branch = java-refactor
+	#branch = master
 [submodule "mrt-services/dep_zoo/mrt-zoo"]
 	path = mrt-services/dep_zoo/mrt-zoo
 	url = git@github.com:cdluc3/mrt-zoo
+	branch = master
 [submodule "mrt-services/dep_cdlzk/cdl-zk-queue"]
 	path = mrt-services/dep_cdlzk/cdl-zk-queue
 	url = git@github.com:cdluc3/cdl-zk-queue
+	branch = master

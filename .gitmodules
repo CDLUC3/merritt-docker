@@ -61,3 +61,7 @@
 	path = mrt-services/dep_cdlzk/cdl-zk-queue
 	url = git@github.com:cdluc3/cdl-zk-queue
 	branch = master
+[submodule "mrt-integ-tests"]
+	path = mrt-integ-tests
+	url = git@github.com:cdluc3/mrt-integ-tests.git
+	branch = main

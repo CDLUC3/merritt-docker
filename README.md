@@ -182,6 +182,50 @@ If you followed the [Installation](#Installation) instructions at the start
 of this README, all submodules will have been pulled into your working tree.
 
 To refresh submodule code from upstream repositories:
+```
+git submodule update --remote
+```
+
+See [Working with Git Submodules](#Working with Git Submodules) below for a detailed totorial and examples.
+
+
+### Working with Git Submodules
+
+
+man git-submodule		# man page
+git submodule			# same as `git submodule status`
+git submodule status		# list configured submodules with paths currently checked out commit (SHA-1)
+git submodule status --cashed	# same, but instead print the SHA-1 of commits recorded in the superproject
+git submodule summary		# show commits in submodule working trees which are not yet recorded in superproject
+
+agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule status 
++4af817151cdeac252ee66cb5353295105d9986a0 mrt-integ-tests (heads/main)
+ 56e633f98031be191f2e27a982e6d5ca1501e0ee mrt-services/audit/mrt-audit (sprint-65-4-g56e633f)
+ b7d9dbf0c4cf29cfa7892e1e52b47b83a113dccc mrt-services/dep_cdlzk/cdl-zk-queue (sprint-65-8-gb7d9dbf)
+ c76edd6b3c6eb183f4015c224d9ff30bb777f02f mrt-services/dep_cloud/mrt-cloud (sprint-65-1-gc76edd6)
+ 2d17fb9806f18b29321a906a0b81b133e8cca53b mrt-services/dep_core/mrt-core2 (sprint-65-3-g2d17fb9)
+ dc430176853925ccb0e2b9c6b28933d6013e9e54 mrt-services/dep_zoo/mrt-zoo (sprint-65)
+ 407b806305b3a79e8d9bb826fd08d5592112bb88 mrt-services/dryad/dryad-app (v0.7.17a-26-g407b80630)
+ fa969c5acceef9586dea30fa1098e6c5209861c9 mrt-services/ingest/mrt-ingest (sprint-64-main-30-gfa969c5)
+ d35df074b79f98a8be84d27fe0c59397b2787ee2 mrt-services/inventory/mrt-inventory (sprint-64-3-gd35df07)
+ 239c258b66c3bd0005f59a4aaa482bdf92ec4c93 mrt-services/mrt-admin-lambda (sprint-65-main-18-g239c258)
+ b0b601c7e3ccb187c7273e9a0def396aaf74c323 mrt-services/oai/mrt-oai (sprint-65)
+ 8cc0e38d3b31aaa444748386adc497c5fe923071 mrt-services/replic/mrt-replic (sprint-64-7-g8cc0e38)
++b182d03d4f4c0df679372549997239735a95d155 mrt-services/store/mrt-store (sprint-65-15-gb182d03)
+ 2d1a521ae02571f4bde85701411f09c781a69a9a mrt-services/sword/mrt-sword (sprint-65)
+ dffd8a712a6ec2ac2ab3c30395cb8600ec682bf7 mrt-services/ui/mrt-dashboard (sprint-65-main)
+
+agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule summary 
+* mrt-integ-tests 3ee46e2...4af8171 (1):
+  > fix integ tests
+
+* mrt-services/store/mrt-store 2231237...b182d03 (1):
+  > blee
+
+
+agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule update 
+Submodule path 'mrt-integ-tests': checked out '3ee46e20621cfaacd75193c56ec58160e2bcb370'
+Submodule path 'mrt-services/store/mrt-store': checked out '2231237e0e01188ba4bfacfc817f45853a052777'
 
 
 

@@ -37,3 +37,4 @@ output.logstash:
 #  keepfiles: 7
 #  permissions: 0644
 ssl.verification_mode: none
+logging.metrics.enabled: false

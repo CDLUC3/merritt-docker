@@ -186,34 +186,72 @@ To refresh submodule code from upstream repositories:
 git submodule update --remote
 ```
 
-See [Working with Git Submodules](#Working with Git Submodules) below for a detailed totorial and examples.
+See [Working with Git Submodules](#Working with Git Submodules) below for a detailed tutorial and examples.
 
 
 ### Working with Git Submodules
 
+#### Quick command reference
 
+```
 man git-submodule		# man page
 git submodule			# same as `git submodule status`
-git submodule status		# list configured submodules with paths currently checked out commit (SHA-1)
-git submodule status --cashed	# same, but instead print the SHA-1 of commits recorded in the superproject
+git submodule status		# list configured submodules
 git submodule summary		# show commits in submodule working trees which are not yet recorded in superproject
 
-agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule status 
+git submodule add -b main --name mrt-integ-tests git@github.com:cdluc3/mrt-integ-tests.git mrt-integ-tests
+                        	# add a new submodule to '.gitmodules':
+				#   [submodule "mrt-integ-tests"]
+				#           path = mrt-integ-tests
+				#           url = git@github.com:cdluc3/mrt-integ-tests.git
+				#           branch = main
+git submodule init mrt-integ-tests
+			 	# register new submodule. submodule code will not get pulled
+				# into working tree if not registered
+
+git submodule update		# clone/pull code from registerd submodules into defined path
+git submodule update --remote	# update using the status of the submodule’s remote-tracking branch
+git submodule update --remote --no-fetch 
+				# check for updates, but don't fetch new objects from the remote site
+```
+
+#### Checking submodule status
+
+The `git submodule` command lists all configured submodules.  For each one it
+lists the currently checked out commit hash, the path relative to the
+superproject root directory where the submodule code will be cloned, and either
+the tag or branch referencing the checked out commit.
+
+Each listing can be prefixed with on of:
+- '-': the submodule is not initialized
+- '+': the currently checked out submodule commit does not match what's recorded in the superproject
+- 'U': the submodule has merge conflicts.
+
+In the below example `mrt-integ-tests, mrt-store` have local commits which have
+not been recorded in the superproject.   `dryad-app, mrt-oai, mrt-sword` are
+registerd, which means they will not get pulled into working tree when running
+`git submodule update` - i.e. they are being ignored.
+
+``
+agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule
 +4af817151cdeac252ee66cb5353295105d9986a0 mrt-integ-tests (heads/main)
  56e633f98031be191f2e27a982e6d5ca1501e0ee mrt-services/audit/mrt-audit (sprint-65-4-g56e633f)
  b7d9dbf0c4cf29cfa7892e1e52b47b83a113dccc mrt-services/dep_cdlzk/cdl-zk-queue (sprint-65-8-gb7d9dbf)
  c76edd6b3c6eb183f4015c224d9ff30bb777f02f mrt-services/dep_cloud/mrt-cloud (sprint-65-1-gc76edd6)
  2d17fb9806f18b29321a906a0b81b133e8cca53b mrt-services/dep_core/mrt-core2 (sprint-65-3-g2d17fb9)
  dc430176853925ccb0e2b9c6b28933d6013e9e54 mrt-services/dep_zoo/mrt-zoo (sprint-65)
- 407b806305b3a79e8d9bb826fd08d5592112bb88 mrt-services/dryad/dryad-app (v0.7.17a-26-g407b80630)
+-407b806305b3a79e8d9bb826fd08d5592112bb88 mrt-services/dryad/dryad-app (v0.7.17a-26-g407b80630)
  fa969c5acceef9586dea30fa1098e6c5209861c9 mrt-services/ingest/mrt-ingest (sprint-64-main-30-gfa969c5)
  d35df074b79f98a8be84d27fe0c59397b2787ee2 mrt-services/inventory/mrt-inventory (sprint-64-3-gd35df07)
  239c258b66c3bd0005f59a4aaa482bdf92ec4c93 mrt-services/mrt-admin-lambda (sprint-65-main-18-g239c258)
- b0b601c7e3ccb187c7273e9a0def396aaf74c323 mrt-services/oai/mrt-oai (sprint-65)
+-b0b601c7e3ccb187c7273e9a0def396aaf74c323 mrt-services/oai/mrt-oai (sprint-65)
  8cc0e38d3b31aaa444748386adc497c5fe923071 mrt-services/replic/mrt-replic (sprint-64-7-g8cc0e38)
 +b182d03d4f4c0df679372549997239735a95d155 mrt-services/store/mrt-store (sprint-65-15-gb182d03)
- 2d1a521ae02571f4bde85701411f09c781a69a9a mrt-services/sword/mrt-sword (sprint-65)
+-2d1a521ae02571f4bde85701411f09c781a69a9a mrt-services/sword/mrt-sword (sprint-65)
  dffd8a712a6ec2ac2ab3c30395cb8600ec682bf7 mrt-services/ui/mrt-dashboard (sprint-65-main)
+```
+
+
 
 agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule summary 
 * mrt-integ-tests 3ee46e2...4af8171 (1):

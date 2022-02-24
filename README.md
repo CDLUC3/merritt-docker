@@ -175,9 +175,6 @@ This repository uses [git submodules](https://git-scm.com/book/en/v2/Git-Tools-S
 to pull in git repositories for all micro-services and dependencies which will
 be used to run a full stack of Merritt Services.
 
-The git submodules for this project are configured in file `.gitmodules`.
-Here we specify the repository url, branch and the location (path) where
-submodule code will be cloned relative to the root of this project.
 If you followed the [Installation](#Installation) instructions at the start
 of this README, all submodules will have been pulled into your working tree.
 
@@ -189,15 +186,19 @@ git submodule update --remote
 See [Working with Git Submodules](#Working with Git Submodules) below for a detailed tutorial and examples.
 
 
-### Working with Git Submodules
 
-#### Quick command reference
+
+
+
+## Working with Git Submodules
+
+### Quick command reference
 
 ```
 man git-submodule		# man page
 git submodule			# same as `git submodule status`
 git submodule status		# list configured submodules
-git submodule summary		# show commits in submodule working trees which are not yet recorded in superproject
+git submodule summary		# show commits in submodule working trees which are not yet recorded in super project
 
 git submodule add -b main --name mrt-integ-tests git@github.com:cdluc3/mrt-integ-tests.git mrt-integ-tests
                         	# add a new submodule to '.gitmodules':
@@ -215,20 +216,123 @@ git submodule update --remote --no-fetch
 				# check for updates, but don't fetch new objects from the remote site
 ```
 
-#### Checking submodule status
 
-The `git submodule` command lists all configured submodules.  For each one it
+
+### Configuring submodules in the super project
+
+The git submodules for this project are configured in file `.gitmodules`.
+Here we specify the repository url, branch and the location (path) where
+submodule code will be cloned relative to the root of the super project.
+
+Specifying `branch` on all submodules lets us configure different upstream
+branches for particular submodules depending on the branch of the super
+project.  For example, while refactoring our java builds, the 'java-refactor'
+branch in the super project is configured to pull in code from a
+'java-refactor' branch for those repos that have been refactored:
+
+```
+agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> head .gitmodules 
+[submodule "mrt-services/dep_core/mrt-core2"]
+        path = mrt-services/dep_core/mrt-core2
+        url = git@github.com:cdluc3/mrt-core2
+        branch = java-refactor
+[submodule "mrt-services/ingest/mrt-ingest"]
+        path = mrt-services/ingest/mrt-ingest
+        url = git@github.com:cdluc3/mrt-ingest
+        branch = main
+```
+
+To add a new submodule:
+```
+agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule add \
+  -b main --name mrt-integ-tests git@github.com:cdluc3/mrt-integ-tests.git mrt-integ-tests
+
+agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> tail -4 .gitmodules
+[submodule "mrt-integ-tests"]
+        path = mrt-integ-tests
+        url = git@github.com:cdluc3/mrt-integ-tests.git
+        branch = main
+```
+
+
+
+### Initializing Submodules
+
+After cloning this repository (or after adding a new submodule) submodules must
+be initialized (or registered).  Unregistered submodules are prefixed by a
+minus ('-') when running `git submodule status`:
+```
+merritt-docker> git submodule status
+-7aa272c2d81f0a4223e2917d84e042421364dc92 mrt-dependencies/cdl-zk-queue
+-0ac8054d899d6e5b7ebb3d46964d406421a1af12 mrt-dependencies/mrt-cloud
+-f224861914a480d8bbd1795ab46452444dd72489 mrt-dependencies/mrt-core2
+-6a5de6f0fa61d6879e05872883d87bae30b6061e mrt-dependencies/mrt-ingest
+[cut]
+```
+
+Uninitialized submodules cannot be updated:
+```
+merritt-docker> git submodule update mrt-dependencies/cdl-zk-queue
+Submodule path 'mrt-dependencies/cdl-zk-queue' not initialized
+Maybe you want to use 'update --init'?
+```
+
+Run `git submodule init` to initialize/register configured submodules:
+```
+merritt-docker> git submodule init
+Submodule 'mrt-dependencies/cdl-zk-queue' (git@github.com:cdluc3/cdl-zk-queue) registered for path 'mrt-dependencies/cdl-zk-queue'
+Submodule 'mrt-dependencies/mrt-cloud' (git@github.com:CDLUC3/mrt-cloud) registered for path 'mrt-dependencies/mrt-cloud'
+Submodule 'mrt-dependencies/mrt-core2' (git@github.com:cdluc3/mrt-core2) registered for path 'mrt-dependencies/mrt-core2'
+Submodule 'mrt-dependencies/mrt-ingest' (git@github.com:cdluc3/mrt-ingest) registered for path 'mrt-dependencies/mrt-ingest'
+[cut]
+```
+
+It is also possible to de-initialize a particular submodule.  Uninitialized
+submodules are ignored when running `git submodule update` for the whole super
+project.  This is useful if you are actively developing code within a submodule
+and do not want your topic branch to be reverted to the branch configured in
+the super project:
+```
+merritt-docker> git submodule deinit mrt-services/dep_cdlzk/cdl-zk-queue
+Cleared directory 'mrt-services/dep_cdlzk/cdl-zk-queue'
+Submodule 'mrt-services/dep_cdlzk/cdl-zk-queue' (git@github.com:cdluc3/cdl-zk-queue) unregistered for path 'mrt-services/dep_cdlzk/cdl-zk-queue'
+merritt-docker> git submodule status mrt-services/dep_cdlzk/cdl-zk-queue
+-b7d9dbf0c4cf29cfa7892e1e52b47b83a113dccc mrt-services/dep_cdlzk/cdl-zk-queue
+```
+
+
+
+### Updating Submodules
+
+When the super project is initially cloned and even after submodules are
+initialized, the directories configured as submodule paths are created, but are
+empty.  To populate submodule code run `git submodule update`.  This command
+clones submodule code into configured paths within the working tree of the
+super project and checks out the commit referenced by the configured branch.
+
+
+
+
+merritt-docker> git submodule update 
+Submodule path 'mrt-integ-tests': checked out '3ee46e20621cfaacd75193c56ec58160e2bcb370'
+Submodule path 'mrt-services/store/mrt-store': checked out '2231237e0e01188ba4bfacfc817f45853a052777'
+
+
+
+### Checking submodule status
+
+The `git submodule status` command lists all configured submodules.  For each one it
 lists the currently checked out commit hash, the path relative to the
-superproject root directory where the submodule code will be cloned, and either
+super project root directory where the submodule code will be cloned, and either
 the tag or branch referencing the checked out commit.
 
 Each listing can be prefixed with on of:
 - '-': the submodule is not initialized
-- '+': the currently checked out submodule commit does not match what's recorded in the superproject
+- '+': the currently checked out submodule commit does not match what's recorded in the super project
 - 'U': the submodule has merge conflicts.
 
 In the below example `mrt-integ-tests, mrt-store` have local commits which have
-not been recorded in the superproject.   `dryad-app, mrt-oai, mrt-sword` are
+not been recorded in the super project.   `dryad-app, mrt-oai, mrt-sword` are
 registerd, which means they will not get pulled into working tree when running
 `git submodule update` - i.e. they are being ignored.
 
@@ -252,18 +356,36 @@ agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git 
 ```
 
 
+Running `git status` also shows which submodules are out-of-sync with what is
+recorded in the super project.
+```
+agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git status
+On branch opensearch
 
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   mrt-integ-tests (new commits)
+        modified:   mrt-services/store/mrt-store (new commits)
+```
+
+
+The `git submodule summary` command shows which commits differ:
+```
 agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule summary 
-* mrt-integ-tests 3ee46e2...4af8171 (1):
+* mrt-integ-tests 3ee46e2...8e9733d (3):
+  > refine perms
+  > fix download folder accessibility
   > fix integ tests
 
-* mrt-services/store/mrt-store 2231237...b182d03 (1):
-  > blee
-
-
-agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule update 
-Submodule path 'mrt-integ-tests': checked out '3ee46e20621cfaacd75193c56ec58160e2bcb370'
-Submodule path 'mrt-services/store/mrt-store': checked out '2231237e0e01188ba4bfacfc817f45853a052777'
+* mrt-services/store/mrt-store 2231237...8a924e6 (13):
+  < tag or branch name
+  < MAVEN_HOME
+  < troubleshoot
+  < ${maven.home}/conf/settings.xml
+  < /dev/null settings file
+  < search for settings.xml
+```
 
 
 

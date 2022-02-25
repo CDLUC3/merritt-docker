@@ -307,15 +307,43 @@ merritt-docker> git submodule status mrt-services/dep_cdlzk/cdl-zk-queue
 When the super project is initially cloned and even after submodules are
 initialized, the directories configured as submodule paths are created, but are
 empty.  To populate submodule code run `git submodule update`.  This command
-clones submodule code into configured paths within the working tree of the
-super project and checks out the commit referenced by the configured branch.
+clones submodule code into configured paths (`.gitmodules`) within the working
+tree of the super project. 
 
-
-
-
-merritt-docker> git submodule update 
+**Note** - the commit recorded in the super project will be checked out on a
+detached HEAD.
+```
+merritt-docker> git submodule init mrt-integ-tests
+Submodule 'mrt-integ-tests' (git@github.com:cdluc3/mrt-integ-tests.git) registered for path 'mrt-integ-tests'
+merritt-docker> git submodule update mrt-integ-tests
 Submodule path 'mrt-integ-tests': checked out '3ee46e20621cfaacd75193c56ec58160e2bcb370'
-Submodule path 'mrt-services/store/mrt-store': checked out '2231237e0e01188ba4bfacfc817f45853a052777'
+merritt-docker> cd mrt-integ-tests/
+merritt-docker/mrt-integ-tests> git branch 
+* (HEAD detached at 3ee46e2)
+  main
+```
+
+**Also Note** - the commit recorded in the super project reflects the state of
+the submodule at the time the super project itself was last committed.  This
+may not be the same as the branch configured in `.gitmodules` or even the
+remote of the submodule.
+
+To update a submodule to reflect it's remote tracking branch (as set in
+`.gitmodules`) pass the `--remote` option.  This is the proper way to ensure
+submodules are up to date:
+
+```
+agould@localhost:~/git/github/cdluc3/merritt-docker> git submodule update --remote
+Cloning into '/home/agould/git/github/cdluc3/merritt-docker/mrt-services/mrt-admin-lambda'...
+Cloning into '/home/agould/git/github/cdluc3/merritt-docker/mrt-services/oai/mrt-oai'...
+Cloning into '/home/agould/git/github/cdluc3/merritt-docker/mrt-services/replic/mrt-replic'...
+Cloning into '/home/agould/git/github/cdluc3/merritt-docker/mrt-services/store/mrt-store'...
+Cloning into '/home/agould/git/github/cdluc3/merritt-docker/mrt-services/sword/mrt-sword'...
+Cloning into '/home/agould/git/github/cdluc3/merritt-docker/mrt-services/ui/mrt-dashboard'...
+[cut]
+```
+
+
 
 
 

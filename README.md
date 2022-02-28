@@ -17,7 +17,8 @@ testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
 
 Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as normal user.
 
-1. Ensure user writable directory from which to do initial cloning:
+1. Ensure user writable directory from which to do initial cloning.  This must
+   live under `/dpr2/merritt-workspace`:
    ```
    cd /dpr2/merritt-workspace
    mkdir $USER
@@ -27,8 +28,7 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
 1. Clone merritt-docker repo and pull in submodules:
    ```
    $BRANCH=java-refactor.ashley
-   git clone git@github.com:CDLUC3/merritt-docker.git -b $BRANCH \
-     --remote-submodules --recurse-submodules
+   git clone git@github.com:CDLUC3/merritt-docker.git -b $BRANCH --remote-submodules
    ```
 
 1. Build dependencies:
@@ -147,7 +147,6 @@ The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI and
 - 8099: Apache
 
 
-
 ### Elastic Container Repository (ECR)
 
 Most docker-compose scripts in this project rely on AWS Elastic Container
@@ -168,7 +167,6 @@ aws ecr get-login-password --region ${AWS_REGION} | \
 ```
 
 
-
 ### Git Submodules
 
 This repository uses [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
@@ -185,6 +183,131 @@ git submodule update --remote
 
 See [Working with Git Submodules](#Working with Git Submodules) below for a detailed tutorial and examples.
 
+
+
+## Build and Start Services in VSCode
+
+See [.vscode/settings.json](.vscode/settings.json) for build and stack initiation configurations.
+
+## Build instructions
+
+Services
+
+```bash
+cd mrt-services
+docker-compose build
+```
+
+### Service Start
+
+```bash
+docker-compose -p merritt up
+```
+
+To verify running processes and ports
+```bash
+docker ps -a
+```
+
+To view persistent volumes
+```bash
+docker volume ls
+```
+
+To view logs for a specific container
+```bash
+docker logs ingest
+```
+
+Tail view logs for a specific container
+```bash
+docker logs -f inventory
+```
+
+To view the docker network
+```bash
+docker network ls
+```
+
+### Service Stop
+
+```bash
+docker-compose -p merritt down
+```
+
+## Other useful tasks
+
+### List Zookeeper Queues
+`docker exec -it zoo zkCli.sh ls /`
+
+### Dump the ingest queue
+`docker exec -it zoo listIngest.sh`
+
+### Dump the inventory queue
+`docker exec -it zoo listInventory.sh`
+
+### Mysql Session
+`docker exec -it db-container mysql -u user --password=password --database=db-name`
+
+
+## Repo Init
+
+```
+```
+
+## Running Merritt Docker
+
+
+### Running docker-compose
+
+Set up docker environment vars:
+```
+source bin/docker_environment.sh
+```
+
+Run core merritt services:
+```
+cd mrt-services
+docker-compose build
+docker-compose -p merritt up -d
+docker-compose -p merritt down
+```
+
+Rebuild and run after minor changes to an image:
+```
+docker-compose -p merritt up -d --build
+```
+
+Run Merrit with Dryad:
+```
+docker-compose -p merritt -f docker-compose.yml -f dryad.yml up -d --build
+docker-compose -p merritt -f docker-compose.yml -f dryad.yml down
+```
+
+Run Merrit with Opensearch:
+```
+docker-compose -p merritt -f docker-compose.yml -f opensearch.yml up -d --build
+docker-compose -p merritt -f docker-compose.yml -f opensearch.yml down
+```
+
+
+### Helper docker-compose Files
+
+| Goal | File | Comment |
+| -- | -- | -- |
+| Debug java applications | in Eclipse | Use JPDA Debug on Port 8000 |
+|  | in VSCode | Launch a remote debugger [launch.json](launch.json) |
+|  | [debug-ingest.yml](mrt-services/debug-ingest.yml) |  |
+|  | [debug-inventory.yml](mrt-services/debug-inventory.yml) |
+|  | [debug-oai.yml](mrt-services/debug-oai.yml) |
+|  | [debug-storage.yml](mrt-services/debug-storage.yml) |
+| UI Testing from mrt-dashboard branch | [ui.yml](mrt-services/ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
+| EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume and hostname overrides EC2 dns and paths |
+| Localhost Config | [local.yml](mrt-services/local.yml) | hostname |
+| Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
+| Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
+| Audit Replic | [audit-replic.yml](mrt-services/audit-replic.yml) | Configuration of Audit Replic services for Merritt |
+| Opensearch Dashboards | [opensearch.yml](mrt-services/opensearch.yml) | Configuration of Full Opensearch stack |
 
 
 
@@ -207,13 +330,92 @@ git submodule add -b main --name mrt-integ-tests git@github.com:cdluc3/mrt-integ
 				#           url = git@github.com:cdluc3/mrt-integ-tests.git
 				#           branch = main
 git submodule init mrt-integ-tests
-			 	# register new submodule. submodule code will not get pulled
-				# into working tree if not registered
+			 	# initialize/register new submodule
+git submodule init		# initialize/register all submodules
 
-git submodule update		# clone/pull code from registerd submodules into defined path
+git submodule update		# clone/pull code from registerd submodules into defined paths
 git submodule update --remote	# update using the status of the submodule’s remote-tracking branch
 git submodule update --remote --no-fetch 
 				# check for updates, but don't fetch new objects from the remote site
+git submodule update --remote --init
+                                # update and initialize at the same time
+```
+
+
+### Typical workflow
+```
+~> cd /dpr2/merritt-workspace/agould/merritt-docker
+merritt-docker> git submodule
+merritt-docker> git submodule update --remote
+merritt-docker> git status
+merritt-docker> git add .
+merritt-docker> git commit -m "update submodules"
+```
+
+
+### Workflow for new deployment
+```
+~> mkdir /dpr2/merritt-workspace/agould
+~> cd /dpr2/merritt-workspace/agould
+agould> git clone git@github.com:CDLUC3/merritt-docker.git
+agould> cd merritt-docker
+merritt-docker> git checkout my-branch
+merritt-docker> git submodule init
+merritt-docker> git submodule update --remote
+merritt-docker> git submodule
+
+ 
+
+### Checking submodule status
+
+The `git submodule status` command lists all configured submodules.  For each one it
+lists the currently checked out commit hash, the path relative to the
+super project root directory where the submodule code will be cloned, and either
+the tag or branch referencing the checked out commit.
+
+Each listing can be prefixed with on of:
+- '-': the submodule is not initialized or is not yet checked out
+- '+': the currently checked out submodule commit does not match what's recorded in the super project
+- 'U': the submodule has merge conflicts.
+
+In the below example:
+- `mrt-integ-tests, mrt-store` have local commits which have not been recorded in the super project.
+- `dryad-app, mrt-oai, mrt-sword` are not registerd.
+
+``
+merritt-docker> git submodule
++4af817151cdeac252ee66cb5353295105d9986a0 mrt-integ-tests (heads/main)
+ 56e633f98031be191f2e27a982e6d5ca1501e0ee mrt-services/audit/mrt-audit (sprint-65-4-g56e633f)
+ b7d9dbf0c4cf29cfa7892e1e52b47b83a113dccc mrt-services/dep_cdlzk/cdl-zk-queue (sprint-65-8-gb7d9dbf)
+ c76edd6b3c6eb183f4015c224d9ff30bb777f02f mrt-services/dep_cloud/mrt-cloud (sprint-65-1-gc76edd6)
+ 2d17fb9806f18b29321a906a0b81b133e8cca53b mrt-services/dep_core/mrt-core2 (sprint-65-3-g2d17fb9)
+ dc430176853925ccb0e2b9c6b28933d6013e9e54 mrt-services/dep_zoo/mrt-zoo (sprint-65)
+-407b806305b3a79e8d9bb826fd08d5592112bb88 mrt-services/dryad/dryad-app (v0.7.17a-26-g407b80630)
+ fa969c5acceef9586dea30fa1098e6c5209861c9 mrt-services/ingest/mrt-ingest (sprint-64-main-30-gfa969c5)
+ d35df074b79f98a8be84d27fe0c59397b2787ee2 mrt-services/inventory/mrt-inventory (sprint-64-3-gd35df07)
+ 239c258b66c3bd0005f59a4aaa482bdf92ec4c93 mrt-services/mrt-admin-lambda (sprint-65-main-18-g239c258)
+-b0b601c7e3ccb187c7273e9a0def396aaf74c323 mrt-services/oai/mrt-oai (sprint-65)
+ 8cc0e38d3b31aaa444748386adc497c5fe923071 mrt-services/replic/mrt-replic (sprint-64-7-g8cc0e38)
++b182d03d4f4c0df679372549997239735a95d155 mrt-services/store/mrt-store (sprint-65-15-gb182d03)
+-2d1a521ae02571f4bde85701411f09c781a69a9a mrt-services/sword/mrt-sword (sprint-65)
+ dffd8a712a6ec2ac2ab3c30395cb8600ec682bf7 mrt-services/ui/mrt-dashboard (sprint-65-main)
+```
+
+The `git submodule summary` command shows which commits differ:
+```
+merritt-docker> git submodule summary 
+* mrt-integ-tests 3ee46e2...8e9733d (3):
+  > refine perms
+  > fix download folder accessibility
+  > fix integ tests
+
+* mrt-services/store/mrt-store 2231237...8a924e6 (13):
+  < tag or branch name
+  < MAVEN_HOME
+  < troubleshoot
+  < ${maven.home}/conf/settings.xml
+  < /dev/null settings file
+  < search for settings.xml
 ```
 
 
@@ -231,7 +433,7 @@ branch in the super project is configured to pull in code from a
 'java-refactor' branch for those repos that have been refactored:
 
 ```
-agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> head .gitmodules 
+merritt-docker> head .gitmodules 
 [submodule "mrt-services/dep_core/mrt-core2"]
         path = mrt-services/dep_core/mrt-core2
         url = git@github.com:cdluc3/mrt-core2
@@ -244,10 +446,10 @@ agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> head
 
 To add a new submodule:
 ```
-agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule add \
+merritt-docker> git submodule add \
   -b main --name mrt-integ-tests git@github.com:cdluc3/mrt-integ-tests.git mrt-integ-tests
 
-agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> tail -4 .gitmodules
+merritt-docker> tail -4 .gitmodules
 [submodule "mrt-integ-tests"]
         path = mrt-integ-tests
         url = git@github.com:cdluc3/mrt-integ-tests.git
@@ -345,50 +547,16 @@ Cloning into '/home/agould/git/github/cdluc3/merritt-docker/mrt-services/ui/mrt-
 
 
 
+### Committing state of submodules into super project
 
+After updating submodules against remotes, the commits checked out in
+submodules may no longer be in sync with what is recorded in the super project.
 
-### Checking submodule status
-
-The `git submodule status` command lists all configured submodules.  For each one it
-lists the currently checked out commit hash, the path relative to the
-super project root directory where the submodule code will be cloned, and either
-the tag or branch referencing the checked out commit.
-
-Each listing can be prefixed with on of:
-- '-': the submodule is not initialized
-- '+': the currently checked out submodule commit does not match what's recorded in the super project
-- 'U': the submodule has merge conflicts.
-
-In the below example `mrt-integ-tests, mrt-store` have local commits which have
-not been recorded in the super project.   `dryad-app, mrt-oai, mrt-sword` are
-registerd, which means they will not get pulled into working tree when running
-`git submodule update` - i.e. they are being ignored.
-
-``
-agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule
-+4af817151cdeac252ee66cb5353295105d9986a0 mrt-integ-tests (heads/main)
- 56e633f98031be191f2e27a982e6d5ca1501e0ee mrt-services/audit/mrt-audit (sprint-65-4-g56e633f)
- b7d9dbf0c4cf29cfa7892e1e52b47b83a113dccc mrt-services/dep_cdlzk/cdl-zk-queue (sprint-65-8-gb7d9dbf)
- c76edd6b3c6eb183f4015c224d9ff30bb777f02f mrt-services/dep_cloud/mrt-cloud (sprint-65-1-gc76edd6)
- 2d17fb9806f18b29321a906a0b81b133e8cca53b mrt-services/dep_core/mrt-core2 (sprint-65-3-g2d17fb9)
- dc430176853925ccb0e2b9c6b28933d6013e9e54 mrt-services/dep_zoo/mrt-zoo (sprint-65)
--407b806305b3a79e8d9bb826fd08d5592112bb88 mrt-services/dryad/dryad-app (v0.7.17a-26-g407b80630)
- fa969c5acceef9586dea30fa1098e6c5209861c9 mrt-services/ingest/mrt-ingest (sprint-64-main-30-gfa969c5)
- d35df074b79f98a8be84d27fe0c59397b2787ee2 mrt-services/inventory/mrt-inventory (sprint-64-3-gd35df07)
- 239c258b66c3bd0005f59a4aaa482bdf92ec4c93 mrt-services/mrt-admin-lambda (sprint-65-main-18-g239c258)
--b0b601c7e3ccb187c7273e9a0def396aaf74c323 mrt-services/oai/mrt-oai (sprint-65)
- 8cc0e38d3b31aaa444748386adc497c5fe923071 mrt-services/replic/mrt-replic (sprint-64-7-g8cc0e38)
-+b182d03d4f4c0df679372549997239735a95d155 mrt-services/store/mrt-store (sprint-65-15-gb182d03)
--2d1a521ae02571f4bde85701411f09c781a69a9a mrt-services/sword/mrt-sword (sprint-65)
- dffd8a712a6ec2ac2ab3c30395cb8600ec682bf7 mrt-services/ui/mrt-dashboard (sprint-65-main)
+Run `git status` in the super project working tree to show which submodules are
+out-of-sync:
 ```
-
-
-Running `git status` also shows which submodules are out-of-sync with what is
-recorded in the super project.
-```
-agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git status
-On branch opensearch
+merritt-docker> git status
+On branch java-refactor
 
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
@@ -397,151 +565,8 @@ Changes not staged for commit:
         modified:   mrt-services/store/mrt-store (new commits)
 ```
 
-
-The `git submodule summary` command shows which commits differ:
+To record new state of submodules in the super project simply add and commit submodule paths:
 ```
-agould@uc3-mrtdocker02x2-dev:/dpr2/merritt-workspace/agould/merritt-docker> git submodule summary 
-* mrt-integ-tests 3ee46e2...8e9733d (3):
-  > refine perms
-  > fix download folder accessibility
-  > fix integ tests
-
-* mrt-services/store/mrt-store 2231237...8a924e6 (13):
-  < tag or branch name
-  < MAVEN_HOME
-  < troubleshoot
-  < ${maven.home}/conf/settings.xml
-  < /dev/null settings file
-  < search for settings.xml
+merritt-docker> git add mrt-integ-tests mrt-services/store/mrt-store
+merritt-docker> git commit -m "update submodules"
 ```
-
-
-
-
-
-
-## Build and Start Services in VSCode
-
-See [.vscode/settings.json](.vscode/settings.json) for build and stack initiation configurations.
-
-## Build instructions
-
-Services
-
-```bash
-cd mrt-services
-docker-compose build
-```
-
-### Service Start
-
-```bash
-docker-compose -p merritt up
-```
-
-To verify running processes and ports
-```bash
-docker ps -a
-```
-
-To view persistent volumes
-```bash
-docker volume ls
-```
-
-To view logs for a specific container
-```bash
-docker logs ingest
-```
-
-Tail view logs for a specific container
-```bash
-docker logs -f inventory
-```
-
-To view the docker network
-```bash
-docker network ls
-```
-
-### Service Stop
-
-```bash
-docker-compose -p merritt down
-```
-
-## Other useful tasks
-
-### List Zookeeper Queues
-`docker exec -it zoo zkCli.sh ls /`
-
-### Dump the ingest queue
-`docker exec -it zoo listIngest.sh`
-
-### Dump the inventory queue
-`docker exec -it zoo listInventory.sh`
-
-### Mysql Session
-`docker exec -it db-container mysql -u user --password=password --database=db-name`
-
-
-## Repo Init
-
-```
-git submodule update --remote --recursive --init -- .
-git submodule update --remote --recursive -- .
-```
-
-## Running Merritt Docker
-
-
-### Running docker-compose
-
-Set up docker environment vars:
-```
-source bin/docker_environment.sh
-```
-
-Run core merritt services:
-```
-cd mrt-services
-docker-compose build
-docker-compose -p merritt up -d
-docker-compose -p merritt down
-```
-
-Rebuild and run after minor changes to an image:
-```
-docker-compose -p merritt up -d --build
-```
-
-Run Merrit with Dryad:
-```
-docker-compose -p merritt -f docker-compose.yml -f dryad.yml up -d --build
-docker-compose -p merritt -f docker-compose.yml -f dryad.yml down
-```
-
-Run Merrit with Opensearch:
-```
-docker-compose -p merritt -f docker-compose.yml -f opensearch.yml up -d --build
-docker-compose -p merritt -f docker-compose.yml -f opensearch.yml down
-```
-
-
-### Helper docker-compose Files
-
-| Goal | File | Comment |
-| -- | -- | -- |
-| Debug java applications | in Eclipse | Use JPDA Debug on Port 8000 |
-|  | in VSCode | Launch a remote debugger [launch.json](launch.json) |
-|  | [debug-ingest.yml](mrt-services/debug-ingest.yml) |  |
-|  | [debug-inventory.yml](mrt-services/debug-inventory.yml) |
-|  | [debug-oai.yml](mrt-services/debug-oai.yml) |
-|  | [debug-storage.yml](mrt-services/debug-storage.yml) |
-| UI Testing from mrt-dashboard branch | [ui.yml](mrt-services/ui.yml) | Selectively mount code directories from mrt-dashboard to the UI container |
-| EC2 Config | [ec2.yml](mrt-services/ec2.yml) | Volume and hostname overrides EC2 dns and paths |
-| Localhost Config | [local.yml](mrt-services/local.yml) | hostname |
-| Dryad | [dryad.yml](mrt-services/dryad.yml) | Configuration of Dryad services and Merritt services only used by Dryad |
-| Dryad Volume Config | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
-| Audit Replic | [audit-replic.yml](mrt-services/audit-replic.yml) | Configuration of Audit Replic services for Merritt |
-| Opensearch Dashboards | [opensearch.yml](mrt-services/opensearch.yml) | Configuration of Full Opensearch stack |

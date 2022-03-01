@@ -1,9 +1,13 @@
-# Merritt Docker Images and Orchestration
+Merritt Docker Images and Orchestration
+=======================================
+
 
 This library is part of the [Merritt Preservation System](https://github.com/CDLUC3/mrt-doc).
 
 The purpose of this repository is to build docker images for local developer
 testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
+
+
 
 
 ## Quick Start Guide
@@ -64,86 +68,89 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
 
 For more detailed usage instructions see [Running Merritt Docker](#running-merritt-docker) below.
 
+---
 
 
 
-## Overview
+## Component Overview
 
-UC3 maintains a set of EC2 docker hosts for development use.  See [UC3 Service
-Inventory](https://uc3-service-inventory.cdlib.org/index.html?table_name=host&column=fqsn&item=uc3-mrt-docker-dev)
+### The Merritt Stack
 
+Custom built docker images are staged in our AWS [Elastic Container
+Registry](#elastic-container-registry) instance.  This is notated below as ${ECR}.
 
-### Project Layout
-
-```
-merritt-docker/
-├── bin			# helper scripts 
-├── docs
-├── mrt-integ-tests	# submodule path for running Merritt integrity checks
-├── mrt-services	# docker-compose scripts and submodule paths for 
-|                         dependencies and micro-services
-└── README.md
-```
+The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI
+and it provides access to individual containers.
 
 
-### Component Overview
-
-The [mrt-services/docker.html](mrt-services/docker.html) is served by the UI and it provides access to individual containers.
-
-| Component            | Image Name            | Where the component runs | Notes |
-| -----------          | ----------            | ------------------------ | ----- |
-| Zookeeper            | zookeeper             | Docker | |
-| OpenDJ               | ldap                  | Docker | |
-| MySQL                | cdluc3/mrt-database   | Docker | |
-| UI                   | cdluc3/mrt-dashboard  | Docker | |
-| Ingest               | cdluc3/mrt-ingest     | Docker | |
-| Storage              | cdluc3/mrt-storage    | Docker | |
-| Inventory            | cdluc3/mrt-inventory  | Docker | |
-| OAI                  | cdluc3/mrt-oai        | Docker | Runs with Dryad |
-| Sword                | cdluc3/mrt-sword      | Docker | Runs with Dryad |
-| Dryad UI             | cdluc3/mrt-dryad      | Docker | |
-| Dryad MySQL          | mysql:5.7             | Docker | Populated with Rails Migration Script |
-| Dryad SOLR           | cdluc3/dryad-solr     | Docker | |
-| Audit                | cdluc3/mrt-audit      | Docker | No-op by default, runs in audit-replic stack |
-| Replic               | cdluc3/mrt-audit      | Docker | No-op by default, runs in audit-replic stack |
-| Merritt Init         | cdluc3/mrt-init       | Docker | Init OAI and inventory services.  Run Dryad notifier. |
-| Apache               | cdluc3/mrt-apache     | Docker | Simulates character encoding settings in Merritt Apache |
-| Minio                | minio/minio           | Docker | Containerized storage service - for testing presigned functionality |
-| Minio Cmd            | minio/mc              | Docker | Initialized bucket in Minio container |
-| ALB Simulator        | cdluc3/simulate-lambda-alb | Docker | Simulates an ALB running in front of a Lambda for Collection Admin |
-| Collection Admin     | ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/uc3-mrt-colladmin-lambda | Docker | Merritt collection admin tool |
-| Opensearch Dashboard |opensearchproject/opensearch-dashboards | Docker | Full ELK stack for indexing and querying container logs. |
+| Component        | Image Name                      | Notes |
+| -----------      | ----------                      | ----- |
+| Zookeeper        | zookeeper                       |       |
+| OpenDJ           | ldap                            |       |
+| MySQL            | ${ECR}/mrt-database             |       |
+| UI               | ${ECR}/mrt-dashboard            |       |
+| Ingest           | ${ECR}/mrt-ingest               |       |
+| Storage          | ${ECR}/mrt-storage              |       |
+| Inventory        | ${ECR}/mrt-inventory            |       |
+| OAI              | ${ECR}/mrt-oai                  | Runs with Dryad |
+| Sword            | ${ECR}/mrt-sword                | Runs with Dryad |
+| Audit            | ${ECR}/mrt-audit                | No-op by default, runs in audit-replic stack |
+| Replic           | ${ECR}/mrt-audit                | No-op by default, runs in audit-replic stack |
+| Merritt Init     | ${ECR}/mrt-init                 | Init OAI and inventory services.  Run Dryad notifier. |
+| Apache           | ${ECR}/mrt-apache               | Simulates character encoding settings in Merritt Apache |
+| Minio            | minio/minio                     | Containerized storage service - for testing presigned functionality |
+| Minio Cmd        | minio/mc                        | Initialized bucket in Minio container |
+| ALB Simulator    | ${ECR}/simulate-lambda-alb      | Simulates an ALB running in front of a Lambda for Collection Admin |
+| Collection Admin | ${ECR}/uc3-mrt-colladmin-lambda | Merritt collection admin tool |
 
 
-#### Diagram
+
+### Optional Dryad Stack
+
+| Component        | Image Name                      | Notes |
+| -----------      | ----------                      | ----- |
+| Dryad UI         | ${ECR}/mrt-dryad                |       |
+| Dryad MySQL      | mysql:5.7                       | Populated with Rails Migration Script |
+| Dryad SOLR       | ${ECR}/dryad-solr               |       |
+
+
+### Optional Opensearch Stack
+
+| Component            | Image Name            | Notes |
+| -----------          | ----------            | ----- |
+| Opensearch           | opensearchproject/opensearch            | |
+| Opensearch Dashboard | opensearchproject/opensearch-dashboards | |
+| Logstash             | opensearchproject/logstash-oss          | |
+| Filebeat             | docker.elastic.co/beats/filebeat        | |
+
+
+### Merritt Integration Test Driver
+
+https://github.com/CDLUC3/mrt-integ-tests
+
+
+### Diagram
 
 ![](https://github.com/CDLUC3/mrt-doc/raw/main/diagrams/docker.mmd.svg)
 
-
-### Dependencies
-
-The following dependencies are needed to build and run this repo.  The goal is
-to build a version of the system that can be run entirely from Docker.  If you
-are running on one of the `uc3-mrt-docker-dev` hosts, these dependencies are
-already in place.  In fact, it's probably a waste of effort to try to set 
-all this up elsewhere.
-
-- Docker and Docker Compose install
-- Access to the CDL maven repo for a couple of pre-built jars
-  - TODO: build these from source in the Dockerfile
-- CDL LDAP access
-- A local maven repo build of mrt-conf jar files
-- Access to storage services
-- Access to config properties
-  - SSM ParameterStore
+---
 
 
 
-### Security
 
-The IAS team has provisioned these to allow us to run docker commands without
-root privileges and to limit access by code running in containers to system
-resources on the Docker host.
+## UC3 Merritt Docker Hosts
+
+UC3 maintains a set of EC2 docker hosts for development use.  These provide all
+the necessary [Docker Dependencies](#docker-dependencies) and compute resources
+to run the full fleet of docker containers comprising
+[The Merritt Stack](#the-merritt-stack).
+
+For a listing of available merritt docker hosts see
+[UC3 Service Inventory](https://uc3-service-inventory.cdlib.org/index.html?table_name=host&column=fqsn&item=uc3-mrt-docker-dev)
+
+The IAS team has provisioned the merritt docker hosts to allow us to run
+docker commands without root privileges and to limit access by code running in
+containers to system resources on the Docker host.
 
 - UC3 developers are members of group `docker.`
 - Docker storage lives under `/dpr2/merritt-workspace.`
@@ -179,6 +186,41 @@ resources on the Docker host.
 
 
 
+
+## Project Internals
+
+
+### Repository Layout
+
+```
+merritt-docker/
+├── bin			# helper scripts 
+├── docs
+├── mrt-integ-tests	# submodule path for running Merritt integrity checks
+├── mrt-services	# docker-compose scripts and submodule paths for 
+|                         dependencies and micro-services
+└── README.md
+```
+
+
+### Docker Dependencies
+
+The following dependencies are needed to build and run this repo.  The goal is
+to build a version of the system that can be run entirely from Docker.  If you
+are running on one of the `uc3-mrt-docker-dev` hosts, these dependencies are
+already in place.  In fact, it's probably a waste of effort to try to set 
+all this up elsewhere.
+
+- Docker and Docker Compose install
+- Access to the CDL maven repo for a couple of pre-built jars
+  - TODO: build these from source in the Dockerfile
+- CDL LDAP access
+- A local maven repo build of mrt-conf jar files
+- Access to storage services
+- Access to config properties
+  - SSM ParameterStore
+
+
 ### Elastic Container Registry
 
 Most docker-compose scripts in this project rely on AWS Elastic Container
@@ -199,7 +241,6 @@ aws ecr get-login-password --region ${AWS_REGION} | \
 ```
 
 
-
 ### Git Submodules
 
 This repository uses [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
@@ -214,7 +255,7 @@ To refresh submodule code from upstream repositories:
 git submodule update --remote
 ```
 
-See [Working with Git Submodules](docs/working_with_git_submodules.md) below for a detailed tutorial and examples.
+See [Working with Git Submodules](docs/working_with_git_submodules.md) for a detailed tutorial and examples.
 
 
 ---

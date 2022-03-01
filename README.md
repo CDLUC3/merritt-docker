@@ -351,14 +351,13 @@ mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml 
 
 See [.vscode/settings.json](.vscode/settings.json) for build and stack initiation configurations.
 
-## Build instructions
+---
 
 
-### Service Start
 
-```bash
-docker-compose -p merritt up
-```
+## Useful Docker Tips and Commands
+
+### Docker Basics
 
 To verify running processes and ports
 ```bash
@@ -385,24 +384,27 @@ To view the docker network
 docker network ls
 ```
 
-### Service Stop
 
-```bash
-docker-compose -p merritt down
+### Other useful tasks
+
+List Zookeeper Queues
+```
+docker exec -it zoo zkCli.sh ls /
 ```
 
-## Other useful tasks
+Dump the ingest queue
+```
+docker exec -it zoo listIngest.sh
+```
 
-### List Zookeeper Queues
-`docker exec -it zoo zkCli.sh ls /`
+Dump the inventory queue
+```
+docker exec -it zoo listInventory.sh
+```
 
-### Dump the ingest queue
-`docker exec -it zoo listIngest.sh`
-
-### Dump the inventory queue
-`docker exec -it zoo listInventory.sh`
-
-### Mysql Session
-`docker exec -it db-container mysql -u user --password=password --database=db-name`
+Mysql Session
+```
+docker exec -it db-container mysql -u user --password=password --database=db-name
+```
 
 

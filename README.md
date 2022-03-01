@@ -47,9 +47,8 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
    merritt-docker> source bin/docker_environment.sh
    ```
 
-1. Build docker images for dependencies and micro-services
+1. Build docker images for micro-services
    ```
-   merritt-docker> bin/dep_build.sh
    merritt-docker> cd mrt-services
    mrt-services> docker-compose build
    ```
@@ -215,7 +214,7 @@ To refresh submodule code from upstream repositories:
 git submodule update --remote
 ```
 
-See [Working with Git Submodules](working_with_git_submodules.md) below for a detailed tutorial and examples.
+See [Working with Git Submodules](docs/working_with_git_submodules.md) below for a detailed tutorial and examples.
 
 
 ---

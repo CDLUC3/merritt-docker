@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#
+# A simple launcher scriptlet to wrap common docker-compose commands
 
 usage() {
   echo "Usage: $(basename $0) <up|down>"
@@ -15,7 +17,7 @@ fi
 
 cd $SERVICES_DIR
 case $1 in
-  up)     docker-compose -p merritt -f opensearch.yml up -d --build;;
-  down)   docker-compose -p merritt -f opensearch.yml down;;
+  up)     docker-compose -p merritt -f docker-compose.yml -f ec2.yml up -d --build;;
+  down)   docker-compose -p merritt -f docker-compose.yml -f ec2.yml down;;
   *)      usage;
 esac

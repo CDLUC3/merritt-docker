@@ -70,7 +70,7 @@ In the below example:
 - `mrt-integ-tests, mrt-store` have local commits which have not been recorded in the super project.
 - `dryad-app, mrt-oai, mrt-sword` are not registerd.
 
-``
+```
 merritt-docker> git submodule
 +4af817151cdeac252ee66cb5353295105d9986a0 mrt-integ-tests (heads/main)
  56e633f98031be191f2e27a982e6d5ca1501e0ee mrt-services/audit/mrt-audit (sprint-65-4-g56e633f)

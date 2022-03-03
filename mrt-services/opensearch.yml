@@ -46,6 +46,15 @@ services:
       - 'OPENSEARCH_HOSTS=["https://opensearch:9200"]'
     networks:
       merrittnet:
+    logging:
+      driver: gelf
+      options:
+        #gelf-address: "udp://logstash:12201"
+        gelf-address: "udp://localhost:12201"
+    depends_on:
+    - opensearch
+    - logstash
+
     #labels:
     #    co.elastic.logs/enabled: "false"
 
@@ -58,6 +67,9 @@ services:
     ports:
     - published: 5044
       target: 5044
+    - published: 12201
+      target: 12201
+      protocol: udp
     networks:
       merrittnet:
     depends_on:
@@ -65,20 +77,22 @@ services:
     #labels:
     #    co.elastic.logs/enabled: "false"
 
-  filebeat:
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/filebeat:dev
-    container_name: filebeat
-    build:
-      context: opensearch/filebeat
-      dockerfile: Dockerfile
-    user: root
-    volumes:
-    - /var/run/docker.sock:/var/run/docker.sock:ro
-    - /apps/dpr2/docker-system-storage/5071.5161/containers:/var/lib/docker/containers:ro
-    #- /var/lib/docker/containers:/var/lib/docker/containers:ro
-    networks:
-      merrittnet:
-    #restart: unless-stopped
-    #labels:
-    #    co.elastic.logs/enabled: "false"
+  ## # Disabling filebeat while I explore GELF log-driver
+  ##
+  ## filebeat:
+  ##   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/filebeat:dev
+  ##   container_name: filebeat
+  ##   build:
+  ##     context: opensearch/filebeat
+  ##     dockerfile: Dockerfile
+  ##   user: root
+  ##   volumes:
+  ##   - /var/run/docker.sock:/var/run/docker.sock:ro
+  ##   - /apps/dpr2/docker-system-storage/5071.5161/containers:/var/lib/docker/containers:ro
+  ##   #- /var/lib/docker/containers:/var/lib/docker/containers:ro
+  ##   networks:
+  ##     merrittnet:
+  ##   #restart: unless-stopped
+  ##   #labels:
+  ##   #    co.elastic.logs/enabled: "false"
 

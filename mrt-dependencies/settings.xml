@@ -2,9 +2,9 @@
 <settings xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+<!--
   <mirrors>
         <mirror>
-      <!--This sends everything else to /public -->
                 <id>nexus</id>
                 <mirrorOf>*</mirrorOf>
                 <url>http://mvn.cdlib.org/content/groups/public</url>
@@ -13,8 +13,6 @@
    <profiles>
     <profile>
       <id>nexus</id>
-      <!--Enable snapshots for the built in central repo to direct -->
-      <!--all requests to nexus via the mirror -->
       <repositories>
         <repository>
           <id>central</id>
@@ -33,4 +31,43 @@
       </pluginRepositories>
     </profile>
   </profiles>
+-->
+
+  <mirrors>
+        <mirror>
+                <id>LocalNexus</id>
+                <url>https://mvn.cdlib.org/content/groups/public</url>
+                <mirrorOf>nexus</mirrorOf>
+      </mirror>
+        <mirror>
+                <id>MavenCentral</id>
+                <url>https://repo1.maven.org/maven2</url>
+                <mirrorOf>central</mirrorOf>
+      </mirror>
+  </mirrors>
+
+<profiles>
+   <profile>
+     <id>use-multiple-repos</id>
+     <repositories>
+        <repository>
+           <id>LocalNexus</id>
+           <name>Local Nexus Repo</name>
+           <url>https://mvn.cdlib.org/content/groups/public</url>
+        </repository>
+
+        <repository>
+           <id>MavenCentral</id>
+           <name>Upstream Central Repo</name>
+           <url>https://repo1.maven.org/maven2</url>
+        </repository>
+     </repositories>
+   </profile>
+</profiles>
+
+<activeProfiles>
+   <!--make the profile active all the time -->
+   <activeProfile>use-multiple-repos</activeProfile>
+</activeProfiles>
+
 </settings>

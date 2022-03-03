@@ -7,12 +7,12 @@ networks:
   merrittnet:
 
 services:
-  opensearch-node1:
+  opensearch:
     image: opensearchproject/opensearch:1.2.4
-    container_name: opensearch-node1
+    container_name: opensearch
     environment:
     - cluster.name=opensearch-cluster
-    - node.name=opensearch-node1
+    - node.name=opensearch
     - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
     - "OPENSEARCH_JAVA_OPTS=-Xms4096m -Xmx4096m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
     - "discovery.type=single-node" # disables bootstrap checks that are enabled when network.host is set to a non-loopback address
@@ -43,7 +43,7 @@ services:
     expose:
       - "8094"
     environment:
-      - 'OPENSEARCH_HOSTS=["https://opensearch-node1:9200"]'
+      - 'OPENSEARCH_HOSTS=["https://opensearch:9200"]'
     networks:
       merrittnet:
     #labels:
@@ -61,7 +61,7 @@ services:
     networks:
       merrittnet:
     depends_on:
-    - opensearch-node1
+    - opensearch
     #labels:
     #    co.elastic.logs/enabled: "false"
 

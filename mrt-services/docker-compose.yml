@@ -73,8 +73,13 @@ services:
       NODE_TABLE: nodes-pairtree-docker
       MERRITT_STORE_INFO: store-info-docker
       LOG_STORE: /dpr2store/mrtHomes/logs
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      MRT_MINIO_HOST: ${HOSTNAME}.cdlib.org
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}.cdlib.org
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -124,6 +129,9 @@ services:
       dockerfile: Dockerfile
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}.cdlib.org
     depends_on:
     - db-container
     - ldap
@@ -134,6 +142,7 @@ services:
       target: 8086
     environment:
       SSM_SKIP_RESOLUTION: Y
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
     volumes:
     - "./docker.html:/var/www/app_name/public/docker.html"
     restart: unless-stopped
@@ -189,6 +198,9 @@ services:
     command: server /data --address :8088
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}.cdlib.org
     volumes:
     - my-minio:/data
     restart: unless-stopped
@@ -252,6 +264,7 @@ services:
       MERRITT_ADMIN_CONFIG: docker
       FORMENV: docker
       INGEST_SERVICES: "http://ingest:8080/ingest/"
+      COLLADMIN_ALB_URL: http://${HOSTNAME}.cdlib.org:8091
     stdin_open: true
     tty: true
     ports:

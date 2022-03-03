@@ -17,7 +17,7 @@ fi
 
 cd $SERVICES_DIR
 case $1 in
-  up)     docker-compose -p merritt -f docker-compose.yml -f ec2.yml up -d --build;;
-  down)   docker-compose -p merritt -f docker-compose.yml -f ec2.yml down;;
+  up)     docker-compose -p merritt -f docker-compose.yml up -d --build;;
+  down)   docker-compose -p merritt -f docker-compose.yml down;;
   *)      usage;
 esac

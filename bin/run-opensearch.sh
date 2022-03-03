@@ -18,7 +18,7 @@ fi
 
 cd $SERVICES_DIR
 case $1 in
-  up)     docker-compose -p merritt -f docker-compose.yml -f ec2.yml -f opensearch.yml up -d --build;;
-  down)   docker-compose -p merritt -f docker-compose.yml -f ec2.yml -f opensearch.yml down;;
+  up)     docker-compose -p merritt -f docker-compose.yml -f opensearch.yml up -d --build;;
+  down)   docker-compose -p merritt -f docker-compose.yml -f opensearch.yml down;;
   *)      usage;
 esac

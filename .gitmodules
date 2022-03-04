@@ -15,7 +15,7 @@
 [submodule "mrt-services/store/mrt-store"]
 	path = mrt-services/store/mrt-store
 	url = git@github.com:cdluc3/mrt-store
-	branch = java-refactor
+	branch = log4j-ecs-layout
 	#branch = master
 [submodule "mrt-services/inventory/mrt-inventory"]
 	path = mrt-services/inventory/mrt-inventory

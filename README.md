@@ -50,6 +50,10 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
    ```
    merritt-docker> source bin/docker_environment.sh
    ```
+1. Ensure all submodule code is up-to-date with respective remotes:
+   ```
+   merritt-docker> git submodule update --remote
+   ```
 
 1. Build docker images for micro-services
    ```

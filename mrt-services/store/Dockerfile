@@ -20,6 +20,7 @@ RUN mvn install && \
 
 FROM tomcat:8-jre8
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /build/store.war
+COPY server.xml /usr/local/tomcat/conf/server.xml
 
 RUN mkdir /usr/local/tomcat/webapps/store && \
     unzip -d /usr/local/tomcat/webapps/store /build/store.war
@@ -34,6 +35,7 @@ ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.AL
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
 ENV TZ=America/Los_Angeles
+#ENV TOMCAT_LOGLEVEL=debug
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 EXPOSE 8080 8009

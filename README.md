@@ -338,7 +338,6 @@ mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml 
 |                          | [debug-oai.yml](mrt-services/debug-oai.yml)               |
 |                          | [debug-storage.yml](mrt-services/debug-storage.yml)       |
 | UI Testing               | [ui.yml](mrt-services/ui.yml)                             | Selectively mount code directories from mrt-dashboard to the UI container |
-| EC2 Config               | [ec2.yml](mrt-services/ec2.yml)                           | Volume and hostname overrides EC2 dns and paths |
 | Dryad                    | [dryad.yml](mrt-services/dryad.yml)                       | Configuration of Dryad services and Merritt services only used by Dryad |
 | Dryad Volume Config      | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
 | Audit Replic             | [audit-replic.yml](mrt-services/audit-replic.yml)         | Configuration of Audit Replic services for Merritt |

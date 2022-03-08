@@ -1,0 +1,26 @@
+# Beats -> Logstash -> OpenSearch pipeline.
+
+input {
+  beats {
+    port => 5044
+  }
+}
+
+output {
+  file {
+    path => "/usr/share/logstash/data/file_output"
+  }
+
+  #stdout {
+  #  codec => rubydebug
+  #}
+
+  opensearch {
+    hosts => ["https://opensearch:9200"]
+    index => "%{[@metadata][beat]}-%{[@metadata][version]}-%{+YYYY.MM.dd}"
+    user => "admin"
+    password => "admin"
+    ssl_certificate_verification => false
+  }
+}
+

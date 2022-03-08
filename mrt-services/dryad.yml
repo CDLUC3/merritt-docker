@@ -2,17 +2,21 @@
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-version: '3.7'
+version: '3.9'
 volumes:
   dryad-db:
   dryad-solr:
 services:
+  core: 
+    
   oai:
     container_name: oai
-    image: cdluc3/mrt-oai
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-oai:dev
     build:
       context: oai
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
     ports:
@@ -23,10 +27,12 @@ services:
     tty: true
   sword:
     container_name: sword
-    image: cdluc3/mrt-sword
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-sword:dev
     build:
       context: sword
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
     ports:
@@ -37,7 +43,7 @@ services:
     tty: true
   dryad:
     container_name: dryad
-    image: cdluc3/dryad
+    image: do-not-push.cdlib.org/dryad
     build:
       context: dryad
       dockerfile: Dockerfile
@@ -88,7 +94,7 @@ services:
     - dryad-db:/var/lib/mysql
   solr:
     container_name: solr
-    image: cdluc3/dryad-solr
+    image: do-not-push.cdlib.org/dryad-solr
     build:
       context: dryad-solr
       dockerfile: Dockerfile

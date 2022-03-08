@@ -1,0 +1,28 @@
+---
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      hints.enabled: true
+
+#processors:
+#  - add_docker_metadata:
+#      host: "unix:///var/run/docker.sock"
+ 
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+ 
+#output.elasticsearch:
+#  hosts: ["https://opensearch-node1:9200"]
+#  username: "admin"
+#  password: "admin"
+ 
+output.logstash:
+  hosts: ["logstash:5044"]
+ 
+#logging.level: error
+logging.level: debug
+logging.selectors: ["*"]
+#ssl.verification_mode: none
+logging.metrics.enabled: false
+monitoring.enabled: false

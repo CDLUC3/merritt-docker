@@ -2,14 +2,17 @@
 #   Copyright 2021 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-# Publish as cdluc3/mrt-replic
+# docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-replic:dev .
+# aws ecr create-repository --repository-name mrt-replic
+# docker push ${ECR_REGISTRY}/mrt-replic:dev
 
-#   docker build -t cdluc3/mrt-replic .
+ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM cdluc3/mrt-dependencies as build
-WORKDIR /tmp/mrt-replic
+FROM ${ECR_REGISTRY}/mrt-inventory-src:dev as build
 
-ADD mrt-replic /tmp/mrt-replic
+WORKDIR /build/mrt-replic
+
+ADD mrt-replic /build/mrt-replic
 
 RUN mvn install && \
     mvn clean

@@ -2,14 +2,17 @@
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-# Publish as cdluc3/mrt-sword
+# docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-sword:dev .
+# aws ecr create-repository --repository-name mrt-sword
+# docker push ${ECR_REGISTRY}/mrt-sword:dev
 
-#   docker build -t cdluc3/mrt-sword .
+ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM cdluc3/mrt-dependencies as build
-WORKDIR /tmp/mrt-sword
+FROM ${ECR_REGISTRY}/mrt-inventory-src:dev as build
 
-ADD mrt-sword /tmp/mrt-sword
+WORKDIR /build/mrt-sword
+
+ADD mrt-sword /build/mrt-sword
 
 RUN mvn install && \
     mvn clean

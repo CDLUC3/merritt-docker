@@ -2,14 +2,17 @@
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-# Publish as cdluc3/mrt-inventory
+# docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory:dev .
+# aws ecr create-repository --repository-name mrt-inventory
+# docker push ${ECR_REGISTRY}/mrt-inventory:dev
 
-#   docker build -t cdluc3/mrt-inventory .
+ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM cdluc3/mrt-dependencies as build
-WORKDIR /tmp/mrt-inventory
+FROM ${ECR_REGISTRY}/mrt-cloud:dev as build
 
-ADD mrt-inventory /tmp/mrt-inventory
+WORKDIR /build/mrt-inventory
+
+ADD mrt-inventory /build/mrt-inventory
 
 RUN mvn install -D=environment=local && \
     mvn clean

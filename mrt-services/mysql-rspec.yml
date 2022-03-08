@@ -12,11 +12,11 @@
 # bundle exec rails coverage
 # bundle exec rubocop
  
-version: '3.7'
+version: '3.9'
 services:
   mysql-rspec:
     container_name: mysql-rspec
-    image: cdluc3/mrt-database
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-database
     build:
       context: mysql
       dockerfile: Dockerfile

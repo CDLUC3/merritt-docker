@@ -2,7 +2,7 @@
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-version: '3.7'
+version: '3.9'
 networks:
   merrittnet:
 volumes:
@@ -14,7 +14,7 @@ services:
     container_name: apache
     depends_on:
     - ui
-    image: cdluc3/mrt-apache
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-apache
     build:
       context: apache
       dockerfile: Dockerfile
@@ -32,10 +32,12 @@ services:
     - zoo
     - store
     - inventory
-    image: cdluc3/mrt-ingest
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-ingest:dev
     build:
       context: ingest
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     environment:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_INGEST: ingest-docker
@@ -55,10 +57,12 @@ services:
     hostname: store
     depends_on:
     - zoo
-    image: cdluc3/mrt-store
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-store:dev
     build:
       context: store
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     ports:
     - published: 8081
       target: 8080
@@ -69,8 +73,13 @@ services:
       NODE_TABLE: nodes-pairtree-docker
       MERRITT_STORE_INFO: store-info-docker
       LOG_STORE: /dpr2store/mrtHomes/logs
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      MRT_MINIO_HOST: ${HOSTNAME}.cdlib.org
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}.cdlib.org
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -79,10 +88,12 @@ services:
     depends_on:
     - zoo
     - ezid
-    image: cdluc3/mrt-inventory
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-inventory:dev
     build:
       context: inventory
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
     ports:
@@ -96,10 +107,12 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: cdluc3/mrt-zookeeper
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-zookeeper:dev
     build:
       context: zoo
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
     ports:
@@ -110,12 +123,15 @@ services:
     tty: true
   ui:
     container_name: ui
-    image: cdluc3/mrt-dashboard
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-dashboard
     build:
       context: ui
       dockerfile: Dockerfile
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}.cdlib.org
     depends_on:
     - db-container
     - ldap
@@ -126,6 +142,7 @@ services:
       target: 8086
     environment:
       SSM_SKIP_RESOLUTION: Y
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
     volumes:
     - "./docker.html:/var/www/app_name/public/docker.html"
     restart: unless-stopped
@@ -133,7 +150,7 @@ services:
     tty: true
   db-container:
     container_name: db-container
-    image: cdluc3/mrt-database
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-database
     build:
       context: mysql
       dockerfile: Dockerfile
@@ -149,7 +166,7 @@ services:
     - my-db:/var/lib/mysql
   ldap:
     container_name: ldap
-    image: cdluc3/mrt-opendj
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-opendj
     build:
       context: ldap
       dockerfile: Dockerfile
@@ -171,27 +188,6 @@ services:
     networks:
       merrittnet:
     restart: unless-stopped
-  # ldap-admin:
-  #   container_name: ldap-admin
-  #   image: ldapaccountmanager/lam
-  #   networks:
-  #     merrittnet:
-  #   ports:
-  #   - published: 8094
-  #     target: 80
-  #   environment:
-  #     LDAP_SERVER: ldap://ldap:1389
-  #     # LDAP_USER: cn=Directory Manager
-  #     LDAP_USER: cn=Directory Manager
-  #     LAM_LANG: en_US
-  #     LAM_PASSWORD: password
-  #     # LDAP_DOMAIN: cdlib.org
-  #     LDAP_BASE_DN: ou=uc3,dc=cdlib,dc=org
-  #     LDAP_GROUPS_DN: ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
-  #     #ou=uc3,dc=cdlib,dc=org
-  #   stdin_open: true
-  #   tty: true
-  #   restart: unless-stopped
   # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect my-minio-localhost-alias:8088 to localhost:8088.
   minio:
     container_name: minio
@@ -202,6 +198,9 @@ services:
     command: server /data --address :8088
     networks:
       merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}.cdlib.org
     volumes:
     - my-minio:/data
     restart: unless-stopped
@@ -220,7 +219,7 @@ services:
       merrittnet:
   ezid:
     container_name: ezid
-    image: cdluc3/ezid_mock
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/ezid_mock
     build: 
       context: ezid_mock
       dockerfile: Dockerfile
@@ -232,7 +231,7 @@ services:
     restart: unless-stopped
   merritt-init:
     container_name: merritt-init
-    image: cdluc3/mrt-init
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-init
     build:
       context: merritt-init
       dockerfile: Dockerfile
@@ -265,6 +264,7 @@ services:
       MERRITT_ADMIN_CONFIG: docker
       FORMENV: docker
       INGEST_SERVICES: "http://ingest:8080/ingest/"
+      COLLADMIN_ALB_URL: http://${HOSTNAME}.cdlib.org:8091
     stdin_open: true
     tty: true
     ports:
@@ -294,7 +294,7 @@ services:
   # Audit/Replic Placeholders using scratch container
   replic:
     container_name: replic
-    image: cdluc3/scratch
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
     build:
       context: scratch
       dockerfile: Dockerfile
@@ -311,7 +311,7 @@ services:
     tty: true
   audit:
     container_name: audit
-    image: cdluc3/scratch
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
     build:
       context: scratch
       dockerfile: Dockerfile
@@ -332,7 +332,7 @@ services:
     tty: true
   callback:
     container_name: callback
-    image: cdluc3/callback
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/callback
     build:
       context: callback
       dockerfile: Dockerfile

@@ -2,18 +2,22 @@
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-# Publish as cdluc3/mrt-ingest
 
-#   docker build -t cdluc3/mrt-ingest .
+# docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-ingest:dev .
+# aws ecr create-repository --repository-name mrt-ingest
+# docker push ${ECR_REGISTRY}/mrt-ingest:dev
 
-FROM cdluc3/mrt-dependencies as build
-WORKDIR /tmp/mrt-ingest
+ARG ECR_REGISTRY=ecr_registry_not_set
 
-ADD mrt-ingest /tmp/mrt-ingest
+FROM ${ECR_REGISTRY}/cdl-zk-queue:dev as build
+
+WORKDIR /build/mrt-ingest
+
+ADD mrt-ingest /build/mrt-ingest
 
 # The following dependencies help the service build in Docker
-COPY batch-war.pom.xml /tmp/mrt-ingest/ingest-war/pom.xml
-COPY batch-war.assembly.xml /tmp/mrt-ingest/ingest-war/assembly.xml
+COPY batch-war.pom.xml /build/mrt-ingest/ingest-war/pom.xml
+COPY batch-war.assembly.xml /build/mrt-ingest/ingest-war/assembly.xml
 
 RUN mvn install -Denforcer.skip=true && \
     mvn clean

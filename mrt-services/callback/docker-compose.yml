@@ -2,7 +2,7 @@
 #   Copyright 2020 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-version: '3.7'
+version: '3.9'
 networks:
   merrittnet:
 services:
@@ -10,7 +10,7 @@ services:
     networks:
       merrittnet:
     container_name: callback
-    image: cdluc3/callback
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/callback
     build:
       context: .
       dockerfile: Dockerfile

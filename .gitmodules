@@ -1,13 +1,11 @@
 [submodule "mrt-services/dep_core/mrt-core2"]
 	path = mrt-services/dep_core/mrt-core2
 	url = git@github.com:cdluc3/mrt-core2
-	branch = java-refactor
-	#branch = master
+	branch = main
 [submodule "mrt-services/ingest/mrt-ingest"]
 	path = mrt-services/ingest/mrt-ingest
 	url = git@github.com:cdluc3/mrt-ingest
-	branch = java-refactor
-	#branch = main
+	branch = main
 [submodule "mrt-services/ui/mrt-dashboard"]
 	path = mrt-services/ui/mrt-dashboard
 	url = git@github.com:CDLUC3/mrt-dashboard

@@ -21,7 +21,10 @@ WORKDIR /build/mrt-oai
 ADD mrt-oai /build/mrt-oai
 
 RUN mvn install -DskipTests && \
+    date -r oai-src/target +'mrt-oai: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
+
+RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-oaiwar/1.0-SNAPSHOT/mrt-oaiwar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
 FROM tomcat:8-jre8
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-oaiwar/1.0-SNAPSHOT/mrt-oaiwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/oai.war

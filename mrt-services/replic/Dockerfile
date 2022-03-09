@@ -15,7 +15,10 @@ WORKDIR /build/mrt-replic
 ADD mrt-replic /build/mrt-replic
 
 RUN mvn install && \
+    date -r replication-src/target +'mrt-replic: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
+
+RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-replicationwar/1.0-SNAPSHOT/mrt-replicationwar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
 FROM tomcat:8-jre8
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-replicationwar/1.0-SNAPSHOT/mrt-replicationwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/replic.war

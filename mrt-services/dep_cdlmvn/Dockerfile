@@ -11,6 +11,8 @@ FROM maven:3-jdk-8 as build
 
 WORKDIR /build
 
+RUN mkdir -p static
+
 # storage uses this
 RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=net.sf -DartifactId=jargs -Dversion=1.0 -Dpackaging=jar \
   -DrepoUrl=https://mvn.cdlib.org/content/repositories/public/
@@ -25,4 +27,5 @@ WORKDIR /build/mysqlconf
 ADD . /build/mysqlconf/
 
 RUN mvn install && \
+    date -r target +'dep-cdlmvn: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean

@@ -19,6 +19,7 @@ ADD mrt-zoo ./
 # Build and clean in one step to keep the image size small
 RUN mkdir appdir && \
     mvn install -DskipTests && \
+    date -r zoo-client-src/target +'dep-zoo: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp */target/*.jar appdir && \
     mvn clean 
 

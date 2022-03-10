@@ -20,120 +20,68 @@
             "template": "docker-compose -f mrt-services/mysql-rspec.yml up -d"
         },
         {
-            "label": "LOCAL merritt",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt -- rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml up -d --build"
-        },
-        {
-            "label": "LOCAL merritt -- debug ingest",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/debug-ingest.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt -- debug inventory",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/debug-inventory.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt -- debug storage",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/debug-storage.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt -- debug ui",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/debug-ui.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt with ui",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/ui.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt with ui -- debug ui",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/ui.yml -f mrt-services/debug-ui.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt+dryad",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/local.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt+dryad - rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/local.yml up -d --build"
-        },
-        {
-            "label": "LOCAL merritt+dryad -- debug oai",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/local.yml -f mrt-services/debug-oai.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt+audit/replic",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/local.yml up -d"
-        },
-        {
-            "label": "LOCAL merritt+audit/replic - rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/local.yml up -d --build"
-        },
-        {
             "label": "EC2 merritt",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml  up -d"
         },
         {
             "label": "EC2 merritt -- DEV DATABASE",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/docker-dev.yml -f mrt-services/ec2.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/docker-dev.yml  up -d"
         },
         {
             "label": "EC2 merritt -- DEV DATABASE rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/docker-dev.yml -f mrt-services/ec2.yml up -d --build"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/docker-dev.yml  up -d --build"
         },
         {
             "label": "EC2 merritt -- rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml up -d --build"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml  up -d --build"
         },
         {
             "label": "EC2 merritt -- debug ingest",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/debug-ingest.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml  -f mrt-services/debug-ingest.yml up -d"
         },
         {
             "label": "EC2 merritt -- debug inventory",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/debug-inventory.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml  -f mrt-services/debug-inventory.yml up -d"
         },
         {
             "label": "EC2 merritt -- debug storage",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/debug-storage.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml  -f mrt-services/debug-storage.yml up -d"
         },
         {
             "label": "EC2 merritt -- debug ui",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/debug-ui.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml  -f mrt-services/debug-ui.yml up -d"
         },
         {
             "label": "EC2 merritt with ui",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/ui.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml  -f mrt-services/ui.yml up -d"
         },
         {
             "label": "EC2 merritt with ui -- debug ui",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/ec2.yml -f mrt-services/ui.yml -f mrt-services/debug-ui.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml  -f mrt-services/ui.yml -f mrt-services/debug-ui.yml up -d"
         },
         {
             "label": "EC2 merritt+dryad",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/ec2.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml  up -d"
         },
         {
             "label": "EC2 merritt+dryad -- rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/ec2.yml up -d --build"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml  up -d --build"
         },
         {
             "label": "EC2 merritt+dryad -- debug oai",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml -f mrt-services/ec2.yml -f mrt-services/debug-oai.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/dryad.yml  -f mrt-services/debug-oai.yml up -d"
         },
         {
             "label": "EC2 merritt+audit/replic",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/ec2.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml  up -d"
         },
         {
             "label": "EC2 merritt+audit/replic -- rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/ec2.yml up -d --build"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml  up -d --build"
         },
         {
             "label": "EC2 merritt+audit/replic + DEV server (generates errors)",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/ec2.yml -f mrt-services/docker-dev.yml up -d"
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml  -f mrt-services/docker-dev.yml up -d"
         },
     ],
     "docker.commands.composeDown": [

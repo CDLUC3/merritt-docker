@@ -15,7 +15,10 @@ WORKDIR /build/mrt-inventory
 ADD mrt-inventory /build/mrt-inventory
 
 RUN mvn install -D=environment=local && \
+    date -r inv-src/target +'mrt-inv: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
+
+RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt-invwar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
 FROM tomcat:8-jre8
 

@@ -16,7 +16,10 @@ WORKDIR /build/mrt-store
 ADD mrt-store /build/mrt-store
 
 RUN mvn install && \
+    date -r store2-src/target +'mrt-store: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
+
+RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
 FROM tomcat:8-jre8
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /build/store.war

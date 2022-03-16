@@ -32,7 +32,7 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
 
 1. Clone merritt-docker repo and pull in submodules:
    ```
-   BRANCH=java-refactor
+   BRANCH=main
    git clone git@github.com:CDLUC3/merritt-docker.git -b $BRANCH \
 	--remote-submodules --recurse-submodules
    ```
@@ -68,7 +68,7 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
    ```
 
 1. Connect to service menu on your merritt-docker host:
-   http://uc3-mrtdocker02x2-dev.cdlib.org:8086/docker.html
+   http://_my-docker-host_:8086/docker.html
 
 For more detailed usage instructions see [Running Merritt Docker](#running-merritt-docker) below.
 
@@ -118,14 +118,15 @@ and it provides access to individual containers.
 | Dryad SOLR       | ${ECR}/dryad-solr               |       |
 
 
-### Optional Opensearch Stack
+### Optional OpenSearch Stack
+
+see [Using OpenSearch with Merritt Services](docs/using_opensearch.md)
 
 | Component            | Image Name            | Notes |
 | -----------          | ----------            | ----- |
-| Opensearch           | opensearchproject/opensearch            | |
-| Opensearch Dashboard | opensearchproject/opensearch-dashboards | |
+| OpenSearch           | opensearchproject/opensearch            | |
+| OpenSearch Dashboard | opensearchproject/opensearch-dashboards | |
 | Logstash             | opensearchproject/logstash-oss          | |
-| Filebeat             | docker.elastic.co/beats/filebeat        | |
 
 
 ### Merritt Integration Test Driver
@@ -181,7 +182,7 @@ containers to system resources on the Docker host.
   - 8091: ALB Simulator in front of Lambda Container
   - 8092: Replic
   - 8093: Audit
-  - 8094: Opensearch Dashboards
+  - 8094: OpenSearch Dashboards
   - 8095:
   - 8096:
   - 8097:
@@ -318,13 +319,13 @@ Rebuild and run after minor changes to an image:
 mrt-services> docker-compose -p merritt up -d --build
 ```
 
-Run Merrit with Dryad:
+Run Merritt with Dryad:
 ```
 mrt-services> docker-compose -p merritt -f docker-compose.yml -f dryad.yml up -d --build
 mrt-services> docker-compose -p merritt -f docker-compose.yml -f dryad.yml down
 ```
 
-Run Merrit with Opensearch:
+Run Merritt with OpenSearch (see [Using OpenSearch with Merritt Services](docs/using_opensearch.md):
 ```
 mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml up -d --build
 mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml down
@@ -345,7 +346,7 @@ mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml 
 | Dryad                    | [dryad.yml](mrt-services/dryad.yml)                       | Configuration of Dryad services and Merritt services only used by Dryad |
 | Dryad Volume Config      | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
 | Audit Replic             | [audit-replic.yml](mrt-services/audit-replic.yml)         | Configuration of Audit Replic services for Merritt |
-| Opensearch Dashboards    | [opensearch.yml](mrt-services/opensearch.yml)             | Configuration of Full Opensearch stack |
+| OpenSearch Dashboards    | [opensearch.yml](mrt-services/opensearch.yml)             | Configuration of Full OpenSearch stack |
 
 
 

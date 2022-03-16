@@ -141,8 +141,117 @@ index 42be47d..fdaf6d8 100644
 
 ### GELF Log-driver
 
+We use the [Graylog Extended Format logging
+driver](https://docs.docker.com/config/containers/logging/gelf/) to stream
+docker container logs to our logstash instance.  It is possible to configure
+`gelf` options globally in `/etc/docker/deamon.yaml` so that all containers
+forward logs to logstash.  But this would be too noisey, and the logstash
+container may not be running at any given time.
+
+Instead we set per-container gelf log-driver configs only for select merritt
+micro-service containers.  These settings reside in the `opensearch.yml` docker
+compose file.  In this way, gelf logging options are only defined when the
+opensearch stack is launched.
+
+The logstash container listens to port `12201/udp`. 
+
+```
+merritt-docker> tail -38 mrt-services/opensearch.yml 
+
+  # Overlay logging configs to merritt containers
+  #
+  apache:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+  ingest:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+  store:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+  inventory:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+  ui:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+  replic:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+  audit:
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://localhost:12201"
+```
 
 
 ### Logstash Pipeline
 
- 
+We build the logstash docker container with a custom `logstash.conf` file:
+```
+merritt-docker> cat mrt-services/opensearch/logstash/Dockerfile 
+FROM opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.3
+COPY logstash.conf /usr/share/logstash/pipeline/logstash.conf
+USER root
+``` 
+
+This file has three sections defining rules for inputs, filtering, and outputs.
+```
+merritt-docker> cat mrt-services/opensearch/logstash/logstash.conf
+# docker gelf log-driver -> Logstash -> OpenSearch
+
+input {
+  # Listen for logstreams from GELF docker log-driver
+  gelf {
+    type => docker
+    port =>  12201
+  }
+}
+
+filter {
+  # parse tomcat access log for ECS compatibility
+  grok {
+    ecs_compatibility => v1
+    match => {"message" => "%{HTTPD_COMMONLOG}" }
+  }
+}
+
+output {
+  # post filtered logstreams to OpenSearch 
+  opensearch {
+    hosts => ["https://opensearch:9200"]
+    user => "admin"
+    password => "admin"
+    ssl_certificate_verification => false
+  }
+}
+```
+
+
+### Setting the Index Pattern in OpenSearch-Dashboards UI
+
+The first time the OpenSearch docker stack is run we need to configure an
+**index pattern** in the OpenSearch-Dashboards UI.  This required for running
+searches and building queries in the UI.
+
+From the dropdown menu (in top left corner) select
+**Stack Management** -> **Index Patterns**.
+
+Create a sinlge index pattern - `logstash\*`.  This pattern will match all
+indexes coming from logstash.  Once configured, this setting will persist, as
+it is stored as metadata in the OpenSearch container's data volume.
+
+

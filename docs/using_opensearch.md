@@ -250,7 +250,7 @@ searches and building queries in the UI.
 From the dropdown menu (in top left corner) select
 **Stack Management** -> **Index Patterns**.
 
-Create a sinlge index pattern - `logstash\*`.  This pattern will match all
+Create a sinlge index pattern - `logstash*`.  This pattern will match all
 indexes coming from logstash.  Once configured, this setting will persist, as
 it is stored as metadata in the OpenSearch container's data volume.
 

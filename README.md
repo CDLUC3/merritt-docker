@@ -96,11 +96,9 @@ and it provides access to individual containers.
 | Ingest           | ${ECR}/mrt-ingest               |       |
 | Storage          | ${ECR}/mrt-storage              |       |
 | Inventory        | ${ECR}/mrt-inventory            |       |
-| OAI              | ${ECR}/mrt-oai                  | Runs with Dryad |
-| Sword            | ${ECR}/mrt-sword                | Runs with Dryad |
 | Audit            | ${ECR}/mrt-audit                | No-op by default, runs in audit-replic stack |
 | Replic           | ${ECR}/mrt-audit                | No-op by default, runs in audit-replic stack |
-| Merritt Init     | ${ECR}/mrt-init                 | Init OAI and inventory services.  Run Dryad notifier. |
+| Merritt Init     | ${ECR}/mrt-init                 | Init inventory services.|
 | Apache           | ${ECR}/mrt-apache               | Simulates character encoding settings in Merritt Apache |
 | Minio            | minio/minio                     | Containerized storage service - for testing presigned functionality |
 | Minio Cmd        | minio/mc                        | Initialized bucket in Minio container |
@@ -116,7 +114,16 @@ and it provides access to individual containers.
 | Dryad UI         | ${ECR}/mrt-dryad                |       |
 | Dryad MySQL      | mysql:5.7                       | Populated with Rails Migration Script |
 | Dryad SOLR       | ${ECR}/dryad-solr               |       |
+| OAI              | ${ECR}/mrt-oai                  | Runs with Dryad |
+| Sword            | ${ECR}/mrt-sword                | Runs with Dryad |
+| Merritt Init     | ${ECR}/mrt-init                 | Init OAI and inventory services.  Run Dryad notifier. |
 
+### Optional Audit and Replication Stack
+
+| Component        | Image Name                      | Notes |
+| -----------      | ----------                      | ----- |
+| Audit            | ${ECR}/mrt-audit                | Performs fixity checks on content in Minio container |
+| Replic           | ${ECR}/mrt-audit                | Replicates content between buckets in Minio container |
 
 ### Optional OpenSearch Stack
 

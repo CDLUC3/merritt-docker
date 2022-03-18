@@ -24,30 +24,29 @@
     <body>
         <h1>Merritt Docker Index</h1>
         <div>
+            <h2>Core Merritt Containers</h2>
+            <ul>
+                <li><a class="ref" data=":8086">Merritt UI</a></li>
+                <li><a class="ref" data=":8099">Merritt UI with Apache Rules</a></li>
+                <li>
+                    <a class="ref" data=":8080/ingest/state">Ingest Service State</a>
+                    <ul><li><a class="ref" data=":8080/ingest/static/build.content.txt">Build info</a></li></ul>
+                </li>
+                <li>
+                    <a class="ref" data=":8081/store/state">Storage Service State</a>
+                    <ul><li><a class="ref" data=":8081/store/static/build.content.txt">Build info</a></li></ul>
+                </li>
+                <li><a class="ref" data=":8081/store/state/7777">Storage Service - Node 7777</a></li>
+                <li>
+                    <a class="ref" data=":8082/inventory/state">Inventory Service State</a>
+                    <ul><li><a class="ref" data=":8082/inventory/static/build.content.txt">Build info</a></li></ul>
+                </li>
+                <li><a class="ref" data=":8088">Minio Service</a></li>
+                <li><a class="ref" data=":8091/web/collAdmin.html">Coll Admin Tool</a></li>
+            </ul>
             <h2>Open Search Dashboard for Merritt Logs(If enabled)</h2>
             <ul>
                 <li><a class="ref" data=":8094">Open Search Dashboard</a></li>
-            </ul>
-            <h2>Audit/Replic Containers (If enabled)</h2>
-            <ul>
-                <li>
-                    <a class="ref" data=":8092/replic/state">Replic Service State</a>
-                    <ul><li><a class="ref" data=":8092/replic/static/build.content.txt">Build info</a></li></ul>
-                    <fieldset>
-                        <legend>The service must be started/stopped explicitly</legend>
-                        <form class="ref" data=":8092/replic/service/start" method="POST"><input type="submit" value="Replic Service Start"/></form>
-                        <form class="ref" data=":8092/replic/service/pause" method="POST"><input type="submit" value="Replic Service Pause"/></form>
-                    </fieldset>
-                </li>
-                <li>
-                    <a class="ref" data=":8093/audit/state">Audit Service State</a>
-                    <ul><li><a class="ref" data=":8093/audit/static/build.content.txt">Build info</a></li></ul>
-                    <fieldset>
-                        <legend>The service must be started/stopped explicitly</legend>
-                        <form class="ref" data=":8093/audit/service/start" method="POST"><input type="submit" value="Audit Service Start"/></form>
-                        <form class="ref" data=":8093/audit/service/stop" method="POST"><input type="submit" value="Audit Service Stop"/></form>
-                    </fieldset>
-                </li>
             </ul>
             <h2>Audit/Replic Containers (If enabled)</h2>
             <ul>

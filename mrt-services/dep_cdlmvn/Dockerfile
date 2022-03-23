@@ -9,6 +9,8 @@
 
 FROM maven:3-jdk-8 as build
 
+RUN apt-get update
+
 WORKDIR /build
 
 RUN mkdir -p static

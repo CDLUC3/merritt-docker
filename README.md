@@ -58,7 +58,7 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
 1. Build docker images for micro-services
    ```
    merritt-docker> cd mrt-services
-   mrt-services> docker-compose build
+   mrt-services> docker-compose build --pull
    ```
 
 1. Run core merritt services:
@@ -298,15 +298,15 @@ merritt-docker> bin/dep_build.sh
 ```
 merritt-docker> source bin/docker_environment.sh
 merritt-docker> mrt-services
-mrt-services> docker-compose build
+mrt-services> docker-compose build --pull
 ```
 
 #### Merritt-admin Lambdas
 ```
 mrt-services> cd mrt-admin-lambda
-mrt-admin-lambda> docker-compose build
-mrt-admin-lambda> docker-compose -f docker-compose.yml -f admintool.yml build
-mrt-admin-lambda> docker-compose -f docker-compose.yml -f colladmin.yml build
+mrt-admin-lambda> docker-compose build --pull
+mrt-admin-lambda> docker-compose -f docker-compose.yml -f admintool.yml build --pull
+mrt-admin-lambda> docker-compose -f docker-compose.yml -f colladmin.yml build --pull
 ```
 
 
@@ -316,7 +316,7 @@ mrt-admin-lambda> docker-compose -f docker-compose.yml -f colladmin.yml build
 Run core merritt services:
 ```
 merritt-docker> cd mrt-services
-mrt-services> docker-compose build
+mrt-services> docker-compose build --pull
 mrt-services> docker-compose -p merritt up -d
 mrt-services> docker-compose -p merritt down
 ```

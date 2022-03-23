@@ -22,6 +22,9 @@ RUN mvn install && \
 RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
 FROM tomcat:8-jre8
+
+RUN apt-get update
+
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /build/store.war
 
 RUN mkdir /usr/local/tomcat/webapps/store && \

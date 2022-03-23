@@ -9,6 +9,8 @@ FROM ${ECR_REGISTRY}/mrt-zoo:dev as build
 
 FROM zookeeper:3.4
 
+RUN apt-get update
+
 RUN mkdir -p zkServer/tools
 
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/cdl-zk-queue/0.2-SNAPSHOT/cdl-zk-queue-0.2-SNAPSHOT.jar zkServer/tools

@@ -6,6 +6,8 @@
 
 FROM mysql:5.7
 
+RUN apt-get update
+
 COPY init.sql /docker-entrypoint-initdb.d/start.sql
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes

@@ -21,6 +21,9 @@ RUN mvn install && \
 RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-replicationwar/1.0-SNAPSHOT/mrt-replicationwar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
 FROM tomcat:8-jre8
+
+RUN apt-get update
+
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-replicationwar/1.0-SNAPSHOT/mrt-replicationwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/replic.war
 
 RUN mkdir -p /tdr/tmpdir/logs 

@@ -57,8 +57,11 @@ services:
     - opensearch
 
   opensearch-dashboards:
-    image: opensearchproject/opensearch-dashboards:1.2.0
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/opensearch-dashboards:dev
     container_name: opensearch-dashboards
+    build:
+      context: opensearch/opensearch-dashboards
+      dockerfile: Dockerfile
     ports:
     - published: 8094
       target: 5601
@@ -71,27 +74,6 @@ services:
     depends_on:
     - opensearch
     - logstash
-
-  ## # Disabling filebeat while I explore GELF log-driver
-  ## # filebeat did not play well with userns-remapping.
-  ##
-  ## filebeat:
-  ##   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/filebeat:dev
-  ##   container_name: filebeat
-  ##   build:
-  ##     context: opensearch/filebeat
-  ##     dockerfile: Dockerfile
-  ##   user: root
-  ##   volumes:
-  ##   - /var/run/docker.sock:/var/run/docker.sock:ro
-  ##   - /apps/dpr2/docker-system-storage/5071.5161/containers:/var/lib/docker/containers:ro
-  ##   #- /var/lib/docker/containers:/var/lib/docker/containers:ro
-  ##   networks:
-  ##     merrittnet:
-  ##   #restart: unless-stopped
-  ##   #labels:
-  ##   #    co.elastic.logs/enabled: "false"
-
 
 
   # Overlay logging configs to merritt containers

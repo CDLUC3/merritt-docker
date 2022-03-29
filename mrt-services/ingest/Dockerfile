@@ -26,6 +26,9 @@ RUN mvn install -Denforcer.skip=true && \
 RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-ingestwar/1.0-SNAPSHOT/mrt-ingestwar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
 FROM tomcat:8-jre8
+
+RUN apt-get update
+
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-ingestwar/1.0-SNAPSHOT/mrt-ingestwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ingest.war
 
 EXPOSE 8080 8009

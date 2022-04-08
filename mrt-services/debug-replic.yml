@@ -1,0 +1,14 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.9'
+services:
+  replic:
+    ports:
+    - published: 8000
+      target: 8000
+    environment:
+      JPDA_ADDRESS: 8000
+      JPDA_TRANSPORT: dt_socket
+    entrypoint: ["catalina.sh", "jpda", "run"]

@@ -76,6 +76,14 @@
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml  up -d"
         },
         {
+            "label": "EC2 merritt+audit/replic -- debug audit",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/debug-audit.yml up -d"
+        },
+        {
+            "label": "EC2 merritt+audit/replic -- debug replic",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml -f mrt-services/debug-replic.yml up -d"
+        },
+        {
             "label": "EC2 merritt+audit/replic -- rebuild",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/audit-replic.yml  up -d --build"
         },

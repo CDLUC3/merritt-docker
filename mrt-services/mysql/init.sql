@@ -288,11 +288,18 @@ CREATE TABLE `inv_nodes_inv_objects` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `replicated` timestamp NULL DEFAULT NULL,
   `version_number` smallint(5) unsigned DEFAULT NULL,
+  replic_start timestamp null,
+  replic_size bigint null,
+  completion_status ENUM('ok', 'fail', 'partial', 'unknown') NULL,
+  note mediumtext null,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inv_object_id` (`inv_object_id`,`inv_node_id`),
   KEY `id_idx` (`inv_node_id`),
   KEY `id_idx1` (`inv_object_id`),
   KEY `id_idx2` (`replicated`),
+  key `irep_start` (`replic_start`),
+  key `irep_size` (`replic_size`),
+  key `irep_status` (`completion_status`),
   CONSTRAINT `inv_nodes_inv_objects_ibfk_1` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `inv_nodes_inv_objects_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=230624 DEFAULT CHARSET=utf8;
@@ -325,21 +332,21 @@ CREATE TABLE `inv_storage_maints` (
             'note',
             'error',
             'unknown'
-            ) NOT NULL DEFAULT 'unknown' COLLATE 'utf8_general_ci',
+            ) NOT NULL DEFAULT 'unknown',
 	`maint_type` ENUM(
             'non-ark',
             'missing-ark',
             'orphan-copy',
             'missing-file',
             'unknown'
-            ) NOT NULL DEFAULT 'unknown' COLLATE 'utf8_general_ci',
-	`s3key` MEDIUMTEXT NOT NULL COLLATE 'utf8mb4_unicode_ci',
-	`note` MEDIUMTEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+            ) NOT NULL DEFAULT 'unknown',
+	`s3key` MEDIUMTEXT NOT NULL,
+	`note` MEDIUMTEXT not NULL,
 	PRIMARY KEY (`id`) USING BTREE,
 	UNIQUE INDEX `keymd5_idx` (`inv_node_id`, `keymd5`) USING BTREE,
 	INDEX `type_idx` (`maint_type`) USING BTREE,
 	INDEX `status_idx` (`maint_status`) USING BTREE,
-	CONSTRAINT `inv_scans_ibfk_2` FOREIGN KEY (`inv_node_id`) REFERENCES `inv`.`inv_nodes` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+	CONSTRAINT `inv_scans_ibfk_2` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB
@@ -373,7 +380,7 @@ CREATE TABLE `inv_storage_scans` (
 	INDEX `scan_type_idx` (`scan_type`) USING BTREE,
 	INDEX `scan_status_idx` (`scan_status`) USING BTREE,
 	INDEX `inv_scans_node_id_ibfk_3` (`inv_node_id`) USING BTREE,
-	CONSTRAINT `inv_scans_node_id_ibfk_3` FOREIGN KEY (`inv_node_id`) REFERENCES `inv`.`inv_nodes` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
+	CONSTRAINT `inv_scans_node_id_ibfk_3` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 COLLATE='utf8mb4_general_ci'
 ENGINE=InnoDB

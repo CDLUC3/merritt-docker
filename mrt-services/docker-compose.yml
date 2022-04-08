@@ -195,7 +195,9 @@ services:
     ports:
     - published: 8088
       target: 8088
-    command: server /data --address :8088
+    - published: 8095
+      target: 9001
+    command: server /data --address :8088 --console-address ":9001"
     networks:
       merrittnet:
         aliases:

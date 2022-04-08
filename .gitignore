@@ -4,3 +4,4 @@ target
 mrt-services/mrt-admin-lambda/consistency-driver/vendor/
 mrt-services/mrt-admin-lambda/consistency-driver/.bundle
 *.swp
+.attach_*

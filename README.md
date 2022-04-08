@@ -183,14 +183,14 @@ containers to system resources on the Docker host.
   - 8085: Dryad Solr
   - 8086: UI
   - 8087: Dryad UI
-  - 8088: Minio
+  - 8088: Minio API
   - 8089: CDL Reserved, do not use
   - 8090: Lambda Container, Collection Admin
   - 8091: ALB Simulator in front of Lambda Container
   - 8092: Replic
   - 8093: Audit
   - 8094: OpenSearch Dashboards
-  - 8095:
+  - 8095: Minio Web Console
   - 8096:
   - 8097:
   - 8098:

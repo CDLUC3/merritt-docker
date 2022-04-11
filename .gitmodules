@@ -35,8 +35,7 @@
 [submodule "mrt-services/audit/mrt-audit"]
 	path = mrt-services/audit/mrt-audit
 	url = git@github.com:cdluc3/mrt-audit
-	branch = java-refactor
-	#branch = master
+	branch = main
 [submodule "mrt-services/replic/mrt-replic"]
 	path = mrt-services/replic/mrt-replic
 	url = git@github.com:cdluc3/mrt-replic

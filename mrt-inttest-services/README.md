@@ -14,3 +14,29 @@ Where possible, DEV stack images will be re-used.  When a specialized version of
 |.../minio-populated|mrt-inttest-services|minio|store, audit, replic|proposed|
 
 ## Integration Tests to Create by Service
+
+### Inventory
+- Save new object to inventory (use manifest as input)
+- Update object inventory record
+- Delete object inventory record
+- Read task from ZK
+- Post task update to ZK
+
+### Storage
+- Read object from cloud storage
+- Write object to cloud storage
+- Write object to cloud storage (inject checksum error)
+- Get manifest
+- Download file
+- Create file presign
+- Queue assembly task
+- Perform assembly task
+
+### Audit
+- Audit batch of records
+- Audit record (inject checksum error)
+- Audit record (inject filesize error)
+
+### Replication
+- Create secondary replication
+- Update object level replication status

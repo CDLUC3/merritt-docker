@@ -48,12 +48,11 @@
 [submodule "mrt-services/dep_cloud/mrt-cloud"]
 	path = mrt-services/dep_cloud/mrt-cloud
 	url = git@github.com:cdluc3/mrt-cloud
-	branch = java-refactor
-	#branch = master
+	branch = main
 [submodule "mrt-services/dep_zoo/mrt-zoo"]
 	path = mrt-services/dep_zoo/mrt-zoo
 	url = git@github.com:cdluc3/mrt-zoo
-	branch = master
+	branch = main
 [submodule "mrt-services/dep_cdlzk/cdl-zk-queue"]
 	path = mrt-services/dep_cdlzk/cdl-zk-queue
 	url = git@github.com:cdluc3/cdl-zk-queue

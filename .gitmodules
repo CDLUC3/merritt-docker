@@ -18,8 +18,7 @@
 [submodule "mrt-services/inventory/mrt-inventory"]
 	path = mrt-services/inventory/mrt-inventory
 	url = git@github.com:CDLUC3/mrt-inventory
-	branch = java-refactor
-	#branch = master
+	branch = main
 [submodule "mrt-services/oai/mrt-oai"]
 	path = mrt-services/oai/mrt-oai
 	url = git@github.com:cdluc3/mrt-oai

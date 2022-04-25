@@ -152,4 +152,5 @@
             "template": "docker exec -it ui tail -f log/docker.log"
         },
     ],
+    "liveServer.settings.port": 8099,
 }

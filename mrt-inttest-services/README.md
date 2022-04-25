@@ -9,7 +9,7 @@ Where possible, DEV stack images will be re-used.  When a specialized version of
 |-------------|--------------|-------------|----------|-------|
 |.../mrt-database|mrt-services/mysql|mysql:5.7|ui|in use|
 |.../mrt-database-populated|mrt-inttest-services|.../mrt-database|inv,audit,replic|proposed|
-|.../ezid_mock|mrt-services/ezid_mock|ruby|ingest, inv?|in use|
+|.../ezid_store_mock|mrt-inttest-services|ruby|ingest, inv|proposed|
 |.../mrt-zookeeper|mrt-services/zoo|zookeeper|ingest, inv, store|proposed|
 |.../minio-populated|mrt-inttest-services|minio|store, audit, replic|proposed|
 

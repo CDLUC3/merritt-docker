@@ -96,8 +96,8 @@ and it provides access to individual containers.
 | Ingest           | ${ECR}/mrt-ingest               |       |
 | Storage          | ${ECR}/mrt-storage              |       |
 | Inventory        | ${ECR}/mrt-inventory            |       |
-| Audit            | ${ECR}/mrt-audit                | No-op by default, runs in audit-replic stack |
-| Replic           | ${ECR}/mrt-audit                | No-op by default, runs in audit-replic stack |
+| Audit            | ${ECR}/mrt-audit                |       |
+| Replic           | ${ECR}/mrt-audit                |       |
 | Merritt Init     | ${ECR}/mrt-init                 | Init inventory services.|
 | Apache           | ${ECR}/mrt-apache               | Simulates character encoding settings in Merritt Apache |
 | Minio            | minio/minio                     | Containerized storage service - for testing presigned functionality |
@@ -118,12 +118,11 @@ and it provides access to individual containers.
 | Sword            | ${ECR}/mrt-sword                | Runs with Dryad |
 | Merritt Init     | ${ECR}/mrt-init                 | Init OAI and inventory services.  Run Dryad notifier. |
 
-### Optional Audit and Replication Stack
+### Optional Apache Container in front of Merritt uI
 
 | Component        | Image Name                      | Notes |
 | -----------      | ----------                      | ----- |
-| Audit            | ${ECR}/mrt-audit                | Performs fixity checks on content in Minio container |
-| Replic           | ${ECR}/mrt-audit                | Replicates content between buckets in Minio container |
+| Apache           | ${ECR}/mrt-apache               | Test interaction with non load-balanced apache instance|
 
 ### Optional OpenSearch Stack
 
@@ -347,12 +346,14 @@ mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml 
 |                          | in VSCode                                                 | Launch a remote debugger [launch.json](launch.json) |
 |                          | [debug-ingest.yml](mrt-services/debug-ingest.yml)         |
 |                          | [debug-inventory.yml](mrt-services/debug-inventory.yml)   |
-|                          | [debug-oai.yml](mrt-services/debug-oai.yml)               |
 |                          | [debug-storage.yml](mrt-services/debug-storage.yml)       |
+|                          | [debug-audit.yml](mrt-services/debug-audit.yml)       |
+|                          | [debug-replic.yml](mrt-services/debug-replic.yml)       |
+|                          | [debug-oai.yml](mrt-services/debug-oai.yml)               |
 | UI Testing               | [ui.yml](mrt-services/ui.yml)                             | Selectively mount code directories from mrt-dashboard to the UI container |
 | Dryad                    | [dryad.yml](mrt-services/dryad.yml)                       | Configuration of Dryad services and Merritt services only used by Dryad |
 | Dryad Volume Config      | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
-| Audit Replic             | [audit-replic.yml](mrt-services/audit-replic.yml)         | Configuration of Audit Replic services for Merritt |
+| Apache                   | [apache.yml](mrt-services/apache.yml)                     | Add Apache in front of Merrit UI |
 | OpenSearch Dashboards    | [opensearch.yml](mrt-services/opensearch.yml)             | Configuration of Full OpenSearch stack |
 
 

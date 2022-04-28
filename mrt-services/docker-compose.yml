@@ -10,22 +10,6 @@ volumes:
   my-minio:
   my-ingest-folder:
 services:
-  apache:
-    container_name: apache
-    depends_on:
-    - ui
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-apache
-    build:
-      context: apache
-      dockerfile: Dockerfile
-    networks:
-      merrittnet:
-    ports:
-    - published: 8099
-      target: 8099
-    restart: unless-stopped
-    stdin_open: true
-    tty: true
   ingest:
     container_name: ingest
     depends_on:
@@ -293,13 +277,15 @@ services:
     volumes:
     - "./mrt-admin-lambda/web/:/web/"
     restart: unless-stopped
-  # Audit/Replic Placeholders using scratch container
   replic:
     container_name: replic
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
+    # image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-replic:dev
     build:
-      context: scratch
+      context: replic
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
     ports:
@@ -313,10 +299,13 @@ services:
     tty: true
   audit:
     container_name: audit
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
+    # image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-audit:dev
     build:
-      context: scratch
+      context: audit
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
     ports:

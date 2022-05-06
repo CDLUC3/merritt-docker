@@ -5,13 +5,14 @@
 # docker build -t cdluc3/mrt-database .
 
 FROM mysql:5.7
+RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
 
 RUN apt-get update
 
 COPY init.sql /docker-entrypoint-initdb.d/start.sql
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
-# ENV TZ=America/Los_Angeles
+ENV TZ=America/Los_Angeles
 # RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 EXPOSE 3306 33060

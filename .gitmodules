@@ -24,6 +24,7 @@
 	path = mrt-services/oai/mrt-oai
 	url = git@github.com:cdluc3/mrt-oai
 	#branch = master
+	branch = maven-refactor
 [submodule "mrt-services/sword/mrt-sword"]
 	path = mrt-services/sword/mrt-sword
 	url = git@github.com:cdluc3/mrt-sword

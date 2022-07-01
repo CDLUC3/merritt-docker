@@ -63,7 +63,7 @@ docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR
 docker push ${ECR_REGISTRY}/mrt-ingest:dev || exit 1
 
 echo
-echo "Building mrt-inventore-src"
+echo "Building mrt-inventory-src"
 echo "Running docker build --pull -f inventory/Dockerfile-jar --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory-src:dev inventory"
 sleep 2
 docker build --pull --force-rm -f inventory/Dockerfile-jar --build-arg ECR_REGISTRY=${ECR_REGISTRY} \

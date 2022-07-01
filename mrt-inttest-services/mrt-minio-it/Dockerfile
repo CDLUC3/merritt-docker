@@ -10,6 +10,8 @@ ENV MRT_MINIO_HOST "${HOSTNAME}.cdlib.org"
 
 RUN mkdir -p /buckets/my-bucket /buckets/my-bucket-repl
 
+COPY "ark:" "/buckets/my-bucket/ark:"
+
 EXPOSE 9000 9001
 
 CMD [ "minio", "server", "/buckets", "--address", ":9000", "--console-address", ":9001" ]

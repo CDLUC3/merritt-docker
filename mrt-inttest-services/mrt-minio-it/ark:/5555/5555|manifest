@@ -1,0 +1,26 @@
+<?xml version="1.1"?>
+<objectInfo xmlns="http://uc3.cdlib.org/ontology/mrt/manifest">
+  <object id="ark:/5555/5555">
+    <current>1</current>
+    <fileCount>1</fileCount>
+    <totalSize>5</totalSize>
+    <actualCount>1</actualCount>
+    <actualSize>5</actualSize>
+    <versionCount>1</versionCount>
+    <lastAddVersion>2022-07-01T17:57:20+00:00</lastAddVersion>
+  </object>
+  <versions>
+    <version id="1">
+      <manifest count="1" size="5" created="2022-07-01T17:57:20+00:00">
+        <file id="producer/hello.txt">
+          <digestType>SHA-256</digestType>
+          <digest>2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</digest>
+          <size>5</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>ark:/5555/5555|1|producer/hello.txt</key>
+        </file>
+      </manifest>
+    </version>
+  </versions>
+</objectInfo>

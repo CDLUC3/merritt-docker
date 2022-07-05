@@ -25,10 +25,7 @@ FROM tomcat:8-jre8
 
 RUN apt-get update
 
-COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /build/store.war
-
-RUN mkdir /usr/local/tomcat/webapps/store && \
-    unzip -d /usr/local/tomcat/webapps/store /build/store.war
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/store.war
 
 RUN mkdir -p /dpr2store/mrtHomes/store \
     /dpr2store/mrtHomes/logs \

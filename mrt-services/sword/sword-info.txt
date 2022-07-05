@@ -1,9 +1,0 @@
-maxUploadSize=100000000
-jssecacert=/apps/replic/tst/sword/mrtHomes/sword/jssecacert
-ldapHost=ldap:1636
-link=http://localhost:8084/sword/v2/object/
-editmedia=http://localhost:8086/d/
-edit=http://http://localhost:8084/sword/edit/
-ingestUrlAdd=http://ingest:8080/ingest/submit-object
-ingestUrlUpdate=http://ingest:8080/ingest/update-object
-retainTargetUrl=true

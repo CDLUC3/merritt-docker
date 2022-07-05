@@ -325,10 +325,15 @@ Rebuild and run after minor changes to an image:
 mrt-services> docker-compose -p merritt up -d --build
 ```
 
+Run Merritt with Sword / OAI:
+```
+mrt-services> docker-compose -p merritt -f docker-compose.yml -f sword-oai.yml up -d --build
+mrt-services> docker-compose -p merritt -f docker-compose.yml -f sword-oai.yml down
+
 Run Merritt with Dryad:
 ```
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f dryad.yml up -d --build
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f dryad.yml down
+mrt-services> docker-compose -p merritt -f docker-compose.yml -f sword-oai.yml -f dryad.yml up -d --build
+mrt-services> docker-compose -p merritt -f docker-compose.yml -f sword-oai.yml -f dryad.yml down
 ```
 
 Run Merritt with OpenSearch (see [Using OpenSearch with Merritt Services](docs/using_opensearch.md):

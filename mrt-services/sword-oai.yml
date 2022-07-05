@@ -1,0 +1,40 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.9'
+services:
+  oai:
+    container_name: oai
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-oai:dev
+    build:
+      context: oai
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+    networks:
+      merrittnet:
+    ports:
+    - published: 8083
+      target: 8080
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+  sword:
+    container_name: sword
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-sword:dev
+    build:
+      context: sword
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+    networks:
+      merrittnet:
+    environment:
+      MERRITT_SWORD_INFO: sword-info-docker
+    ports:
+    - published: 8084
+      target: 8080
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

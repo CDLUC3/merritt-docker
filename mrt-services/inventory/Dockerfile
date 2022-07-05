@@ -24,10 +24,7 @@ FROM tomcat:8-jre8
 
 RUN apt-get update
 
-COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt-invwar-1.0-SNAPSHOT.war /tmp/inventory.war
-
-RUN mkdir /usr/local/tomcat/webapps/inventory && \
-    unzip -d /usr/local/tomcat/webapps/inventory /tmp/inventory.war
+COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt-invwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/inventory.war
 
 RUN mkdir -p /apps/replic/tst/inv/log /tdr/tmpdir
 

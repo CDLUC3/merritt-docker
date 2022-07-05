@@ -28,9 +28,7 @@ COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-swordwarpub/1.0-SNAPSHO
 
 EXPOSE 8080 8009
 
-RUN mkdir -p /apps/replic/tst/sword/mrtHomes/sword
-
-COPY sword-info.txt /apps/replic/tst/sword/mrtHomes/sword
+RUN mkdir -p /apps/replic/tst/sword/mrtHomes/sword /tdr/tmpdir
 
 RUN cd /apps/replic/tst/sword/mrtHomes/sword && \
     keytool -genkey -keyalg RSA -alias tomcat -keystore jssecacert \

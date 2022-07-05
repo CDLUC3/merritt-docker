@@ -18,7 +18,7 @@ ADD mrt-cloud ./
 
 # Build and clean in one step to keep the image size small
 RUN mkdir appdir && \
-    mvn install -DskipTests && \
+    mvn install -DskipTests -Ddocker.skip && \
     date -r s3-src/target +'dep-cloud: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp */target/*.jar appdir && \
     mvn clean 

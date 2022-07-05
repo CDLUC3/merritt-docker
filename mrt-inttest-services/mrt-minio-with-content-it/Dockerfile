@@ -1,14 +1,16 @@
 # Mock ezid and storage service for ingest integration testing
 #
-# docker build -t ${ECR_REGISTRY}/mrt-minio-it:dev .
-# aws ecr create-repository --repository-name mrt-minio-it
-# docker push ${ECR_REGISTRY}/mrt-minio-it:dev
+# docker build -t ${ECR_REGISTRY}/mrt-minio-with-content-it:dev .
+# aws ecr create-repository --repository-name mrt-minio-with-content-it
+# docker push ${ECR_REGISTRY}/mrt-minio-with-content-it:dev
 
 FROM minio/minio
 
 ENV MRT_MINIO_HOST "${HOSTNAME}.cdlib.org"
 
 RUN mkdir -p /buckets/my-bucket /buckets/my-bucket-repl
+
+COPY "ark:" "/buckets/my-bucket/ark:"
 
 EXPOSE 9000 9001
 

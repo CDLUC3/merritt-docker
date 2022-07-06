@@ -32,6 +32,7 @@ services:
       merrittnet:
     environment:
       MERRITT_SWORD_INFO: sword-info-docker
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
     ports:
     - published: 8084
       target: 8080

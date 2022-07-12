@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  pm-server:
+    container_name: minio-server
+    image: ${ECR_REGISTRY}/pm-server:dev
+    ports:
+    - published: 8097
+      target: 4567

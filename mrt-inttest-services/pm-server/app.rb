@@ -28,7 +28,12 @@ end
 
 get '/image/*' do
   image = params['splat'][0]
-  get_file("#{image}")
+  if image =~ %r[^\d\d\d\d]
+    get_file("#{image}")
+  else
+    status 403
+    "invalid image name"
+  end
 end
 
 get '/mods/*' do

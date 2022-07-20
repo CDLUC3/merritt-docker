@@ -14,6 +14,9 @@ services:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     networks:
       merrittnet:
+    environment:
+      MERRITT_OAI_INFO: oai-info-docker
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
     ports:
     - published: 8083
       target: 8080

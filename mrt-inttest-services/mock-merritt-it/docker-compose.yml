@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  mock-merritt-it:
+    container_name: mock-merritt-it
+    image: ${ECR_REGISTRY}/mock-merritt-it:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - published: 8096
+      target: 4567

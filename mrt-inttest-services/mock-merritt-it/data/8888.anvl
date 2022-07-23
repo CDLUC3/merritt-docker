@@ -1,0 +1,13 @@
+verifyOnRead: true
+nodeForm: physical
+nodeProtocol: http
+mediaConnectivity: cloud
+externalProvider: nodeio
+logicalVolume: yaml:|8888
+testOk: true
+verifyOnWrite: true
+accessProtocol: s3
+ok: false
+baseURI: http://localhost:8096/store
+identifier: 8888
+error: Service tested and not alive - bucket:my-bucket

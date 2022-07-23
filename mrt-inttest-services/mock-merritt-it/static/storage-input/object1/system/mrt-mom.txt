@@ -1,0 +1,4 @@
+type:		MRT-curatorial
+role:		MRT-content
+localIdentifier:	01ad6477-eb2d-4f5b-8f0c-fab0066fec6a
+primaryIdentifier:	ark:/99999/fk4xw4m06q

@@ -24,6 +24,11 @@ Where possible, DEV stack images will be re-used.  When a specialized version of
 | ------ | ---- | ----------- | ----- |
 | done | mrt-cloud | mrt-minio-it | Integration tests run as an executable |
 | done | mrt-store | tomcat | Integration tests call service running in a tomcat container | 
+| | | | _Note: test data is currently mounted as a volume_ |
+| | | mrt-minio-it | |
+| | | zoo | |
+| tbd - revision | mrt-store | tomcat | Integration tests call service running in a tomcat container | 
+| | | mock-merritt-it | This image will supply test data to be loaded into the storage container |
 | | | mrt-minio-it | |
 | | | zoo | |
 | deprecated | mrt-ingest (non tomcat) | mrt-minio-it | Integration tests run as an executable, limited coverage since ingest is not running in tomcat |

@@ -15,11 +15,20 @@ get '/store/state/8888' do
 end
 
 get '/static/*' do
-  val = params['splat'][0]
-  fname = "/data/static/#{val}"
-  if File.exist?(fname)
-    send_file "/data/static/#{val}"
+  fn = params['splat'][0]
+  fname = get_fname(fn)
+  if fname.nil?
+    status 404
+    "Not found: #{fn}"
   else
-    "Not found: #{fname}"
+    send_file fname
   end
+end
+
+def get_fname(val) 
+  fname = "/data/static/#{val}"
+  return fname if File.exist?(fname)
+  fname = fname.gsub(%r[\/0\/], '/1/')
+  return fname if File.exist?(fname)
+  nil
 end

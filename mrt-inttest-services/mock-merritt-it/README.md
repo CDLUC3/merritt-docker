@@ -10,8 +10,8 @@ This application is also used to manufacture test data (from templates) for inte
 | ------ | -------- | ----- | ----- |
 | GET    | /data/*NODE*?t=anvl | inv-it | Storage Node Metadata - used to populate the inv_nodes table |
 | GET    | /static/*           | | Return a file stored in the image |
-| GET    | /static/storage/manifest/*NODE*/*ark* | inv-it | Return manifest.xml for an object |
-| GET    | /static/storage/content/*NODE*/*ark*/*version*/*path* | inv-it|  Return file content |
+| GET    | /storage/manifest/*NODE*/*ark* | inv-it | Return manifest.xml for an object |
+| GET    | /storage/content/*NODE*/*ark*/*version*/*path* | inv-it|  Return file content |
 
 ## To be implemented 
 

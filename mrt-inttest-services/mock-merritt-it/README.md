@@ -17,7 +17,6 @@ This application is also used to manufacture test data (from templates) for inte
 
 | Method | Endpoint | Used by | Notes |
 | ------ | -------- | ------- | ----- |
-| GET    | /static/storage-input | store-it | Input data to be loaded via storage, simulates data on EFS drive |
 | GET    | /id/*ark* | | Mock ezid, is this used? |
 | GET    | /shoulder/*shoulder* | | Mock ezid, is this used? |
 | POST   | /id/*ark* | ingest-it | Mock data update for ark |

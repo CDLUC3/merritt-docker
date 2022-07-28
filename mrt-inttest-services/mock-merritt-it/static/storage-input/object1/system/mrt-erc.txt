@@ -1,6 +1,0 @@
-erc:	
-who:	Halberstadt, Milton
-what:	Abandoned Apartment. Boston, Massachusetts, 1936
-when:	1936
-where:	ark:/99999/fk4xw4m06q
-where:	01ad6477-eb2d-4f5b-8f0c-fab0066fec6a

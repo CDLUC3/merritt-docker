@@ -1,6 +1,6 @@
 <?xml version="1.1"?>
 <objectInfo xmlns="http://uc3.cdlib.org/ontology/mrt/manifest">
-  <object id="ark:/1111/2222">
+  <object id="{{ark}}">
     <current>1</current>
     <fileCount>8</fileCount>
     <totalSize>4826</totalSize>
@@ -18,7 +18,7 @@
           <size>149</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>application/xml</mimeType>
-          <key>ark:/1111/2222|1|system/mrt-dc.xml</key>
+          <key>{{ark}}|1|system/mrt-dc.xml</key>
         </file>
         <file id="system/mrt-owner.txt">
           <digestType>SHA-256</digestType>
@@ -26,7 +26,7 @@
           <size>20</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
-          <key>ark:/1111/2222|1|system/mrt-owner.txt</key>
+          <key>{{ark}}|1|system/mrt-owner.txt</key>
         </file>
         <file id="system/mrt-erc.txt">
           <digestType>SHA-256</digestType>
@@ -34,7 +34,7 @@
           <size>170</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
-          <key>ark:/1111/2222|1|system/mrt-erc.txt</key>
+          <key>{{ark}}|1|system/mrt-erc.txt</key>
         </file>
         <file id="system/mrt-object-map.ttl">
           <digestType>SHA-256</digestType>
@@ -42,7 +42,7 @@
           <size>2670</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>plain/turtle</mimeType>
-          <key>ark:/1111/2222|1|system/mrt-object-map.ttl</key>
+          <key>{{ark}}|1|system/mrt-object-map.ttl</key>
         </file>
         <file id="system/mrt-mom.txt">
           <digestType>SHA-256</digestType>
@@ -50,7 +50,7 @@
           <size>136</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
-          <key>ark:/1111/2222|1|system/mrt-mom.txt</key>
+          <key>{{ark}}|1|system/mrt-mom.txt</key>
         </file>
         <file id="system/mrt-ingest.txt">
           <digestType>SHA-256</digestType>
@@ -58,7 +58,7 @@
           <size>1655</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
-          <key>ark:/1111/2222|1|system/mrt-ingest.txt</key>
+          <key>{{ark}}|1|system/mrt-ingest.txt</key>
         </file>
         <file id="system/mrt-membership.txt">
           <digestType>SHA-256</digestType>
@@ -66,7 +66,7 @@
           <size>21</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
-          <key>ark:/1111/2222|1|system/mrt-membership.txt</key>
+          <key>{{ark}}|1|system/mrt-membership.txt</key>
         </file>
         <file id="producer/hello.txt">
           <digestType>SHA-256</digestType>
@@ -74,7 +74,7 @@
           <size>5</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
-          <key>ark:/1111/2222|1|producer/hello.txt</key>
+          <key>{{ark}}|1|producer/hello.txt</key>
         </file>
       </manifest>
     </version>

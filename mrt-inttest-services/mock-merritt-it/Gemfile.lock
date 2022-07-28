@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    mustache (1.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     rack (2.2.4)
@@ -18,6 +19,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  mustache
   sinatra
 
 BUNDLED WITH

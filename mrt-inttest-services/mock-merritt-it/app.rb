@@ -1,8 +1,55 @@
 require 'sinatra'
 require 'sinatra/base'
+require 'mustache'
 require 'cgi'
 
 set :bind, '0.0.0.0'
+
+get '/storage/manifest/*/*' do
+  node = params['splat'][0]
+  ark = params['splat'][1]
+  content_type 'application/xml'
+  Mustache.render(File.open('/data/manifest').read, {'node': node, 'ark': ark})
+end
+
+get '/storage/content/*/*/*/producer/*' do
+  node = params['splat'][0]
+  ark = params['splat'][1]
+  ver = params['splat'][2]
+  path = params['splat'][3]
+
+  fname = "/data/producer/#{path}"
+  if File.exist?(fname)
+    if path =~ %r[\.xml$]
+      content_type 'application/xml'
+    elsif path =~ %r[\.txt$]
+      content_type 'text/plain'
+    end
+    send_file fname
+  else
+    status 404
+    "Not found: #{fname}"
+  end
+end
+
+get '/storage/content/*/*/*/system/*' do
+  node = params['splat'][0]
+  ark = params['splat'][1]
+  ver = params['splat'][2]
+  path = params['splat'][3]
+  fname = "/data/system/#{path}"
+  if File.exist?(fname)
+    if path =~ %r[\.xml$]
+      content_type 'application/xml'
+    elsif path =~ %r[\.txt$]
+      content_type 'text/plain'
+    end
+    Mustache.render(File.open(fname).read, {'node': node, 'ark': ark})
+  else
+    status 404
+    "Not found: #{fname}"
+  end
+end
 
 get '/store/state/7777' do
   send_file "/data/7777.anvl" if params[:t] == "anvl"

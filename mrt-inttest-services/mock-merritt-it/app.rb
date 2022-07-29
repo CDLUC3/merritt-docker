@@ -12,17 +12,11 @@ get '/storage/manifest/*/*' do
   Mustache.render(File.open('/data/manifest').read, {'node': node, 'ark': ark})
 end
 
-get '/storage/content/*/*/*/producer/*' do
-  node = params['splat'][0]
-  ark = params['splat'][1]
-  ver = params['splat'][2]
-  path = params['splat'][3]
-
-  fname = "/data/producer/#{path}"
+def get_file(fname)
   if File.exist?(fname)
-    if path =~ %r[\.xml$]
+    if fname =~ %r[\.xml$]
       content_type 'application/xml'
-    elsif path =~ %r[\.txt$]
+    elsif fname =~ %r[\.txt$]
       content_type 'text/plain'
     end
     send_file fname
@@ -32,23 +26,42 @@ get '/storage/content/*/*/*/producer/*' do
   end
 end
 
-get '/storage/content/*/*/*/system/*' do
+def get_producer(params)
   node = params['splat'][0]
   ark = params['splat'][1]
   ver = params['splat'][2]
   path = params['splat'][3]
-  fname = "/data/system/#{path}"
-  if File.exist?(fname)
-    if path =~ %r[\.xml$]
-      content_type 'application/xml'
-    elsif path =~ %r[\.txt$]
-      content_type 'text/plain'
-    end
-    Mustache.render(File.open(fname).read, {'node': node, 'ark': ark})
-  else
-    status 404
-    "Not found: #{fname}"
-  end
+
+  get_file("/data/producer/#{path}")
+end
+
+get '/storage/content/*/*/*/producer/*' do
+  get_producer(params)
+end
+
+get '/store/content/*/*/*/producer/*' do
+  get_producer(params)
+end
+
+get '/storage-input/*' do
+  path = params['splat'][0]
+  get_file("/data/#{path}")
+end
+
+def get_system(params) 
+  node = params['splat'][0]
+  ark = params['splat'][1]
+  ver = params['splat'][2]
+  path = params['splat'][3]
+  get_file("/data/system/#{path}")
+end
+
+get '/storage/content/*/*/*/system/*' do
+  get_system(params)
+end
+
+get '/store/content/*/*/*/system/*' do
+  get_system(params)
 end
 
 get '/store/state/7777' do

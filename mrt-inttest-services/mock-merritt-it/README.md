@@ -4,7 +4,7 @@ This application is a Sinatra app that mocks the behaviors of Merritt microservi
 
 This application is also used to manufacture test data (from templates) for integration tests.
 
-## An inventory of endpoints is available here:
+## Accessing the documentation from the Mock Merritt Service:
 
 External Access
 - http://localhost:8096/ (substitute your own hostname)
@@ -13,8 +13,10 @@ Docker access
 - http://mock-merritt-it:4567/ (substitute your own hostname)
 
 ---
+## Mock Service Endpoints
 
-### Static content request
+_Links in this section should be accessed from a running container_
+
 
 <style>
 td, th {

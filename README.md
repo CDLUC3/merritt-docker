@@ -174,7 +174,9 @@ containers to system resources on the Docker host.
   ports (8080:8099).  If we need more ports, we can ask IAS to expand this set.
 
   **Current Port Usage**
-  - 8080: Ingest
+  - 8080: Multiple
+    - Merritt Stack: Ingest
+    - Integration Test: service-it tomcat port
   - 8081: Store
   - 8082: Inventory
   - 8083: OAI
@@ -190,10 +192,14 @@ containers to system resources on the Docker host.
   - 8093: Audit
   - 8094: OpenSearch Dashboards
   - 8095: Minio Web Console
-  - 8096:
-  - 8097:
-  - 8098:
-  - 8099: Apache
+  - 8096: Mock Merritt Service for Integration Testing
+  - 8097: Pal Museum data ingest service
+  - 8098: Multiple: 
+    - Merritt Stack: Ingest Callback
+    - Integration Test: Minio admin port
+  - 8099: 
+    - Merritt Stack: Apache
+    - Integration Test: service-it debug
 
 
 

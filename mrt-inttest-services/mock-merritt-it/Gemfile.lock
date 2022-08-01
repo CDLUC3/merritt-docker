@@ -7,6 +7,7 @@ GEM
     rack (2.2.4)
     rack-protection (2.2.0)
       rack
+    redcarpet (3.5.1)
     ruby2_keywords (0.0.5)
     sinatra (2.2.0)
       mustermann (~> 1.0)
@@ -20,6 +21,7 @@ PLATFORMS
 
 DEPENDENCIES
   mustache
+  redcarpet
   sinatra
 
 BUNDLED WITH

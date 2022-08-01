@@ -1,9 +1,25 @@
 require 'sinatra'
 require 'sinatra/base'
 require 'mustache'
+require 'redcarpet'
 require 'cgi'
 
 set :bind, '0.0.0.0'
+
+def readme
+  renderer = Redcarpet::Render::HTML.new
+  markdown = Redcarpet::Markdown.new(renderer, {tables: true})
+  markdown.render(File.open('/data/README.md').read)
+end
+
+get '/' do
+  readme
+end
+
+get '' do
+  readme
+end
+
 
 get '/storage/manifest/*/*' do
   node = params['splat'][0]
@@ -66,12 +82,12 @@ end
 
 get '/store/state/7777' do
   send_file "/data/7777.anvl" if params[:t] == "anvl"
-  "success: store/state/7777"
+  "Specify ?t=anvl to download the file"
 end
 
 get '/store/state/8888' do
   send_file "/data/8888.anvl" if params[:t] == "anvl"
-  "success: store/state/8888"
+  "Specify ?t=anvl to download the file"
 end
 
 get '/static/*' do

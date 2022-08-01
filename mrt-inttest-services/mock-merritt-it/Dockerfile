@@ -17,6 +17,7 @@ RUN bundle install --jobs 20 --retry 5
 
 COPY *.rb .
 COPY data /data
+COPY *.md /data
 COPY static /data/static
 
 EXPOSE 4567

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DublinCore xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dc:title>Hello File</dc:title>
+        <dc:creator>Merritt Team</dc:creator>
+        <dc:type>text</dc:type>
+        <dc:publisher>CDL</dc:publisher>
+        <dc:date>2022</dc:date>
+        <dc:language>eng</dc:language>
+        <dc:description>File used for Merritt Integration Tests.</dc:description>
+        <dc:subject>integration test</dc:subject>
+</DublinCore>

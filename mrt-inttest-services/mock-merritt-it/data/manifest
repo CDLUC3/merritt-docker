@@ -2,20 +2,20 @@
 <objectInfo xmlns="http://uc3.cdlib.org/ontology/mrt/manifest">
   <object id="{{ark}}">
     <current>1</current>
-    <fileCount>8</fileCount>
-    <totalSize>4826</totalSize>
-    <actualCount>8</actualCount>
-    <actualSize>4826</actualSize>
+    <fileCount>7</fileCount>
+    <totalSize>2336</totalSize>
+    <actualCount>7</actualCount>
+    <actualSize>2336</actualSize>
     <versionCount>1</versionCount>
     <lastAddVersion>2022-07-21T23:20:20+00:00</lastAddVersion>
   </object>
   <versions>
     <version id="1">
-      <manifest count="8" size="4826" created="2022-07-21T23:20:20+00:00">
-        <file id="system/mrt-dc.xml">
+      <manifest count="7" size="2336" created="2022-07-21T23:20:20+00:00">
+        <file id="producer/mrt-dc.xml">
           <digestType>SHA-256</digestType>
-          <digest>f40dd72e54b7e93c389895de1c13922fe5ac2ac226d7159a9704ae6f19a67929</digest>
-          <size>149</size>
+          <digest>35dd45b157fc7352ebf2954c4658baa89073cba762fd40b7f9f16bc54a9a2af8</digest>
+          <size>525</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>application/xml</mimeType>
           <key>{{ark}}|1|system/mrt-dc.xml</key>
@@ -30,32 +30,24 @@
         </file>
         <file id="system/mrt-erc.txt">
           <digestType>SHA-256</digestType>
-          <digest>a7ecec1302500877054e7f6ce748bf2fa23820663140d870f45ba7b36469e843</digest>
-          <size>170</size>
+          <digest>a5adc23d32740161d2b100069975d3262c79b5c5330edea81c1c09408aaaec49</digest>
+          <size>93</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
           <key>{{ark}}|1|system/mrt-erc.txt</key>
         </file>
-        <file id="system/mrt-object-map.ttl">
-          <digestType>SHA-256</digestType>
-          <digest>a5e54042b18e09daed74d224080f0eac44cf64d64ffe6e8488eb10360caff823</digest>
-          <size>2670</size>
-          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
-          <mimeType>plain/turtle</mimeType>
-          <key>{{ark}}|1|system/mrt-object-map.ttl</key>
-        </file>
         <file id="system/mrt-mom.txt">
           <digestType>SHA-256</digestType>
-          <digest>8a0acfdbe0e9408a6dc8399d8679f9892cc706560691e5c9c5e076736701c2ef</digest>
-          <size>136</size>
+          <digest>b15277ee61ed9a25e753de3c0c71a8ac01066f91322cb16ef07c3690a9f570d3</digest>
+          <size>104</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
           <key>{{ark}}|1|system/mrt-mom.txt</key>
         </file>
         <file id="system/mrt-ingest.txt">
           <digestType>SHA-256</digestType>
-          <digest>f68bf16f06ef938b38530d7fb7619020f58d8048d6866152b14f95f1b59aa7dc</digest>
-          <size>1655</size>
+          <digest>8beef10c35d4cfacee042c98fb1587c55e0052f6150ec1e7589d17685836cdb9</digest>
+          <size>1568</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
           <key>{{ark}}|1|system/mrt-ingest.txt</key>

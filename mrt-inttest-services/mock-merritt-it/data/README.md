@@ -7,7 +7,7 @@
 |  | when | inv_objects | erc_when | ^^ | 
 |  | where | inv_objects | erc_where | values are concatenated | 
 |  | (each field) | inv_dublinkernels | value | |
-| system/mrtingest.txt | batch | inv_ingests | batch_id | |
+| system/mrt-ingest.txt | batch | inv_ingests | batch_id | |
 |  | job | inv_ingests | job_id | |
 | | profile | inv_ingests | profile | |
 | | storageNode | inv_nodes_inv_objects | inv_node_id | |
@@ -17,7 +17,7 @@
 | | (link) | inv_objects | inv_owner_id | |
 | system/mrt-mom.txt | type | inv_objects | object_type | |
 | | role | inv_objects | aggregate_role | |
-| producer/mrt-* | (content) | inv_metadatas | value | |
+| producer/mrt-* | (content) | inv_metadatas | value | specific files only |
 
 ## Mysql Dump After Single Object Ingest
 

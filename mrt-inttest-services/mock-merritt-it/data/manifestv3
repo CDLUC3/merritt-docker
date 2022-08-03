@@ -1,0 +1,142 @@
+<?xml version="1.1"?>
+<objectInfo xmlns="http://uc3.cdlib.org/ontology/mrt/manifest">
+  <object id="{{ark}}">
+    <current>2</current>
+    <fileCount>15</fileCount>
+    <totalSize>4677</totalSize>
+    <actualCount>8</actualCount>
+    <actualSize>2341</actualSize>
+    <versionCount>2</versionCount>
+    <lastAddVersion>2022-07-22T23:20:20+00:00</lastAddVersion>
+  </object>
+  <versions>
+    <version id="1">
+      <manifest count="7" size="2336" created="2022-07-21T23:20:20+00:00">
+        <file id="producer/mrt-dc.xml">
+          <digestType>SHA-256</digestType>
+          <digest>35dd45b157fc7352ebf2954c4658baa89073cba762fd40b7f9f16bc54a9a2af8</digest>
+          <size>525</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>application/xml</mimeType>
+          <key>{{ark}}|1|system/mrt-dc.xml</key>
+        </file>
+        <file id="system/mrt-owner.txt">
+          <digestType>SHA-256</digestType>
+          <digest>2f79330df790a7ff3b8cfe580cea1f12d12b316da50679d3f08899ca3dd4f1c9</digest>
+          <size>20</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-owner.txt</key>
+        </file>
+        <file id="system/mrt-erc.txt">
+          <digestType>SHA-256</digestType>
+          <digest>a5adc23d32740161d2b100069975d3262c79b5c5330edea81c1c09408aaaec49</digest>
+          <size>93</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-erc.txt</key>
+        </file>
+        <file id="system/mrt-mom.txt">
+          <digestType>SHA-256</digestType>
+          <digest>b15277ee61ed9a25e753de3c0c71a8ac01066f91322cb16ef07c3690a9f570d3</digest>
+          <size>104</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-mom.txt</key>
+        </file>
+        <file id="system/mrt-ingest.txt">
+          <digestType>SHA-256</digestType>
+          <digest>8beef10c35d4cfacee042c98fb1587c55e0052f6150ec1e7589d17685836cdb9</digest>
+          <size>1568</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-ingest.txt</key>
+        </file>
+        <file id="system/mrt-membership.txt">
+          <digestType>SHA-256</digestType>
+          <digest>165bcdd5e9202ae2fb872ba6609caf95adcc68a60b39c7d2899bd337014501c8</digest>
+          <size>21</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-membership.txt</key>
+        </file>
+        <file id="producer/hello.txt">
+          <digestType>SHA-256</digestType>
+          <digest>2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</digest>
+          <size>5</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|producer/hello.txt</key>
+        </file>
+      </manifest>
+    </version>
+    <version id="2">
+      <manifest count="8" size="2341" created="2022-07-22T23:20:20+00:00">
+        <file id="producer/mrt-dc.xml">
+          <digestType>SHA-256</digestType>
+          <digest>35dd45b157fc7352ebf2954c4658baa89073cba762fd40b7f9f16bc54a9a2af8</digest>
+          <size>525</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>application/xml</mimeType>
+          <key>{{ark}}|1|system/mrt-dc.xml</key>
+        </file>
+        <file id="system/mrt-owner.txt">
+          <digestType>SHA-256</digestType>
+          <digest>2f79330df790a7ff3b8cfe580cea1f12d12b316da50679d3f08899ca3dd4f1c9</digest>
+          <size>20</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-owner.txt</key>
+        </file>
+        <file id="system/mrt-erc.txt">
+          <digestType>SHA-256</digestType>
+          <digest>a5adc23d32740161d2b100069975d3262c79b5c5330edea81c1c09408aaaec49</digest>
+          <size>93</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-erc.txt</key>
+        </file>
+        <file id="system/mrt-mom.txt">
+          <digestType>SHA-256</digestType>
+          <digest>b15277ee61ed9a25e753de3c0c71a8ac01066f91322cb16ef07c3690a9f570d3</digest>
+          <size>104</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-mom.txt</key>
+        </file>
+        <file id="system/mrt-ingest.txt">
+          <digestType>SHA-256</digestType>
+          <digest>8beef10c35d4cfacee042c98fb1587c55e0052f6150ec1e7589d17685836cdb9</digest>
+          <size>1568</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-ingest.txt</key>
+        </file>
+        <file id="system/mrt-membership.txt">
+          <digestType>SHA-256</digestType>
+          <digest>165bcdd5e9202ae2fb872ba6609caf95adcc68a60b39c7d2899bd337014501c8</digest>
+          <size>21</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|system/mrt-membership.txt</key>
+        </file>
+        <file id="producer/hello.txt">
+          <digestType>SHA-256</digestType>
+          <digest>2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</digest>
+          <size>5</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|1|producer/hello.txt</key>
+        </file>
+        <file id="producer/hello2.txt">
+          <digestType>SHA-256</digestType>
+          <digest>2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824</digest>
+          <size>5</size>
+          <creationDate>2017-10-03T22:29:19+00:00</creationDate>
+          <mimeType>text/plain</mimeType>
+          <key>{{ark}}|2|producer/hello2.txt</key>
+        </file>
+      </manifest>
+    </version>
+  </versions>
+</objectInfo>

@@ -20,12 +20,12 @@ get '' do
   readme
 end
 
-
 get '/storage/manifest/*/*' do
   node = params['splat'][0]
   ark = params['splat'][1]
   content_type 'application/xml'
-  Mustache.render(File.open('/data/manifest').read, {'node': node, 'ark': ark})
+  manifest = ark =~ %r[ark:\/v3.*] ? "manifestv3" : "manifest"
+  Mustache.render(File.open("/data/#{manifest}").read, {'node': node, 'ark': ark})
 end
 
 def get_file(fname)

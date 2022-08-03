@@ -18,6 +18,8 @@
 | system/mrt-mom.txt | type | inv_objects | object_type | |
 | | role | inv_objects | aggregate_role | |
 | producer/mrt-* | (content) | inv_metadatas | value | specific files only |
+| (each filename) | | inv_files | pathname | |
+| (eachfilename)  | | inv_audits | inv_file_id | links to new inv_files |
 
 ## Mysql Dump After Single Object Ingest
 

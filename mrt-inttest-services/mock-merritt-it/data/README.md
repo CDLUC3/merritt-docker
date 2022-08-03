@@ -32,7 +32,7 @@ INSERT INTO `inv_audits` VALUES
   (5,1,1,1,5,'http://mock-merritt-it:4567/storage/content/7777/ark%3A%2F1111%2F2222/1/system%2Fmrt-ingest.txt?fixity=no','unknown','2022-08-02 22:36:08',NULL,NULL,0,NULL,NULL),
   (6,1,1,1,6,'http://mock-merritt-it:4567/storage/content/7777/ark%3A%2F1111%2F2222/1/system%2Fmrt-membership.txt?fixity=no','unknown','2022-08-02 22:36:08',NULL,NULL,0,NULL,NULL),
   (7,1,1,1,7,'http://mock-merritt-it:4567/storage/content/7777/ark%3A%2F1111%2F2222/1/producer%2Fhello.txt?fixity=no','unknown','2022-08-02 22:36:08',NULL,NULL,0,NULL,NULL);
-INSERT INTO `inv_collections` VALUES (1,NULL,'ark:/99999/fk4q24532',NULL,NULL,NULL,NULL,NULL,NULL,'none');
+INSERT INTO `inv_collections` VALUES (1,NULL,'ark:/99999/collection',NULL,NULL,NULL,NULL,NULL,NULL,'none');
 INSERT INTO `inv_collections_inv_objects` VALUES (1,1,1);
 INSERT INTO `inv_dublinkernels` VALUES 
   (1,1,1,1,'who',NULL,'Merritt Team'),
@@ -55,7 +55,7 @@ INSERT INTO `inv_nodes` VALUES
   (2,8888,'magnetic-disk','cloud','on-line','s3','physical','http','yaml:|8888','nodeio',1,1,'http://mock-merritt-it:4567/store','2022-08-02 22:36:07',NULL,NULL,NULL);
 INSERT INTO `inv_nodes_inv_objects` VALUES (1,1,1,'primary','2022-08-02 22:36:08',NULL,NULL,NULL,NULL,NULL,NULL);
 INSERT INTO `inv_objects` VALUES (1,1,'ark:/1111/2222','d28','MRT-curatorial','MRT-content','MRT-none',1,'Merritt Team','Hello File','2022','ark:/7777/7777 ; my-local-id','2022-08-02 22:36:08','2022-08-03 05:36:08');
-INSERT INTO `inv_owners` VALUES (1,NULL,'ark:/99999/fk4tt4wsh',NULL);
+INSERT INTO `inv_owners` VALUES (1,NULL,'ark:/99999/owner',NULL);
 INSERT INTO `inv_versions` VALUES (1,1,'ark:/1111/2222',1,NULL,'2022-08-02 22:36:08');
 INSERT INTO `sha_dublinkernels` VALUES 
   (1,'Merritt Team'),

@@ -11,7 +11,7 @@
   </object>
   <versions>
     <version id="1">
-      <manifest count="7" size="2336" created="2022-07-21T23:20:20+00:00">
+      <manifest count="7" size="2333" created="2022-07-21T23:20:20+00:00">
         <file id="producer/mrt-dc.xml">
           <digestType>SHA-256</digestType>
           <digest>35dd45b157fc7352ebf2954c4658baa89073cba762fd40b7f9f16bc54a9a2af8</digest>

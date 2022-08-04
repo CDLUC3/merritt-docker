@@ -15,10 +15,12 @@ RUN gem install bundler
 RUN bundle install --jobs 20 --retry 5
 # Adding project files
 
-COPY *.rb .
+COPY *.rb ./
 COPY data /data
 COPY *.md /data
 COPY static /data/static
+
+RUN ruby generate.rb
 
 EXPOSE 4567
 CMD ["ruby", "app.rb"]

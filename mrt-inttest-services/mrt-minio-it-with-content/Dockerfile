@@ -4,6 +4,10 @@
 # aws ecr create-repository --repository-name mrt-minio-it-with-content
 # docker push ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
 
+ARG ECR_REGISTRY=ecr_registry_not_set
+
+FROM ${ECR_REGISTRY}/mock-merritt-it:dev as mock
+
 FROM minio/minio
 
 # https://stackoverflow.com/questions/72904999/create-minio-docker-image-with-content
@@ -13,7 +17,7 @@ ENV MRT_MINIO_HOST "${HOSTNAME}.cdlib.org"
 
 RUN mkdir -p /data-load /buckets/my-bucket /buckets/my-bucket-repl
 
-COPY data-load/ /data-load
+COPY --from=mock /data/generated/ /data-load/
 
 RUN minio server /buckets & \
     server_pid=$!; \

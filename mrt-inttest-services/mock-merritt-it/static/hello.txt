@@ -1,1 +1,1 @@
-hello
+This is a sample file to be served up as a static resource.

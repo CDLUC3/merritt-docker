@@ -3,15 +3,15 @@
   <object id="{{ark}}">
     <current>2</current>
     <fileCount>15</fileCount>
-    <totalSize>4677</totalSize>
+    <totalSize>4671</totalSize>
     <actualCount>8</actualCount>
-    <actualSize>2341</actualSize>
+    <actualSize>2338</actualSize>
     <versionCount>2</versionCount>
     <lastAddVersion>2022-07-22T23:20:20+00:00</lastAddVersion>
   </object>
   <versions>
     <version id="1">
-      <manifest count="7" size="2336" created="2022-07-21T23:20:20+00:00">
+      <manifest count="7" size="2333" created="2022-07-21T23:20:20+00:00">
         <file id="producer/mrt-dc.xml">
           <digestType>SHA-256</digestType>
           <digest>35dd45b157fc7352ebf2954c4658baa89073cba762fd40b7f9f16bc54a9a2af8</digest>
@@ -71,7 +71,7 @@
       </manifest>
     </version>
     <version id="2">
-      <manifest count="8" size="2341" created="2022-07-22T23:20:20+00:00">
+      <manifest count="8" size="2338" created="2022-07-22T23:20:20+00:00">
         <file id="producer/mrt-dc.xml">
           <digestType>SHA-256</digestType>
           <digest>35dd45b157fc7352ebf2954c4658baa89073cba762fd40b7f9f16bc54a9a2af8</digest>
@@ -82,8 +82,8 @@
         </file>
         <file id="system/mrt-owner.txt">
           <digestType>SHA-256</digestType>
-          <digest>2f79330df790a7ff3b8cfe580cea1f12d12b316da50679d3f08899ca3dd4f1c9</digest>
-          <size>20</size>
+          <digest>1a00b96724193d940c3823c981bd95dce7b5785d468d79971fc188555c35e4f0</digest>
+          <size>15</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
           <key>{{ark}}|1|system/mrt-owner.txt</key>
@@ -114,8 +114,8 @@
         </file>
         <file id="system/mrt-membership.txt">
           <digestType>SHA-256</digestType>
-          <digest>165bcdd5e9202ae2fb872ba6609caf95adcc68a60b39c7d2899bd337014501c8</digest>
-          <size>21</size>
+          <digest>be4528f2066fb75a898710cc7bc321dfea67c02a7c5887cc95b0a18800fd4e53</digest>
+          <size>22</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
           <key>{{ark}}|1|system/mrt-membership.txt</key>

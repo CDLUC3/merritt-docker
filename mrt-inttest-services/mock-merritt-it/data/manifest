@@ -3,9 +3,9 @@
   <object id="{{ark}}">
     <current>1</current>
     <fileCount>7</fileCount>
-    <totalSize>2336</totalSize>
+    <totalSize>2333</totalSize>
     <actualCount>7</actualCount>
-    <actualSize>2336</actualSize>
+    <actualSize>2333</actualSize>
     <versionCount>1</versionCount>
     <lastAddVersion>2022-07-21T23:20:20+00:00</lastAddVersion>
   </object>
@@ -22,8 +22,8 @@
         </file>
         <file id="system/mrt-owner.txt">
           <digestType>SHA-256</digestType>
-          <digest>2f79330df790a7ff3b8cfe580cea1f12d12b316da50679d3f08899ca3dd4f1c9</digest>
-          <size>20</size>
+          <digest>1a00b96724193d940c3823c981bd95dce7b5785d468d79971fc188555c35e4f0</digest>
+          <size>16</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
           <key>{{ark}}|1|system/mrt-owner.txt</key>
@@ -54,8 +54,8 @@
         </file>
         <file id="system/mrt-membership.txt">
           <digestType>SHA-256</digestType>
-          <digest>165bcdd5e9202ae2fb872ba6609caf95adcc68a60b39c7d2899bd337014501c8</digest>
-          <size>21</size>
+          <digest>be4528f2066fb75a898710cc7bc321dfea67c02a7c5887cc95b0a18800fd4e53</digest>
+          <size>22</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>text/plain</mimeType>
           <key>{{ark}}|1|system/mrt-membership.txt</key>

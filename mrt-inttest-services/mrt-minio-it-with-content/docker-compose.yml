@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  minio-server:
+    container_name: minio-server
+    image: ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+    - published: 9000
+      target: 9000
+    - published: 8098
+      target: 9001

@@ -4,6 +4,10 @@ This application is a Sinatra app that mocks the behaviors of Merritt microservi
 
 This application is also used to manufacture test data (from templates) for integration tests.
 
+- app.rb - Sinatra app to mock Merritt services
+- generate.rb - Generates test data for use by audit and replic integration services
+- create_audit_replic_data.sh - Generates a mysql dump used by audit and replic integration services
+
 ## Accessing the documentation from the Mock Merritt Service:
 
 External Access

@@ -18,7 +18,7 @@
           <size>525</size>
           <creationDate>2017-10-03T22:29:19+00:00</creationDate>
           <mimeType>application/xml</mimeType>
-          <key>{{ark}}|1|system/mrt-dc.xml</key>
+          <key>{{ark}}|1|producer/mrt-dc.xml</key>
         </file>
         <file id="system/mrt-owner.txt">
           <digestType>SHA-256</digestType>

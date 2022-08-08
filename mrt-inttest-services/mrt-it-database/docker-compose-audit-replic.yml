@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  db-container:
+    container_name: mrt-it-database
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-it-database-audit-replic:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        LOAD_SQL: /tmp/audit_replic_data.sql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'inv'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root-password'

@@ -10,4 +10,9 @@ for ark in ['2222', '3333', '4444'] do
     f.write(manifest) 
     f.close
   end
+  %x[ mkdir -p "/data/generated/ark:/7777/7777/1/producer" ]
+  %x[ echo "hello" > "/data/generated/ark:/7777/7777/1/producer/untracked_file_with_ark" ]
+  %x[ mkdir -p "/data/generated/folder" ]
+  %x[ echo "hello" > "/data/generated/folder/untracked_file_without_ark" ]
+
 end

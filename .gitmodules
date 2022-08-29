@@ -13,8 +13,7 @@
 [submodule "mrt-services/store/mrt-store"]
 	path = mrt-services/store/mrt-store
 	url = git@github.com:cdluc3/mrt-store
-	branch = java-refactor
-	#branch = master
+	branch = main
 [submodule "mrt-services/inventory/mrt-inventory"]
 	path = mrt-services/inventory/mrt-inventory
 	url = git@github.com:CDLUC3/mrt-inventory
@@ -22,11 +21,11 @@
 [submodule "mrt-services/oai/mrt-oai"]
 	path = mrt-services/oai/mrt-oai
 	url = git@github.com:cdluc3/mrt-oai
-	branch = master
+	branch = main
 [submodule "mrt-services/sword/mrt-sword"]
 	path = mrt-services/sword/mrt-sword
 	url = git@github.com:cdluc3/mrt-sword
-	branch = master
+	branch = main
 [submodule "mrt-services/dryad/dryad-app"]
 	path = mrt-services/dryad/dryad-app
 	url = git@github.com:CDL-Dryad/dryad-app
@@ -38,8 +37,7 @@
 [submodule "mrt-services/replic/mrt-replic"]
 	path = mrt-services/replic/mrt-replic
 	url = git@github.com:cdluc3/mrt-replic
-	branch = java-refactor
-	#branch = master
+	branch = main
 [submodule "mrt-services/mrt-admin-lambda"]
 	path = mrt-services/mrt-admin-lambda
 	url = git@github.com:CDLUC3/mrt-admin-lambda

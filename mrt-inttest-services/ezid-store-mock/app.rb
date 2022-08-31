@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/base'
+require 'json'
 
 set :bind, '0.0.0.0'
 
@@ -22,6 +23,15 @@ get '/shoulder/*' do
   ark = fake_ark(shoulder)
   status 200
   "success: #{ark}"
+end
+
+get '/hostname' do
+  content_type 'application/json'
+  {
+    "hostname": "it-server",
+    "canonicalHostname": "it-server",
+    "hostAddress": "na"
+  }.to_json  
 end
 
 get '/*' do

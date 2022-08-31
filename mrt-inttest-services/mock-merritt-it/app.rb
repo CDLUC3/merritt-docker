@@ -73,6 +73,16 @@ def get_fname(val)
   nil
 end
 
+# delete ingest queue directory
+delete '/ingest-queue' do
+  fname = "/tdr/ingest/queue"
+  puts %x{ find #{fname} }
+  %x{ rm -rf #{fname} }
+  %x{ mkdir #{fname} }
+  puts 'test2'
+  puts %x{ find #{fname} }
+end
+
 # mock data creation
 
 get '/storage-input/*' do
@@ -116,6 +126,15 @@ end
 get '/store/state/8888' do
   send_file "/data/8888.anvl" if params[:t] == "anvl"
   "Specify ?t=anvl to download the file"
+end
+
+get '/hostname' do
+  content_type 'application/json'
+  {
+    "hostname": "mock-merritt-it",
+    "canonicalHostname": "mock-merritt-it",
+    "hostAddress": "na"
+  }.to_json  
 end
 
 post '/add/*' do

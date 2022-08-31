@@ -28,8 +28,8 @@ end
 get '/hostname' do
   content_type 'application/json'
   {
-    "hostname": "it-server",
-    "canonicalHostname": "it-server",
+    "hostname": "localhost",
+    "canonicalHostname": "localhost",
     "hostAddress": "na"
   }.to_json  
 end

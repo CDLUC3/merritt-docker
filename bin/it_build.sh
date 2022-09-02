@@ -21,22 +21,30 @@ aws ecr get-login-password --region us-west-2 | \
     --password-stdin ${ECR_REGISTRY} || exit 1
 
 echo
-echo "Building ezid-store-mock"
-echo "Running docker build --pull -t ${ECR_REGISTRY}/mrt-ezid-store-mock:dev ezid-store-mock"
-sleep 2
-docker build --pull --force-rm -t ${ECR_REGISTRY}/mrt-ezid-store-mock:dev ezid-store-mock || exit 1
-docker push ${ECR_REGISTRY}/mrt-ezid-store-mock:dev || exit 1
+echo "Building mock-merritt-it"
+docker-compose -f mock-merritt-it/docker-compose.yml build --pull
+docker-compose -f mock-merritt-it/docker-compose.yml push
+
+echo
+echo "Building mrt-it-database"
+docker-compose -f mrt-it-database/docker-compose.yml build --pull
+docker-compose -f mrt-it-database/docker-compose.yml push
+
+echo "Building mrt-it-database-audit-replic"
+docker-compose -f mrt-it-database/docker-compose-audit-replic.yml build --pull
+docker-compose -f mrt-it-database/docker-compose-audit-replic.yml push
 
 echo
 echo "Building mrt-minio-it"
-echo "Running docker build --pull -t ${ECR_REGISTRY}/mrt-minio-it:dev mrt-minio-it"
-sleep 2
-docker build --pull --force-rm -t ${ECR_REGISTRY}/mrt-minio-it:dev mrt-minio-it || exit 1
-docker push ${ECR_REGISTRY}/mrt-minio-it:dev || exit 1
+docker-compose -f mrt-minio-it/docker-compose.yml build --pull
+docker-compose -f mrt-minio-it/docker-compose.yml push
 
 echo
 echo "Building mrt-minio-with-content-it"
-echo "Running docker build --pull -t ${ECR_REGISTRY}/mrt-minio-with-content-it:dev mrt-minio-with-content-it"
-sleep 2
-docker build --pull --force-rm -t ${ECR_REGISTRY}/mrt-minio-with-content-it:dev mrt-minio-with-content-it || exit 1
-docker push ${ECR_REGISTRY}/mrt-minio-with-content-it:dev || exit 1
+docker-compose -f mrt-minio-it-with-content/docker-compose.yml build --pull
+docker-compose -f mrt-minio-it-with-content/docker-compose.yml push
+
+echo
+echo "Building pm-server"
+docker-compose -f pm-server/docker-compose.yml build --pull
+docker-compose -f pm-server/docker-compose.yml push

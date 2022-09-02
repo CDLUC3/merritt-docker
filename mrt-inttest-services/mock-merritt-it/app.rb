@@ -137,7 +137,12 @@ get '/hostname' do
   }.to_json  
 end
 
-post '/add/*' do
+post '/add/*/*' do
+  node = params['splat'][0]
+  ark = params['splat'][1]
+  if ark == 'ark/9999/2222'
+    sleep 20
+  end
   status 200
   "<entity>foo</entity>"
 end

@@ -16,9 +16,9 @@ Where possible, DEV stack images will be re-used.  When a specialized version of
 | ------ | ----- | ---------- | ----- | ----------- |
 | In use | pm-server | ruby | S3 bucket with PM data | Sinatra app to make PM data in S3 web-accessible for ingest|
 | In use | mock-merritt-it | ruby | mock ingest input | Sinatra app |
-| | | mock storage data | - Generates test data for integrtion tests |
-| | | mock node definitions | - Mocks responses from Merritt services |
-| | | | - Mocks responses from UC services (ezid) |
+| | | | mock storage data | - Generates test data for integrtion tests |
+| | | | mock node definitions | - Mocks responses from Merritt services |
+| | | | | - Mocks responses from UC services (ezid) |
 | In use | mrt-it-database | mysql | schema | Empty Merritt database with schema only |
 | In use| mrt-minio-it | minio | | Empty S3 compatible cloud storage with test buckets for nodes 7777 and 8888 |
 | In use | mrt-it-database-audit-replic | mrt-it-database | Mock storage data | Merritt database populated with integration test data using mrt-inventory library calls |

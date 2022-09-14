@@ -30,6 +30,13 @@ def get_status
   }.to_json
 end
 
+def status_404
+  status 404
+  {
+    processing: processing
+  }.to_json
+end
+
 get '/status' do
   get_status
 end
@@ -52,6 +59,7 @@ get '' do
 end
 
 def get_file(fname)
+  return status_404 unless processing
   if File.exist?(fname)
     if fname =~ %r[\.xml$]
       content_type 'application/xml'
@@ -83,6 +91,7 @@ def get_system(params)
 end
 
 get '/static/*' do
+  return status_404 unless processing
   fn = params['splat'][0]
   fname = get_fname(fn)
   if fname.nil?
@@ -122,6 +131,7 @@ end
 # Mock Storage
 
 get '/storage/manifest/*/*' do
+  return get_status unless processing
   node = params['splat'][0]
   ark = params['splat'][1]
   content_type 'application/xml'

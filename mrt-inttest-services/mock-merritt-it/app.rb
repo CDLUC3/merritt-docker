@@ -24,21 +24,27 @@ def processing
   true
 end
 
-get '/status' do
+def get_status
   {
     processing: processing
   }.to_json
 end
 
+get '/status' do
+  get_status
+end
+
 post '/status/start' do
   hold_file = File.new("/tmp/mock.hold", "w")
   File.delete(hold_file) if File.exist?(hold_file)
+  get_status
 end
 
 post '/status/stop' do
   hold_file = File.new("/tmp/mock.hold", "w")
   hold_file.puts("")
   hold_file.close
+  get_status
 end
 
 get '' do

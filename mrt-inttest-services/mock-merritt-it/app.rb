@@ -19,6 +19,28 @@ get '/' do
   readme
 end
 
+def processing
+  return false if File.exist?("/tmp/mock.hold")
+  true
+end
+
+get '/status' do
+  {
+    processing: processing
+  }.to_json
+end
+
+post '/status/start' do
+  hold_file = File.new("/tmp/mock.hold", "w")
+  File.delete(hold_file) if File.exist?(hold_file)
+end
+
+post '/status/stop' do
+  hold_file = File.new("/tmp/mock.hold", "w")
+  hold_file.puts("")
+  hold_file.close
+end
+
 get '' do
   readme
 end

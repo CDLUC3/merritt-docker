@@ -46,8 +46,13 @@ table {
 | implemented | GET    | [/storage/content/NODE/ark:/YYYY/ZZZZ/VER/producer/PATH](/storage/content/7777/ark%3A%2F1111%2F2222/1/producer/hello.txt) | inv-it | [data/producer/hello.txt](https://github.com/CDLUC3/merritt-docker/blob/main/mrt-inttest-services/mock-merritt-it/data/producer/hello.txt) | Retrieve sample producer file |
 | implemented | GET    | [/store/content/NODE/ark:/YYYY/ZZZZ/VER/producer/PATH](/store/content/7777/ark%3A%2F1111%2F2222/1/producer/hello.txt) | ??? |  ^^ | ^^ |
 | implemented | GET    | [/storage-input/producer/PATH](/storage-input/producer/hello.txt) | store-it | ^^ | ^^ |
-| TBD | GET    | /id/*ark* | ??? | | Mock ezid retrieval |
-| TBD | GET    | /shoulder/*shoulder* | ??? | | Mock ezid shoulder retrieval |
-| TBD | POST   | /id/*ark* | ingest-it | | Mock data update for ark |
-| TBD | POST   | /shoulder/*shoulder* | ingest-it | | Mock ark creation for a given shoulder |
-| TBD | POST   | /add/* | ingest-it | | Mock storage add|
+| implemented | POST   | /id/*ark* | ingest-it | | Mock data update for ark |
+| implemented | POST   | /shoulder/*shoulder* | ingest-it | | Mock ark creation for a given shoulder |
+| implemented | POST   | /add/*/* | ingest-it | | Mock storage add|
+| implemented | POST   | /update/* | ingest-it | | Mock storage update|
+| implemented | POST   | /status/start | ingest-it | | Resume serving data|
+| implemented | POST   | /status/stop  | ingest-it | | Temporarily stop serving data|
+| implemented | GET    | /status  | ingest-it | | Check if service is serving data|
+| implemented | GET    | /hostname  | ingest-it | | Ask mock storage service for its hostname|
+| implemented | GET    | /inventory/* | ingest-it | | Mock inventory call|
+| implemented | POST   | /inventory/* | ingest-it | | Mock inventory call|

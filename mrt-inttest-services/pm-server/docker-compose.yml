@@ -3,6 +3,11 @@ services:
   pm-server:
     container_name: pm-server
     image: ${ECR_REGISTRY}/pm-server:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
     ports:
     - published: 8097
       target: 4567

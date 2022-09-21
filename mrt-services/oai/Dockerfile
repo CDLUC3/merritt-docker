@@ -10,12 +10,6 @@ ARG ECR_REGISTRY=ecr_registry_not_set
 
 FROM ${ECR_REGISTRY}/mrt-inventory-src:dev as build
 
-RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=com.lyncode -DartifactId=xoai-data-provider -Dversion=4.1.1-SNAPSHOT \
-  -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/ 
-
-RUN mvn dependency:get -Dmaven.legacyLocalRepo=true -DgroupId=com.lyncode -DartifactId=xoai-common -Dversion=4.1.1-SNAPSHOT \
-  -Dpackaging=jar -DrepoUrl=https://mvn.cdlib.org/content/repositories/cdl-snapshots/ 
-
 WORKDIR /build/mrt-oai
 
 ADD mrt-oai /build/mrt-oai

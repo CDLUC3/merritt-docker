@@ -91,7 +91,7 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-zookeeper:dev
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-zoo:dev
     build:
       context: zoo
       dockerfile: Dockerfile

@@ -13,6 +13,7 @@ phases:
       - export AWS_ACCOUNT_ID=`aws sts get-caller-identity| jq -r .Account`
       - echo AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - export ECR_REGISTRY=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
   build:
     commands:
       - docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml build --pull     

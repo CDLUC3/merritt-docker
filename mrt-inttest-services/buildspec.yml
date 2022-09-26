@@ -12,6 +12,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...  
-      - docker-compose -v        
+      - docker-compose -f docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml build --pull     
+      - docker-compose -f docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml push     
       # - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
       # - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG   

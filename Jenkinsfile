@@ -4,8 +4,8 @@
 // See https://github.com/CDLUC3/mrt-jenkins/blob/main/src/org/cdlib/mrt/build/BuildFunctions.groovy
 
 pipeline {
-    environment {      
-    }
+    //environment {      
+    //}
     agent any
 
     tools {

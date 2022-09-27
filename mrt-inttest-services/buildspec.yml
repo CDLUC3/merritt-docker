@@ -4,6 +4,8 @@ version: 0.2
 # - Create CodeBuild project
 #   - Provide minimal github credentials to access public repo
 # - Grant CodeBuild project ECR List/Read/Write/Tag access to repos
+# - Create ECR repos for each image
+#   - Set lifecycle policy to "expire | imageCountMoreThan (1) | untagged" for each repo
 
 phases:
   pre_build:

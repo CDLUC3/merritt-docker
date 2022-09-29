@@ -23,7 +23,7 @@ RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-auditwarpub/1.0-SNAPSHOT/mrt-a
 
 FROM tomcat:8-jre8
 
-RUN apt-get update
+RUN apt-get update -y
 
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-auditwarpub/1.0-SNAPSHOT/mrt-auditwarpub-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/audit.war
 

@@ -6,7 +6,7 @@
 #   docker build -t cdluc3/mrt-dashboard .
 
 FROM ruby:2.6.6
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+RUN apt-get update -y -qq && apt-get install -y build-essential libpq-dev nodejs
 
 # Adding gems
 COPY Gemfile Gemfile

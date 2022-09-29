@@ -22,7 +22,7 @@ RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt-invwar
 
 FROM tomcat:8-jre8
 
-RUN apt-get update
+RUN apt-get update -y
 
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt-invwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/inventory.war
 

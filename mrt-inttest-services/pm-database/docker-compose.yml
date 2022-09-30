@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  db-container:
+    container_name: pm-database
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'pm'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root-password'
+    volumes:
+      - "/apps/dpr2/merritt-workspace/palmu/mod.sql:/tmp/mod.sql"

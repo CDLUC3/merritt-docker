@@ -12,6 +12,7 @@ Perhaps a data export could be provided.  It is unclear if this was the source f
 cat daily_da_ca_2022-07-26_03h32m_Tuesday.sql | egrep "^.{0,100}$" > schema.sql
 grep -n "CREATE TABLE" *
 egrep "CREATE TABLE|varchar|text" schema.sql |less
+sed -n 13178,13343p daily_da_ca_2022-07-26_03h32m_Tuesday.sql > obj.sql
 ```
 
 

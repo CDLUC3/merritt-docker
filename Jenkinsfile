@@ -63,7 +63,6 @@ pipeline {
             steps {
                 dir('mrt-services') {
                   script {
-                        sh("docker-compose build --pull")
                         sh("docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-core2:dev dep_core")
                         if (env.ECRPUSH == 'true') {
                             sh("docker push ${ECR_REGISTRY}/mrt-core2:dev")
@@ -72,5 +71,19 @@ pipeline {
                 }
             }
         }
+        /*
+        stage('Build Services') {
+            steps {
+                dir('mrt-services') {
+                  script {
+                        sh("docker-compose build --pull")
+                        if (env.ECRPUSH == 'true') {
+                            sh("docker-compose push")
+                        }
+                  }
+                }
+            }
+        }
+        */
     }
 }

@@ -28,7 +28,7 @@ pipeline {
         stage('Submodules Init') {
             steps {
                 script {
-                    sh("sed -e ""s%git@github.com:%https://github.com/%"" -i .gitmodules")
+                    sh("sed -e \"s%git@github.com:%https://github.com/%\" -i .gitmodules")
                     sh("cat .gitmodules")
                     sh("git submodule init")
                     sh("git submodule update --remote")

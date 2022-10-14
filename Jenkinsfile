@@ -36,10 +36,10 @@ pipeline {
         }
         stage('Build End To End Test Images') {
             steps {
-                dir('mrt-inttest-services') {
+                dir('mrt-integ-test') {
                   script {
-                        sh("docker-compose -f mrt-integ-test/docker-compose.yml build --pull")
-                        //sh("docker-compose -f mrt-integ-test/docker-compose.yml push")
+                        sh("docker-compose build --pull")
+                        //sh("docker-compose docker-compose.yml push")
                   }
                 }
             }

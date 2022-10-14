@@ -4,8 +4,9 @@
 // See https://github.com/CDLUC3/mrt-jenkins/blob/main/src/org/cdlib/mrt/build/BuildFunctions.groovy
 
 pipeline {
-    //environment {      
-    //}
+    environment {
+        ECRPUSH = 0
+    }
     agent any
 
     tools {
@@ -39,7 +40,9 @@ pipeline {
                 dir('mrt-inttest-services') {
                   script {
                         sh("docker-compose -f mock-merritt-it/docker-compose.yml build --pull")
-                        //sh("docker-compose -f mock-merritt-it/docker-compose.yml push")
+                        if env.ECRPUSH {
+                            sh("docker-compose -f mock-merritt-it/docker-compose.yml push")
+                        }
                   }
                 }
             }
@@ -49,7 +52,22 @@ pipeline {
                 dir('mrt-integ-tests') {
                   script {
                         sh("docker-compose build --pull")
-                        //sh("docker-compose docker-compose.yml push")
+                        if env.ECRPUSH {
+                            sh("docker-compose docker-compose.yml push")
+                        }
+                  }
+                }
+            }
+        }
+        stage('Build Library Images') {
+            steps {
+                dir('mrt-services') {
+                  script {
+                        sh("docker-compose build --pull")
+                        sh("docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-core2:dev dep_core")
+                        if env.ECRPUSH {
+                            sh("docker push ${ECR_REGISTRY}/mrt-core2:dev")
+                        }
                   }
                 }
             }

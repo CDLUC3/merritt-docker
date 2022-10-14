@@ -24,12 +24,22 @@ pipeline {
                 }
             }
         }
-        stage('Build Int test') {
+        stage('Build Java Integ Test Images') {
             steps {
                 dir('mrt-inttest-services') {
                   script {
                         sh("docker-compose -f mock-merritt-it/docker-compose.yml build --pull")
-                        sh("docker-compose -f mock-merritt-it/docker-compose.yml push")
+                        //sh("docker-compose -f mock-merritt-it/docker-compose.yml push")
+                  }
+                }
+            }
+        }
+        stage('Build End To End Test Images') {
+            steps {
+                dir('mrt-inttest-services') {
+                  script {
+                        sh("docker-compose -f mrt-integ-test/docker-compose.yml build --pull")
+                        //sh("docker-compose -f mrt-integ-test/docker-compose.yml push")
                   }
                 }
             }

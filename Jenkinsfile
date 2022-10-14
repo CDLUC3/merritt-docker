@@ -5,7 +5,7 @@
 
 pipeline {
     environment {
-        ECRPUSH = 0
+        ECRPUSH = false
     }
     agent any
 
@@ -40,7 +40,7 @@ pipeline {
                 dir('mrt-inttest-services') {
                   script {
                         sh("docker-compose -f mock-merritt-it/docker-compose.yml build --pull")
-                        if env.ECRPUSH {
+                        if (env.ECRPUSH) {
                             sh("docker-compose -f mock-merritt-it/docker-compose.yml push")
                         }
                   }
@@ -52,7 +52,7 @@ pipeline {
                 dir('mrt-integ-tests') {
                   script {
                         sh("docker-compose build --pull")
-                        if env.ECRPUSH {
+                        if (env.ECRPUSH) {
                             sh("docker-compose docker-compose.yml push")
                         }
                   }
@@ -65,7 +65,7 @@ pipeline {
                   script {
                         sh("docker-compose build --pull")
                         sh("docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-core2:dev dep_core")
-                        if env.ECRPUSH {
+                        if (env.ECRPUSH) {
                             sh("docker push ${ECR_REGISTRY}/mrt-core2:dev")
                         }
                   }

@@ -25,6 +25,15 @@ pipeline {
                 }
             }
         }
+        stage('Submodules Init') {
+            steps {
+                script {
+                    sh("sed -e 's/git@github.com:/https:\/\/github.com\//' -i .gitmodules")
+                    sh("git submodule init")
+                    sh("git submodule update --remote")
+                }
+            }
+        }
         stage('Build Java Integ Test Images') {
             steps {
                 dir('mrt-inttest-services') {

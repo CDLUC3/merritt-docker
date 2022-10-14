@@ -88,7 +88,7 @@ pipeline {
                             sh("docker push ${ECR_REGISTRY}/mrt-cloud:dev")
                         }
 
-                        sh("docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory-src:dev inventory")
+                        sh("docker build --pull -f inventory/Dockerfile-jar --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory-src:dev inventory")
                         if (env.ECRPUSH == 'true') {
                             sh("docker push ${ECR_REGISTRY}/mrt-inventory-src:dev")
                         }

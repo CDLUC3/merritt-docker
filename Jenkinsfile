@@ -91,8 +91,7 @@ pipeline {
                 }
             }
         }
-        /*
-        stage('Build Services') {
+         stage('Build Services Stack') {
             steps {
                 dir('mrt-services') {
                   script {
@@ -104,6 +103,5 @@ pipeline {
                 }
             }
         }
-        */
     }
 }

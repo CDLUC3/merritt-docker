@@ -5,7 +5,7 @@
 
 pipeline {
     environment {
-        ECRPUSH = false
+        ECRPUSH = true
     }
     agent any
 

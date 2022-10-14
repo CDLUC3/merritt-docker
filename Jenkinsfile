@@ -67,6 +67,26 @@ pipeline {
                         if (env.ECRPUSH == 'true') {
                             sh("docker push ${ECR_REGISTRY}/mrt-core2:dev")
                         }
+
+                        sh("docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/cdl-zk-queue:dev dep_cdlzk")
+                        if (env.ECRPUSH == 'true') {
+                            sh("docker push ${ECR_REGISTRY}/cdl-zk-queue:dev")
+                        }
+
+                        sh("docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-zoo:dev dep_zoo")
+                        if (env.ECRPUSH == 'true') {
+                            sh("docker push ${ECR_REGISTRY}/mrt-zoo:dev")
+                        }
+
+                        sh("docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-cloud:dev dep_cloud")
+                        if (env.ECRPUSH == 'true') {
+                            sh("docker push ${ECR_REGISTRY}/mrt-cloud:dev")
+                        }
+
+                        sh("docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-inventory-src:dev inventory")
+                        if (env.ECRPUSH == 'true') {
+                            sh("docker push ${ECR_REGISTRY}/mrt-inventory-src:dev")
+                        }
                   }
                 }
             }

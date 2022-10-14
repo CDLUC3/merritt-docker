@@ -53,7 +53,7 @@ pipeline {
                   script {
                         sh("docker-compose build --pull")
                         if (env.ECRPUSH == 'true') {
-                            sh("docker-compose push mrt-integ-tests")
+                            sh("docker push ${ECR_REGISTRY}/mrt-integ-tests")
                         }
                   }
                 }

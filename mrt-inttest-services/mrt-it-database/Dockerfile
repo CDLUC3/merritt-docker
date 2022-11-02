@@ -6,7 +6,7 @@
 # aws ecr create-repository --repository-name mrt-it-database
 # docker push ${ECR_REGISTRY}/mrt-it-database:dev
 
-FROM mysql:5.7
+FROM mysql:8
 
 ARG LOAD_SQL=/dev/null
 

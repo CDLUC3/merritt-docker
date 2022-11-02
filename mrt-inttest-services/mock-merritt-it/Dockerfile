@@ -20,8 +20,8 @@ COPY *.sh ./
 COPY data /data
 COPY *.md /data
 COPY static /data/static
-COPY --from=mysql:5.7 /usr/bin/mysql /usr/bin/mysql
-COPY --from=mysql:5.7 /usr/bin/mysqldump /usr/bin/mysqldump
+COPY --from=mysql:8 /usr/bin/mysql /usr/bin/mysql
+COPY --from=mysql:8 /usr/bin/mysqldump /usr/bin/mysqldump
 
 RUN ruby generate.rb
 RUN chmod 744 *.sh

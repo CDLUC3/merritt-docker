@@ -9,7 +9,7 @@ FROM ${ECR_REGISTRY}/mrt-zoo:dev as build
 
 FROM zookeeper:3.4
 
-RUN apt-get update
+RUN apt-get update -y
 
 RUN mkdir -p zkServer/tools
 

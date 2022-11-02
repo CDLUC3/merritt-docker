@@ -9,7 +9,7 @@
 # update stash_engine_users set role='superuser' where orcid='0000-0002-5961-0685';
 
 FROM ruby:2.6.6
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+RUN apt-get update -y -qq && apt-get install -y build-essential libpq-dev nodejs
 
 # Set an environment variable where the Rails app is installed to inside of Docker image
 ENV RAILS_ROOT /var/www/app_name

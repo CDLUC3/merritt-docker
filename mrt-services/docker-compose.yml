@@ -91,7 +91,7 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-zoo:dev
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/zoo-with-merritt-tools:dev
     build:
       context: zoo
       dockerfile: Dockerfile
@@ -205,10 +205,7 @@ services:
       merrittnet:
   ezid:
     container_name: ezid
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/ezid_mock
-    build: 
-      context: ezid_mock
-      dockerfile: Dockerfile
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mock-merritt-it:dev
     ports:
     - published: 4567
       target: 4567
@@ -323,7 +320,7 @@ services:
     tty: true
   callback:
     container_name: callback
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/callback
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-callback
     build:
       context: callback
       dockerfile: Dockerfile

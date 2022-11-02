@@ -12,8 +12,8 @@ ARG LOAD_SQL=/dev/null
 
 RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
 
-# RUN apt-get update
-# RUN yum -y update
+# RUN apt-get update -y
+RUN yum -y update
 
 COPY *.sql schema.prd.norm /tmp/
 

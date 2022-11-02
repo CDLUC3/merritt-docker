@@ -1,5 +1,5 @@
 FROM httpd:2.4
-RUN apt-get update -qq && apt-get install -y build-essential curl vim ruby
+RUN apt-get update -y -qq && apt-get install -y build-essential curl vim ruby
 
 COPY mrt.conf /usr/local/apache2/conf/conf.d/mrt.conf
 RUN mkdir /usr/local/apache2/redirect

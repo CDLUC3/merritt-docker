@@ -28,6 +28,10 @@
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/docker-dev.yml  up -d"
         },
         {
+            "label": "EC2 merritt -- DEV DATABASE + UI",
+            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/docker-dev.yml -f mrt-services/ui.yml up -d"
+        },
+        {
             "label": "EC2 merritt -- DEV DATABASE rebuild",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/docker-dev.yml  up -d --build"
         },

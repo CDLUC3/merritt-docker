@@ -7,7 +7,7 @@ services:
   ui:
     volumes:
     # You must install this file with proper credentials
-    - "./ui/mrt-dashboard/app:/var/www/app_name/app"
+    - "${PWD}/mrt-services/ui/mrt-dashboard/app:/var/www/app_name/app"
     #Must supply a master.key if overriding config
-    #- "./ui/mrt-dashboard/config:/var/www/app_name/config"
-    - "./ui/mrt-dashboard/public/assets:/var/www/app_name/public/assets"
+    #- "${PWD}/mrt-services/ui/mrt-dashboard/config:/var/www/app_name/config"
+    - "${PWD}/mrt-services/ui/mrt-dashboard/public/assets:/var/www/app_name/public/assets"

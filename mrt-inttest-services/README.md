@@ -32,11 +32,11 @@ Where possible, DEV stack images will be re-used.  When a specialized version of
 | | | mock-merritt-it | |
 | | | mrt-minio-it | |
 | | | zoo | |
-| in progress  | mrt-ingest | tomcat | Integration tests call service running in a tomcat container | 
+| done  | mrt-ingest | tomcat | Integration tests call service running in a tomcat container | 
 | | | mock-merritt-it | |
 | | | zoo | |
 | | | smtp | |
-| in progress  | mrt-inventory | tomcat | Integration tests call service running in a tomcat container | 
+| done | mrt-inventory | tomcat | Integration tests call service running in a tomcat container | 
 | | | mock-merritt-it | |
 | | | mrt-it-database |  |
 | | | zoo | |

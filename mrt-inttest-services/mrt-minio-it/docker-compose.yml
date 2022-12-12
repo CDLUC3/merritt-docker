@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+        ECR_REGISTRY: ${ECR_REGISTRY}
     ports:
     - published: 9000
       target: 9000

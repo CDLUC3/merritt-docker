@@ -2,7 +2,7 @@ version: '3.3'
 services:
   db-container:
     container_name: mrt-it-database
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-it-database:dev
+    image: ${ECR_REGISTRY}/mrt-it-database:dev
     build:
       context: .
       dockerfile: Dockerfile

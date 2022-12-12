@@ -1,0 +1,75 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.9'
+services:
+  ingest:
+    image: local/mrt-ingest:dev
+    build:
+      args:
+        ECR_REGISTRY: local
+  store:
+    image: local/mrt-store:dev
+    build:
+      args:
+        ECR_REGISTRY: local
+    environment:
+      MRT_DOCKER_HOST: localhost
+      MRT_MINIO_HOST: localhost
+  inventory:
+    image: local/mrt-inventory:dev
+    build:
+      args:
+        ECR_REGISTRY: local
+  zoo:
+    image: local/zoo-with-merritt-tools:dev
+    build:
+      args:
+        ECR_REGISTRY: local
+  ui:
+    image: local/mrt-dashboard
+    networks:
+      merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - localhost
+    environment:
+      MRT_DOCKER_HOST: localhost
+  db-container:
+    image: local/mrt-database
+  ldap:
+    image: local/mrt-opendj
+  minio:
+    networks:
+      merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - localhost
+  ezid:
+    image: local/mock-merritt-it:dev
+  merritt-init:
+    image: local/mrt-init
+  lambda-container:
+    # The Merritt Admin Tool needs only the database to run. It does not need this stack to run.
+    # The Merritt Collection Admin Tool can be tested from this application stack.
+    image: local/uc3-mrt-colladmin-lambda:dev
+    build:
+      args:
+        ECR_REGISTRY: local
+    environment:
+      COLLADMIN_ALB_URL: http://localhost:8091
+  alb-simulate:
+    image: local/simulate-lambda-alb
+  replic:
+    image: local/mrt-replic:dev
+    build:
+      args:
+        ECR_REGISTRY: local
+  audit:
+    image: local/mrt-audit:dev
+    build:
+      args:
+        ECR_REGISTRY: local
+  callback:
+    image: local/mrt-callback

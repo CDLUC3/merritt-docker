@@ -173,4 +173,5 @@
         },
     ],
     "liveServer.settings.port": 8099,
+    "java.compile.nullAnalysis.mode": "automatic",
 }

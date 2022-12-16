@@ -20,11 +20,11 @@
             "template": "docker-compose -f mrt-services/mysql-rspec.yml up -d"
         },
         {
-            "label": "local",
+            "label": "local merritt",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml up -d"
         },
         {
-            "label": "local build",
+            "label": "local merritt -- rebuild",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml up -d --build"
         },
         {

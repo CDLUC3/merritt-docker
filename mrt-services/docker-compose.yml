@@ -168,7 +168,7 @@ services:
     tty: true
   smtp:
     container_name: smtp 
-    image: namshi/smtp
+    image: ghusta/fakesmtp
     networks:
       merrittnet:
     restart: unless-stopped

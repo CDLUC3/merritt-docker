@@ -15,8 +15,13 @@ services:
       args:
         ECR_REGISTRY: it-docker-registry
     environment:
-      MRT_DOCKER_HOST: localhost
+      MRT_DOCKER_HOST: my-minio-localhost-alias
       MRT_MINIO_HOST: localhost
+    networks:
+      merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - localhost
   inventory:
     image: it-docker-registry/mrt-inventory:dev
     build:

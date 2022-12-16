@@ -7,7 +7,7 @@ ARG ECR_REGISTRY=ecr_registry_not_set
 
 FROM ${ECR_REGISTRY}/mrt-zoo:dev as build
 
-FROM zookeeper:3.4
+FROM zookeeper
 
 RUN apt-get update -y
 

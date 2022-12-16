@@ -35,7 +35,7 @@ COPY mrt-dashboard .
 RUN EDITOR=nano rails credentials:edit
 
 ENV SSM_SKIP_RESOLUTION=Y
-RUN bundle exec rake assets:precompile && \
+RUN bundle exec rails assets:precompile && \
     bundle exec rails dev:cache
     
 EXPOSE 3000 8086 1234

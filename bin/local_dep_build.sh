@@ -9,7 +9,7 @@ SCRIPT_HOME=$(dirname $0)
 REPOS_DIR="$SCRIPT_HOME/../mrt-services"
 cd $REPOS_DIR
 
-export ECR_REGISTRY=local
+export ECR_REGISTRY=it-docker-registry
 
 echo
 echo "Building dep_cdlmvn"

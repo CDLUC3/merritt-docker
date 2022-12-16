@@ -5,30 +5,30 @@
 version: '3.9'
 services:
   ingest:
-    image: local/mrt-ingest:dev
+    image: it-docker-registry/mrt-ingest:dev
     build:
       args:
-        ECR_REGISTRY: local
+        ECR_REGISTRY: it-docker-registry
   store:
-    image: local/mrt-store:dev
+    image: it-docker-registry/mrt-store:dev
     build:
       args:
-        ECR_REGISTRY: local
+        ECR_REGISTRY: it-docker-registry
     environment:
       MRT_DOCKER_HOST: localhost
       MRT_MINIO_HOST: localhost
   inventory:
-    image: local/mrt-inventory:dev
+    image: it-docker-registry/mrt-inventory:dev
     build:
       args:
-        ECR_REGISTRY: local
+        ECR_REGISTRY: it-docker-registry
   zoo:
-    image: local/zoo-with-merritt-tools:dev
+    image: it-docker-registry/zoo-with-merritt-tools:dev
     build:
       args:
-        ECR_REGISTRY: local
+        ECR_REGISTRY: it-docker-registry
   ui:
-    image: local/mrt-dashboard
+    image: it-docker-registry/mrt-dashboard
     networks:
       merrittnet:
         aliases:
@@ -37,9 +37,9 @@ services:
     environment:
       MRT_DOCKER_HOST: localhost
   db-container:
-    image: local/mrt-database
+    image: it-docker-registry/mrt-database
   ldap:
-    image: local/mrt-opendj
+    image: it-docker-registry/mrt-opendj
   minio:
     networks:
       merrittnet:
@@ -47,29 +47,31 @@ services:
         - my-minio-localhost-alias
         - localhost
   ezid:
-    image: local/mock-merritt-it:dev
+    image: it-docker-registry/mock-merritt-it:dev
   merritt-init:
-    image: local/mrt-init
+    image: it-docker-registry/mrt-init
   lambda-container:
     # The Merritt Admin Tool needs only the database to run. It does not need this stack to run.
     # The Merritt Collection Admin Tool can be tested from this application stack.
-    image: local/uc3-mrt-colladmin-lambda:dev
+    image: it-docker-registry/uc3-mrt-colladmin-lambda:dev
     build:
+      context: scratch
+      dockerfile: Dockerfile
       args:
-        ECR_REGISTRY: local
+        ECR_REGISTRY: it-docker-registry
     environment:
       COLLADMIN_ALB_URL: http://localhost:8091
   alb-simulate:
-    image: local/simulate-lambda-alb
+    image: it-docker-registry/simulate-lambda-alb
   replic:
-    image: local/mrt-replic:dev
+    image: it-docker-registry/mrt-replic:dev
     build:
       args:
-        ECR_REGISTRY: local
+        ECR_REGISTRY: it-docker-registry
   audit:
-    image: local/mrt-audit:dev
+    image: it-docker-registry/mrt-audit:dev
     build:
       args:
-        ECR_REGISTRY: local
+        ECR_REGISTRY: it-docker-registry
   callback:
-    image: local/mrt-callback
+    image: it-docker-registry/mrt-callback

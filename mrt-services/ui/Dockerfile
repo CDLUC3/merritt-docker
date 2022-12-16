@@ -22,14 +22,14 @@ ENV RACK_ENV='docker'
 
 # Adding gems
 COPY mrt-dashboard/Gemfile Gemfile
-COPY mrt-dashboard/Gemfile.lock Gemfile.lock
 
 RUN gem install bundler
-RUN bundle install --jobs 20 --retry 5
+RUN bundle install 
 RUN mkdir pid
 
 # Adding project files
 COPY mrt-dashboard .
+RUN bundle install 
 
 # Build a discardable master.key and credentials.yml.enc file for docker deployment
 RUN EDITOR=nano rails credentials:edit

@@ -16,7 +16,7 @@ services:
         ECR_REGISTRY: it-docker-registry
     environment:
       MRT_DOCKER_HOST: my-minio-localhost-alias
-      MRT_MINIO_HOST: localhost
+      MRT_MINIO_HOST: my-minio-localhost-alias
     networks:
       merrittnet:
         aliases:

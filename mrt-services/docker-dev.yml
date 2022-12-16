@@ -24,11 +24,6 @@ services:
   ingest:
     volumes:
     - ./ingest/profiles-dev/:/tdr/ingest/profiles/
-  lambda-container:
-    environment:
-      SSM_SKIP_RESOLUTION: 
-      SSM_ROOT_PATH: /uc3/mrt/dev/
-      MERRITT_ADMIN_CONFIG: default
   # The following setting will connect to the DEV database
   # But, the contents of the cloud nodes will not be compatible with this stack
   audit:

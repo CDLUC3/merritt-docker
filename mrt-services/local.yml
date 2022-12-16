@@ -55,19 +55,6 @@ services:
     image: it-docker-registry/mock-merritt-it:dev
   merritt-init:
     image: it-docker-registry/mrt-init
-  lambda-container:
-    # The Merritt Admin Tool needs only the database to run. It does not need this stack to run.
-    # The Merritt Collection Admin Tool can be tested from this application stack.
-    image: it-docker-registry/uc3-mrt-colladmin-lambda:dev
-    build:
-      context: scratch
-      dockerfile: Dockerfile
-      args:
-        ECR_REGISTRY: it-docker-registry
-    environment:
-      COLLADMIN_ALB_URL: http://localhost:8091
-  alb-simulate:
-    image: it-docker-registry/simulate-lambda-alb
   replic:
     image: it-docker-registry/mrt-replic:dev
     build:
@@ -78,5 +65,3 @@ services:
     build:
       args:
         ECR_REGISTRY: it-docker-registry
-  callback:
-    image: it-docker-registry/mrt-callback

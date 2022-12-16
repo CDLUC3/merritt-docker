@@ -174,35 +174,29 @@ containers to system resources on the Docker host.
   ports (8080:8099).  If we need more ports, we can ask IAS to expand this set.
 
   **Current Port Usage**
-  - 8080: Multiple
-    - Merritt Stack: Ingest
-    - Integration Test: service-it tomcat port
-  - 8081: Store
-  - 8082: Inventory
-  - 8083: OAI
-  - 8084: Sword
-  - 8085: Dryad Solr
-  - 8086: UI
-  - 8087: Dryad UI
-  - 8088: Minio API
-  - 8089: CDL Reserved, do not use
-  - 8090: Lambda Container, Collection Admin
-  - 8091: ALB Simulator in front of Lambda Container
-  - 8092: Replic
-  - 8093: Audit
-  - 8094: OpenSearch Dashboards
-  - 8095: Minio Web Console
-  - 8096: Mock Merritt Service for Integration Testing
-  - 8097: Pal Museum data ingest service
-  - 8098: Multiple: 
-    - Merritt Stack: Ingest Callback
-    - Integration Test: Minio admin port
-  - 8099: 
-    - Merritt Stack: Apache
-    - Integration Test: service-it debug
-
-
-
+  | Port | Category | Purpose |
+  | ---- | -------- | ------- |
+  | 8080 | Dev Stack| Ingest|
+  | 8080 | IntTest Stack| Integration Test: service-it tomcat port|
+  | 8081 | Dev Stack| Store|
+  | 8082 | Dev Stack| Inventory|
+  | 8083 | Dryad Stack| OAI|
+  | 8084 | Dryad Stack| Sword|
+  | 8085 | Dryad Stack| Dryad Solr|
+  | 8086 | Dev Stack| UI|
+  | 8087 | Dryad Stack| Dryad UI|
+  | 8088 | Dev Stack| Minio API|
+  | 8089 | `***` | CDL Reserved, do not use|
+  | 8090 | Lambda Stack| Lambda Container, Collection Admin|
+  | 8091 | Lambda Stack| ALB Simulator in front of Lambda Container|
+  | 8092 | Dev Stack| Replic|
+  | 8093 | Dev Stack| Audit|
+  | 8094 | OpenSearch Stack| OpenSearch Dashboards|
+  | 8095 | Dev Stack| Minio Web Console|
+  | 8096 | IntTest Stack| Integration Test: Mock Merritt Service|
+  | 8097 | Content Stack| Pal Museum data ingest service|
+  | 8098 | IntTest Stack| Integration Test: Minio admin port|
+  | 8099 | IntTest Stack| Integration Test: service-it debug|
 
 ## Project Internals
 

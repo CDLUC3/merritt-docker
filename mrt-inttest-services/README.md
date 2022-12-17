@@ -6,9 +6,17 @@ Where possible, DEV stack images will be re-used.  When a specialized version of
 
 ## Image Build Script
 
+Server
 ```
-../bin/it_build.sh
+./bin/it_build.sh
 ```
+
+Local desktop
+```
+./bin/local_it_build.sh
+```
+
+
 
 ## Images
 

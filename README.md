@@ -99,9 +99,13 @@ and it provides access to individual containers.
 | Audit            | ${ECR}/mrt-audit                |       |
 | Replic           | ${ECR}/mrt-audit                |       |
 | Merritt Init     | ${ECR}/mrt-init                 | Init inventory services.|
-| Apache           | ${ECR}/mrt-apache               | Simulates character encoding settings in Merritt Apache |
 | Minio            | minio/minio                     | Containerized storage service - for testing presigned functionality |
 | Minio Cmd        | minio/mc                        | Initialized bucket in Minio container |
+
+### Lambda Testing Stack
+
+| Component        | Image Name                      | Notes |
+| -----------      | ----------                      | ----- |
 | ALB Simulator    | ${ECR}/simulate-lambda-alb      | Simulates an ALB running in front of a Lambda for Collection Admin |
 | Collection Admin | ${ECR}/uc3-mrt-colladmin-lambda | Merritt collection admin tool |
 
@@ -271,77 +275,76 @@ See [Working with Git Submodules](docs/working_with_git_submodules.md) for a det
 
 ---
 
-
-
-
-
 ## Running Merritt Docker
 
-### Shell environment vars
+### Cloning Merritt Docker
+
+#### Dev Server Configuration
+- Clone merritt-docker to `/apps/dpr2/merritt-workspace/$USER/`
+  - [Udpate submodules](#git-submodules)
 
 All `docker-compose` commands require you export shell environment vars.  See
 [Elastic Container Registry](#elastic-container-registry) for explanation.  Do
 this by sourcing `bin/docker_environment.sh` into your current shell:
 ```
-merritt-docker> source bin/docker_environment.sh
+source bin/docker_environment.sh
+```
+
+#### Local Desktop Configuration
+- Clone merritt-docker
+  - [Udpate submodules](#git-submodules)
+- The minio container requires a localhost alias in order to serve up presigned urls.
+
+```
+export ECR_REGISTRY=it-docker-registry
+sudo echo '127.0.0.1	my-minio-localhost-alias' >> /etc/hosts
 ```
 
 ### Build Docker Images
 
-#### dependencies
+Dev Server
 ```
-merritt-docker> bin/dep_build.sh
-```
-
-#### Merritt micro-services
-```
-merritt-docker> source bin/docker_environment.sh
-merritt-docker> mrt-services
-mrt-services> docker-compose build --pull
+./bin/dep_build.sh
 ```
 
-#### Merritt-admin Lambdas
+Local Desktop
 ```
-mrt-services> cd mrt-admin-lambda
-mrt-admin-lambda> docker-compose build --pull
-mrt-admin-lambda> docker-compose -f docker-compose.yml -f admintool.yml build --pull
-mrt-admin-lambda> docker-compose -f docker-compose.yml -f colladmin.yml build --pull
+./bin/local_dep_build.sh
 ```
 
+### Docker Stack Configuration Options
+- [Docker Stack Configurations](.vscode/settings.json)
 
-
-### Running docker-compose
-
-Run core merritt services:
+#### Run Core Stack 
+Dev Server
+_Add --build or --pull as needed_
 ```
-merritt-docker> cd mrt-services
-mrt-services> docker-compose build --pull
-mrt-services> docker-compose -p merritt up -d
-mrt-services> docker-compose -p merritt down
+docker-compose -p merritt -f mrt-services/docker-compose.yml up -d
 ```
 
-Rebuild and run after minor changes to an image:
+Local Desktop
+_Add --build or --pull as needed_
 ```
-mrt-services> docker-compose -p merritt up -d --build
-```
-
-Run Merritt with Sword / OAI:
-```
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f sword-oai.yml up -d --build
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f sword-oai.yml down
-
-Run Merritt with Dryad:
-```
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f sword-oai.yml -f dryad.yml up -d --build
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f sword-oai.yml -f dryad.yml down
+docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml up -d
 ```
 
-Run Merritt with OpenSearch (see [Using OpenSearch with Merritt Services](docs/using_opensearch.md):
+#### Run Merritt with OpenSearch (see [Using OpenSearch with Merritt Services](docs/using_opensearch.md):
 ```
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml up -d --build
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml down
+docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/opensearch.yml up -d
 ```
 
+### Maven Builds from merritt-docker
+The merritt-docker repo provides a convenient location to build the entrire Merritt system.  This is also a useful way to prepare code for attaching the VSCode debugger to a running Docker stack.
+
+Dev Server
+```
+./bin/maven_build.sh
+```
+
+Local Desktop
+```
+./bin/local_maven_build.sh
+```
 
 ### Helper docker-compose Files
 

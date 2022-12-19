@@ -99,20 +99,6 @@ docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR
 docker push ${ECR_REGISTRY}/mrt-replic:dev || exit 1
 
 echo
-echo "Building mrt-oai"
-echo "Running docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-oai:dev oai"
-sleep 2
-docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-oai:dev oai || exit 1
-docker push ${ECR_REGISTRY}/mrt-oai:dev || exit 1
-
-echo
-echo "Building mrt-sword"
-echo "Running docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-sword:dev sword"
-sleep 2
-docker build --pull --force-rm --build-arg ECR_REGISTRY=${ECR_REGISTRY} -t ${ECR_REGISTRY}/mrt-sword:dev sword || exit 1
-docker push ${ECR_REGISTRY}/mrt-sword:dev || exit 1
-
-echo
 echo "eh bede bede... That's all folks!"
 echo
 echo

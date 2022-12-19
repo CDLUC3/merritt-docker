@@ -9,6 +9,10 @@ services:
     build:
       args:
         ECR_REGISTRY: it-docker-registry
+
+
+
+
   store:
     image: it-docker-registry/mrt-store:dev
     build:

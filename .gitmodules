@@ -18,18 +18,6 @@
 	path = mrt-services/inventory/mrt-inventory
 	url = git@github.com:CDLUC3/mrt-inventory
 	branch = main
-[submodule "mrt-services/oai/mrt-oai"]
-	path = mrt-services/oai/mrt-oai
-	url = git@github.com:cdluc3/mrt-oai
-	branch = main
-[submodule "mrt-services/sword/mrt-sword"]
-	path = mrt-services/sword/mrt-sword
-	url = git@github.com:cdluc3/mrt-sword
-	branch = main
-[submodule "mrt-services/dryad/dryad-app"]
-	path = mrt-services/dryad/dryad-app
-	url = git@github.com:CDL-Dryad/dryad-app
-	branch = main
 [submodule "mrt-services/audit/mrt-audit"]
 	path = mrt-services/audit/mrt-audit
 	url = git@github.com:cdluc3/mrt-audit

@@ -160,11 +160,6 @@ merritt-docker> tail -38 mrt-services/opensearch.yml
 
   # Overlay logging configs to merritt containers
   #
-  apache:
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
   ingest:
     logging:
       driver: gelf

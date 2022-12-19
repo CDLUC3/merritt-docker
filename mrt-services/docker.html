@@ -69,33 +69,6 @@
                     </fieldset>
                 </li>
             </ul>
-            <h2>Sword and OAI Containers (If enabled)</h2>
-            <ul>
-                <li>
-                    <a class="ref" data=":8083/oai/oai/v2?verb=Identify">OAI Service State</a>
-                    <ul>
-                        <li><a class="ref" data=":8083/oai/static/build.content.txt">Build info</a></li>
-                        <li>
-                            <span>The docker stack has configured 2 collections to be harvestable: inv_collections.harvest_privilege.</span>
-                            <ul>
-                                <li><a class="ref" data=":8083/oai/oai/v2?verb=ListRecords&metadataPrefix=oai_dc&set=cdl_dryaddev">OAI List Dryad Dev</a></li>
-                                <li><a class="ref" data=":8083/oai/oai/v2?verb=ListRecords&metadataPrefix=oai_dc&set=merritt_demo">OAI List Merritt Demo</a></li>            
-                            </ul>    
-                        </li>
-                        <li>Load a file <em>mrt-oaidc.xml</em> into the object to provide OAI metadata.</li>
-                        <li>This will populate the <em>inv_metadatas</em> table.</li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="ref" data=":8084/sword/servicedocument">Sword Service State</a>
-                    <ul><li><a class="ref" data=":8084/sword/static/build.content.txt">Build info</a></li></ul>
-                </li>
-            </ul>
-            <h2>Dryad Containers (If enabled)</h2>
-            <ul>
-                <li><a class="ref" data=":8087">Dryad UI</a></li>
-                <li><a class="ref" data=":8085">Dryad Solr</a></li>
-            </ul>
             <h2>Useful Commands</h2>
             <a href="https://github.com/cdluc3/merritt-docker#other-useful-tasks">Useful Tasks</a>
         </div>

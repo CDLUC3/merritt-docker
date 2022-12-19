@@ -109,25 +109,6 @@ and it provides access to individual containers.
 | ALB Simulator    | ${ECR}/simulate-lambda-alb      | Simulates an ALB running in front of a Lambda for Collection Admin |
 | Collection Admin | ${ECR}/uc3-mrt-colladmin-lambda | Merritt collection admin tool |
 
-
-
-### Optional Dryad Stack
-
-| Component        | Image Name                      | Notes |
-| -----------      | ----------                      | ----- |
-| Dryad UI         | ${ECR}/mrt-dryad                |       |
-| Dryad MySQL      | mysql:5.7                       | Populated with Rails Migration Script |
-| Dryad SOLR       | ${ECR}/dryad-solr               |       |
-| OAI              | ${ECR}/mrt-oai                  | Runs with Dryad |
-| Sword            | ${ECR}/mrt-sword                | Runs with Dryad |
-| Merritt Init     | ${ECR}/mrt-init                 | Init OAI and inventory services.  Run Dryad notifier. |
-
-### Optional Apache Container in front of Merritt uI
-
-| Component        | Image Name                      | Notes |
-| -----------      | ----------                      | ----- |
-| Apache           | ${ECR}/mrt-apache               | Test interaction with non load-balanced apache instance|
-
 ### Optional OpenSearch Stack
 
 see [Using OpenSearch with Merritt Services](docs/using_opensearch.md)
@@ -149,9 +130,6 @@ https://github.com/CDLUC3/mrt-integ-tests
 ![](https://github.com/CDLUC3/mrt-doc/raw/main/diagrams/docker.mmd.svg)
 
 ---
-
-
-
 
 ## UC3 Merritt Docker Hosts
 
@@ -184,11 +162,7 @@ containers to system resources on the Docker host.
   | 8080 | IntTest Stack| Integration Test: service-it tomcat port|
   | 8081 | Dev Stack| Store|
   | 8082 | Dev Stack| Inventory|
-  | 8083 | Dryad Stack| OAI|
-  | 8084 | Dryad Stack| Sword|
-  | 8085 | Dryad Stack| Dryad Solr|
   | 8086 | Dev Stack| UI|
-  | 8087 | Dryad Stack| Dryad UI|
   | 8088 | Dev Stack| Minio API|
   | 8089 | `***` | CDL Reserved, do not use|
   | 8090 | Lambda Stack| Lambda Container, Collection Admin|
@@ -359,9 +333,6 @@ Local Desktop
 |                          | [debug-replic.yml](mrt-services/debug-replic.yml)       |
 |                          | [debug-oai.yml](mrt-services/debug-oai.yml)               |
 | UI Testing               | [ui.yml](mrt-services/ui.yml)                             | Selectively mount code directories from mrt-dashboard to the UI container |
-| Dryad                    | [dryad.yml](mrt-services/dryad.yml)                       | Configuration of Dryad services and Merritt services only used by Dryad |
-| Dryad Volume Config      | [use-volume-dryad.yml](mrt-services/use-volume-dryad.yml) | In addition to the 3 Merritt volumes, persist Dryad mysql and Dryad solr to a Docker volume |
-| Apache                   | [apache.yml](mrt-services/apache.yml)                     | Add Apache in front of Merrit UI |
 | OpenSearch Dashboards    | [opensearch.yml](mrt-services/opensearch.yml)             | Configuration of Full OpenSearch stack |
 
 

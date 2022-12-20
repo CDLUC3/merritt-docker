@@ -15,9 +15,8 @@ services:
       args:
         ECR_REGISTRY: it-docker-registry
     environment:
-      MRT_DOCKER_HOST: ${HOSTNAME:-localhost}
+      MRT_DOCKER_HOST: my-minio-localhost-alias
       MRT_MINIO_HOST: my-minio-localhost-alias
-      MINIO_BROWSER_REDIRECT_URL: http://localhost:8095
     networks:
       merrittnet:
         aliases:
@@ -39,7 +38,7 @@ services:
         aliases:
         - my-minio-localhost-alias
     environment:
-      MRT_DOCKER_HOST: ${HOSTNAME:-localhost}
+      MRT_DOCKER_HOST: my-minio-localhost-alias
   db-container:
     image: it-docker-registry/mrt-database
   ldap:
@@ -50,6 +49,8 @@ services:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
+    environment:
+      MINIO_SERVER_URL: http://my-minio-localhost-alias:8088
   ezid:
     image: it-docker-registry/mock-merritt-it:dev
   merritt-init:

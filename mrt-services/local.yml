@@ -9,23 +9,19 @@ services:
     build:
       args:
         ECR_REGISTRY: it-docker-registry
-
-
-
-
   store:
     image: it-docker-registry/mrt-store:dev
     build:
       args:
         ECR_REGISTRY: it-docker-registry
     environment:
-      MRT_DOCKER_HOST: my-minio-localhost-alias
+      MRT_DOCKER_HOST: ${HOSTNAME:-localhost}
       MRT_MINIO_HOST: my-minio-localhost-alias
+      MINIO_BROWSER_REDIRECT_URL: http://localhost:8095
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-        - localhost
   inventory:
     image: it-docker-registry/mrt-inventory:dev
     build:
@@ -42,19 +38,18 @@ services:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-        - localhost
     environment:
-      MRT_DOCKER_HOST: localhost
+      MRT_DOCKER_HOST: ${HOSTNAME:-localhost}
   db-container:
     image: it-docker-registry/mrt-database
   ldap:
     image: it-docker-registry/mrt-opendj
   minio:
+    image: it-docker-registry/mrt-minio-it:dev
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
-        - localhost
   ezid:
     image: it-docker-registry/mock-merritt-it:dev
   merritt-init:

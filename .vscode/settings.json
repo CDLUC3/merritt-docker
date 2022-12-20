@@ -87,30 +87,6 @@
             "label": "EC2 merritt+apache",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/apache.yml up -d"
         },
-        {
-            "label": "EC2 merritt+sword+oai",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/sword-oai.yml up -d"
-        },
-        {
-            "label": "EC2 merritt+sword+oai -- rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/sword-oai.yml up -d --build"
-        },
-        {
-            "label": "EC2 merritt+sword+oai -- debug oai",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/sword-oai.yml -f mrt-services/debug-oai.yml up -d"
-        },
-        {
-            "label": "EC2 merritt+dryad",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/sword-oai.yml -f mrt-services/dryad.yml up -d"
-        },
-        {
-            "label": "EC2 merritt+dryad -- rebuild",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/sword-oai.yml -f mrt-services/dryad.yml up -d --build"
-        },
-        {
-            "label": "EC2 merritt+dryad -- debug oai",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/sword-oai.yml -f mrt-services/dryad.yml -f mrt-services/debug-oai.yml up -d"
-        },
     ],
     "docker.commands.composeDown": [
        {
@@ -121,27 +97,11 @@
             "label": "merritt",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml down"
         },
-        {
-            "label": "merritt+sword+oai",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/sword-oai.yml down"
-        },
-        {
-            "label": "merritt+dryad",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/sword-oai.yml -f mrt-services/dryad.yml down"
-        },
     ],
     "docker.commands.attach": [
         {
             "label": "default",
             "template": "docker exec -it ${containerId} ${shellCommand}"
-        },
-        {
-            "label": "check oai",
-            "template": "docker exec merritt-init curl http://oai:8080/oai/oai/v2?verb=Identify"
-        },
-         {
-            "label": "dryad notifier",
-            "template": "docker exec -w /var/www/app_name/stash/stash-notifier dryad bundle exec main.rb"
         },
         {
             "label": "list ingest queue",

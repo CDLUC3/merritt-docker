@@ -175,34 +175,21 @@ services:
   # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect my-minio-localhost-alias:8088 to localhost:8088.
   minio:
     container_name: minio
-    image: minio/minio
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-minio-it:dev
     ports:
     - published: 8088
       target: 8088
     - published: 8095
       target: 9001
-    command: server /data --address :8088 --console-address ":9001"
+    command: server /buckets --address :8088 --console-address ":9001"
     networks:
       merrittnet:
         aliases:
         - my-minio-localhost-alias
         - ${HOSTNAME}.cdlib.org
     volumes:
-    - my-minio:/data
+    - my-minio:/buckets
     restart: unless-stopped
-  # When initializing the minio container for the first time, you will need to create an initial bucket named my-bucket.
-  minio-mc:
-    container_name: minio-mc
-    image: minio/mc
-    entrypoint: >
-      /bin/sh -c "
-      sleep 15;
-      mc config host add docker http://minio:8088 minioadmin minioadmin;
-      mc mb docker/my-bucket;
-      mc mb docker/my-bucket-repl;
-      "
-    networks:
-      merrittnet:
   ezid:
     container_name: ezid
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mock-merritt-it:dev

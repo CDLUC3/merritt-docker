@@ -7,3 +7,4 @@ mrt-services/mrt-admin-lambda/consistency-driver/.bundle
 **/.bundle
 *.swp
 .attach_*
+dependencies.txt

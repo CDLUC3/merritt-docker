@@ -10,12 +10,12 @@ REPOS_DIR=${START_DIR}/$SCRIPT_HOME/../mrt-services
 
 export ECR_REGISTRY=it-docker-registry
 
-echo "Building mock-core"
+echo "Building mrt-core"
 cd $REPOS_DIR
 cd dep_core/mrt-core2
 mvn install || exit 1
 
-echo "Building mock-cloud"
+echo "Building mrt-cloud"
 cd $REPOS_DIR
 cd dep_cloud/mrt-cloud
 mvn install || exit 1

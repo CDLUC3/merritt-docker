@@ -39,6 +39,11 @@
                 <li>
                     <a class="ref" data=":8082/inventory/state">Inventory Service State</a>
                     <ul><li><a class="ref" data=":8082/inventory/static/build.content.txt">Build info</a></li></ul>
+                    <fieldset>
+                        <legend>The service must be started/stopped explicitly</legend>
+                        <form class="ref" data=":8082/inventory/service/start" method="POST"><input type="submit" value="Inventory Service Start"/></form>
+                        <form class="ref" data=":8082/inventory/service/stop" method="POST"><input type="submit" value="Inventory Service Stop"/></form>
+                    </fieldset>
                 </li>
                 <li><a class="ref" data=":8095">Minio Web Console (api on 8088)</a></li>
                 <li><a class="ref" data=":8096">Mock Merritt Integration Test Service</a></li>

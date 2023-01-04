@@ -9,6 +9,7 @@ SCRIPT_HOME=$(dirname $0)
 REPOS_DIR=${START_DIR}/$SCRIPT_HOME/../mrt-services
 
 export ECR_REGISTRY=it-docker-registry
+export SSM_SKIP_RESOLUTION=Y
 
 echo "Building mrt-core"
 cd $REPOS_DIR

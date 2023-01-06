@@ -174,6 +174,7 @@ containers to system resources on the Docker host.
   | 8096 | IntTest Stack| Integration Test: Mock Merritt Service|
   | 8097 | Content Stack| Pal Museum data ingest service|
   | 8098 | IntTest Stack| Integration Test: Minio admin port|
+  | 8098 | Dev Stack| Ingest Callback |
   | 8099 | IntTest Stack| Integration Test: service-it debug|
 
 ## Project Internals

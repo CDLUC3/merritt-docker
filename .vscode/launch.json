@@ -19,6 +19,13 @@
         },
         {
             "type": "java",
+            "name": "Debug IT (Attach 8099) - Remote",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": "8099"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"

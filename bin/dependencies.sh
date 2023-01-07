@@ -11,3 +11,5 @@ REPOS_DIR=${START_DIR}/$SCRIPT_HOME/../mrt-services
 cd $REPOS_DIR
 mvn clean dependency:analyze
 mvn dependency:analyze-only | egrep "WARNING|INFO..Building" > ${START_DIR}/dependencies.txt
+
+echo " ===> See ${START_DIR}/dependencies.txt"

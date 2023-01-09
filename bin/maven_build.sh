@@ -8,7 +8,8 @@ SCRIPT_HOME=$(dirname $0)
 # cd into mrt-services
 REPOS_DIR=${START_DIR}/$SCRIPT_HOME/../mrt-services
 
-export ECR_REGISTRY=it-docker-registry
+echo "ECR_REGISTRY must be set"
+echo "ECR_REGISTRY=${ECR_REGISTRY}"
 
 cd $REPOS_DIR
-mvn clena install
+mvn clean install

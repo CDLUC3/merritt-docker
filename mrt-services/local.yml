@@ -65,3 +65,5 @@ services:
     build:
       args:
         ECR_REGISTRY: it-docker-registry
+  callback:
+    image: it-docker-registry/callback

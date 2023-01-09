@@ -19,11 +19,19 @@ COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-zoopub-src/1.0-SNAPSHOT
 
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-core/2.0-SNAPSHOT/mrt-core-2.0-SNAPSHOT.jar zkServer/tools
 
+COPY --from=build /root/.m2/repository/log4j/log4j/1.2.17/log4j-1.2.17.jar lib
+
+COPY --from=build /root/.m2/repository/org/slf4j/slf4j-log4j12/1.7.25/slf4j-log4j12-1.7.25.jar lib
+
+COPY --from=build /root/.m2/repository/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar lib
+
 COPY . zkServer/tools
 
 RUN chmod 555 zkServer/tools/*.sh
 
-ENV ZK=zookeeper-3.4.14
+ENV ZK=apache-zookeeper-3.8.0-bin
+ENV ZKJ=zookeeper-3.8.0
+ENV ZKJUTE=zookeeper-jute-3.8.0
 ENV PATH=$PATH:/${ZK}/zkServer/tools
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes

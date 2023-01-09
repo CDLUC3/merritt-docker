@@ -112,6 +112,14 @@
             "template": "docker exec -it zoo listInventory.sh"
         },
         {
+            "label": "list access small queue",
+            "template": "docker exec -it zoo listAccessSmall.sh"
+        },
+        {
+            "label": "list access large queue",
+            "template": "docker exec -it zoo listAccessLarge.sh"
+        },
+        {
             "label": "list mysql processes",
             "template": "docker exec -it db-container mysql -u user --password=password --database=db-name -e 'show processlist; '"
         },
@@ -134,4 +142,5 @@
     ],
     "liveServer.settings.port": 8099,
     "java.compile.nullAnalysis.mode": "automatic",
+    "java.debug.settings.onBuildFailureProceed": true,
 }

@@ -12,10 +12,13 @@ CP=$CP:/$ZK/zkServer/tools
 L4J=1.2.17
 S4J=1.7.25
 
-CP=$CP:/$ZK/$ZK.jar
+CP=$CP:/$ZK/lib/$ZKJ.jar
+CP=$CP:/$ZK/lib/$ZKJUTE.jar
 CP=$CP:/$ZK/lib/slf4j-log4j12-$S4J.jar
 CP=$CP:/$ZK/lib/log4j-$L4J.jar
 CP=$CP:/$ZK/lib/slf4j-api-$S4J.jar
+
+echo $CP
 
 #Usage: listQueue.sh /ingest|/mrt.inventory.full
 

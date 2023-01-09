@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>mrt-docker-stack</artifactId>
+    <groupId>org.cdlib.mrt</groupId>
+
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>UC3-merritt-docker</name>
+    <description>UC3 Merritt Micro-Services</description>
+    <url>http://uc3.cdlib.org</url>
+    <build>
+      <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.0</version>
+            <configuration>
+              <source>1.8</source>
+              <target>1.8</target>
+            </configuration>
+          </plugin>
+      </plugins>
+    </build>
+    <!-- let profiles determine which conf module to run -->
+    <profiles>
+        <profile>
+            <id>notUC3</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>   
+            <modules>
+                <module>dep_core/mrt-core2</module>
+                <module>dep_cloud/mrt-cloud</module>
+                <module>dep_cdlzk/cdl-zk-queue</module>
+                <module>dep_zoo/mrt-zoo</module>
+                <module>inventory/mrt-inventory</module>
+                <module>replic/mrt-replic</module>
+                <module>audit/mrt-audit</module>
+                <module>store/mrt-store</module>
+                <module>ingest/mrt-ingest</module>
+            </modules>
+        </profile>
+     </profiles>
+    
+</project>

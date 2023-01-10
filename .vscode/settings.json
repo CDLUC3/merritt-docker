@@ -84,8 +84,24 @@
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/debug-replic.yml up -d"
         },
         {
-            "label": "EC2 merritt+apache",
-            "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/apache.yml up -d"
+            "label": "Integ Test INV",
+            "template": "MDIR=$PWD/mrt-services/inventory/mrt-inventory docker-compose -f mrt-services/inventory/mrt-inventory/inv-it/src/test/docker/docker-compose.yml up -d"
+        },
+        {
+            "label": "Integ Test STORE",
+            "template": "MDIR=$PWD/mrt-services/store/mrt-store docker-compose -f mrt-services/store/mrt-store/store-it/src/test/docker/docker-compose.yml up -d"
+        },
+        {
+            "label": "Integ Test INGEST",
+            "template": "MDIR=$PWD/mrt-services/ingest/mrt-ingest docker-compose -f mrt-services/ingest/mrt-ingest/ingest-it/src/test/docker/docker-compose.yml up -d"
+        },
+        {
+            "label": "Integ Test AUDIT",
+            "template": "MDIR=$PWD/mrt-services/audit/mrt-audit docker-compose -f mrt-services/audit/mrt-audit/audit-it/src/test/docker/docker-compose.yml up -d"
+        },
+        {
+            "label": "Integ Test REPLIC",
+            "template": "MDIR=$PWD/mrt-services/replic/mrt-replic docker-compose -f mrt-services/replic/mrt-replic/replication-it/src/test/docker/docker-compose.yml up -d"
         },
     ],
     "docker.commands.composeDown": [
@@ -96,6 +112,26 @@
         {
             "label": "merritt",
             "template": "docker-compose -p merritt -f mrt-services/docker-compose.yml down"
+        },
+        {
+            "label": "Integ Test INV",
+            "template": "MDIR=$PWD/mrt-services/inventory/mrt-inventory docker-compose -f mrt-services/inventory/mrt-inventory/inv-it/src/test/docker/docker-compose.yml down"
+        },
+        {
+            "label": "Integ Test STORE",
+            "template": "MDIR=$PWD/mrt-services/store/mrt-store docker-compose -f mrt-services/store/mrt-store/store-it/src/test/docker/docker-compose.yml down"
+        },
+        {
+            "label": "Integ Test INGEST",
+            "template": "MDIR=$PWD/mrt-services/ingest/mrt-ingest docker-compose -f mrt-services/ingest/mrt-ingest/ingest-it/src/test/docker/docker-compose.yml down"
+        },
+        {
+            "label": "Integ Test AUDIT",
+            "template": "MDIR=$PWD/mrt-services/audit/mrt-audit docker-compose -f mrt-services/audit/mrt-audit/audit-it/src/test/docker/docker-compose.yml down"
+        },
+        {
+            "label": "Integ Test REPLIC",
+            "template": "MDIR=$PWD/mrt-services/replic/mrt-replic docker-compose -f mrt-services/replic/mrt-replic/replication-it/src/test/docker/docker-compose.yml down"
         },
     ],
     "docker.commands.attach": [

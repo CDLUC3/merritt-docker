@@ -7,20 +7,22 @@ This library is part of the [Merritt Preservation System](https://github.com/CDL
 The purpose of this repository is to build docker images for local developer
 testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
 
-
-
-
 ## Quick Start Guide
 
 ### Prerequisites
 
+#### UC3 Docker Dev Server
 - You must me a member of group `docker`.
 - You must deploy this repository on a merritt docker host under directory
   `/dpr2/merritt-workspace`.
 
+#### Local Workstation
+- M2 Macbook Pro (16G RAM) or equivalent
+- Docker Desktop installed
 
 ### Installation
 
+#### UC3 Docker Dev Server
 Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as normal user.
 
 1. Ensure user writable directory from which to do initial cloning:
@@ -37,19 +39,46 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
 	--remote-submodules --recurse-submodules
    ```
 
-1. Build dependencies:
-   ```
-   cd merritt-docker
-   bin/dep_build.sh
-   ```
-
-
-### Usage
-
 1. Set up docker environment vars:
    ```
    merritt-docker> source bin/docker_environment.sh
    ```
+
+1. Build dependencies:
+   ```
+   cd merritt-docker
+   bin/dep_build.sh
+   bin/it_build.sh
+   ```
+
+#### Local Workstation
+
+1. Clone merritt-docker repo and pull in submodules:
+   ```
+   BRANCH=main
+   git clone git@github.com:CDLUC3/merritt-docker.git -b $BRANCH \
+	--remote-submodules --recurse-submodules
+   ```
+
+1. Set up local variables
+   ```
+   export ECR_REGISTRY=it-docker-registry
+   ```
+
+1. Allow Minio container to resolve local pre-signed URL's
+   ```
+   sudo echo '127.0.0.1	my-minio-localhost-alias' >> /etc/hosts
+   ```
+
+1. Build dependencies:
+   ```
+   cd merritt-docker
+   bin/local_dep_build.sh
+   bin/local_it_build.sh
+   ```
+
+### Usage
+
 1. Ensure all submodule code is up-to-date with respective remotes:
    ```
    merritt-docker> git submodule update --remote
@@ -71,6 +100,7 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
    http://_my-docker-host_:8086/docker.html
 
 For more detailed usage instructions see [Running Merritt Docker](#running-merritt-docker) below.
+
 
 ---
 
@@ -270,8 +300,13 @@ source bin/docker_environment.sh
   - [Udpate submodules](#git-submodules)
 - The minio container requires a localhost alias in order to serve up presigned urls.
 
+Consider adding this to your .profile
 ```
 export ECR_REGISTRY=it-docker-registry
+```
+
+Make this change once
+```
 sudo echo '127.0.0.1	my-minio-localhost-alias' >> /etc/hosts
 ```
 
@@ -319,6 +354,19 @@ Dev Server
 Local Desktop
 ```
 ./bin/local_maven_build.sh
+```
+
+Useful Maven Recipes
+
+_All Merritt Services can be built from a grandparent pom file_
+
+```
+cd mrt-services
+mvn clean
+mvn clean install
+mvn dependency:analyze
+mvn dependency:tree
+mvn dependency:build-classpath
 ```
 
 ### Helper docker-compose Files

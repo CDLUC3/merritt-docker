@@ -11,6 +11,7 @@ RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzin
 # RUN yum -y update
 
 COPY init.sql /docker-entrypoint-initdb.d/start.sql
+COPY custom.cnf /etc/mysql/conf.d/
 
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
 ENV TZ=America/Los_Angeles

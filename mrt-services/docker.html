@@ -26,16 +26,34 @@
         <div>
             <h2>Core Merritt Containers</h2>
             <ul>
-                <li><a class="ref" data=":8086">Merritt UI</a></li>
+                <li>
+                    <a class="ref" data=":8086">Merritt UI</a>
+                    <ul>
+                        <li><a class="ref" data=":8086/state">State</a></li>
+                        <li><a class="ref" data=":8086/state.json">State (Json)</a></li>
+                        <li><a class="ref" data=":8086/state-audit-replic">State Audit Replic</a></li>
+                        <li><a class="ref" data=":8086/state-audit-replic.json">State Audit Replic (Json)</a></li>
+                    </ul>
+                </li>
                 <li>
                     <a class="ref" data=":8080/ingest/state">Ingest Service State</a>
                     <ul><li><a class="ref" data=":8080/ingest/static/build.content.txt">Build info</a></li></ul>
                 </li>
                 <li>
                     <a class="ref" data=":8081/store/state">Storage Service State</a>
-                    <ul><li><a class="ref" data=":8081/store/static/build.content.txt">Build info</a></li></ul>
+                    <ul>
+                        <li><a class="ref" data=":8081/store/static/build.content.txt">Build info</a></li>
+                        <li><a class="ref" data=":8081/store/state/7777">Storage Service - Node 7777</a></li>
+                        <li><a class="ref" data=":8081/store/state/8888">Storage Service - Node 8888</a></li>
+                        <fieldset>
+                            <legend>Set Queue Processing State in Zookeeper</legend>
+                            <form class="ref" data=":8081/store/flag/set/access/LargeAccessHold?t=xml" method="POST"><input type="submit" value="Pause Large Ingest"/></form>
+                            <form class="ref" data=":8081/store/flag/clear/access/LargeAccessHold?t=xml" method="POST"><input type="submit" value="Unpause Large Ingest"/></form>
+                            <form class="ref" data=":8081/store/flag/set/access/SmallAccessHold?t=xml" method="POST"><input type="submit" value="Pause Small Ingest"/></form>
+                            <form class="ref" data=":8081/store/flag/clear/access/SmallAccessHold?t=xml" method="POST"><input type="submit" value="Unpause Small Ingest"/></form>
+                        </fieldset>
+                        </ul>
                 </li>
-                <li><a class="ref" data=":8081/store/state/7777">Storage Service - Node 7777</a></li>
                 <li>
                     <a class="ref" data=":8082/inventory/state">Inventory Service State</a>
                     <ul><li><a class="ref" data=":8082/inventory/static/build.content.txt">Build info</a></li></ul>

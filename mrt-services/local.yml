@@ -26,11 +26,6 @@ services:
     build:
       args:
         ECR_REGISTRY: it-docker-registry
-  zoo:
-    image: it-docker-registry/zoo-with-merritt-tools:dev
-    build:
-      args:
-        ECR_REGISTRY: it-docker-registry
   ui:
     image: it-docker-registry/mrt-dashboard
     networks:

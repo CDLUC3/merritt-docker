@@ -429,17 +429,17 @@ docker network ls
 
 List Zookeeper Queues
 ```
-docker exec -it zoo zkCli.sh ls /
+docker exec -it zoo bash
 ```
 
-Dump the ingest queue
+zkCli.sh commands
 ```
-docker exec -it zoo listIngest.sh
-```
-
-Dump the inventory queue
-```
-docker exec -it zoo listInventory.sh
+zkCli.sh ls /
+zkCli.sh ls /ingest
+zkCli.sh ls /mrt.inventory.full
+zkCli.sh ls /accessSmall.1
+zkCli.sh ls /accessLarge.1
+zkCli.sh ls /mrt.lock
 ```
 
 Mysql Session

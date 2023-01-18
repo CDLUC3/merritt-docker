@@ -148,20 +148,8 @@
             "template": "docker exec -it ${containerId} ${shellCommand}"
         },
         {
-            "label": "list ingest queue",
-            "template": "docker exec -it zoo listIngest.sh"
-        },
-        {
-            "label": "list inventory queue",
-            "template": "docker exec -it zoo listInventory.sh"
-        },
-        {
-            "label": "list access small queue",
-            "template": "docker exec -it zoo listAccessSmall.sh"
-        },
-        {
-            "label": "list access large queue",
-            "template": "docker exec -it zoo listAccessLarge.sh"
+            "label": "list queues",
+            "template": "docker exec -it zoo zkCli.sh ls /"
         },
         {
             "label": "list mysql processes",

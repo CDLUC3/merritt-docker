@@ -17,10 +17,6 @@ services:
     environment:
       MRT_DOCKER_HOST: my-minio-localhost-alias
       MRT_MINIO_HOST: my-minio-localhost-alias
-    networks:
-      merrittnet:
-        aliases:
-        - my-minio-localhost-alias
   inventory:
     image: it-docker-registry/mrt-inventory:dev
     build:
@@ -33,10 +29,6 @@ services:
         ECR_REGISTRY: it-docker-registry
   ui:
     image: it-docker-registry/mrt-dashboard
-    networks:
-      merrittnet:
-        aliases:
-        - my-minio-localhost-alias
     environment:
       MRT_DOCKER_HOST: my-minio-localhost-alias
   db-container:

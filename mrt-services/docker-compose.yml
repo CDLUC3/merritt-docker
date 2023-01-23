@@ -62,7 +62,6 @@ services:
     networks:
       merrittnet:
         aliases:
-        - my-minio-localhost-alias
         - ${HOSTNAME}.cdlib.org
     restart: unless-stopped
     stdin_open: true

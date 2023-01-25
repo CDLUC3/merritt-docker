@@ -12,4 +12,9 @@ cd $REPOS_DIR
 mvn clean dependency:analyze
 mvn dependency:analyze-only | egrep "WARNING|INFO..Building" > ${START_DIR}/dependencies.txt
 
+echo
 echo " ===> See ${START_DIR}/dependencies.txt"
+echo
+
+echo "Report on any non-standard entries"
+egrep ":compile|Used " ${START_DIR}/dependencies.txt

@@ -33,7 +33,7 @@ Handler.16: org.cdlib.mrt.ingest.handlers.HandlerCleanup
 # --- handler queue submission processing
 HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
 HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
-#HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
+HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
 StorageService: http://store:8080/store
 StorageNode: 7777
 CreationDate: 2010-01-19T13:28:14-08:00
@@ -43,4 +43,5 @@ ObjectMinterURL: http://ezid:4567/shoulder/ark:/99999/fk4
 CallbackURL: http://callback:8098
 Priority: 02
 NotificationType: additional
+NotificationSuppression: full
 Context: merritt_demo

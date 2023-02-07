@@ -32,7 +32,18 @@ get '/*' do
   puts "\t#{params}"
 end
 
-post '*' do
-  puts "POST #{params['splat'][0]}"
-  puts request.body.read
+post '/mc/:jid' do |jid|
+  data = JSON.parse(request.body.read)
+   jobStatus = data['job:jobState']['job:jobStatus']
+   if (jobStatus.eql? "COMPLETED") then
+      puts "JOB SUCCESS: #{jid}"
+      puts data
+      status 200
+      body data.to_s
+   else
+      puts "JOB FAILURE: #{jid}"
+      puts data
+      status 200
+      body data.to_s
+   end
 end

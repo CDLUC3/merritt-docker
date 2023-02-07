@@ -43,7 +43,7 @@ post '/mc/:jid' do |jid|
    else
       puts "JOB FAILURE: #{jid}"
       puts data
-      status 400
+      status 200
       body data.to_s
    end
 end

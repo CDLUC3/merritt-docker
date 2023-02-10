@@ -262,6 +262,79 @@ modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: 410da389-1db1-4753-8cff-51840e2fd13e
 createTimestamp: 20100914192017Z
 
+dn: ou=ucb_lib_prechmat,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_prechmat_content
+ou: ucb_lib_prechmat
+arkId: ark:/13030/m5vb545c
+description: UC Berkeley Library Pre 1912 Chinese Materials
+createTimestamp: 20211214063844Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: eb70d4b7-a9b2-4b9b-ada0-339c58d52b61
+
+dn: cn=read,ou=ucb_lib_prechmat,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd100
+createTimestamp: 20100914192017Z
+
+dn: ou=ucb_lib_metcalf,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_metcalf_content
+description: UC Berkeley Library Fritz-Metcalf Photograph collection
+ou: ucb_lib_metcalf
+arkId: ark:/13030/m5sv0js2
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20151007161134Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: a48a53ee-3492-4f4e-a1d5-c331930954e3
+createTimestamp: 20150930232551Z
+
+dn: cn=read,ou=ucb_lib_metcalf,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd101
+createTimestamp: 20100914192017Z
+
+dn: ou=ucb_lib_jar,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+description: UC Berkeley Library Japanese American Records 1930-1974
+submissionProfile: ucb_lib_jar_content
+ou: ucb_lib_jar
+arkId: ark:/13030/m5452r7b
+createTimestamp: 20220516230218Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20220516230244Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: b593da37-cd6e-4c49-8f01-393be1182e6e
+
+dn: cn=read,ou=ucb_lib_jar,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd102
+createTimestamp: 20100914192017Z
+
 dn: o=CDL,o=institutions,ou=uc3,dc=cdlib,dc=org
 objectClass: organization
 objectClass: top

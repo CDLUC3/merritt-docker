@@ -335,6 +335,80 @@ modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: 410da389-1db1-4753-8cff-51840e2fd102
 createTimestamp: 20100914192017Z
 
+dn: ou=ucb_lib_cal_cultures,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_cal_cultures_content
+description: UC Berkeley Library Cal Cultures
+ou: ucb_lib_cal_cultures
+arkId: ark:/13030/m51n7z82
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20110824215057Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 94585ca5-1bf3-45b1-bb2a-9b3e8220f236
+createTimestamp: 20110822235136Z
+
+dn: cn=read,ou=ucb_lib_cal_cultures,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd103
+createTimestamp: 20100914192017Z
+
+dn: cn=admin,ou=ucb_lib_dcpp,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=tbrady,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=elopatin,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=mreyes,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: admin
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20220830163326Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 122846b9-882e-43b0-bd04-161524275dc5
+createTimestamp: 20220830163214Z
+
+dn: cn=read,ou=ucb_lib_dcpp,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd104
+createTimestamp: 20100914192017Z
+
+dn: ou=ucb_lib_stone_rubbings,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_stone_rubbings_content
+description: UC Berkeley Library Stone Rubbings
+ou: ucb_lib_stone_rubbings
+arkId: ark:/13030/m5tt4p37
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20110824231059Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 180d4e51-df5a-4942-8073-e1657a7ba0d9
+createTimestamp: 20110823162014Z
+
+dn: cn=read,ou=ucb_lib_stone_rubbings,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd105
+createTimestamp: 20100914192017Z
+
 dn: o=CDL,o=institutions,ou=uc3,dc=cdlib,dc=org
 objectClass: organization
 objectClass: top

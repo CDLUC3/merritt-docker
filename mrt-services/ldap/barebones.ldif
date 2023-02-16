@@ -360,18 +360,18 @@ modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: 410da389-1db1-4753-8cff-51840e2fd103
 createTimestamp: 20100914192017Z
 
-dn: cn=admin,ou=ucb_lib_dcpp,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+dn: ou=ucb_lib_dcpp,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top
-objectClass: groupOfUniqueNames
-uniqueMember: uid=tbrady,ou=People,ou=uc3,dc=cdlib,dc=org
-uniqueMember: uid=elopatin,ou=People,ou=uc3,dc=cdlib,dc=org
-uniqueMember: uid=mreyes,ou=People,ou=uc3,dc=cdlib,dc=org
-cn: admin
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_dcpp_content
+ou: ucb_lib_dcpp
+arkId: ark:/13030/m5qc7bz1
+description: UC Berkeley Library Dobanga Copper Plate Prints
+createTimestamp: 20220830163147Z
 creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
-modifyTimestamp: 20220830163326Z
-modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
-entryUUID: 122846b9-882e-43b0-bd04-161524275dc5
-createTimestamp: 20220830163214Z
+ds-sync-hist: dn:00000182ef983b5e301c00000501:add
+entryUUID: bfdf329c-ce9c-4cb7-9b11-19b0b2706a24
 
 dn: cn=read,ou=ucb_lib_dcpp,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top

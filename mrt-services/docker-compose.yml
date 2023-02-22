@@ -90,12 +90,7 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/zoo-with-merritt-tools:dev
-    build:
-      context: zoo
-      dockerfile: Dockerfile
-      args:
-        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+    image: zookeeper
     networks:
       merrittnet:
     ports:

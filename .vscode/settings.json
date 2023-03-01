@@ -156,6 +156,26 @@
             "template": "docker exec -it zoo zkCli.sh ls /"
         },
         {
+            "label": "list ingest queue",
+            "template": "docker exec -it zoo zkCli.sh ls /ingest"
+        },
+        {
+            "label": "list inventory queue",
+            "template": "docker exec -it zoo zkCli.sh ls /mrt.inventory.full"
+        },
+        {
+            "label": "list access small queue",
+            "template": "docker exec -it zoo zkCli.sh ls /accessSmall.1"
+        },
+        {
+            "label": "list access large queue",
+            "template": "docker exec -it zoo zkCli.sh ls /accessLarge.1"
+        },
+        {
+            "label": "list locks",
+            "template": "docker exec -it zoo zkCli.sh ls /mrt.lock"
+        },
+        {
             "label": "list mysql processes",
             "template": "docker exec -it db-container mysql -u user --password=password --database=db-name -e 'show processlist; '"
         },

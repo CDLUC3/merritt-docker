@@ -93,6 +93,7 @@ CREATE TABLE `inv_files` (
   KEY `id_idx` (`inv_version_id`),
   KEY `id_idx1` (`inv_object_id`),
   KEY `source` (`source`),
+  KEY `pathname` (`pathname`(768)),
   KEY `role` (`role`),
   CONSTRAINT `inv_files_ibfk_1` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `inv_files_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION

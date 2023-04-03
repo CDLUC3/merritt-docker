@@ -3,7 +3,7 @@ FROM openjdk:11-jre-stretch
 
 WORKDIR /opt
 
-RUN apt-get update -y
+RUN apt-get update -y && apt-get -y upgrade
 RUN apt-get install -y wget unzip
 
 RUN curl --silent -LO https://github.com/OpenIdentityPlatform/OpenDJ/releases/download/4.4.5/opendj-4.4.5.zip && unzip -q opendj-4.4.5.zip && rm -r opendj-4.4.5.zip

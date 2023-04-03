@@ -5,7 +5,7 @@
 # docker push ${ECR_REGISTRY}/pm-server:dev
 
 FROM ruby:3
-RUN apt-get update -y -qq && apt-get install -y build-essential libpq-dev nodejs
+RUN apt-get update -y -qq && apt-get install -y build-essential libpq-dev nodejs && apt-get -y upgrade
 
 # Adding gems
 COPY Gemfile Gemfile

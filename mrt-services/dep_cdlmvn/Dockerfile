@@ -9,7 +9,7 @@
 
 FROM maven:3-jdk-8 as build
 
-RUN apt-get update -y
+RUN apt-get update -y && apt-get -y upgrade
 
 WORKDIR /build
 

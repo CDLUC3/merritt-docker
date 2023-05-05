@@ -1,5 +1,5 @@
 # https://github.com/ghchinoy/forgerock-docker
-FROM openjdk:11-jre-stretch
+FROM openjdk:11-jre-buster
 
 WORKDIR /opt
 

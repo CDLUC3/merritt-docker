@@ -6,7 +6,7 @@ GEM
     mustache (1.1.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    rack (2.2.4)
+    rack (2.2.7)
     rack-protection (2.2.0)
       rack
     redcarpet (3.5.1)

@@ -9,7 +9,12 @@
 version: '3'
 
 volumes:
-  opensearch-data1:
+  apps-logs-ingest:
+  apps-logs-store:
+  apps-logs-inventory:
+  apps-logs-audit:
+  apps-logs-replic:
+  apps-logs-ui:
 
 networks:
   merrittnet:
@@ -31,8 +36,6 @@ services:
       nofile:
         soft: 65536 # maximum number of open files for the OpenSearch user, set to at least 65536 on modern systems
         hard: 65536
-    volumes:
-    - opensearch-data1:/usr/share/opensearch/data
     ports:
     - published: 9200
       target: 9200
@@ -53,6 +56,13 @@ services:
       protocol: udp
     networks:
       merrittnet:
+    volumes:
+    - "apps-logs-ingest:/logfiles/ingest/"
+    - "apps-logs-store:/logfiles/store/"
+    - "apps-logs-inventory:/logfiles/inventory/"
+    - "apps-logs-audit:/logfiles/audit/"
+    - "apps-logs-replic:/logfiles/replic/"
+    - "apps-logs-ui:/logfiles/ui/"
     depends_on:
     - opensearch
 
@@ -72,62 +82,21 @@ services:
     - opensearch
     - logstash
 
-  ## # Disabling filebeat while I explore GELF log-driver
-  ## # filebeat did not play well with userns-remapping.
-  ##
-  ## filebeat:
-  ##   image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/filebeat:dev
-  ##   container_name: filebeat
-  ##   build:
-  ##     context: opensearch/filebeat
-  ##     dockerfile: Dockerfile
-  ##   user: root
-  ##   volumes:
-  ##   - /var/run/docker.sock:/var/run/docker.sock:ro
-  ##   - /apps/dpr2/docker-system-storage/5071.5161/containers:/var/lib/docker/containers:ro
-  ##   #- /var/lib/docker/containers:/var/lib/docker/containers:ro
-  ##   networks:
-  ##     merrittnet:
-  ##   #restart: unless-stopped
-  ##   #labels:
-  ##   #    co.elastic.logs/enabled: "false"
-
-
-
-  # Overlay logging configs to merritt containers
-  #
-  apache:
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
   ingest:
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
+    volumes:
+    - "apps-logs-ingest:/usr/local/tomcat/logs/"
   store:
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
+    volumes:
+    - "apps-logs-store:/usr/local/tomcat/logs/"
   inventory:
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
+    volumes:
+    - "apps-logs-inventory:/usr/local/tomcat/logs/"
   ui:
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
+    volumes:
+    - "apps-logs-ui:/var/www/app_name/log/"
   replic:
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
+    volumes:
+    - "apps-logs-replic:/usr/local/tomcat/logs/"
   audit:
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://localhost:12201"
+    volumes:
+    - "apps-logs-audit:/usr/local/tomcat/logs/"

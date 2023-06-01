@@ -213,6 +213,10 @@ services:
           sleep 30
           echo "*** Starting the inventory service"
           curl -v -X POST http://inventory:8080/inventory/service/start?t=json
+          echo "*** Starting the replic service"
+          curl -v -X POST http://replic:8080/replic/service/start?t=json
+          echo "*** Starting the audit service"
+          curl -v -X POST http://audit:8080/audit/service/start?t=json
   replic:
     container_name: replic
     # image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch

@@ -25,6 +25,9 @@ services:
     environment:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_INGEST: ingest-docker
+      SERVICE: ingest
+      HOSTNAME: ingest
+      LOGLEVEL: info
     networks:
       merrittnet:
     ports:
@@ -59,6 +62,9 @@ services:
       LOG_STORE: /dpr2store/mrtHomes/logs
       MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
       MRT_MINIO_HOST: ${HOSTNAME}.cdlib.org
+      SERVICE: store
+      HOSTNAME: store
+      LOGLEVEL: info
     networks:
       merrittnet:
         aliases:
@@ -85,6 +91,9 @@ services:
     environment:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_INV_INFO: inv-info-docker
+      SERVICE: inventory
+      HOSTNAME: inventory
+      LOGLEVEL: info
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -120,7 +129,10 @@ services:
       target: 8086
     environment:
       SSM_SKIP_RESOLUTION: Y
-      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.
+      SERVICE: ui
+      HOSTNAME: ui
+      LOGLEVEL: info
     volumes:
     - "./docker.html:/var/www/app_name/public/docker.html"
     restart: unless-stopped
@@ -235,6 +247,9 @@ services:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_REPLIC_INFO: replic-info-docker
       NODE_TABLE: nodes-pairtree-docker
+      SERVICE: replic
+      HOSTNAME: replic
+      LOGLEVEL: info
     stdin_open: true
     tty: true
   audit:
@@ -255,6 +270,9 @@ services:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_AUDIT_INFO: audit-info-docker
       NODE_TABLE: nodes-pairtree-docker
+      SERVICE: audit
+      HOSTNAME: audit
+      LOGLEVEL: info
       # Uncomment the followign lines to increase throughput of the audit service
       # AUDIT_THREAD_POOL: 5
       # AUDIT_SLEEP_MS: 100

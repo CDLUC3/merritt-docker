@@ -7,9 +7,9 @@
 # aws ecr create-repository --repository-name dep-cdlmvn
 # docker push ${ECR_REGISTRY}/dep-cdlmvn:dev
 
-FROM maven:3-jdk-8 as build
+FROM maven:3.9-eclipse-temurin-8-alpine as build
 
-RUN apt-get update -y && apt-get -y upgrade
+#RUN apt-get update -y && apt-get -y upgrade
 
 WORKDIR /build
 

@@ -21,6 +21,11 @@ RUN mkdir appdir && \
     mvn install -DskipTests -Ddocker.skip && \
     date -r s3-src/target +'dep-cloud: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp */target/*.jar appdir && \
-    mvn clean 
+    mvn clean && \
+    rm -rf /root/.m2/repository/dom4j && \
+    rm -rf /root/.m2/repository/org/codehaus && \
+    rm -rf /root/.m2/repository/org/apache/maven && \
+    rm -rf /root/.m2/repository/com/google/cloud/tools && \
+    rm -rf /root/.m2/repository/org/yaml/snakeyaml/1.26
 
 ENTRYPOINT [ "ls", "appdir" ]

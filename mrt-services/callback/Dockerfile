@@ -8,6 +8,8 @@
 
 FROM ruby:3
 
+RUN apt-get update -y -qq && apt-get -y upgrade
+
 RUN gem install bundler
 
 COPY Gemfile Gemfile

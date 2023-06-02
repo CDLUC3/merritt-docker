@@ -21,6 +21,9 @@ RUN mkdir appdir && \
     mvn install -DskipTests && \
     date -r zoo-client-src/target +'dep-zoo: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp */target/*.jar appdir && \
-    mvn clean 
+    mvn clean && \
+    rm -rf /root/.m2/repository/dom4j && \
+    rm -rf /root/.m2/repository/org/codehaus && \
+    rm -rf /root/.m2/repository/org/apache/maven
 
 ENTRYPOINT [ "ls", "appdir" ]

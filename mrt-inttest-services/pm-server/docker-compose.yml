@@ -11,3 +11,4 @@ services:
     ports:
     - published: 8097
       target: 4567
+    restart: unless-stopped

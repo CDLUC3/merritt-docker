@@ -250,6 +250,7 @@ services:
       SERVICE: replic
       HOSTNAME: replic
       LOGLEVEL: info
+    restart: unless-stopped
     stdin_open: true
     tty: true
   audit:
@@ -277,6 +278,7 @@ services:
       # AUDIT_THREAD_POOL: 5
       # AUDIT_SLEEP_MS: 100
       # AUDIT_QUEUE_CAPACITY: 300
+    restart: unless-stopped
     stdin_open: true
     tty: true
   callback:
@@ -290,5 +292,6 @@ services:
     ports:
     - published: 8098
       target: 8098
+    restart: unless-stopped
     stdin_open: true
     tty: true

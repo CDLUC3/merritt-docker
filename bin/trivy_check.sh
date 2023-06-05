@@ -20,6 +20,9 @@ aws ecr get-login-password --region us-west-2 | \
   docker login --username AWS \
     --password-stdin ${ECR_REGISTRY} || exit 1
 
+# Java Images - resolved several issues by switching maven:3-jdk-8 to 3.9-eclipse-temurin-8-alpine
+# and by tidying up some artifacts left by the build
+# ---------------------------------
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/dep-cdlmvn:dev 
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-core2:dev
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/cdl-zk-queue:dev
@@ -32,7 +35,12 @@ aws ecr get-login-password --region us-west-2 | \
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-audit:dev
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-replic:dev
 
+# the following have issues
+~/trivy/trivy --scanners vuln image --severity CRITICAL openjdk:11-jre-buster
+~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-opendj
+
 # ruby images
+# ---------------------------------
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ruby:3
 ~/trivy/trivy --scanners vuln image --severity CRITICAL --ignore-unfixed ruby:3
 ~/trivy/trivy --scanners vuln image --severity CRITICAL --ignore-unfixed ${ECR_REGISTRY}/callback
@@ -44,31 +52,38 @@ aws ecr get-login-password --region us-west-2 | \
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mysql-ruby-lambda
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-admin-lambda:dev
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-colladmin-lambda:dev
-# no longer used
-~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/simulate-lambda-alb
-
 
 # note that libarchive-tools adds 2 unfixable vulnerabilities
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-integ-tests
 
+# no longer used
+~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/simulate-lambda-alb
+
 # mysql
+# ---------------------------------
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-it-database:dev
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-database
 
 # minio
+# ---------------------------------
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-minio-it:dev
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
 
 # other images
+# ---------------------------------
 ~/trivy/trivy --scanners vuln image --severity CRITICAL zookeeper
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ghusta/fakesmtp
+~/trivy/trivy --scanners vuln image --severity CRITICAL opensearchproject/opensearch
+~/trivy/trivy --scanners vuln image --severity CRITICAL opensearchproject/opensearch-dashboards
+
 #   ubuntu + curl
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-init
 
 # other images - investigate issues
-~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-opendj
-~/trivy/trivy --scanners vuln image --severity CRITICAL opensearchproject/opensearch:1.2.4
-~/trivy/trivy --scanners vuln image --severity CRITICAL opensearchproject/opensearch-dashboards:1.2.0
+# ---------------------------------
+~/trivy/trivy --scanners vuln image --severity CRITICAL opensearchproject/logstash-oss-with-opensearch-output-plugin
 ~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/logstash-oss:dev
-#~/trivy/trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/filebeat:dev
+
+~/trivy/trivy --scanners vuln image --severity CRITICAL selenium/standalone-chrome
+~/trivy/trivy --scanners vuln image --severity CRITICAL standalone-chrome-download-folder

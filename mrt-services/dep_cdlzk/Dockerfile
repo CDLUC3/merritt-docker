@@ -22,7 +22,6 @@ RUN mkdir appdir && \
     date -r target +'dep-cdlzk: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp target/*.jar appdir && \
     mvn clean && \
-    rm -rf /root/.m2/repository/dom4j && \
     rm -rf /root/.m2/repository/org/codehaus && \
     rm -rf /root/.m2/repository/org/apache/maven
 

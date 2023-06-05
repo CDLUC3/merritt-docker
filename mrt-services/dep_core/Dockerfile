@@ -22,7 +22,6 @@ RUN mkdir appdir && \
     date -r core/target +'dep-core: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp */target/*.jar appdir && \
     mvn clean && \
-    rm -rf /root/.m2/repository/dom4j && \
     rm -rf /root/.m2/repository/org/codehaus
 
 ENTRYPOINT [ "ls", "appdir" ]

@@ -16,4 +16,9 @@ ADD mrt-inventory /build/mrt-inventory
 
 RUN mvn install -D=environment=local -DskipITs -Ddocker.skip && \
     date -r inv-src/target +'mrt-inv: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
-    mvn clean
+    mvn clean && \
+    rm -rf /root/.m2/repository/org/codehaus && \
+    rm -rf /root/.m2/repository/org/apache/maven && \
+    rm -rf /root/.m2/repository/commons-collections && \
+    rm -rf /root/.m2/repository/com/google/cloud/tools && \
+    rm -rf /root/.m2/repository/org/yaml/snakeyaml/1.26

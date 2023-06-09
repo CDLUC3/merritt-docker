@@ -20,6 +20,14 @@ aws ecr get-login-password --region us-west-2 | \
   docker login --username AWS \
     --password-stdin ${ECR_REGISTRY} || exit 1
 
+# repos=`aws ecr describe-repositories|jq -r ".repositories[] | .repositoryName"| sort`
+# for repo in $repos
+# do 
+#   echo $repo `aws ecr list-images --repository $repo | jq -r ".imageIds[] | .imageDigest" | wc -l`
+# done
+
+# aws ecr put-lifecycle-policy --lifecycle-policy-text "{\"rules\":[{\"rulePriority\":1,\"description\":\"Expire all untagged images\",\"selection\":{\"tagStatus\":\"untagged\",\"countType\":\"imageCountMoreThan\",\"countNumber\":1},\"action\":{\"type\":\"expire\"}}]}" --repository-name callback
+
 # Java Images - resolved several issues by switching maven:3-jdk-8 to 3.9-eclipse-temurin-8-alpine
 # and by tidying up some artifacts left by the build
 # ---------------------------------
@@ -36,8 +44,7 @@ trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-audit:dev
 trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-replic:dev
 
 # the following have issues
-trivy --scanners vuln image --severity CRITICAL openjdk:11-jre-buster
-trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-opendj
+trivy --scanners vuln image --severity CRITICAL --ignore-unfixed ${ECR_REGISTRY}/mrt-opendj
 
 # ruby images
 # ---------------------------------
@@ -47,14 +54,21 @@ trivy --scanners vuln image --severity CRITICAL --ignore-unfixed ${ECR_REGISTRY}
 trivy --scanners vuln image --severity CRITICAL --ignore-unfixed ${ECR_REGISTRY}/mock-merritt-it:dev
 trivy --scanners vuln image --severity CRITICAL --ignore-unfixed ${ECR_REGISTRY}/pm-server:dev
 trivy --scanners vuln image --severity CRITICAL --ignore-unfixed ${ECR_REGISTRY}/mrt-dashboard
-trivy --scanners vuln image --severity CRITICAL public.ecr.aws/lambda/ruby:2.7
+
+# actual production images
 trivy --scanners vuln image --severity CRITICAL public.ecr.aws/lambda/ruby:3
 trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mysql-ruby-lambda
 trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-admin-lambda:dev
 trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-colladmin-lambda:dev
+trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-admin-lambda:stg
+trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-colladmin-lambda:stg
+trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-cognitousers:stg
+trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-admin-lambda:prd
+trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-colladmin-lambda:prd
+trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/uc3-mrt-cognitousers:prd
 
 # note that libarchive-tools adds 2 unfixable vulnerabilities
-trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/mrt-integ-tests
+trivy --scanners vuln image --severity CRITICAL --ignore-unfixed ${ECR_REGISTRY}/mrt-integ-tests
 
 # no longer used
 trivy --scanners vuln image --severity CRITICAL ${ECR_REGISTRY}/simulate-lambda-alb

@@ -12,4 +12,5 @@ export ECR_REGISTRY=it-docker-registry
 export SSM_SKIP_RESOLUTION=Y
 
 cd $REPOS_DIR
+mvn clean install -f dep_core/mrt-core2/parprop/
 mvn clean install

@@ -12,4 +12,5 @@ echo "ECR_REGISTRY must be set"
 echo "ECR_REGISTRY=${ECR_REGISTRY}"
 
 cd $REPOS_DIR
+mvn clean install -f dep_core/mrt-core2/parprop/
 mvn clean install

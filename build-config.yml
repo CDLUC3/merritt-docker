@@ -1,0 +1,18 @@
+build-config:
+  main:
+    tags:
+      mrt-core: main
+      mrt-cloud: main
+      cdl-zk-queue: main
+      mrt-zoo: main
+      mrt-inventory: main
+      mrt-store: main
+      mrt-ingest: main
+      mrt-audit: main
+      mrt-replic: main
+      mrt-dashboard: main
+    docker-tag: dev
+    push: true
+    artifacts-tag: testall
+    scan-unfixable: true
+    scan-fixable: true

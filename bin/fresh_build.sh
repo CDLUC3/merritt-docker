@@ -87,7 +87,7 @@ build_it_image() {
 }
 
 echo > /tmp/trivy-scan.txt
-echo > /tmp/trivy-scan-fixed.txt
+echo "Fixable items below.  See the attached report for the full vulnerability list: \n\n"> /tmp/trivy-scan-fixed.txt
 
 build_image_push ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn
 build_image_push ${ECR_REGISTRY}/mrt-core2:dev dep_core
@@ -135,4 +135,5 @@ scan_image opensearchproject/opensearch
 scan_image opensearchproject/opensearch-dashboards
 scan_image opensearchproject/logstash-oss-with-opensearch-output-plugin
 
-cat /tmp/trivy-scan-fixed.txt | mail -a /trmp/trivy-scan.txt -s "Merritt Docker Image Scan" `get_ssm_value_by_name 'batch/email'|sed -e s/,//g`
+DIST=`get_ssm_value_by_name 'batch/email'`
+cat /tmp/trivy-scan-fixed.txt | mail -a /tmp/trivy-scan.txt -s "Merritt Docker Image Scan" ${DIST//,/}

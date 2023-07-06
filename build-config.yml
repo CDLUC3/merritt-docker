@@ -18,15 +18,15 @@ build-config:
     scan-fixable: true
   opensearch:
     tags:
-      mrt-core: opensearch1
-      mrt-cloud: opensearch1
-      cdl-zk-queue: opensearch1
-      mrt-zoo: opensearch1
-      mrt-inventory: opensearch1
-      mrt-store: opensearch1
-      mrt-ingest: opensearch1
-      mrt-audit: opensearch1
-      mrt-replic: opensearch1
+      mrt-core: main
+      mrt-cloud: main
+      cdl-zk-queue: main
+      mrt-zoo: main
+      mrt-inventory: main
+      mrt-store: main
+      mrt-ingest: opensearch1a
+      mrt-audit: main
+      mrt-replic: main
       mrt-dashboard: main
     docker-tag: dev
     push: true

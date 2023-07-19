@@ -79,22 +79,27 @@ checkout 'ingest/mrt-ingest' 'mrt-ingest'
 checkout 'audit/mrt-audit' 'mrt-audit'
 checkout 'replic/mrt-replic' 'mrt-replic'
 checkout 'ui/mrt-dashboard' 'mrt-dashboard'
+checkout 'mrt-integ-tests' 'mrt-integ-tests'
 
 scan_image() {
   if [ "$FLAG_SCAN" == "true" ]
   then
     trivy --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCAN
     rc=$?
-    if [ $rc -ne 0]; then echo "WARN" > $JOBSTAT; fi
+    if [ $rc -ne 0 ]; then echo "WARN" > $JOBSTAT; fi
     echo "Scan $1; Result: $rc" >> $LOGSUM
+  else 
+    echo "Scan disabled" >> $LOGSUM
   fi
 
   if [ "$FLAG_SCAN_UNFIXED" == "true" ]
   then
     trivy --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 
     rc=$?
-    if [ $rc -ne 0]; then echo "FAIL" > $JOBSTAT; fi
+    if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
     echo "Scan (ignore unfixed) $1; Result: $rc" >> $LOGSUM
+  else 
+    echo "Scan unfixed disabled" >> $LOGSUM
   fi
 }
 
@@ -104,7 +109,7 @@ build_image() {
   date >> $LOGSUM
   docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} --force-rm $3 -t $1 $2 
   rc=$?
-  if [ $rc -ne 0]; then echo "FAIL" > $JOBSTAT; fi
+  if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
   echo "Docker build $1, dir: $2, param: $3; Result: $rc" >> $LOGSUM
   scan_image $1 
 }
@@ -115,8 +120,10 @@ build_image_push() {
   then
     docker push $1 
     rc=$?
-    if [ $rc -ne 0]; then echo "FAIL" > $JOBSTAT; fi
+    if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
     echo "Docker push $1; Result: $rc" >> $LOGSUM
+  else 
+    echo "Image push disabled" >> $LOGSUM
   fi
 }
 
@@ -137,6 +144,8 @@ build_it_image() {
     rc=$?
     if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
     echo "Compose Push, file: $1; Result: $rc" >> $LOGSUM
+  else 
+    echo "Image push disabled" >> $LOGSUM
   fi
 }
 
@@ -154,10 +163,13 @@ if [ "$FLAG_RUN_MAVEN" == "true" ]
 then
   echo >> $LOGSUM
   date >> $LOGSUM
+  mvn clean install -Pparent
   mvn clean install
   rc=$?
   if [ $rc -ne 0 ]; then STATUS='FAIL'; fi
   echo "Maven Build; Result: $rc" >> $LOGSUM
+else 
+  echo "Maven build disabled" >> $LOGSUM
 fi
 
 build_image_push ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn

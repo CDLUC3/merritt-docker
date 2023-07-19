@@ -43,8 +43,3 @@ echo
 echo "Building mrt-minio-with-content-it"
 docker-compose -f mrt-minio-it-with-content/docker-compose.yml build --pull
 docker-compose -f mrt-minio-it-with-content/docker-compose.yml push
-
-echo
-echo "Building pm-server"
-docker-compose -f pm-server/docker-compose.yml build --pull
-docker-compose -f pm-server/docker-compose.yml push

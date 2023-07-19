@@ -31,9 +31,6 @@ phases:
 
       - docker-compose -f mrt-inttest-services/mrt-minio-it-with-content/docker-compose.yml build --pull
       - docker-compose -f mrt-inttest-services/mrt-minio-it-with-content/docker-compose.yml push
-
-      - docker-compose -f mrt-inttest-services/pm-server/docker-compose.yml build --pull
-      - docker-compose -f mrt-inttest-services/pm-server/docker-compose.yml push
 #  post_build:
 #    commands:
 

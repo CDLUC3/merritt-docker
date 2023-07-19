@@ -22,7 +22,6 @@ Local desktop
 
 | Status | Image | Base Image | Input | Description |
 | ------ | ----- | ---------- | ----- | ----------- |
-| In use | pm-server | ruby | S3 bucket with PM data | Sinatra app to make PM data in S3 web-accessible for ingest|
 | In use | mock-merritt-it | ruby | mock ingest input | Sinatra app |
 | | | | mock storage data | - Generates test data for integrtion tests |
 | | | | mock node definitions | - Mocks responses from Merritt services |

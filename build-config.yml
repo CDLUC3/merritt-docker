@@ -16,20 +16,9 @@ build-config:
     artifacts-tag: testall
     scan-unfixable: true
     scan-fixable: true
-  opensearch:
-    tags:
-      mrt-core: main
-      mrt-cloud: main
-      cdl-zk-queue: main
-      mrt-zoo: main
-      mrt-inventory: main
-      mrt-store: main
-      mrt-ingest: opensearch1a
-      mrt-audit: main
-      mrt-replic: main
-      mrt-dashboard: main
-    docker-tag: dev
-    push: true
-    artifacts-tag: testall
-    scan-unfixable: true
-    scan-fixable: true
+  # create alternative branch configs
+  # --------------------------------
+  # opensearch:
+  #   tags:
+  #     mrt-core: main
+  #     mrt-cloud: main

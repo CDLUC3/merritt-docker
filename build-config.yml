@@ -16,6 +16,7 @@ build-config:
     push: true
     scan-unfixable: true
     scan-fixable: true
+    run-maven: true
   main-buildonly:
     tags:
       mrt-core: main
@@ -33,6 +34,7 @@ build-config:
     push: false
     scan-unfixable: false
     scan-fixable: false
+    run-maven: true
   # create alternative branch configs
   # --------------------------------
   # opensearch:

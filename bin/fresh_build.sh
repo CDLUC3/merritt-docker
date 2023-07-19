@@ -1,18 +1,31 @@
 #!/usr/bin/env bash
 #set -x
 
-MD_BRANCH=main
-BC_LABEL=opensearch
+MD_BRANCH=${1:-main}
+BC_LABEL=${2:-main}
+STATUS=PASS
+
+LOGSUM=/tmp/build-summary.${MD_BRANCH}.${BC_LABEL}.txt
+LOGSCAN=/tmp/trivy-scan.${MD_BRANCH}.${BC_LABEL}.txt
+LOGSCANFIXED=/tmp/trivy-scan-fixed.${MD_BRANCH}.${BC_LABEL}.txt
+
+echo > $LOGSUM
+echo > $LOGSCAN
+echo "Fixable items below.  See the attached report for the full vulnerability list: \n\n">  $LOGSCANFIXED
+
 WKDIR=/apps/dpr2/merritt-workspace/builds
+
+echo "Build merritt-docker branch: ${MD_BRANCH} using build label ${BC_LABEL}" >> $LOGSUM
+echo >> $LOGSUM
+date >> $LOGSUM
 
 checkout() {
   cd $WKDIR/merritt-docker
   SRCH=".[\"build-config\"].\"$BC_LABEL\".tags.\"$2\""
-  echo $SRCH
   branch=`python3 build-config.py|jq -r $SRCH`
-  echo $branch
   cd $WKDIR/merritt-docker/mrt-services/$1
   git checkout origin/$branch
+  echo "checkout dir: $1, repo: $2, branch: $branch" >> $LOGSUM
 }
 
 # get dir of this script
@@ -57,37 +70,61 @@ checkout 'audit/mrt-audit' 'mrt-audit'
 checkout 'replic/mrt-replic' 'mrt-replic'
 checkout 'ui/mrt-dashboard' 'mrt-dashboard'
 
-cd $WKDIR/merritt-docker/mrt-services
-
 scan_image() {
-  trivy --scanners vuln image --severity CRITICAL $1 >> /tmp/trivy-scan.txt
-  trivy --scanners vuln image --severity CRITICAL --ignore-unfixed >> /tmp/trivy-scan-fixed.txt $1 || exit 1
+  trivy --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCAN
+  rc=$?
+  if [ $rc -ne 0]; then STATUS=WARN; fi
+  echo "Scan $1; Result: $rc" >> $LOGSUM
+  trivy --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 
+  rc=$?
+  if [ $rc -ne 0]; then STATUS=ERROR; fi
+  echo "Scan (ignore unfixed) $1; Result: $rc" >> $LOGSUM
 }
 
 build_image() {
-  echo
-  echo "Building $1 (dir $2)"
-  echo "Running docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} $3 -t $1 $2"
   sleep 2
-  docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} --force-rm $3 -t $1 $2 || exit 1
+  echo >> $LOGSUM
+  date >> $LOGSUM
+  docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} --force-rm $3 -t $1 $2 
+  rc=$?
+  if [ $rc -ne 0]; then STATUS=ERROR; fi
+  echo "Docker build $1, dir: $2, param: $3; Result: $rc" >> $LOGSUM
   scan_image $1 
 }
 
 build_image_push() {
   build_image $1 $2 "$3"
-  docker push $1 || exit 1
+  docker push $1 
+  rc=$?
+  if [ $rc -ne 0]; then STATUS=ERROR; fi
+  echo "Docker push $1; Result: $rc" >> $LOGSUM
 }
 
 build_it_image() {
-  echo
-  echo "Building $2"
-  docker-compose -f $1 build --pull || exit 1
+  echo >> $LOGSUM
+  date >> $LOGSUM
+
+  docker-compose -f $1 build --pull
+  rc=$?
+  if [ $rc -ne 0]; then STATUS=ERROR; fi 
+  echo "Compose Build $2, file: $1; Result: $rc" >> $LOGSUM
+
   scan_image $2
-  docker-compose -f $1 push || exit 1
+  docker-compose -f $1 push 
+  rc=$?
+  if [ $rc -ne 0]; then STATUS=ERROR; fi
+  echo "Compose Push, file: $1; Result: $rc" >> $LOGSUM
 }
 
-echo > /tmp/trivy-scan.txt
-echo "Fixable items below.  See the attached report for the full vulnerability list: \n\n"> /tmp/trivy-scan-fixed.txt
+cd $WKDIR/merritt-docker/mrt-inttest-services
+
+build_it_image mock-merritt-it/docker-compose.yml ${ECR_REGISTRY}/mock-merritt-it:dev
+build_it_image mrt-it-database/docker-compose.yml ${ECR_REGISTRY}/mrt-it-database:dev
+build_it_image mrt-it-database/docker-compose-audit-replic.yml ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev
+build_it_image mrt-minio-it/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it:dev
+build_it_image mrt-minio-it-with-content/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
+
+cd ../mrt-services
 
 build_image_push ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn
 build_image_push ${ECR_REGISTRY}/mrt-core2:dev dep_core
@@ -116,24 +153,20 @@ build_image_push ${ECR_REGISTRY}/simulate-lambda-alb mrt-admin-lambda/simulate-l
 
 build_image ${ECR_REGISTRY}/logstash-oss:dev opensearch/logstash
 
-cd ../mrt-inttest-services
-
-build_it_image mock-merritt-it/docker-compose.yml ${ECR_REGISTRY}/mock-merritt-it:dev
-build_it_image mrt-it-database/docker-compose.yml ${ECR_REGISTRY}/mrt-it-database:dev
-build_it_image mrt-it-database/docker-compose-audit-replic.yml ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev
-build_it_image mrt-minio-it/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it:dev
-build_it_image mrt-minio-it-with-content/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
-build_it_image pm-server/docker-compose.yml ${ECR_REGISTRY}/pm-server:dev
-
 cd ../mrt-integ-tests
 build_image_push ${ECR_REGISTRY}/mrt-integ-tests .
 build_image standalone-chrome-download-folder chrome-driver
 
+echo >> $LOGSUM
+date >> $LOGSUM
 scan_image zookeeper
 scan_image ghusta/fakesmtp
 scan_image opensearchproject/opensearch
 scan_image opensearchproject/opensearch-dashboards
-scan_image opensearchproject/logstash-oss-with-opensearch-output-plugin
 
+echo >> $LOGSUM
+date >> $LOGSUM
 DIST=`get_ssm_value_by_name 'batch/email'`
-cat /tmp/trivy-scan-fixed.txt | mail -a /tmp/trivy-scan.txt -s "Merritt Docker Image Scan" ${DIST//,/}
+cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "${STATUS}: Merritt Daily Build and Docker Image Scan" ${DIST//,/}
+echo "${STATUS}: Merritt Daily Build and Docker Image Scan"
+rm $LOGSUM $LOGSCAN $LOGSCANFIXED

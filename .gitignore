@@ -10,3 +10,4 @@ mrt-services/mrt-admin-lambda/consistency-driver/.bundle
 dependencies.txt
 mrt-services/it.txt
 mrt-services/war.txt
+bin/fresh_build2.sh

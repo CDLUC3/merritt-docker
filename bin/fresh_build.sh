@@ -27,6 +27,7 @@ get_flag() {
 FLAG_PUSH=`get_flag push`
 FLAG_SCAN=`get_flag scan-fixable`
 FLAG_SCAN_UNFIXED=`get_flag scan-unfixable`
+FLAG_RUN_MAVEN=`get_flag run-maven`
 
 checkout() {
   cd $WKDIR/merritt-docker
@@ -80,7 +81,7 @@ checkout 'replic/mrt-replic' 'mrt-replic'
 checkout 'ui/mrt-dashboard' 'mrt-dashboard'
 
 scan_image() {
-  if $FLAG_SCAN
+  if [ "$FLAG_SCAN" == "true" ]
   then
     trivy --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCAN
     rc=$?
@@ -88,7 +89,7 @@ scan_image() {
     echo "Scan $1; Result: $rc" >> $LOGSUM
   fi
 
-  if $FLAG_SCAN_UNFIXED
+  if [ "$FLAG_SCAN_UNFIXED" == "true" ]
   then
     trivy --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 
     rc=$?
@@ -110,7 +111,7 @@ build_image() {
 
 build_image_push() {
   build_image $1 $2 "$3"
-  if $FLAG_PUSH
+  if [ "$FLAG_PUSH" == "true" ]
   then
     docker push $1 
     rc=$?
@@ -125,16 +126,16 @@ build_it_image() {
 
   docker-compose -f $1 build --pull
   rc=$?
-  if [ $rc -ne 0]; then echo "FAIL" > $JOBSTAT; fi 
+  if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi 
   echo "Compose Build $2, file: $1; Result: $rc" >> $LOGSUM
 
   scan_image $2
 
-  if $FLAG_PUSH
+  if [ "$FLAG_PUSH" == "true" ]
   then
     docker-compose -f $1 push 
     rc=$?
-    if [ $rc -ne 0]; then echo "FAIL" > $JOBSTAT; fi
+    if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
     echo "Compose Push, file: $1; Result: $rc" >> $LOGSUM
   fi
 }
@@ -149,12 +150,15 @@ build_it_image mrt-minio-it-with-content/docker-compose.yml ${ECR_REGISTRY}/mrt-
 
 cd ../mrt-services
 
-echo >> $LOGSUM
-date >> $LOGSUM
-mvn clean install
-rc=$?
-if [ $rc -ne 0]; then STATUS='FAIL'; fi
-echo "Maven Build; Result: $rc" >> $LOGSUM
+if [ "$FLAG_RUN_MAVEN" == "true" ]
+then
+  echo >> $LOGSUM
+  date >> $LOGSUM
+  mvn clean install
+  rc=$?
+  if [ $rc -ne 0 ]; then STATUS='FAIL'; fi
+  echo "Maven Build; Result: $rc" >> $LOGSUM
+fi
 
 build_image_push ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn
 build_image_push ${ECR_REGISTRY}/mrt-core2:dev dep_core

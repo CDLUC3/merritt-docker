@@ -18,12 +18,12 @@ services:
   store:
     environment:
       SSM_SKIP_RESOLUTION: 
-      #NODE_TABLE: nodes-dev
+      NODE_TABLE: nodes-dev
       SSM_ROOT_PATH: /uc3/mrt/dev/
-      #MERRITT_STORE_INFO: store-info-dev-docker
-  #ingest:
-    #volumes:
-    #- ./ingest/profiles-dev/:/tdr/ingest/profiles/
+      MERRITT_STORE_INFO: store-info-dev-docker
+  ingest:
+    volumes:
+    - ./ingest/profiles-dev/:/tdr/ingest/profiles/
   # The following setting will connect to the DEV database
   # But, the contents of the cloud nodes will not be compatible with this stack
   audit:

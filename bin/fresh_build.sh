@@ -17,6 +17,8 @@ LOGDOCKER=${WKDIR}/docker.txt
 LOGMAVEN=${WKDIR}/maven.txt
 JOBSTAT=${WKDIR}/jobstat.txt
 
+echo "See Log Ouput in $LOGSUM"
+
 echo "Working Dir: ${WKDIR}" > $LOGSUM
 echo " - ${LOGSUM}" >> $LOGSUM
 echo " - ${LOGSCAN}" >> $LOGSUM
@@ -41,22 +43,22 @@ SCRIPT_HOME=$(dirname $0)
 DOCKER_ENV_FILE=$SCRIPT_HOME/docker_environment.sh
 
 # source env vars
-echo "Setting up docker environment"
-[ -f "$DOCKER_ENV_FILE" ] && . "$DOCKER_ENV_FILE" || echo "file $DOCKER_ENV_FILE not found"
+echo "Setting up docker environment" >> $LOGSUM
+[ -f "$DOCKER_ENV_FILE" ] && . "$DOCKER_ENV_FILE" || echo "file $DOCKER_ENV_FILE not found" >> $LOGSUM
 source ~/.profile.d/uc3-aws-util.sh
 
-echo "Setup ECS login"
-echo "ECR_REGISTRY: $ECR_REGISTRY"
+echo "Setup ECS login" >> $LOGSUM
+echo "ECR_REGISTRY: $ECR_REGISTRY" >> $LOGSUM
 aws ecr get-login-password --region us-west-2 | \
   docker login --username AWS \
-    --password-stdin ${ECR_REGISTRY} || exit 1
+    --password-stdin ${ECR_REGISTRY} >> $LOGSUM 2>&1 || exit 1
 
 checkout() {
   cd $WKDIR/merritt-docker
   SRCH=".[\"build-config\"].\"$BC_LABEL\".tags.\"$2\""
   branch=`python3 build-config.py|jq -r $SRCH`
-  cd $WKDIR/merritt-docker/mrt-services/$1
-  git checkout origin/$branch
+  cd $WKDIR/merritt-docker/$1
+  git checkout origin/$branch >> $LOGSUM 2>&1
   echo "checkout dir: $1, repo: $2, branch: $branch" >> $LOGSUM
 }
 
@@ -86,7 +88,7 @@ build_image() {
   sleep 2
   echo >> $LOGSUM
   date >> $LOGSUM
-  docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} --force-rm $3 -t $1 $2 2>&1 >> $LOGDOCKER
+  docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} --force-rm $3 -t $1 $2 >> $LOGDOCKER 2>&1 
   rc=$?
   if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
   echo "Docker build $1, dir: $2, param: $3; Result: $rc" >> $LOGSUM
@@ -97,7 +99,7 @@ build_image_push() {
   build_image $1 $2 "$3"
   if [ "$FLAG_PUSH" == "true" ]
   then
-    docker push $1 2>&1 >> $LOGDOCKER
+    docker push $1 >> $LOGDOCKER 2>&1 
     rc=$?
     if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
     echo "Docker push $1; Result: $rc" >> $LOGSUM
@@ -110,7 +112,7 @@ build_it_image() {
   echo >> $LOGSUM
   date >> $LOGSUM
 
-  docker-compose -f $1 build --pull 2>&1 >> $LOGDOCKER
+  docker-compose -f $1 build --pull >> $LOGDOCKER 2>&1
   rc=$?
   if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi 
   echo "Compose Build $2, file: $1; Result: $rc" >> $LOGSUM
@@ -119,7 +121,7 @@ build_it_image() {
 
   if [ "$FLAG_PUSH" == "true" ]
   then
-    docker-compose -f $1 push 2>&1 >> $LOGDOCKER
+    docker-compose -f $1 push >> $LOGDOCKER 2>&1
     rc=$?
     if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
     echo "Compose Push, file: $1; Result: $rc" >> $LOGSUM
@@ -136,10 +138,10 @@ echo >> $LOGSUM
 echo "Clone merritt-docker; branch $MD_BRANCH" >> $LOGSUM
 echo "-----" >> $LOGSUM
 
-git clone git@github.com:CDLUC3/merritt-docker.git
+git clone git@github.com:CDLUC3/merritt-docker.git >> $LOGSUM 2>&1
 cd merritt-docker
-git checkout $MD_BRANCH
-git submodule update --remote --init
+git checkout $MD_BRANCH >> $LOGSUM 2>&1
+git submodule update --remote --init >> $LOGSUM 2>&1
 
 FLAG_PUSH=`get_flag push`
 FLAG_SCAN=`get_flag scan-fixable`
@@ -150,16 +152,16 @@ echo >> $LOGSUM
 echo "Checking out sumbmodule branches for build label $BC_LABEL" >> $LOGSUM
 echo "-----" >> $LOGSUM
 
-checkout 'dep_core/mrt-core2' 'mrt-core'
-checkout 'dep_cloud/mrt-cloud' 'mrt-cloud'
-checkout 'dep_cdlzk/cdl-zk-queue' 'cdl-zk-queue'
-checkout 'dep_zoo/mrt-zoo' 'mrt-zoo'
-checkout 'inventory/mrt-inventory' 'mrt-inventory'
-checkout 'store/mrt-store' 'mrt-store'
-checkout 'ingest/mrt-ingest' 'mrt-ingest'
-checkout 'audit/mrt-audit' 'mrt-audit'
-checkout 'replic/mrt-replic' 'mrt-replic'
-checkout 'ui/mrt-dashboard' 'mrt-dashboard'
+checkout 'mrt-services/dep_core/mrt-core2' 'mrt-core'
+checkout 'mrt-services/dep_cloud/mrt-cloud' 'mrt-cloud'
+checkout 'mrt-services/dep_cdlzk/cdl-zk-queue' 'cdl-zk-queue'
+checkout 'mrt-services/dep_zoo/mrt-zoo' 'mrt-zoo'
+checkout 'mrt-services/inventory/mrt-inventory' 'mrt-inventory'
+checkout 'mrt-services/store/mrt-store' 'mrt-store'
+checkout 'mrt-services/ingest/mrt-ingest' 'mrt-ingest'
+checkout 'mrt-services/audit/mrt-audit' 'mrt-audit'
+checkout 'mrt-services/replic/mrt-replic' 'mrt-replic'
+checkout 'mrt-services/ui/mrt-dashboard' 'mrt-dashboard'
 checkout 'mrt-integ-tests' 'mrt-integ-tests'
 
 echo >> $LOGSUM
@@ -184,8 +186,8 @@ if [ "$FLAG_RUN_MAVEN" == "true" ]
 then
   echo >> $LOGSUM
   date >> $LOGSUM
-  mvn clean install -Pparent 2>&1 >> $LOGMAVEN
-  mvn clean install 2>&1 >> $LOGMAVEN
+  mvn clean install -Pparent >> $LOGMAVEN 2>&1
+  mvn clean install >> $LOGMAVEN 2>&1
   rc=$?
   if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi
   echo "Maven Build; Result: $rc" >> $LOGSUM

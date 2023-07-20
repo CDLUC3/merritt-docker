@@ -257,4 +257,4 @@ date >> $LOGSUM
 DIST=`get_ssm_value_by_name 'batch/email'`
 STATUS=`cat $JOBSTAT`
 cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "${STATUS}: Merritt Daily Build and Docker Image Scan" ${DIST//,/}
-echo "${STATUS}: Merritt Daily Build and Docker Image Scan"
+echo "${STATUS}: Merritt Daily Build and Docker Image Scan" >> $LOGSUM

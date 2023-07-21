@@ -349,7 +349,7 @@ JOBSTAT=${WKDIR}/jobstat.txt
 init_log_files
 environment_init
 
-if (( `is_daily_build_dir` )) || ![ -d merritt-docker ]
+if (( `is_daily_build_dir` )) || [[ ! -d merritt-docker ]]
 then
   git_repo_init
 fi

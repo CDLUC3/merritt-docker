@@ -200,8 +200,10 @@ git_repo_init() {
   git clone git@github.com:CDLUC3/merritt-docker.git >> $LOGGIT 2>&1
   cd $WKDIR
   git checkout $MD_BRANCH >> $LOGGIT 2>&1
-  git submodule update --remote --init >> $LOGGIT 2>&1
+}
 
+git_repo_submodules() {
+  git submodule update --remote --init >> $LOGGIT 2>&1
   show_header "Checking out sumbmodule branches for build label $BC_LABEL" $LOGGIT
 
   checkout 'mrt-services/dep_core/mrt-core2' 'mrt-core'
@@ -355,6 +357,10 @@ environment_init
 if (( `is_daily_build_dir` )) 
 then
   git_repo_init
+  git_repo_submodules
+elif [ ! -e mrt-services/dep_core/mrt-core2/pom.xml ]
+then
+  git_repo_submodules
 fi
 
 show_flags() {

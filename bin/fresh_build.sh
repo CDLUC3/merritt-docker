@@ -358,8 +358,9 @@ if (( `is_daily_build_dir` ))
 then
   git_repo_init
   git_repo_submodules
-elif [ ! -e mrt-services/dep_core/mrt-core2/pom.xml ]
+elif [ "$JENKINS_HOME" != "" ]
 then
+  sed -i -e "s/git@github.com:/https:\/\/github.com\//" .git/config
   git_repo_submodules
 fi
 

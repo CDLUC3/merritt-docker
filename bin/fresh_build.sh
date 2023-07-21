@@ -328,6 +328,11 @@ post_summary_report() {
   cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
   echo $SUBJ
 }
+
+which mvn
+mvn --version
+exit
+
 # Process Runtime Args
 MD_BRANCH=${1:-main}
 BC_LABEL=${2:-main}

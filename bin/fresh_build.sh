@@ -322,8 +322,9 @@ post_summary_report() {
   date >> $LOGSUM
   DIST=`get_ssm_value_by_name 'batch/email'`
   STATUS=`get_jobstat`
-  cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "${STATUS}: Merritt Daily Build and Docker Image Scan" ${DIST//,/}
-  echo "${STATUS}: Merritt Daily Build and Docker Image Scan" >> $LOGSUM
+  SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - $MAVEN_PROFILE"
+  cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
+  echo $SUBJ
 }
 # Process Runtime Args
 MD_BRANCH=${1:-main}
@@ -348,7 +349,7 @@ JOBSTAT=${WKDIR}/jobstat.txt
 init_log_files
 environment_init
 
-if (( `is_daily_build_dir` ))
+if (( `is_daily_build_dir` )) || ![ -d merritt-docker ]
 then
   git_repo_init
 fi

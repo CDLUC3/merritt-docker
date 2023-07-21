@@ -16,7 +16,7 @@
           <activation>
               <activeByDefault>true</activeByDefault>
           </activation>   
-          <modules>
+            <modules>
                 <module>dep_core/mrt-core2</module>
                 <module>dep_cloud/mrt-cloud</module>
                 <module>dep_cdlzk/cdl-zk-queue</module>
@@ -33,7 +33,7 @@
           <activation>
               <activeByDefault>false</activeByDefault>
           </activation>   
-          <modules>
+            <modules>
                 <module>dep_core/mrt-core2</module>
                 <module>dep_cdlzk/cdl-zk-queue</module>
                 <module>ingest/mrt-ingest</module>
@@ -44,7 +44,7 @@
           <activation>
               <activeByDefault>false</activeByDefault>
           </activation>   
-          <modules>
+            <modules>
                 <module>dep_core/mrt-core2</module>
                 <module>dep_cloud/mrt-cloud</module>
                 <module>dep_zoo/mrt-zoo</module>
@@ -56,7 +56,7 @@
           <activation>
               <activeByDefault>false</activeByDefault>
           </activation>   
-          <modules>
+            <modules>
                 <module>dep_core/mrt-core2</module>
                 <module>dep_cloud/mrt-cloud</module>
                 <module>audit/mrt-audit</module>
@@ -67,7 +67,7 @@
           <activation>
               <activeByDefault>false</activeByDefault>
           </activation>   
-          <modules>
+            <modules>
                 <module>dep_core/mrt-core2</module>
                 <module>dep_cloud/mrt-cloud</module>
                 <module>dep_zoo/mrt-zoo</module>
@@ -79,7 +79,7 @@
           <activation>
               <activeByDefault>false</activeByDefault>
           </activation>   
-          <modules>
+            <modules>
                 <module>dep_core/mrt-core2</module>
                 <module>dep_cloud/mrt-cloud</module>
                 <module>dep_zoo/mrt-zoo</module>

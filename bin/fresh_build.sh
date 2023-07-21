@@ -322,7 +322,7 @@ post_summary_report() {
   date >> $LOGSUM
   DIST=`get_ssm_value_by_name 'batch/email'`
   STATUS=`get_jobstat`
-  SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - $MAVEN_PROFILE"
+  SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - ${MAVEN_PROFILE_PARAM}"
   cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
   echo $SUBJ
 }
@@ -331,6 +331,7 @@ MD_BRANCH=${1:-main}
 BC_LABEL=${2:-main}
 
 # use "" or "uc3" to build all; otherwise "ingest", "inventory", "store", "audit", "replic"
+MAVEN_PROFILE_PARAM=$3
 if [ "$3" == "" ]; then MAVEN_PROFILE=""; else MAVEN_PROFILE="-P$3"; fi
 
 WKDIR=${BUILDDIR:-/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}/merritt-docker}

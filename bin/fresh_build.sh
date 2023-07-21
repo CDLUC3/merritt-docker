@@ -197,7 +197,7 @@ show_header() {
 git_repo_init() {
   show_header "Clone merritt-docker; branch $MD_BRANCH" $LOGGIT
 
-  git clone git@github.com:CDLUC3/merritt-docker.git >> $LOGGIT 2>&1
+  git clone https://github.com/CDLUC3/merritt-docker.git >> $LOGGIT 2>&1
   cd merritt-docker
   git checkout $MD_BRANCH >> $LOGGIT 2>&1
   git submodule update --remote --init >> $LOGGIT 2>&1

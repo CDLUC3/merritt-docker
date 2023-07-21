@@ -241,10 +241,6 @@ build_maven_artifacts() {
     echo >> $LOGSUM
     date >> $LOGSUM
 
-    echo "!!!!!!!!!!!!!!"
-    mvn --version
-    mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent
-
     mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent >> $LOGMAVEN 2>&1
     if [ "$FLAG_RUN_MAVEN_TESTS" == "true" ]
     then
@@ -357,7 +353,10 @@ LOGMAVEN=${WKDIR_PAR}/build-log.maven.txt
 JOBSTAT=${WKDIR_PAR}/jobstat.txt
 
 init_log_files
-environment_init
+if [ "$JENKINS_HOME" == "" ]
+then
+  environment_init
+fi
 
 if (( `is_daily_build_dir` )) 
 then

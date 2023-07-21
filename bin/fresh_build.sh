@@ -9,7 +9,7 @@
 # - Checkout submoule branches identified in build-config.yml
 # 
 # Usage:
-#   fresh_build.sh [merritt-docker branch] [build-config profile name]
+#   fresh_build.sh [merritt-docker branch] [build-config profile name] [maven profile - optional]
 #
 # Environment variables
 #   BUILDDIR - directory in which to run builds
@@ -242,9 +242,9 @@ build_maven_artifacts() {
     mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent >> $LOGMAVEN 2>&1
     if [ "$FLAG_RUN_MAVEN_TESTS" == "true" ]
     then
-      mvn clean install >> $LOGMAVEN 2>&1
+      mvn clean install $MAVEN_PROFILE >> $LOGMAVEN 2>&1
     else
-      mvn clean install -Ddocker.skip -DskipITs -Dmaven.test.skip=true >> $LOGMAVEN 2>&1
+      mvn clean install -Ddocker.skip -DskipITs -Dmaven.test.skip=true $MAVEN_PROFILE >> $LOGMAVEN 2>&1
     fi
     eval_jobstat $? "FAIL" "Maven Build"
   else 
@@ -328,6 +328,10 @@ post_summary_report() {
 # Process Runtime Args
 MD_BRANCH=${1:-main}
 BC_LABEL=${2:-main}
+
+# use "" or "uc3" to build all; otherwise "ingest", "inventory", "store", "audit", "replic"
+if [ "$3" == "" ]; then MAVEN_PROFILE=""; else MAVEN_PROFILE="-P$3"; fi
+
 WKDIR=${BUILDDIR:-/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}}
 
 create_working_dir
@@ -349,23 +353,33 @@ then
   git_repo_init
 fi
 
-echo >> $LOGSUM
+show_flags() {
+  echo >> $LOGSUM
+  echo "FLAG_PUSH=$FLAG_PUSH" >> $LOGSUM
+  echo "FLAG_SCAN=$FLAG_SCAN" >> $LOGSUM
+  echo "FLAG_SCAN_UNFIXED=$FLAG_SCAN_UNFIXED" >> $LOGSUM
+  echo "FLAG_RUN_MAVEN=$FLAG_RUN_MAVEN" >> $LOGSUM
+  echo "FLAG_RUN_MAVEN_TESTS=$FLAG_RUN_MAVEN_TESTS" >> $LOGSUM
+  echo "FLAG_BUILD_SUPPORT=$FLAG_BUILD_SUPPORT" >> $LOGSUM
+}
+
 FLAG_PUSH=`get_flag push`
-echo "FLAG_PUSH=$FLAG_PUSH" >> $LOGSUM
 FLAG_SCAN=`get_flag scan-fixable`
-echo "FLAG_SCAN=$FLAG_SCAN" >> $LOGSUM
 FLAG_SCAN_UNFIXED=`get_flag scan-unfixable`
-echo "FLAG_SCAN_UNFIXED=$FLAG_SCAN_UNFIXED" >> $LOGSUM
 FLAG_RUN_MAVEN=`get_flag run-maven`
-echo "FLAG_RUN_MAVEN=$FLAG_RUN_MAVEN" >> $LOGSUM
 FLAG_RUN_MAVEN_TESTS=`get_flag run-maven-tests`
-echo "FLAG_RUN_MAVEN_TESTS=$FLAG_RUN_MAVEN_TESTS" >> $LOGSUM
+FLAG_BUILD_SUPPORT=`get_flag build-support`
+show_flags
 
 build_integration_test_images
 build_maven_artifacts
 build_microservice_images
 build_docker_stack_support_images
-build_merritt_lambda_images
-build_merritt_end_to_end_test_images
-scan_default_docker_stack_support_images
+
+if [ "$FLAG_BUILD_SUPPORT" == "true" ]
+then
+  build_merritt_lambda_images
+  build_merritt_end_to_end_test_images
+  scan_default_docker_stack_support_images
+fi
 post_summary_report

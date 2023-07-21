@@ -325,7 +325,10 @@ post_summary_report() {
   DIST=`get_ssm_value_by_name 'batch/email'`
   STATUS=`get_jobstat`
   SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - ${MAVEN_PROFILE_PARAM}"
-  cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
+  if [ "$JENKINS_HOME" == "" ]
+  then
+    cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
+  fi
   echo $SUBJ
 }
 

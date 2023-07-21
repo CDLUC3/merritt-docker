@@ -69,7 +69,9 @@ eval_jobstat() {
   if [[ $1 > 0 ]]
   then
     jobstat "$2"
-    echo "$3; Result: $1" >> $LOGSUM
+    echo "* $2 $3; Result: $1" >> $LOGSUM
+  else
+    echo "       $3" >> $LOGSUM
   fi
 }
 
@@ -127,18 +129,18 @@ checkout() {
 scan_image() {
   if [ "$FLAG_SCAN" == "true" ]
   then
-    trivy --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCAN
+    trivy --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCAN 2>&1
     eval_jobstat $? "WARN" "Scan $1"
   else 
-    echo "Scan disabled" >> $LOGSUM
+    echo "       Scan disabled" >> $LOGSUM
   fi
 
   if [ "$FLAG_SCAN_UNFIXED" == "true" ]
   then
-    trivy --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 
+    trivy --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 2>&1
     eval_jobstat $? "FAIL" "Scan (ignore unfixed) $1"
   else 
-    echo "Scan unfixed disabled" >> $LOGSUM
+    echo "       Scan unfixed disabled" >> $LOGSUM
   fi
 }
 
@@ -158,7 +160,7 @@ build_image_push() {
     docker push $1 >> $LOGDOCKER 2>&1 
     eval_jobstat $? "FAIL" "Docker push $1"
   else 
-    echo "Image push disabled" >> $LOGSUM
+    echo "       Image push disabled" >> $LOGSUM
   fi
 }
 
@@ -167,9 +169,7 @@ build_it_image() {
   date >> $LOGSUM
 
   docker-compose -f $1 build --pull >> $LOGDOCKER 2>&1
-  rc=$?
-  if [ $rc -ne 0 ]; then echo "FAIL" > $JOBSTAT; fi 
-  echo "Compose Build $2, file: $1; Result: $rc" >> $LOGSUM
+  eval_jobstat $? "FAIL" "Compose Build $2, file: $1"
 
   scan_image $2
 
@@ -178,7 +178,7 @@ build_it_image() {
     docker-compose -f $1 push >> $LOGDOCKER 2>&1
     eval_jobstat $? "FAIL" "Compose Push, file: $1"
   else 
-    echo "Image push disabled" >> $LOGSUM
+    echo "       Image push disabled" >> $LOGSUM
   fi
 }
 
@@ -187,19 +187,22 @@ get_flag() {
   python3 build-config.py|jq -r ".[\"build-config\"].\"$BC_LABEL\".\"$1\""
 }
 
-git_repo_init() {
+# show_header(text, detail_log_path)
+show_header() {
   echo >> $LOGSUM
-  echo "Clone merritt-docker; branch $MD_BRANCH" >> $LOGSUM
+  echo "$1 (log: `basename $2`)" >> $LOGSUM
   echo "-----" >> $LOGSUM
+}
+
+git_repo_init() {
+  show_header "Clone merritt-docker; branch $MD_BRANCH" $LOGGIT
 
   git clone git@github.com:CDLUC3/merritt-docker.git >> $LOGGIT 2>&1
   cd merritt-docker
   git checkout $MD_BRANCH >> $LOGGIT 2>&1
   git submodule update --remote --init >> $LOGGIT 2>&1
 
-  echo >> $LOGSUM
-  echo "Checking out sumbmodule branches for build label $BC_LABEL" >> $LOGSUM
-  echo "-----" >> $LOGSUM
+  show_header "Checking out sumbmodule branches for build label $BC_LABEL" $LOGGIT
 
   checkout 'mrt-services/dep_core/mrt-core2' 'mrt-core'
   checkout 'mrt-services/dep_cloud/mrt-cloud' 'mrt-cloud'
@@ -215,9 +218,7 @@ git_repo_init() {
 }
 
 build_integration_test_images() {
-  echo >> $LOGSUM
-  echo "Build Integration Test Docker Images" >> $LOGSUM
-  echo "-----" >> $LOGSUM
+  show_header "Build Integration Test Docker Images" $LOGDOCKER
 
   cd $WKDIR/merritt-docker/mrt-inttest-services
 
@@ -229,28 +230,30 @@ build_integration_test_images() {
 }
 
 build_maven_artifacts() {
-  echo >> $LOGSUM
-  echo "Run maven builds and integration tests" >> $LOGSUM
-  echo "-----" >> $LOGSUM
+  show_header "Run maven builds and integration tests" $LOGMAVEN
 
   cd $WKDIR/merritt-docker/mrt-services
 
-  if [ "$FLAG_RUN_MAVEN" == "true" ]
+  if [ "$FLAG_RUN_MAVEN_TESTS" == "true" ] || [ "$FLAG_RUN_MAVEN" == "true" ]
   then
     echo >> $LOGSUM
     date >> $LOGSUM
-    mvn clean install -Pparent >> $LOGMAVEN 2>&1
-    mvn clean install >> $LOGMAVEN 2>&1
+
+    mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent >> $LOGMAVEN 2>&1
+    if [ "$FLAG_RUN_MAVEN_TESTS" == "true" ]
+    then
+      mvn clean install >> $LOGMAVEN 2>&1
+    else
+      mvn clean install -Ddocker.skip -DskipITs -Dmaven.test.skip=true >> $LOGMAVEN 2>&1
+    fi
     eval_jobstat $? "FAIL" "Maven Build"
   else 
-    echo "Maven build disabled" >> $LOGSUM
+    echo "       Maven build disabled" >> $LOGSUM
   fi
 }
 
 build_microservice_images() {
-  echo >> $LOGSUM
-  echo "Build Merritt Images" >> $LOGSUM
-  echo "-----" >> $LOGSUM
+  show_header "Build Merritt Images" $LOGDOCKER
 
   cd $WKDIR/merritt-docker/mrt-services
 
@@ -270,9 +273,7 @@ build_microservice_images() {
 }
 
 build_docker_stack_support_images(){
-  echo >> $LOGSUM
-  echo "Build Docker Stack Images" >> $LOGSUM
-  echo "-----" >> $LOGSUM
+  show_header "Build Docker Stack Images" $LOGDOCKER
 
   cd $WKDIR/merritt-docker/mrt-services
 
@@ -285,9 +286,7 @@ build_docker_stack_support_images(){
 }
 
 build_merritt_lambda_images() {
-  echo >> $LOGSUM
-  echo "Build Merritt Lambda Images" >> $LOGSUM
-  echo "-----" >> $LOGSUM
+  show_header "Build Merritt Lambda Images" $LOGDOCKER
 
   cd $WKDIR/merritt-docker/mrt-services
 
@@ -300,9 +299,7 @@ build_merritt_lambda_images() {
 }
 
 build_merritt_end_to_end_test_images() {
-  echo >> $LOGSUM
-  echo "Build Merritt End to End Test Images" >> $LOGSUM
-  echo "-----" >> $LOGSUM
+  show_header "Build Merritt End to End Test Images" $LOGDOCKER
 
   cd ../mrt-integ-tests
   build_image_push ${ECR_REGISTRY}/mrt-integ-tests .
@@ -352,10 +349,17 @@ then
   git_repo_init
 fi
 
+echo >> $LOGSUM
 FLAG_PUSH=`get_flag push`
+echo "FLAG_PUSH=$FLAG_PUSH" >> $LOGSUM
 FLAG_SCAN=`get_flag scan-fixable`
+echo "FLAG_SCAN=$FLAG_SCAN" >> $LOGSUM
 FLAG_SCAN_UNFIXED=`get_flag scan-unfixable`
+echo "FLAG_SCAN_UNFIXED=$FLAG_SCAN_UNFIXED" >> $LOGSUM
 FLAG_RUN_MAVEN=`get_flag run-maven`
+echo "FLAG_RUN_MAVEN=$FLAG_RUN_MAVEN" >> $LOGSUM
+FLAG_RUN_MAVEN_TESTS=`get_flag run-maven-tests`
+echo "FLAG_RUN_MAVEN_TESTS=$FLAG_RUN_MAVEN_TESTS" >> $LOGSUM
 
 build_integration_test_images
 build_maven_artifacts

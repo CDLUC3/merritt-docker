@@ -241,6 +241,10 @@ build_maven_artifacts() {
     echo >> $LOGSUM
     date >> $LOGSUM
 
+    echo "!!!!!!!!!!!!!!"
+    mvn --version
+    mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent
+
     mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent >> $LOGMAVEN 2>&1
     if [ "$FLAG_RUN_MAVEN_TESTS" == "true" ]
     then
@@ -328,10 +332,6 @@ post_summary_report() {
   cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
   echo $SUBJ
 }
-
-which mvn
-mvn --version
-exit
 
 # Process Runtime Args
 MD_BRANCH=${1:-main}

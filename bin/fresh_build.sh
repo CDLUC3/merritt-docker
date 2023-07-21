@@ -35,11 +35,11 @@ is_daily_build_dir() {
 create_working_dir() {
   if (( `is_daily_build_dir` ))
   then
-    echo "Creating $WKDIR"
-    rm -rf $WKDIR
-    mkdir -p $WKDIR
+    echo "Creating $WKDIR_PAR"
+    rm -rf $WKDIR_PAR
+    mkdir -p $WKDIR_PAR
   fi
-  cd $WKDIR
+  cd $WKDIR_PAR
 }
 
 get_jobstat(){ 
@@ -118,10 +118,10 @@ environment_init() {
 }
 
 checkout() {
-  cd $WKDIR/merritt-docker
+  cd $WKDIR
   SRCH=".[\"build-config\"].\"$BC_LABEL\".tags.\"$2\""
   branch=`python3 build-config.py|jq -r $SRCH`
-  cd $WKDIR/merritt-docker/$1
+  cd $WKDIR/$1
   git checkout origin/$branch >> $LOGGIT 2>&1
   echo "checkout dir: $1, repo: $2, branch: $branch" >> $LOGSUM
 }
@@ -183,7 +183,7 @@ build_it_image() {
 }
 
 get_flag() {
-  cd $WKDIR/merritt-docker
+  cd $WKDIR
   python3 build-config.py|jq -r ".[\"build-config\"].\"$BC_LABEL\".\"$1\""
 }
 
@@ -196,9 +196,9 @@ show_header() {
 
 git_repo_init() {
   show_header "Clone merritt-docker; branch $MD_BRANCH" $LOGGIT
-
-  git clone https://github.com/CDLUC3/merritt-docker.git >> $LOGGIT 2>&1
-  cd merritt-docker
+  cd $WKDIR_PAR
+  git clone git@github.com:CDLUC3/merritt-docker.git >> $LOGGIT 2>&1
+  cd $WKDIR
   git checkout $MD_BRANCH >> $LOGGIT 2>&1
   git submodule update --remote --init >> $LOGGIT 2>&1
 
@@ -220,7 +220,7 @@ git_repo_init() {
 build_integration_test_images() {
   show_header "Build Integration Test Docker Images" $LOGDOCKER
 
-  cd $WKDIR/merritt-docker/mrt-inttest-services
+  cd $WKDIR/mrt-inttest-services
 
   build_it_image mock-merritt-it/docker-compose.yml ${ECR_REGISTRY}/mock-merritt-it:dev
   build_it_image mrt-it-database/docker-compose.yml ${ECR_REGISTRY}/mrt-it-database:dev
@@ -232,7 +232,7 @@ build_integration_test_images() {
 build_maven_artifacts() {
   show_header "Run maven builds and integration tests" $LOGMAVEN
 
-  cd $WKDIR/merritt-docker/mrt-services
+  cd $WKDIR/mrt-services
 
   if [ "$FLAG_RUN_MAVEN_TESTS" == "true" ] || [ "$FLAG_RUN_MAVEN" == "true" ]
   then
@@ -255,7 +255,7 @@ build_maven_artifacts() {
 build_microservice_images() {
   show_header "Build Merritt Images" $LOGDOCKER
 
-  cd $WKDIR/merritt-docker/mrt-services
+  cd $WKDIR/mrt-services
 
   build_image_push ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn
   build_image_push ${ECR_REGISTRY}/mrt-core2:dev dep_core
@@ -275,7 +275,7 @@ build_microservice_images() {
 build_docker_stack_support_images(){
   show_header "Build Docker Stack Images" $LOGDOCKER
 
-  cd $WKDIR/merritt-docker/mrt-services
+  cd $WKDIR/mrt-services
 
   build_image_push ${ECR_REGISTRY}/mrt-database mysql
   build_image_push ${ECR_REGISTRY}/mrt-opendj ldap
@@ -288,7 +288,7 @@ build_docker_stack_support_images(){
 build_merritt_lambda_images() {
   show_header "Build Merritt Lambda Images" $LOGDOCKER
 
-  cd $WKDIR/merritt-docker/mrt-services
+  cd $WKDIR/mrt-services
 
   build_image_push ${ECR_REGISTRY}/mysql-ruby-lambda mrt-admin-lambda/mysql-ruby-lambda
   build_image_push ${ECR_REGISTRY}/uc3-mrt-admin-common:dev mrt-admin-lambda/src-common
@@ -333,26 +333,25 @@ BC_LABEL=${2:-main}
 # use "" or "uc3" to build all; otherwise "ingest", "inventory", "store", "audit", "replic"
 if [ "$3" == "" ]; then MAVEN_PROFILE=""; else MAVEN_PROFILE="-P$3"; fi
 
-WKDIR=${BUILDDIR:-/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}}
+WKDIR=${BUILDDIR:-/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}/merritt-docker}
+# Note that Jenkins clones into a directory without repeating the repo name
+WKDIR_PAR=${BUILDDIR:-/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}}
 
 create_working_dir
 
 # Set ouput logs
-LOGSUM=${WKDIR}/build-log.summary.txt
-LOGGIT=${WKDIR}/build-log.git.txt
-LOGDOCKER=${WKDIR}/build-log.docker.txt
-LOGSCAN=${WKDIR}/build-log.trivy-scan.txt
-LOGSCANFIXED=${WKDIR}/build-log.trivy-scan-fixed.txt
-LOGMAVEN=${WKDIR}/build-log.maven.txt
-JOBSTAT=${WKDIR}/jobstat.txt
+LOGSUM=${WKDIR_PAR}/build-log.summary.txt
+LOGGIT=${WKDIR_PAR}/build-log.git.txt
+LOGDOCKER=${WKDIR_PAR}/build-log.docker.txt
+LOGSCAN=${WKDIR_PAR}/build-log.trivy-scan.txt
+LOGSCANFIXED=${WKDIR_PAR}/build-log.trivy-scan-fixed.txt
+LOGMAVEN=${WKDIR_PAR}/build-log.maven.txt
+JOBSTAT=${WKDIR_PAR}/jobstat.txt
 
 init_log_files
 environment_init
 
-if (( `is_daily_build_dir` ))
-then
-  git_repo_init
-elif [ ! -d merritt-docker ]
+if (( `is_daily_build_dir` )) 
 then
   git_repo_init
 fi

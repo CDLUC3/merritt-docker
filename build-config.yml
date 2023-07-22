@@ -1,49 +1,64 @@
-build-config:
-  main:
-    tags:
-      mrt-core: main
-      mrt-cloud: main
-      cdl-zk-queue: main
-      mrt-zoo: main
-      mrt-inventory: main
-      mrt-store: main
-      mrt-ingest: main
-      mrt-audit: main
-      mrt-replic: main
-      mrt-dashboard: main
-      mrt-integ-tests: main
-    # docker-tag: dev
-    # artifacts-tag: testall
+# Merritt Build Configurations 
+#   Construct a new grouping of tags if you wish to build a different combination of branches
+#
+# Possible future flags
+# - docker-tag - to build tags other than "dev"
+
+# Common sets of build flags to be used in comination with a set of branches and tags
+flagsets:
+  # run only docker builds, do not run maven
+  docker: &docker
     push: true
-    scan-unfixable: true
-    scan-fixable: true
-    run-maven: true
-    run-maven-tests: true
-    build-support: true
-  main-buildonly:
-    tags:
-      mrt-core: main
-      mrt-cloud: main
-      cdl-zk-queue: main
-      mrt-zoo: main
-      mrt-inventory: main
-      mrt-store: main
-      mrt-ingest: main
-      mrt-audit: main
-      mrt-replic: main
-      mrt-dashboard: main
-      mrt-integ-tests: main
-    # docker-tag: dev
-    # artifacts-tag: testall
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: false
+    run-maven-tests: false
+    build-support: false
+  # run docker and maven buids
+  buildonly: &buildonly
     push: false
     scan-unfixable: false
     scan-fixable: false
     run-maven: true
     run-maven-tests: false
     build-support: false
-  # create alternative branch configs
-  # --------------------------------
-  # opensearch:
-  #   tags:
-  #     mrt-core: main
-  #     mrt-cloud: main
+  # run docker and maven builds, include maven tests
+  buildtest: &buildtest
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: true
+    run-maven-tests: test
+    build-support: false
+build-config:
+  main:
+    tags: &maintags
+      mrt-core: main
+      mrt-cloud: main
+      cdl-zk-queue: main
+      mrt-zoo: main
+      mrt-inventory: main
+      mrt-store: main
+      mrt-ingest: main
+      mrt-audit: main
+      mrt-replic: main
+      mrt-dashboard: main
+      mrt-integ-tests: main
+    push: true
+    scan-unfixable: true
+    scan-fixable: true
+    run-maven: true
+    run-maven-tests: true
+    build-support: true
+  main-docker:
+    <<: *docker
+    tags:
+      <<: *maintags
+  main-buildonly:
+    <<: *buildonly
+    tags:
+      <<: *maintags
+  main-test:
+    <<: *buildtest
+    tags:
+      <<: *maintags

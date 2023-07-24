@@ -1,6 +1,6 @@
 # Merritt Build
 
-The [fresh_build.sh](fresh_build.sh) script performs the following actions
+The [bin/fresh_build.sh](bin/fresh_build.sh) script performs the following actions
 - Clone merritt-docker which contains submodules that link to all other Merritt code modules
 - Clone submodules
 - Checkout submoule branches identified in [build-config.yml](build-config.yml)

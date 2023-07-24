@@ -13,3 +13,4 @@ mrt-services/war.txt
 build-output/*.txt
 build-output/*.jar
 build-output/*.war
+build.content.txt

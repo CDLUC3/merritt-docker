@@ -36,6 +36,16 @@ create_working_dir() {
     mkdir -p $WKDIR_PAR
   fi
   cd $WKDIR_PAR
+
+  if [[ -f $WKDIR/build-output/*.war ]]
+  then
+    rm $WKDIR/build-output/*.war
+  fi
+
+  if [[ -f $WKDIR/build-output/*.jar ]]
+  then
+    rm $WKDIR/build-output/*.jar
+  fi
 }
 
 get_jobstat(){ 
@@ -83,6 +93,7 @@ init_log_files() {
   echo " - ${LOGMAVEN}" >> $LOGSUM
   echo >> $LOGSUM
 
+  echo "Test" > $BUILD_TXT
   echo > $LOGGIT
   echo > $LOGSCAN
   echo > $LOGDOCKER
@@ -113,13 +124,20 @@ environment_init() {
       --password-stdin ${ECR_REGISTRY} >> $LOGSUM 2>&1 || exit 1
 }
 
-checkout() {
+checkout_build_config() {
   cd $WKDIR
   SRCH=".[\"build-config\"].\"$BC_LABEL\".tags.\"$2\""
   branch=`python3 build-config.py|jq -r $SRCH`
   cd $WKDIR/$1
   git checkout origin/$branch >> $LOGGIT 2>&1
   echo "checkout dir: $1, repo: $2, branch: $branch" >> $LOGSUM
+}
+
+checkout_tag() {
+  cd $WKDIR/$1
+  tag=$2
+  git checkout origin/$tag >> $LOGGIT 2>&1
+  echo "checkout dir: $1, tag: $tag" >> $LOGSUM
 }
 
 scan_image() {
@@ -184,7 +202,7 @@ get_flag() {
 }
 
 test_flag() {
-  if [[ "`get_flag $1`" == "test" ]]; then return 0; else return 1; fi
+  if [[ "`get_flag $1`" == "true" ]]; then return 0; else return 1; fi
 }
 
 
@@ -207,17 +225,48 @@ git_repo_submodules() {
   git submodule update --remote --init >> $LOGGIT 2>&1
   show_header "Checking out sumbmodule branches for build label $BC_LABEL" $LOGGIT
 
-  checkout 'mrt-services/dep_core/mrt-core2' 'mrt-core'
-  checkout 'mrt-services/dep_cloud/mrt-cloud' 'mrt-cloud'
-  checkout 'mrt-services/dep_cdlzk/cdl-zk-queue' 'cdl-zk-queue'
-  checkout 'mrt-services/dep_zoo/mrt-zoo' 'mrt-zoo'
-  checkout 'mrt-services/inventory/mrt-inventory' 'mrt-inventory'
-  checkout 'mrt-services/store/mrt-store' 'mrt-store'
-  checkout 'mrt-services/ingest/mrt-ingest' 'mrt-ingest'
-  checkout 'mrt-services/audit/mrt-audit' 'mrt-audit'
-  checkout 'mrt-services/replic/mrt-replic' 'mrt-replic'
-  checkout 'mrt-services/ui/mrt-dashboard' 'mrt-dashboard'
-  checkout 'mrt-integ-tests' 'mrt-integ-tests'
+  checkout_build_config 'mrt-services/dep_core/mrt-core2' 'mrt-core'
+  checkout_build_config 'mrt-services/dep_cloud/mrt-cloud' 'mrt-cloud'
+  checkout_build_config 'mrt-services/dep_cdlzk/cdl-zk-queue' 'cdl-zk-queue'
+  checkout_build_config 'mrt-services/dep_zoo/mrt-zoo' 'mrt-zoo'
+
+  if [[ "$MAVEN_PROFILE" == "-P inventory" ]] && [[ "$CHECK_REPO_TAG" != "" ]]
+  then
+    checkout_tag 'mrt-services/inventory/mrt-inventory' $CHECK_REPO_TAG
+  else
+    checkout_build_config 'mrt-services/inventory/mrt-inventory' 'mrt-inventory'
+  fi
+
+  if [[ "$MAVEN_PROFILE" == "-P store" ]] && [[ "$CHECK_REPO_TAG" != "" ]]
+  then
+    checkout_tag 'mrt-services/store/mrt-store' $CHECK_REPO_TAG
+  else
+    checkout_build_config 'mrt-services/store/mrt-store' 'mrt-store'
+  fi
+  
+  if [[ "$MAVEN_PROFILE" == "-P ingest" ]] && [[ "$CHECK_REPO_TAG" != "" ]]
+  then
+    checkout_tag 'mrt-services/ingest/mrt-ingest' $CHECK_REPO_TAG
+  else
+    checkout_build_config 'mrt-services/ingest/mrt-ingest' 'mrt-ingest'
+  fi
+  
+  if [[ "$MAVEN_PROFILE" == "-P audit" ]] && [[ "$CHECK_REPO_TAG" != "" ]]
+  then
+    checkout_tag 'mrt-services/audit/mrt-audit' $CHECK_REPO_TAG
+  else
+    checkout_build_config 'mrt-services/audit/mrt-audit' 'mrt-audit'
+  fi
+  
+  if [[ "$MAVEN_PROFILE" == "-P replic" ]] && [[ "$CHECK_REPO_TAG" != "" ]]
+  then
+    checkout_tag 'mrt-services/replic/mrt-replic' $CHECK_REPO_TAG
+  else
+    checkout_build_config 'mrt-services/replic/mrt-replic' 'mrt-replic'
+  fi
+
+  checkout_build_config 'mrt-services/ui/mrt-dashboard' 'mrt-dashboard'
+  checkout_build_config 'mrt-integ-tests' 'mrt-integ-tests'
 }
 
 build_integration_test_images() {
@@ -232,10 +281,28 @@ build_integration_test_images() {
   build_it_image mrt-minio-it-with-content/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
 }
 
+check_maven_profile() {
+  if [[ "$MAVEN_PROFILE" == "-P $1" ]] || [[ "$MAVEN_PROFILE" == "-P uc3" ]] || [[ "$MAVEN_PROFILE" == "" ]]; then return 0; else return 1; fi
+}
+
+write_build_content() {
+  if [[ "$MAVEN_PROFILE" == "-P uc3" ]] || [[ "$MAVEN_PROFILE" == "" ]]
+  then
+    echo "$TAG_PUB; $MD_BRANCH; $BC_LABEL; ${MAVEN_PROFILE}" > $BUILD_TXT
+  elif [[ "$CHECK_REPO_TAG" != "" ]]
+  then
+    echo "$CHECK_REPO_TAG" > $BUILD_TXT
+  else
+    echo "$TAG_PUB; $MD_BRANCH; $BC_LABEL; ${MAVEN_PROFILE}" > $BUILD_TXT
+  fi
+}
+
 build_maven_artifacts() {
   show_header "Run maven builds and integration tests" $LOGMAVEN
 
   cd $WKDIR/mrt-services
+
+  write_build_content
 
   if test_flag 'run-maven' || test_flag 'run-maven-tests'
   then
@@ -249,7 +316,46 @@ build_maven_artifacts() {
     else
       mvn clean install -Ddocker.skip -DskipITs -Dmaven.test.skip=true $MAVEN_PROFILE >> $LOGMAVEN 2>&1
     fi
-    eval_jobstat $? "FAIL" "Maven Build"
+    mstat=$?
+    eval_jobstat $mstat "FAIL" "Maven Build"
+
+    if (( "$mstat" == "0" ))
+    then
+      if check_maven_profile 'store'
+      then
+        cp $WKDIR/mrt-services/store/mrt-store/store-war/target/mrt-storewar-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-store-${TAG_PUB}.war
+        mkdir -p $WKDIR/build-output/mrt-store
+        jar uf $WKDIR/build-output/mrt-store/mrt-store-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+      fi
+
+      if check_maven_profile 'replic'
+      then
+        cp $WKDIR/mrt-services/replic/mrt-replic/replication-war/target/mrt-replicationwar-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-replic-${TAG_PUB}.war
+        mkdir -p $WKDIR/build-output/mrt-replic
+        jar uf $WKDIR/build-output/mrt-replic/mrt-replic-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+      fi
+
+      if check_maven_profile 'ingest'
+      then
+        cp $WKDIR/mrt-services/ingest/mrt-ingest/ingest-war/target/mrt-ingestwar-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-ingest-${TAG_PUB}.war
+        mkdir -p $WKDIR/build-output/mrt-ingest
+        jar uf $WKDIR/build-output/mrt-ingest/mrt-ingest-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+      fi
+
+      if check_maven_profile 'audit'
+      then
+        cp $WKDIR/mrt-services/audit/mrt-audit/audit-war/target/mrt-auditwarpub-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-audit-${TAG_PUB}.war
+        mkdir -p $WKDIR/build-output/mrt-audit
+        jar uf $WKDIR/build-output/mrt-audit/mrt-audit-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+      fi
+
+      if check_maven_profile 'inventory'
+      then
+        cp $WKDIR/mrt-services/inventory/mrt-inventory/inv-war/target/mrt-invwar-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-inventory-${TAG_PUB}.war
+        mkdir -p $WKDIR/build-output/mrt-inventory
+        jar uf $WKDIR/build-output/mrt-inventory/mrt-inventory-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+      fi
+    fi
   else 
     echo "       Maven build disabled" >> $LOGSUM
   fi
@@ -353,7 +459,7 @@ show_options() {
   echo BC_LABEL=$BC_LABEL
   echo MAVEN_PROFILE=$MAVEN_PROFILE
   echo TAG_PUB=$TAG_PUB
-  echo CHECK_REOP_TAG=$CHECK_REOP_TAG
+  echo CHECK_REPO_TAG=$CHECK_REPO_TAG
   echo WKDIR=$WKDIR
   echo
 }
@@ -374,7 +480,7 @@ MD_BRANCH=main
 BC_LABEL=main
 MAVEN_PROFILE="-P uc3"
 TAG_PUB=testall
-CHECK_REOP_TAG=main
+CHECK_REPO_TAG=
 HELP=0
 
 while getopts "B:C:m:p:t:w:j:h" flag 
@@ -384,7 +490,9 @@ do
         C) BC_LABEL=${OPTARG};;
         m) MAVEN_PROFILE="-P ${OPTARG}";;
         p) TAG_PUB=${OPTARG};;
-        t) CHECK_REOP_TAG=${OPTARG};;
+        t) CHECK_REPO_TAG=${OPTARG}
+           TAG_PUB=$CHECK_REPO_TAG
+           ;;
         w) WKDIR=${OPTARG}
            WKDIR_PAR=`dirname $WKDIR`
            ;;
@@ -411,6 +519,7 @@ show_options
 create_working_dir
 
 # Create output files for the build steps
+BUILD_TXT=${WKDIR}/build.content.txt
 LOGSUM=${WKDIR}/build-output/build-log.summary.txt
 LOGGIT=${WKDIR}/build-output/build-log.git.txt
 LOGDOCKER=${WKDIR}/build-output/build-log.docker.txt
@@ -458,4 +567,5 @@ then
   build_merritt_end_to_end_test_images
   scan_default_docker_stack_support_images
 fi
+
 post_summary_report

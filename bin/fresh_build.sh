@@ -9,11 +9,7 @@
 # - Checkout submoule branches identified in build-config.yml
 # 
 # Usage:
-#   fresh_build.sh [merritt-docker branch] [build-config profile name] [maven profile - optional]
-#
-# Environment variables
-#   BUILDDIR - directory in which to run builds
-#     if the build dir has a parent path containing "merritt-workspace/daily-builds", the directory will be deleted and recreated
+#   see usage()
 #
 # build-config.yml
 # - "tags" determines the submodule branches to checkout for the build config
@@ -29,11 +25,11 @@
 
 is_daily_build_dir() {
   echo $WKDIR | grep -q "merritt-workspace\/daily-builds"
-  if (( $? == 0 )); then echo 1; else echo 0; fi
+  return $?
 }
 
 create_working_dir() {
-  if (( `is_daily_build_dir` ))
+  if is_daily_build_dir
   then
     echo "Creating $WKDIR_PAR"
     rm -rf $WKDIR_PAR
@@ -127,7 +123,7 @@ checkout() {
 }
 
 scan_image() {
-  if [ "$FLAG_SCAN" == "true" ]
+  if test_flag 'scan-fixable'
   then
     trivy --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCAN 2>&1
     eval_jobstat $? "WARN" "Scan $1"
@@ -135,7 +131,7 @@ scan_image() {
     echo "       Scan disabled" >> $LOGSUM
   fi
 
-  if [ "$FLAG_SCAN_UNFIXED" == "true" ]
+  if test_flag 'scan-unfixable'
   then
     trivy --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 2>&1
     eval_jobstat $? "FAIL" "Scan (ignore unfixed) $1"
@@ -155,7 +151,7 @@ build_image() {
 
 build_image_push() {
   build_image $1 $2 "$3"
-  if [ "$FLAG_PUSH" == "true" ]
+  if test_flag('push')
   then
     docker push $1 >> $LOGDOCKER 2>&1 
     eval_jobstat $? "FAIL" "Docker push $1"
@@ -173,7 +169,7 @@ build_it_image() {
 
   scan_image $2
 
-  if [ "$FLAG_PUSH" == "true" ]
+  if test_flag 'push'
   then
     docker-compose -f $1 push >> $LOGDOCKER 2>&1
     eval_jobstat $? "FAIL" "Compose Push, file: $1"
@@ -186,6 +182,11 @@ get_flag() {
   cd $WKDIR
   python3 build-config.py|jq -r ".[\"build-config\"].\"$BC_LABEL\".\"$1\""
 }
+
+test_flag() {
+  if [[ "`get_flag $1`" == "test" ]]; then return 0; else return 1; fi
+}
+
 
 # show_header(text, detail_log_path)
 show_header() {
@@ -236,13 +237,13 @@ build_maven_artifacts() {
 
   cd $WKDIR/mrt-services
 
-  if [ "$FLAG_RUN_MAVEN_TESTS" == "true" ] || [ "$FLAG_RUN_MAVEN" == "true" ]
+  if test_flag 'run-maven' || test_flag 'run-maven-tests'
   then
     echo >> $LOGSUM
     date >> $LOGSUM
 
     mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent >> $LOGMAVEN 2>&1
-    if [ "$FLAG_RUN_MAVEN_TESTS" == "true" ]
+    if test_flag 'run-maven-tests'
     then
       mvn clean install $MAVEN_PROFILE >> $LOGMAVEN 2>&1
     else
@@ -324,7 +325,7 @@ post_summary_report() {
   date >> $LOGSUM
   DIST=`get_ssm_value_by_name 'batch/email'`
   STATUS=`get_jobstat`
-  SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - ${MAVEN_PROFILE_PARAM}"
+  SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - ${MAVEN_PROFILE}"
   if [ "$JENKINS_HOME" == "" ]
   then
     cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
@@ -332,21 +333,87 @@ post_summary_report() {
   echo $SUBJ
 }
 
-# Process Runtime Args
-MD_BRANCH=${1:-main}
-BC_LABEL=${2:-main}
+usage() {
+  echo "fresh_build.sh "
+  echo "  -h; display usage message"
+  echo "  -B merritt-docker-branch to check out; defaut: main"
+  echo "  -C build-config-profile-name entry, see build-config.yml for options; default: main"
+  echo "  -m maven-profile to use for maven builts, options: uc3, ingest, inventory, store, audit, replic; default: uc3"
+  echo "  -p tag-name-for-published-artifacts, part of generated war files; default: testall"
+  echo "  -t checkout-repo, branch or tag to checkout when buiding a specific maven profiile, detault: main"
+  echo "  -w workidir, working directory in which build will run"
+  echo "    default: /apps/dpr2/merritt-workspace/daily-builds/[merritt-docker-branch].[build-config-profile-name]/merritt-docker"
+  echo "      if path contains 'merritt-workspace/daily-builds', the directory will be recreated"
+  echo "  -j workidir, Jenkins working directory in which build will run.  Jenkins will not create a 'merritt-docker' directory for clone"
+  echo ""
+}
 
-# use "" or "uc3" to build all; otherwise "ingest", "inventory", "store", "audit", "replic"
-MAVEN_PROFILE_PARAM=$3
-if [ "$3" == "" ]; then MAVEN_PROFILE=""; else MAVEN_PROFILE="-P$3"; fi
+show_options() {
+  echo MD_BRANCH=$MD_BRANCH
+  echo BC_LABEL=$BC_LABEL
+  echo MAVEN_PROFILE=$MAVEN_PROFILE
+  echo TAG_PUB=$TAG_PUB
+  echo CHECK_REOP_TAG=$CHECK_REOP_TAG
+  echo WKDIR=$WKDIR
+  echo
+}
 
-WKDIR=${BUILDDIR:-/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}/merritt-docker}
-# Note that Jenkins clones into a directory without repeating the repo name
-WKDIR_PAR=${BUILDDIR:-/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}}
+# interpret flag options listed in the build-config.yml file
+show_flags() {
+  echo >> $LOGSUM
+  echo "FLAG_PUSH=`get_flag push`" >> $LOGSUM
+  echo "FLAG_SCAN=`get_flag scan-fixable`" >> $LOGSUM
+  echo "FLAG_SCAN_UNFIXED=`get_flag scan-unfixable`" >> $LOGSUM
+  echo "FLAG_RUN_MAVEN=`get_flag run-maven`" >> $LOGSUM
+  echo "FLAG_RUN_MAVEN_TESTS=`get_flag run-maven-tests`" >> $LOGSUM
+  echo "FLAG_BUILD_SUPPORT=`get_flag build-support`" >> $LOGSUM
+}
 
+
+MD_BRANCH=main
+BC_LABEL=main
+MAVEN_PROFILE="-P uc3"
+TAG_PUB=testall
+CHECK_REOP_TAG=main
+HELP=0
+
+while getopts "B:C:m:p:t:w:j:h" flag 
+do
+    case "${flag}" in
+        B) MD_BRANCH=${OPTARG};;
+        C) BC_LABEL=${OPTARG};;
+        m) MAVEN_PROFILE="-P ${OPTARG}";;
+        p) TAG_PUB=${OPTARG};;
+        t) CHECK_REOP_TAG=${OPTARG};;
+        w) WKDIR=${OPTARG}
+           WKDIR_PAR=`dirname $WKDIR`
+           ;;
+        # Jenkins checks contents out into a clone directory without creating a merritt-docker folder
+        j) WKDIR=${OPTARG}
+           WKDIR_PAR=$WKDIR
+           ;;
+        h) usage
+           exit
+           ;;
+    esac
+done
+
+# Compute working directory if it is not set
+if [[ "$WKDIR" == "" ]]
+then
+  WKDIR_PAR=/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}
+  WKDIR=/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}/merritt-docker
+fi
+
+if is_daily_build_dir; then echo AAA; else echo BBB; fi
+exit
+
+show_options
+
+# If the working directory contains "merritt-workspace/daily-builds", delete and recreate the directory
 create_working_dir
 
-# Set ouput logs
+# Create output files for the build steps
 LOGSUM=${WKDIR_PAR}/build-log.summary.txt
 LOGGIT=${WKDIR_PAR}/build-log.git.txt
 LOGDOCKER=${WKDIR_PAR}/build-log.docker.txt
@@ -356,12 +423,17 @@ LOGMAVEN=${WKDIR_PAR}/build-log.maven.txt
 JOBSTAT=${WKDIR_PAR}/jobstat.txt
 
 init_log_files
+
+# If running on a UC3 DEV server, initialize the environment
+# On the Jenkins server, this will wipe out settings that have already be configured
 if [ "$JENKINS_HOME" == "" ]
 then
   environment_init
 fi
 
-if (( `is_daily_build_dir` )) 
+# Clone merriit-docker if needed
+# Expand submodules if needed
+if is_daily_build_dir 
 then
   git_repo_init
   git_repo_submodules
@@ -371,30 +443,19 @@ then
   git_repo_submodules
 fi
 
-show_flags() {
-  echo >> $LOGSUM
-  echo "FLAG_PUSH=$FLAG_PUSH" >> $LOGSUM
-  echo "FLAG_SCAN=$FLAG_SCAN" >> $LOGSUM
-  echo "FLAG_SCAN_UNFIXED=$FLAG_SCAN_UNFIXED" >> $LOGSUM
-  echo "FLAG_RUN_MAVEN=$FLAG_RUN_MAVEN" >> $LOGSUM
-  echo "FLAG_RUN_MAVEN_TESTS=$FLAG_RUN_MAVEN_TESTS" >> $LOGSUM
-  echo "FLAG_BUILD_SUPPORT=$FLAG_BUILD_SUPPORT" >> $LOGSUM
-}
-
-FLAG_PUSH=`get_flag push`
-FLAG_SCAN=`get_flag scan-fixable`
-FLAG_SCAN_UNFIXED=`get_flag scan-unfixable`
-FLAG_RUN_MAVEN=`get_flag run-maven`
-FLAG_RUN_MAVEN_TESTS=`get_flag run-maven-tests`
-FLAG_BUILD_SUPPORT=`get_flag build-support`
 show_flags
 
+# Build integration test docker images (these are needeed for maven integration tests)
 build_integration_test_images
+# Build artifacts with maven
 build_maven_artifacts
+# Build Merritt microservice docker images for docker testing
 build_microservice_images
+# Build supporting docker images for docker testing
 build_docker_stack_support_images
 
-if [ "$FLAG_BUILD_SUPPORT" == "true" ]
+# Build all other docker iamges used by Merritt (for daily scanning)
+if test_flag 'build-support'
 then
   build_merritt_lambda_images
   build_merritt_end_to_end_test_images

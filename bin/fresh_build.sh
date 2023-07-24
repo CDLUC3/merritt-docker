@@ -151,7 +151,7 @@ build_image() {
 
 build_image_push() {
   build_image $1 $2 "$3"
-  if test_flag('push')
+  if test_flag 'push'
   then
     docker push $1 >> $LOGDOCKER 2>&1 
     eval_jobstat $? "FAIL" "Docker push $1"
@@ -405,22 +405,19 @@ then
   WKDIR=/apps/dpr2/merritt-workspace/daily-builds/${MD_BRANCH}.${BC_LABEL}/merritt-docker
 fi
 
-if is_daily_build_dir; then echo AAA; else echo BBB; fi
-exit
-
 show_options
 
 # If the working directory contains "merritt-workspace/daily-builds", delete and recreate the directory
 create_working_dir
 
 # Create output files for the build steps
-LOGSUM=${WKDIR_PAR}/build-log.summary.txt
-LOGGIT=${WKDIR_PAR}/build-log.git.txt
-LOGDOCKER=${WKDIR_PAR}/build-log.docker.txt
-LOGSCAN=${WKDIR_PAR}/build-log.trivy-scan.txt
-LOGSCANFIXED=${WKDIR_PAR}/build-log.trivy-scan-fixed.txt
-LOGMAVEN=${WKDIR_PAR}/build-log.maven.txt
-JOBSTAT=${WKDIR_PAR}/jobstat.txt
+LOGSUM=${WKDIR}/build-output/build-log.summary.txt
+LOGGIT=${WKDIR}/build-output/build-log.git.txt
+LOGDOCKER=${WKDIR}/build-output/build-log.docker.txt
+LOGSCAN=${WKDIR}/build-output/build-log.trivy-scan.txt
+LOGSCANFIXED=${WKDIR}/build-output/build-log.trivy-scan-fixed.txt
+LOGMAVEN=${WKDIR}/build-output/build-log.maven.txt
+JOBSTAT=${WKDIR}/build-output/jobstat.txt
 
 init_log_files
 

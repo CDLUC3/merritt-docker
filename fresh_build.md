@@ -21,6 +21,13 @@ fresh_build.sh
 
 ```
 
+## Dependencies required for the script to run
+- ECR Access
+- docker and docker-compose
+- maven
+- trivy
+- python3 (for pyyaml)
+
 ## Runtime Options
 
 - Daily build/scan ALL Merritt docker images

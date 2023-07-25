@@ -36,8 +36,6 @@ create_working_dir() {
     mkdir -p $WKDIR_PAR
   fi
   cd $WKDIR_PAR
-
-  rm -rf $ARTIFACTS build-output/*.txt
 }
 
 get_jobstat(){ 
@@ -74,6 +72,7 @@ eval_jobstat() {
 }
 
 init_log_files() {
+  rm -rf $ARTIFACTS $WKDIR/build-output/*.txt
   echo "See Log Ouput in $LOGSUM"
 
   echo "Working Dir: ${WKDIR}" > $LOGSUM

@@ -71,6 +71,11 @@ eval_jobstat() {
   fi
 }
 
+check_jobstat() {
+  STATUS=`get_jobstat`
+  if [ "$1" == "PASS" ]; then return 0; else return 1; fi
+}
+
 init_log_files() {
   mkdir -p $WKDIR_PAR/build-output
   rm -rf $ARTIFACTS $WKDIR_PAR/build-output/*.txt
@@ -122,8 +127,7 @@ checkout_build_config() {
   branch=`python3 build-config.py|jq -r $SRCH`
   cd $WKDIR/$1
   git checkout origin/$branch >> $LOGGIT 2>&1
-  eval_jobstat $? "FAIL" "Git checkout $2 $branch"
-  echo "checkout dir: $1, repo: $2, branch: $branch" >> $LOGSUM
+  eval_jobstat $? "FAIL" "checkout dir: $1, repo: $2, branch: $branch"
 }
 
 checkout_tag() {
@@ -132,12 +136,11 @@ checkout_tag() {
   if git show-ref --quiet refs/tags/$tag
   then
     git checkout refs/tags/$tag >> $LOGGIT 2>&1
-    eval_jobstat $? "FAIL" "Git checkout tag: $1 $tag"
+    eval_jobstat $? "FAIL" "checkout dir: $1, tag: $tag"
   else
     git checkout origin/$tag >> $LOGGIT 2>&1
-    eval_jobstat $? "FAIL" "Git checkout branch: $1 $tag"
+    eval_jobstat $? "FAIL" "checkout dir: $1, branch: $tag"
   fi
-  echo "checkout dir: $1, tag: $tag" >> $LOGSUM
 }
 
 scan_image() {
@@ -553,7 +556,7 @@ then
   git_repo_submodules
 fi
 
-if [[ "`get_jobstat`" != "PASS" ]]
+if [[ ! check_jobstat ]]
 then
   post_summary_report
   exit

@@ -100,13 +100,8 @@ fresh_build.sh
 - Compare deps for WAR and IT WAR 
   - Curent and future: `it_analyze.sh`
 
-## Pipeline
-- https://github.com/CDLUC3/mrt-jenkins/blob/main/BuildConfig.Jenkinsfile
-
-## Code to simplify
-- https://github.com/CDLUC3/mrt-jenkins/blob/main/src/org/cdlib/mrt/build/BuildFunctions.groovy
-
 ## Code to retire
+- https://github.com/CDLUC3/mrt-jenkins/
 - https://github.com/CDLUC3/mrt-cloud/blob/main/Jenkinsfile
 - https://github.com/CDLUC3/mrt-ingest/blob/main/Jenkinsfile
 - https://github.com/CDLUC3/mrt-inventory/blob/main/Jenkinsfile

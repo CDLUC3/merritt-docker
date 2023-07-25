@@ -77,8 +77,8 @@ check_jobstat() {
 }
 
 init_log_files() {
+  rm -rf $WKDIR_PAR/build-output
   mkdir -p $WKDIR_PAR/build-output
-  rm -rf $ARTIFACTS $WKDIR_PAR/build-output/*.txt
   echo "See Log Ouput in $LOGSUM"
 
   echo "Working Dir: ${WKDIR}" > $LOGSUM

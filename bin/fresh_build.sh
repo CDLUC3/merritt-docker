@@ -497,7 +497,10 @@ do
         m) MAVEN_PROFILE="-P ${OPTARG}";;
         p) TAG_PUB=${OPTARG};;
         t) CHECK_REPO_TAG=${OPTARG}
-           TAG_PUB=$CHECK_REPO_TAG
+           if [[ "$CHECK_REPO_TAG" != "" ]]
+           then
+             TAG_PUB=$CHECK_REPO_TAG
+           fi
            ;;
         w) WKDIR=${OPTARG}
            WKDIR_PAR=`dirname $WKDIR`

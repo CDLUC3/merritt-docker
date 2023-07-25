@@ -18,8 +18,11 @@ fresh_build.sh
     default: /apps/dpr2/merritt-workspace/daily-builds/[merritt-docker-branch].[build-config-profile-name]/merritt-docker
       if path contains 'merritt-workspace/daily-builds', the directory will be recreated
   -j workidir, Jenkins working directory in which build will run.  Jenkins will not create a 'merritt-docker' directory for clone
-
+  -e; email build results
 ```
+
+## Jeninks pipeline
+- [Jenkinsfile](Jenkinsfile)
 
 ## Dependencies required for the script to run
 - ECR Access
@@ -31,9 +34,9 @@ fresh_build.sh
 ## Runtime Options
 
 - Daily build/scan ALL Merritt docker images
-  - `fresh_build.sh`
+  - `fresh_build.sh -e`
   - same as the following
-  - `fresh_build.sh -B main -C main -m uc3`
+  - `fresh_build.sh -B main -C main -m uc3 -e`
 - Daily build/scan ALL Merritt docker images defined in branch "foo"
   - `fresh_build.sh -B foo`
 - Daily build/scan ALL Merritt docker images defined in build config "bar" residing in merritt-docker branch "foo"

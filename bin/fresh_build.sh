@@ -437,10 +437,12 @@ post_summary_report() {
   date >> $LOGSUM
   STATUS=`get_jobstat`
   SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - ${MAVEN_PROFILE}"
-  if [ "$JENKINS_HOME" == "" ]
+  if [[ "$JENKINS_HOME" == "" ]] && [[ $EMAIL > 0 ]]
   then
     DIST=`get_ssm_value_by_name 'batch/email'`
     cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
+  else
+    cat $LOGSUM
   fi
   echo $SUBJ
 }
@@ -457,6 +459,7 @@ usage() {
   echo "    default: /apps/dpr2/merritt-workspace/daily-builds/[merritt-docker-branch].[build-config-profile-name]/merritt-docker"
   echo "      if path contains 'merritt-workspace/daily-builds', the directory will be recreated"
   echo "  -j workidir, Jenkins working directory in which build will run.  Jenkins will not create a 'merritt-docker' directory for clone"
+  echo "  -e; email build results"
   echo ""
 }
 
@@ -487,9 +490,9 @@ BC_LABEL=main
 MAVEN_PROFILE="-P uc3"
 TAG_PUB=testall
 CHECK_REPO_TAG=
-HELP=0
+EMAIL=0
 
-while getopts "B:C:m:p:t:w:j:h" flag 
+while getopts "B:C:m:p:t:w:j:he" flag 
 do
     case "${flag}" in
         B) MD_BRANCH=${OPTARG};;
@@ -509,6 +512,7 @@ do
         j) WKDIR=${OPTARG}
            WKDIR_PAR=$WKDIR
            ;;
+        e) EMAIL=1;;
         h) usage
            exit
            ;;

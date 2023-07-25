@@ -77,7 +77,6 @@ check_jobstat() {
 }
 
 init_log_files() {
-  echo rm -rf $WKDIR_PAR/build-output
   rm -rf $WKDIR_PAR/build-output
   mkdir -p $WKDIR_PAR/build-output
   echo "See Log Ouput in $LOGSUM"
@@ -295,12 +294,12 @@ check_maven_profile() {
 write_build_content() {
   if [[ "$MAVEN_PROFILE" == "-P uc3" ]] || [[ "$MAVEN_PROFILE" == "" ]]
   then
-    echo "$TAG_PUB; $MD_BRANCH; $BC_LABEL; ${MAVEN_PROFILE}" > $BUILD_TXT
+    echo "Building tag $TAG_PUB; $MD_BRANCH; $BC_LABEL; ${MAVEN_PROFILE}" > $BUILD_TXT
   elif [[ "$CHECK_REPO_TAG" != "" ]]
   then
-    echo "$CHECK_REPO_TAG" > $BUILD_TXT
+    echo "Building tag $CHECK_REPO_TAG" > $BUILD_TXT
   else
-    echo "$TAG_PUB; $MD_BRANCH; $BC_LABEL; ${MAVEN_PROFILE}" > $BUILD_TXT
+    echo "Building tag $TAG_PUB; $MD_BRANCH; $BC_LABEL; ${MAVEN_PROFILE}" > $BUILD_TXT
   fi
 }
 

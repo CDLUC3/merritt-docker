@@ -77,6 +77,7 @@ check_jobstat() {
 }
 
 init_log_files() {
+  echo rm -rf $WKDIR_PAR/build-output
   rm -rf $WKDIR_PAR/build-output
   mkdir -p $WKDIR_PAR/build-output
   echo "See Log Ouput in $LOGSUM"

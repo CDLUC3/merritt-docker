@@ -420,11 +420,11 @@ scan_default_docker_stack_support_images() {
 post_summary_report() {
   echo >> $LOGSUM
   date >> $LOGSUM
-  DIST=`get_ssm_value_by_name 'batch/email'`
   STATUS=`get_jobstat`
   SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - ${MAVEN_PROFILE}"
   if [ "$JENKINS_HOME" == "" ]
   then
+    DIST=`get_ssm_value_by_name 'batch/email'`
     cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
   fi
   echo $SUBJ

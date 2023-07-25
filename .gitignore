@@ -11,6 +11,5 @@ dependencies.txt
 mrt-services/it.txt
 mrt-services/war.txt
 build-output/*.txt
-build-output/*.jar
-build-output/*.war
+build-output/artifacts/
 build.content.txt

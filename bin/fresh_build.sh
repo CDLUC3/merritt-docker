@@ -37,15 +37,7 @@ create_working_dir() {
   fi
   cd $WKDIR_PAR
 
-  if [[ -f $WKDIR/build-output/*.war ]]
-  then
-    rm $WKDIR/build-output/*.war
-  fi
-
-  if [[ -f $WKDIR/build-output/*.jar ]]
-  then
-    rm $WKDIR/build-output/*.jar
-  fi
+  rm -rf $ARTIFACTS build-output/*.txt
 }
 
 get_jobstat(){ 
@@ -323,37 +315,37 @@ build_maven_artifacts() {
     then
       if check_maven_profile 'store'
       then
-        cp $WKDIR/mrt-services/store/mrt-store/store-war/target/mrt-storewar-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-store-${TAG_PUB}.war
-        mkdir -p $WKDIR/build-output/mrt-store
-        jar uf $WKDIR/build-output/mrt-store/mrt-store-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        mkdir -p $ARTIFACTS/mrt-store
+        cp $WKDIR/mrt-services/store/mrt-store/store-war/target/mrt-storewar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-store/mrt-store-${TAG_PUB}.war
+        jar uf $ARTIFACTS/mrt-store/mrt-store-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
       fi
 
       if check_maven_profile 'replic'
       then
-        cp $WKDIR/mrt-services/replic/mrt-replic/replication-war/target/mrt-replicationwar-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-replic-${TAG_PUB}.war
-        mkdir -p $WKDIR/build-output/mrt-replic
-        jar uf $WKDIR/build-output/mrt-replic/mrt-replic-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        mkdir -p $ARTIFACTS/mrt-replic
+        cp $WKDIR/mrt-services/replic/mrt-replic/replication-war/target/mrt-replicationwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-replic/mrt-replic-${TAG_PUB}.war
+        jar uf $ARTIFACTS/mrt-replic/mrt-replic-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
       fi
 
       if check_maven_profile 'ingest'
       then
-        cp $WKDIR/mrt-services/ingest/mrt-ingest/ingest-war/target/mrt-ingestwar-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-ingest-${TAG_PUB}.war
-        mkdir -p $WKDIR/build-output/mrt-ingest
-        jar uf $WKDIR/build-output/mrt-ingest/mrt-ingest-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        mkdir -p $ARTIFACTS/mrt-ingest
+        cp $WKDIR/mrt-services/ingest/mrt-ingest/ingest-war/target/mrt-ingestwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-ingest/mrt-ingest-${TAG_PUB}.war
+        jar uf $ARTIFACTS/mrt-ingest/mrt-ingest-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
       fi
 
       if check_maven_profile 'audit'
       then
-        cp $WKDIR/mrt-services/audit/mrt-audit/audit-war/target/mrt-auditwarpub-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-audit-${TAG_PUB}.war
-        mkdir -p $WKDIR/build-output/mrt-audit
-        jar uf $WKDIR/build-output/mrt-audit/mrt-audit-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        mkdir -p $ARTIFACTS/mrt-audit
+        cp $WKDIR/mrt-services/audit/mrt-audit/audit-war/target/mrt-auditwarpub-1.0-SNAPSHOT.war $ARTIFACTS/mrt-audit/mrt-audit-${TAG_PUB}.war
+        jar uf $ARTIFACTS/mrt-audit/mrt-audit-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
       fi
 
       if check_maven_profile 'inventory'
       then
-        cp $WKDIR/mrt-services/inventory/mrt-inventory/inv-war/target/mrt-invwar-1.0-SNAPSHOT.war $WKDIR/build-output/mrt-inventory-${TAG_PUB}.war
-        mkdir -p $WKDIR/build-output/mrt-inventory
-        jar uf $WKDIR/build-output/mrt-inventory/mrt-inventory-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        mkdir -p $ARTIFACTS/mrt-inventory
+        cp $WKDIR/mrt-services/inventory/mrt-inventory/inv-war/target/mrt-invwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-inventory/mrt-inventory-${TAG_PUB}.war
+        jar uf $ARTIFACTS/mrt-inventory/mrt-inventory-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
       fi
     fi
   else 
@@ -527,6 +519,7 @@ LOGSCAN=${WKDIR}/build-output/build-log.trivy-scan.txt
 LOGSCANFIXED=${WKDIR}/build-output/build-log.trivy-scan-fixed.txt
 LOGMAVEN=${WKDIR}/build-output/build-log.maven.txt
 JOBSTAT=${WKDIR}/build-output/jobstat.txt
+ARTIFACTS=${WKDIR}/build-output/artifacts
 
 init_log_files
 
@@ -555,10 +548,14 @@ show_flags
 build_integration_test_images
 # Build artifacts with maven
 build_maven_artifacts
+
 # Build Merritt microservice docker images for docker testing
-build_microservice_images
-# Build supporting docker images for docker testing
-build_docker_stack_support_images
+if test_flag 'build-stack'
+then
+  build_microservice_images
+  # Build supporting docker images for docker testing
+  build_docker_stack_support_images
+fi
 
 # Build all other docker iamges used by Merritt (for daily scanning)
 if test_flag 'build-support'

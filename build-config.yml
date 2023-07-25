@@ -8,6 +8,7 @@
 flagsets:
   # run only docker builds, do not run maven
   docker: &docker
+    build-stack: true
     push: true
     scan-unfixable: false
     scan-fixable: false
@@ -16,6 +17,7 @@ flagsets:
     build-support: false
   # run docker and maven buids
   buildonly: &buildonly
+    build-stack: true
     push: false
     scan-unfixable: false
     scan-fixable: false
@@ -24,12 +26,20 @@ flagsets:
     build-support: false
   # run docker and maven builds, include maven tests
   buildtest: &buildtest
+    build-stack: true
     push: false
     scan-unfixable: false
     scan-fixable: false
     run-maven: true
     run-maven-tests: test
     build-support: false
+  jenkins: &jenkins
+    build-stack: false
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: true
+    run-maven-tests: test
 build-config:
   main:
     tags: &maintags
@@ -60,5 +70,9 @@ build-config:
       <<: *maintags
   main-test:
     <<: *buildtest
+    tags:
+      <<: *maintags
+  main-jenkins:
+    <<: *jenkins
     tags:
       <<: *maintags

@@ -45,7 +45,7 @@ get_jobstat(){
   fi
 }
 
-# eval_jobstat(status)
+# jobstat(status)
 jobstat() {
   STATUS=`get_jobstat`
   if [ "$1" == "FAIL" ]
@@ -72,7 +72,8 @@ eval_jobstat() {
 }
 
 init_log_files() {
-  rm -rf $ARTIFACTS $WKDIR/build-output/*.txt
+  mkdir -p $WKDIR_PAR/build-output
+  rm -rf $ARTIFACTS $WKDIR_PAR/build-output/*.txt
   echo "See Log Ouput in $LOGSUM"
 
   echo "Working Dir: ${WKDIR}" > $LOGSUM
@@ -121,13 +122,21 @@ checkout_build_config() {
   branch=`python3 build-config.py|jq -r $SRCH`
   cd $WKDIR/$1
   git checkout origin/$branch >> $LOGGIT 2>&1
+  eval_jobstat $? "FAIL" "Git checkout $2 $branch"
   echo "checkout dir: $1, repo: $2, branch: $branch" >> $LOGSUM
 }
 
 checkout_tag() {
   cd $WKDIR/$1
   tag=$2
-  git checkout origin/$tag >> $LOGGIT 2>&1
+  if git show-ref --quiet refs/tags/$tag
+  then
+    git checkout refs/tags/$tag >> $LOGGIT 2>&1
+    eval_jobstat $? "FAIL" "Git checkout tag: $1 $tag"
+  else
+    git checkout origin/$tag >> $LOGGIT 2>&1
+    eval_jobstat $? "FAIL" "Git checkout branch: $1 $tag"
+  fi
   echo "checkout dir: $1, tag: $tag" >> $LOGSUM
 }
 
@@ -207,13 +216,16 @@ show_header() {
 git_repo_init() {
   show_header "Clone merritt-docker; branch $MD_BRANCH" $LOGGIT
   cd $WKDIR_PAR
-  git clone git@github.com:CDLUC3/merritt-docker.git >> $LOGGIT 2>&1
+  git clone https://github.com/CDLUC3/merritt-docker.git >> $LOGGIT 2>&1
+  eval_jobstat $? "FAIL" "Git clone merritt-docker branch"
   cd $WKDIR
   git checkout $MD_BRANCH >> $LOGGIT 2>&1
+  eval_jobstat $? "FAIL" "Git checkout merritt-docker branch"
 }
 
 git_repo_submodules() {
   git submodule update --remote --init >> $LOGGIT 2>&1
+  eval_jobstat $? "FAIL" "Git submodule update"
   show_header "Checking out sumbmodule branches for build label $BC_LABEL" $LOGGIT
 
   checkout_build_config 'mrt-services/dep_core/mrt-core2' 'mrt-core'
@@ -510,15 +522,15 @@ show_options
 create_working_dir
 
 # Create output files for the build steps
-BUILD_TXT=${WKDIR}/build.content.txt
-LOGSUM=${WKDIR}/build-output/build-log.summary.txt
-LOGGIT=${WKDIR}/build-output/build-log.git.txt
-LOGDOCKER=${WKDIR}/build-output/build-log.docker.txt
-LOGSCAN=${WKDIR}/build-output/build-log.trivy-scan.txt
-LOGSCANFIXED=${WKDIR}/build-output/build-log.trivy-scan-fixed.txt
-LOGMAVEN=${WKDIR}/build-output/build-log.maven.txt
-JOBSTAT=${WKDIR}/build-output/jobstat.txt
-ARTIFACTS=${WKDIR}/build-output/artifacts
+BUILD_TXT=${WKDIR_PAR}/build.content.txt
+LOGSUM=${WKDIR_PAR}/build-output/build-log.summary.txt
+LOGGIT=${WKDIR_PAR}/build-output/build-log.git.txt
+LOGDOCKER=${WKDIR_PAR}/build-output/build-log.docker.txt
+LOGSCAN=${WKDIR_PAR}/build-output/build-log.trivy-scan.txt
+LOGSCANFIXED=${WKDIR_PAR}/build-output/build-log.trivy-scan-fixed.txt
+LOGMAVEN=${WKDIR_PAR}/build-output/build-log.maven.txt
+JOBSTAT=${WKDIR_PAR}/build-output/jobstat.txt
+ARTIFACTS=${WKDIR_PAR}/build-output/artifacts
 
 init_log_files
 
@@ -539,6 +551,12 @@ elif [ "$JENKINS_HOME" != "" ]
 then
   sed -i -e "s/git@github.com:/https:\/\/github.com\//" .git/config
   git_repo_submodules
+fi
+
+if [[ "`get_jobstat`" != "PASS" ]]
+then
+  post_summary_report
+  exit
 fi
 
 show_flags

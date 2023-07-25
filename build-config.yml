@@ -76,3 +76,38 @@ build-config:
     <<: *jenkins
     tags:
       <<: *maintags
+  newbuild:
+    tags: &newbuildtags
+      mrt-core: newbuild
+      mrt-cloud: newbuild
+      cdl-zk-queue: main
+      mrt-zoo: main
+      mrt-inventory: main
+      mrt-store: main
+      mrt-ingest: main
+      mrt-audit: main
+      mrt-replic: main
+      mrt-dashboard: main
+      mrt-integ-tests: main
+    push: true
+    scan-unfixable: true
+    scan-fixable: true
+    run-maven: true
+    run-maven-tests: true
+    build-support: true
+  newbuild-docker:
+    <<: *docker
+    tags:
+      <<: *newbuildtags
+  newbuild-buildonly:
+    <<: *buildonly
+    tags:
+      <<: *newbuildtags
+  newbuild-test:
+    <<: *buildtest
+    tags:
+      <<: *newbuildtags
+  newbuild-jenkins:
+    <<: *jenkins
+    tags:
+      <<: *newbuildtags

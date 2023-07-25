@@ -76,7 +76,8 @@ build-config:
     <<: *jenkins
     tags:
       <<: *maintags
-  newbuild:
+  newbuild-buildonly:
+    <<: *buildonly
     tags: &newbuildtags
       mrt-core: newbuild
       mrt-cloud: newbuild
@@ -89,20 +90,6 @@ build-config:
       mrt-replic: main
       mrt-dashboard: main
       mrt-integ-tests: main
-    push: true
-    scan-unfixable: true
-    scan-fixable: true
-    run-maven: true
-    run-maven-tests: true
-    build-support: true
-  newbuild-docker:
-    <<: *docker
-    tags:
-      <<: *newbuildtags
-  newbuild-buildonly:
-    <<: *buildonly
-    tags:
-      <<: *newbuildtags
   newbuild-test:
     <<: *buildtest
     tags:

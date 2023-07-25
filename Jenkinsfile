@@ -12,6 +12,7 @@ pipeline {
                 script {
                   sh("newgrp docker")
                   sh("id")
+                  sh("env")
                   sh("echo 'ECR REG: ${env.ECR_REGISTRY}'")
                   sh("aws ecr get-login-password --region ${env.AWS_REGION} | docker login --username AWS --password-stdin ${env.ECR_REGISTRY}")
                   sh("pip3 install pyyaml")

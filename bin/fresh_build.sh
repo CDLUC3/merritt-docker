@@ -108,6 +108,7 @@ environment_init() {
   START_DIR=$(pwd)
   SCRIPT_HOME=$(dirname $0)
   DOCKER_ENV_FILE=$SCRIPT_HOME/docker_environment.sh
+  export PATH=$PATH:/usr/local/bin
 
   # source env vars
   if [[ "$AWS_ACCOUNT_ID" == "" ]]

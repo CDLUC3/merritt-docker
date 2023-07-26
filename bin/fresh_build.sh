@@ -110,15 +110,15 @@ environment_init() {
   DOCKER_ENV_FILE=$SCRIPT_HOME/docker_environment.sh
 
   # source env vars
-  echo "Setting up docker environment" >> $LOGSUM
-  [ -f "$DOCKER_ENV_FILE" ] && . "$DOCKER_ENV_FILE" || echo "file $DOCKER_ENV_FILE not found" >> $LOGSUM
+  if [[ "$AWS_ACCOUNT_ID" == "" ]]
+  then
+    echo "Setting up docker environment" >> $LOGSUM
+    [ -f "$DOCKER_ENV_FILE" ] && . "$DOCKER_ENV_FILE" || echo "file $DOCKER_ENV_FILE not found" >> $LOGSUM
+  fi
   source ~/.profile.d/uc3-aws-util.sh
 
   echo "Setup ECS login" >> $LOGSUM
-  echo "ECR_REGISTRY: $ECR_REGISTRY" >> $LOGSUM
-  aws ecr get-login-password --region us-west-2 | \
-    docker login --username AWS \
-      --password-stdin ${ECR_REGISTRY} >> $LOGSUM 2>&1 || exit 1
+  aws ecr get-login-password --region  | docker login --username AWS --password-stdin ${ECR_REGISTRY}
 }
 
 checkout_build_config() {
@@ -556,9 +556,12 @@ fi
 if is_daily_build_dir 
 then
   git_repo_init
+  sed -i -e "s/git@github.com:/https:\/\/github.com\//" .gitmodules
+  sed -i -e "s/git@github.com:/https:\/\/github.com\//" .git/config
   git_repo_submodules
 elif [ "$JENKINS_HOME" != "" ]
 then
+  sed -i -e "s/git@github.com:/https:\/\/github.com\//" .gitmodules
   sed -i -e "s/git@github.com:/https:\/\/github.com\//" .git/config
   git_repo_submodules
 fi

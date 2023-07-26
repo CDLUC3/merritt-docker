@@ -118,7 +118,7 @@ environment_init() {
   source ~/.profile.d/uc3-aws-util.sh
 
   echo "Setup ECS login" >> $LOGSUM
-  aws ecr get-login-password --region  | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+  aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}
 }
 
 checkout_build_config() {
@@ -437,7 +437,7 @@ post_summary_report() {
   date >> $LOGSUM
   STATUS=`get_jobstat`
   SUBJ="${STATUS}: Merritt Daily Build $MD_BRANCH - $BC_LABEL - ${MAVEN_PROFILE}"
-  if [[ "$JENKINS_HOME" == "" ]] && [[ $EMAIL > 0 ]]
+  if [[ "$JENKINS_HOME" == "" ]] || [[ $EMAIL > 0 ]]
   then
     DIST=`get_ssm_value_by_name 'batch/email'`
     cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}

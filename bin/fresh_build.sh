@@ -117,6 +117,7 @@ environment_init() {
     [ -f "$DOCKER_ENV_FILE" ] && . "$DOCKER_ENV_FILE" || echo "file $DOCKER_ENV_FILE not found" >> $LOGSUM
   fi
   source ~/.profile.d/uc3-aws-util.sh
+  export PATH=/opt/maven/apache-maven-3.8.4/bin:/usr/lib/jvm/java-11-openjdk/bin:$PATH
 
   echo "Setup ECS login" >> $LOGSUM
   aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}
@@ -316,6 +317,7 @@ build_maven_artifacts() {
     echo >> $LOGSUM
     date >> $LOGSUM
 
+    mvn --version >> $LOGMAVEN 2>&1
     mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent >> $LOGMAVEN 2>&1
     if test_flag 'run-maven-tests'
     then

@@ -31,7 +31,7 @@ flagsets:
     scan-unfixable: false
     scan-fixable: false
     run-maven: true
-    run-maven-tests: test
+    run-maven-tests: true
     build-support: false
   jenkins: &jenkins
     build-stack: false
@@ -39,7 +39,7 @@ flagsets:
     scan-unfixable: false
     scan-fixable: false
     run-maven: true
-    run-maven-tests: test
+    run-maven-tests: true
 build-config:
   main:
     tags: &maintags

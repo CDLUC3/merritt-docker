@@ -21,4 +21,5 @@ RUN mvn install -D=environment=local -DskipITs -Ddocker.skip && \
     rm -rf /root/.m2/repository/org/apache/maven && \
     rm -rf /root/.m2/repository/commons-collections && \
     rm -rf /root/.m2/repository/com/google/cloud/tools && \
-    rm -rf /root/.m2/repository/org/yaml/snakeyaml/1.26
+    rm -rf /root/.m2/repository/org/yaml/snakeyaml/1.26 && \
+    rm -rf /root/.m2/repository/dom4j

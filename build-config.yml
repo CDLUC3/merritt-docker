@@ -55,6 +55,7 @@ build-config:
       mrt-dashboard: main
       mrt-integ-tests: main
     push: true
+    build-stack: true
     scan-unfixable: true
     scan-fixable: true
     run-maven: true

@@ -157,7 +157,89 @@ https://github.com/CDLUC3/mrt-integ-tests
 
 ### Diagram
 
-![](https://github.com/CDLUC3/mrt-doc/raw/main/diagrams/docker.mmd.svg)
+```mermaid
+%%{init: {'theme': 'neutral', 'securityLevel': 'loose', 'themeVariables': {'fontFamily': 'arial'}}}%%
+graph LR
+  DOCKYML[[docker-compose.yml]]
+  click DOCKYML href "https://github.com/CDLUC3/merritt-docker/blob/main/mrt-services/docker-compose.yml" "source code"
+  DOCK(Docker Compose)
+  ING([Ingest])
+  click ING href "https://github.com/CDLUC3/mrt-ingest" "source code"
+  STORE([Storage])
+  click STORE href "https://github.com/CDLUC3/mrt-store" "source code"
+  UI([Merritt UI])
+  click UI href "https://github.com/CDLUC3/mrt-dashboard" "source code"
+  INV([Inventory])
+  click INV href "https://github.com/CDLUC3/mrt-inventory" "source code"
+  ZOO([Zookeeper])
+  click ZOO href "https://github.com/CDLUC3/mrt-zoo" "source code"
+  LDAP([LDAP])
+  click LDAP href "https://github.com/CDLUC3/merritt-docker/tree/main/mrt-services/ldap" "source code"
+  MYSQL([MySQL])
+  click MYSQL href "https://github.com/CDLUC3/merritt-docker/tree/main/mrt-services/mysql" "source code"
+  MINIO([Minio])
+  click MINIO href "https://github.com/CDLUC3/merritt-docker/blob/main/mrt-services/docker-compose.yml#L193-L204" "source code"
+  MINIOMC([Mino Client])
+  click MINIOMC href "https://github.com/CDLUC3/merritt-docker/blob/main/mrt-services/docker-compose.yml#L206-L217" "source code"
+  EZID([Mock EZID])
+  click EZID href "https://github.com/CDLUC3/merritt-docker/blob/main/mrt-services/docker-compose.yml#L218-L229" "source code"
+  INIT([Merritt Docker Init Tasks])
+  click INIT href "https://github.com/CDLUC3/merritt-docker/blob/main/mrt-services/docker-compose.yml#L230-L249" "source code"
+  COLLADMIN([Merritt Collection Admin])
+  click COLLADMIN href "https://github.com/CDLUC3/mrt-admin-lambda" "source code"
+  ALB([ALB Simulation])
+  click ALB href "https://github.com/CDLUC3/mrt-admin-lambda/tree/main/simulate-lambda-alb" "source code"
+  AUDIT([Audit placeholder])
+  REPLIC([Replication placeholder])
+  SMTP([SMTP])
+  click SMTP href "https://github.com/CDLUC3/merritt-docker/blob/main/mrt-services/docker-compose.yml#L165-L170" "source code"
+  INPROF[[Ingest Profiles for Docker]]
+  click INPROF href "https://github.com/CDLUC3/merritt-docker/tree/main/mrt-services/ingest/profiles" "source code"
+
+  subgraph main
+    DOCKYML --> DOCK
+    DOCK -.-> ING
+    DOCK -.-> STORE
+    DOCK -.-> UI
+    DOCK -.-> INV
+    DOCK -.-> ZOO
+    DOCK -.-> LDAP
+    DOCK -.-> MYSQL
+    DOCK -.-> MINIO
+    DOCK -.-> MINIOMC
+    DOCK -.-> EZID
+    DOCK -.-> INIT
+    DOCK -.-> COLLADMIN
+    DOCK -.-> ALB
+    DOCK -.-> AUDIT
+    DOCK -.-> REPLIC
+    DOCK -.-> SMTP
+    INPROF --> ING
+  end
+
+  ARYML[[audit-replic.yml]]
+  AUDIT2([Audit override])
+  REPLIC2([Replication override])
+  ARYML --> DOCK
+
+  subgraph audit_replic
+    ARYML --> AUDIT2
+    ARYML --> REPLIC2
+  end
+
+  AUDIT2 -.-> AUDIT
+  REPLIC2 -.-> REPLIC
+  DRYINIT -.-> INIT
+
+  style DOCK fill:cyan
+  style ZOO fill:cyan
+  style LDAP fill:cyan
+  style MINIO fill:cyan
+  style MINIOMC fill:cyan
+  style SMTP fill:cyan
+  style MINIO fill:#77913C
+  style MYSQL fill:#F68D2F
+```
 
 ---
 

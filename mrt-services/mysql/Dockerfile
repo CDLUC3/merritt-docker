@@ -4,10 +4,10 @@
 #*********************************************************************
 # docker build -t cdluc3/mrt-database .
 
-FROM mysql:8
+FROM public.ecr.aws/ubuntu/mysql:8.0-20.04_beta
 RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
 
-# RUN apt-get update -y
+RUN apt-get update -y
 # RUN yum -y update
 
 COPY init.sql /docker-entrypoint-initdb.d/start.sql

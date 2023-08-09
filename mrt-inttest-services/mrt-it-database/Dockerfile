@@ -6,13 +6,13 @@
 # aws ecr create-repository --repository-name mrt-it-database
 # docker push ${ECR_REGISTRY}/mrt-it-database:dev
 
-FROM mysql:8
+FROM public.ecr.aws/ubuntu/mysql:8.0-20.04_beta
 
 ARG LOAD_SQL=/dev/null
 
 RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
 
-# RUN apt-get update -y
+RUN apt-get update -y
 # RUN yum -y update
 
 COPY *.sql schema.prd.norm /tmp/

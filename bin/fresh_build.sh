@@ -399,8 +399,6 @@ build_docker_stack_support_images(){
   build_image_push ${ECR_REGISTRY}/mrt-opendj ldap
   build_image_push ${ECR_REGISTRY}/mrt-init ldap
   build_image_push ${ECR_REGISTRY}/callback callback
-
-  build_image ${ECR_REGISTRY}/logstash-oss:dev opensearch/logstash
 }
 
 build_merritt_lambda_images() {
@@ -419,7 +417,7 @@ build_merritt_lambda_images() {
 build_merritt_end_to_end_test_images() {
   show_header "Build Merritt End to End Test Images" $LOGDOCKER
 
-  cd ../mrt-integ-tests
+  cd $WKDIR/mrt-integ-tests
   build_image_push ${ECR_REGISTRY}/mrt-integ-tests .
   build_image standalone-chrome-download-folder chrome-driver
 }
@@ -429,10 +427,12 @@ scan_default_docker_stack_support_images() {
   echo "Scan Supporting Docker Stack Images" >> $LOGSUM
   date >> $LOGSUM
 
+  cd $WKDIR
   scan_image zookeeper
   scan_image ghusta/fakesmtp
   scan_image opensearchproject/opensearch
   scan_image opensearchproject/opensearch-dashboards
+  scan_image opensearchproject/logstash-oss-with-opensearch-output-plugin
 }
 
 post_summary_report() {

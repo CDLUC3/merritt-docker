@@ -44,11 +44,8 @@ services:
     restart: unless-stopped
 
   logstash:
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/logstash-oss:dev
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin
     container_name: logstash
-    build:
-      context: opensearch/logstash
-      dockerfile: Dockerfile
     ports:
     - published: 5044
       target: 5044
@@ -58,6 +55,7 @@ services:
     networks:
       merrittnet:
     volumes:
+    - "./opensearch/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf"
     - "apps-logs-ingest:/logfiles/ingest/"
     - "apps-logs-store:/logfiles/store/"
     - "apps-logs-inventory:/logfiles/inventory/"

@@ -72,13 +72,6 @@ There are two docker-compose files for launching an OpenSearch stack.  These liv
 - **`opensearch.yml`**
   Launch three opensearch containers and add overlay docker log-driver configs to select merritt micro-service containers.
 
-- **`opensearch-solo.yml`**
-  Launches only the three opensearch containers independant of Merritt services. Use for testing and development of opensearch itself.
-  ```
-  mrt-services> docker-compose -p opensearch -f opensearch-solo.yml up -d
-  ```
-
-
 ---
 
 

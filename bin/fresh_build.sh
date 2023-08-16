@@ -334,35 +334,35 @@ build_maven_artifacts() {
       then
         mkdir -p $ARTIFACTS/mrt-store
         cp $WKDIR/mrt-services/store/mrt-store/store-war/target/mrt-storewar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-store/mrt-store-${TAG_PUB}.war
-        jar uf $ARTIFACTS/mrt-store/mrt-store-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        jar uf $ARTIFACTS/mrt-store/mrt-store-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
 
       if check_maven_profile 'replic'
       then
         mkdir -p $ARTIFACTS/mrt-replic
         cp $WKDIR/mrt-services/replic/mrt-replic/replication-war/target/mrt-replicationwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-replic/mrt-replic-${TAG_PUB}.war
-        jar uf $ARTIFACTS/mrt-replic/mrt-replic-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        jar uf $ARTIFACTS/mrt-replic/mrt-replic-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
 
       if check_maven_profile 'ingest'
       then
         mkdir -p $ARTIFACTS/mrt-ingest
         cp $WKDIR/mrt-services/ingest/mrt-ingest/ingest-war/target/mrt-ingestwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-ingest/mrt-ingest-${TAG_PUB}.war
-        jar uf $ARTIFACTS/mrt-ingest/mrt-ingest-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        jar uf $ARTIFACTS/mrt-ingest/mrt-ingest-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
 
       if check_maven_profile 'audit'
       then
         mkdir -p $ARTIFACTS/mrt-audit
         cp $WKDIR/mrt-services/audit/mrt-audit/audit-war/target/mrt-auditwarpub-1.0-SNAPSHOT.war $ARTIFACTS/mrt-audit/mrt-audit-${TAG_PUB}.war
-        jar uf $ARTIFACTS/mrt-audit/mrt-audit-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        jar uf $ARTIFACTS/mrt-audit/mrt-audit-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
 
       if check_maven_profile 'inventory'
       then
         mkdir -p $ARTIFACTS/mrt-inventory
         cp $WKDIR/mrt-services/inventory/mrt-inventory/inv-war/target/mrt-invwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-inventory/mrt-inventory-${TAG_PUB}.war
-        jar uf $ARTIFACTS/mrt-inventory/mrt-inventory-${TAG_PUB}.war -C `dirname $BUILD_TXT` `basename $BUILD_TXT`
+        jar uf $ARTIFACTS/mrt-inventory/mrt-inventory-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
     fi
   else 
@@ -535,7 +535,9 @@ show_options
 create_working_dir
 
 # Create output files for the build steps
-BUILD_TXT=${WKDIR_PAR}/build.content.txt
+mkdir -p ${WKDIR_PAR}/static
+BUILD_TXT_FILE=static/build.content.txt
+BUILD_TXT=${WKDIR_PAR}/${BUILD_TXT_FILE}
 LOGSUM=${WKDIR_PAR}/build-output/build-log.summary.txt
 LOGGIT=${WKDIR_PAR}/build-output/build-log.git.txt
 LOGDOCKER=${WKDIR_PAR}/build-output/build-log.docker.txt

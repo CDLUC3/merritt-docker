@@ -10,7 +10,7 @@ pipeline {
         stage('Initialize') {
             steps {
                 script {
-                  sh("java -version")
+                  sh("javac -version")
                   sh("newgrp docker")
                   sh("id")
                   sh("echo 'ECR REG: ${env.ECR_REGISTRY}'")

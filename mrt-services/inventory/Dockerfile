@@ -20,9 +20,10 @@ RUN mvn install -D=environment=local -DskipITs -Ddocker.skip && \
 
 RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt-invwar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
-FROM tomcat:8-jre8
+FROM public.ecr.aws/docker/library/tomcat:9-jdk8-corretto
 
-RUN apt-get update -y && apt-get -y upgrade
+# RUN apt-get update -y && apt-get -y upgrade
+RUN yum -y update
 
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-invwar/1.0-SNAPSHOT/mrt-invwar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/inventory.war
 

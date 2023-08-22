@@ -1,2 +1,19 @@
-# logstash-oss has reported the following vulnerability in snakeyaml
+# logstash-oss has reported the following vulnerability in snakeyaml - Added 2023-08
 CVE-2022-1471
+
+# openssh issues in ruby images - Added 2023-08
+CVE-2023-28531
+CVE-2023-38408
+
+# rails image issues - Added 2023-08
+## curl
+CVE-2023-23914
+## libaom0
+CVE-2021-30473
+CVE-2021-30474
+CVE-2021-30475
+## libdb
+CVE-2019-8457
+CVE-2021-29921
+## python
+CVE-2021-29921

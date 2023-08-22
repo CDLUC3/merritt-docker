@@ -86,6 +86,7 @@ init_log_files() {
   echo " - ${LOGDOCKER}" >> $LOGSUM
   echo " - ${LOGSUM}" >> $LOGSUM
   echo " - ${LOGSCAN}" >> $LOGSUM
+  echo " - ${LOGSCANIGNORE}" >> $LOGSUM
   echo " - ${LOGSCANFIXED}" >> $LOGSUM
   echo " - ${LOGMAVEN}" >> $LOGSUM
   echo >> $LOGSUM
@@ -96,6 +97,7 @@ init_log_files() {
   echo > $LOGDOCKER
   echo > $LOGMAVEN
   echo "Fixable items below.  See the attached report for the full vulnerability list: \n\n" > $LOGSCANFIXED
+  echo "Items not included in .trivyignore: \n\n" > $LOGSCANIGNORE
   jobstat "PASS" 
 
   echo "Build merritt-docker branch: ${MD_BRANCH} using build label ${BC_LABEL}" >> $LOGSUM
@@ -148,7 +150,8 @@ checkout_tag() {
 scan_image() {
   if test_flag 'scan-fixable'
   then
-    trivy --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCAN 2>&1
+    trivy --scanners vuln image --severity CRITICAL $1 >> $LOGSCAN 2>&1
+    trivy --ignorefile $WKDIR/.trivyignore --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCANIGNORE 2>&1
     eval_jobstat $? "WARN" "Scan $1"
   else 
     echo "       Scan disabled" >> $LOGSUM
@@ -156,7 +159,7 @@ scan_image() {
 
   if test_flag 'scan-unfixable'
   then
-    trivy --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 2>&1
+    trivy --ignorefile $WKDIR/.trivyignore --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 2>&1
     eval_jobstat $? "FAIL" "Scan (ignore unfixed) $1"
   else 
     echo "       Scan unfixed disabled" >> $LOGSUM
@@ -443,7 +446,7 @@ post_summary_report() {
   if [[ "$JENKINS_HOME" == "" ]] && [[ $EMAIL > 0 ]]
   then
     DIST=`get_ssm_value_by_name 'batch/email'`
-    cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
+    cat $LOGSUM | mail -a $LOGSCAN -a $LOGSCANIGNORE -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
   else
     cat $LOGSUM
   fi
@@ -542,6 +545,7 @@ LOGSUM=${WKDIR_PAR}/build-output/build-log.summary.txt
 LOGGIT=${WKDIR_PAR}/build-output/build-log.git.txt
 LOGDOCKER=${WKDIR_PAR}/build-output/build-log.docker.txt
 LOGSCAN=${WKDIR_PAR}/build-output/build-log.trivy-scan.txt
+LOGSCANIGNORE=${WKDIR_PAR}/build-output/build-log.trivy-scan-igore.txt
 LOGSCANFIXED=${WKDIR_PAR}/build-output/build-log.trivy-scan-fixed.txt
 LOGMAVEN=${WKDIR_PAR}/build-output/build-log.maven.txt
 JOBSTAT=${WKDIR_PAR}/build-output/jobstat.txt

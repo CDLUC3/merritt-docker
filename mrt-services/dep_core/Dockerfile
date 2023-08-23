@@ -9,6 +9,8 @@
 
 FROM public.ecr.aws/docker/library/maven:3-amazoncorretto-11
 
+RUN yum -y update
+
 RUN mkdir -p /build/static
 
 WORKDIR /build/mrt-core2

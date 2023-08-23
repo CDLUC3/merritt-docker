@@ -15,6 +15,14 @@ flagsets:
     run-maven: false
     run-maven-tests: false
     build-support: false
+  docker-nopush: &docker-nopush
+    build-stack: true
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: false
+    run-maven-tests: false
+    build-support: false
   scan: &scan
     build-stack: true
     push: false
@@ -71,6 +79,10 @@ build-config:
     build-support: true
   main-docker:
     <<: *docker
+    tags:
+      <<: *maintags
+  main-docker-nopush:
+    <<: *docker-nopush
     tags:
       <<: *maintags
   main-scan:

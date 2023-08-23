@@ -21,7 +21,7 @@ RUN mvn install -DskipITs -Ddocker.skip && \
 
 RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-auditwarpub/1.0-SNAPSHOT/mrt-auditwarpub-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
-FROM public.ecr.aws/docker/library/tomcat:9-jdk8-corretto
+FROM public.ecr.aws/docker/library/tomcat:9-jdk11-corretto
 
 # RUN apt-get update -y && apt-get -y upgrade
 RUN yum -y update

@@ -15,7 +15,7 @@ WORKDIR /build/mrt-store
 
 ADD mrt-store /build/mrt-store
 
-RUN mvn install -DskipITs -Ddocker.skip && \
+RUN mvn install -DskipITs -Ddocker.skip --no-transfer-progress && \
     date -r store2-src/target +'mrt-store: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
 

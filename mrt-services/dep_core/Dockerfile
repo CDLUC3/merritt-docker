@@ -20,8 +20,8 @@ ADD mrt-core2 ./
 
 # Build and clean in one step to keep the image size small
 RUN mkdir appdir && \
-    mvn install -Pparent && \
-    mvn install -DskipTests && \
+    mvn install -Pparent --no-transfer-progress && \
+    mvn install -DskipTests --no-transfer-progress && \
     date -r core/target +'dep-core: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp */target/*.jar appdir && \
     mvn clean && \

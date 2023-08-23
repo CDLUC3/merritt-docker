@@ -14,7 +14,7 @@ WORKDIR /build/mrt-replic
 
 ADD mrt-replic /build/mrt-replic
 
-RUN mvn install -DskipITs -Ddocker.skip && \
+RUN mvn install -DskipITs -Ddocker.skip --no-transfer-progress && \
     date -r replication-src/target +'mrt-replic: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
 

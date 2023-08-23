@@ -14,7 +14,7 @@ WORKDIR /build/mrt-inventory
 
 ADD mrt-inventory /build/mrt-inventory
 
-RUN mvn install -D=environment=local -DskipITs -Ddocker.skip && \
+RUN mvn install -D=environment=local -DskipITs -Ddocker.skip --no-transfer-progress && \
     date -r inv-src/target +'mrt-inv: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
 

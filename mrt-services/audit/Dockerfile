@@ -15,7 +15,7 @@ WORKDIR /build/mrt-audit
 
 ADD mrt-audit /build/mrt-audit
 
-RUN mvn install -DskipITs -Ddocker.skip && \
+RUN mvn install -DskipITs -Ddocker.skip --no-transfer-progress && \
     date -r audit-src/target +'mrt-audit: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
 

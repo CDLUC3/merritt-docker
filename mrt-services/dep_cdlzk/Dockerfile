@@ -18,7 +18,7 @@ ADD cdl-zk-queue ./
 
 # Build and clean in one step to keep the image size small
 RUN mkdir appdir && \
-    mvn install -DskipTests && \
+    mvn install -DskipTests --no-transfer-progress && \
     date -r target +'dep-cdlzk: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp target/*.jar appdir && \
     mvn clean && \

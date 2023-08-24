@@ -170,7 +170,7 @@ build_image() {
   sleep 2
   echo >> $LOGSUM
   date >> $LOGSUM
-  docker build --pull --build-arg ECR_REGISTRY=${ECR_REGISTRY} --force-rm $3 -t $1 $2 >> $LOGDOCKER 2>&1 
+  docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} --force-rm $3 -t $1 $2 >> $LOGDOCKER 2>&1 
   eval_jobstat $? "FAIL" "Docker build $1, dir: $2, param: $3"
   scan_image $1 
 }
@@ -378,7 +378,6 @@ build_microservice_images() {
 
   cd $WKDIR/mrt-services
 
-  build_image_push ${ECR_REGISTRY}/dep-cdlmvn:dev dep_cdlmvn
   build_image_push ${ECR_REGISTRY}/mrt-core2:dev dep_core
   build_image_push ${ECR_REGISTRY}/cdl-zk-queue:dev dep_cdlzk
   build_image_push ${ECR_REGISTRY}/mrt-zoo:dev dep_zoo
@@ -497,6 +496,7 @@ MAVEN_PROFILE="-P uc3"
 TAG_PUB=testall
 CHECK_REPO_TAG=
 EMAIL=0
+export JAVA_RELEASE=${JAVA_RELEASE:-8}
 
 while getopts "B:C:m:p:t:w:j:he" flag 
 do

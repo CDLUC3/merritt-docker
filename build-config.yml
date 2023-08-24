@@ -40,6 +40,15 @@ flagsets:
     run-maven: true
     run-maven-tests: false
     build-support: false
+  # run maven builds only
+  mvn: &mvn
+    build-stack: false
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: true
+    run-maven-tests: false
+    build-support: false
   # run docker and maven builds, include maven tests
   buildtest: &buildtest
     build-stack: true
@@ -93,8 +102,12 @@ build-config:
     <<: *buildonly
     tags:
       <<: *maintags
-  main-test:
+  main-buildtest:
     <<: *buildtest
+    tags:
+      <<: *maintags
+  main-mvn:
+    <<: *mvn
     tags:
       <<: *maintags
   main-jenkins:

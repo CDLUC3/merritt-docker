@@ -49,6 +49,15 @@ flagsets:
     run-maven: true
     run-maven-tests: false
     build-support: false
+  # run maven build and test only
+  mvntest: &mvntest
+    build-stack: false
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: true
+    run-maven-tests: true
+    build-support: false
   # run docker and maven builds, include maven tests
   buildtest: &buildtest
     build-stack: true
@@ -110,29 +119,25 @@ build-config:
     <<: *mvn
     tags:
       <<: *maintags
+  main-mvntest:
+    <<: *mvntest
+    tags:
+      <<: *maintags
   main-jenkins:
     <<: *jenkins
     tags:
       <<: *maintags
-  newbuild-buildonly:
-    <<: *buildonly
-    tags: &newbuildtags
-      mrt-core: newbuild
-      mrt-cloud: newbuild
-      cdl-zk-queue: main
-      mrt-zoo: main
-      mrt-inventory: main
-      mrt-store: main
-      mrt-ingest: main
-      mrt-audit: main
-      mrt-replic: main
-      mrt-dashboard: main
-      mrt-integ-tests: main
-  newbuild-test:
-    <<: *buildtest
-    tags:
-      <<: *newbuildtags
-  newbuild-jenkins:
-    <<: *jenkins
-    tags:
-      <<: *newbuildtags
+  java11-mvntest:
+    <<: *mvntest
+    tags: &java11tags
+      mrt-core: java11
+      mrt-cloud: java11
+      cdl-zk-queue: java11
+      mrt-zoo: java11
+      mrt-inventory: java11
+      mrt-store: java11
+      mrt-ingest: java11
+      mrt-audit: java11
+      mrt-replic: java11
+      mrt-dashboard: java11
+      mrt-integ-tests: java11

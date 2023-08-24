@@ -127,8 +127,8 @@ build-config:
     <<: *jenkins
     tags:
       <<: *maintags
-  java11-mvntest:
-    <<: *mvntest
+  java11-main:
+    <<: *main
     tags: &java11tags
       mrt-core: java11
       mrt-cloud: java11
@@ -141,3 +141,11 @@ build-config:
       mrt-replic: java11
       mrt-dashboard: java11
       mrt-integ-tests: java11
+  java11-mvntest:
+    <<: *mvntest
+    tags: 
+      <<: *java11tags
+  java11-jenkins:
+    <<: *jenkins
+    tags: 
+      <<: *java11tags

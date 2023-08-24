@@ -496,6 +496,7 @@ MAVEN_PROFILE="-P uc3"
 TAG_PUB=testall
 CHECK_REPO_TAG=
 EMAIL=0
+export JAVA_RELEASE=${JAVA_RELEASE:-8}
 
 while getopts "B:C:m:p:t:w:j:he" flag 
 do

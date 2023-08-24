@@ -145,8 +145,8 @@ build-config:
       mrt-ingest: java11
       mrt-audit: java11
       mrt-replic: java11
-      mrt-dashboard: java11
-      mrt-integ-tests: java11
+      mrt-dashboard: main
+      mrt-integ-tests: main
   java11-mvntest:
     <<: *mvntest
     tags: 

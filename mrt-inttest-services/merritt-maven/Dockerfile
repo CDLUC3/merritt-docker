@@ -6,6 +6,9 @@
 
 FROM public.ecr.aws/docker/library/maven:3-amazoncorretto-11
 
+ENV JAVA_RELEASE=8
+# ENV JAVA_RELEASE=11
+
 RUN yum -y update
 
 RUN mkdir -p /build/static

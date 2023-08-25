@@ -4,7 +4,7 @@
 # aws ecr create-repository --repository-name merritt-tomcat
 # docker push ${ECR_REGISTRY}/merritt-tomcat:dev
 
-FROM ${ECR_REGISTRY}/merritt-tomcat:dev
+FROM public.ecr.aws/docker/library/tomcat:9-jdk11-corretto
 
 # RUN apt-get update -y && apt-get -y upgrade
 RUN yum -y update

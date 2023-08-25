@@ -15,7 +15,7 @@ WORKDIR /build/mrt-ingest
 
 ADD mrt-ingest /build/mrt-ingest
 
-RUN mvn install -Denforcer.skip=true -Dskip.surefire.tests -DskipITs -Ddocker.skip --no-transfer-progress && \
+RUN mvn -ntp install -Denforcer.skip=true -Dskip.surefire.tests -DskipITs -Ddocker.skip && \
     date -r ingest-src/target +'mrt-ingest: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean
 

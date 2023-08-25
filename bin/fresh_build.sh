@@ -190,7 +190,7 @@ build_it_image() {
   echo >> $LOGSUM
   date >> $LOGSUM
 
-  docker-compose -f $1 build --pull >> $LOGDOCKER 2>&1
+  docker-compose -f $1 build >> $LOGDOCKER 2>&1
   eval_jobstat $? "FAIL" "Compose Build $2, file: $1"
 
   scan_image $2

@@ -7,6 +7,8 @@
 # aws ecr create-repository --repository-name mrt-core2
 # docker push ${ECR_REGISTRY}/mrt-core2:dev
 
+ARG ECR_REGISTRY=ecr_registry_not_set
+
 FROM ${ECR_REGISTRY}/merritt-maven:dev
 
 WORKDIR /build/mrt-core2

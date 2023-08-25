@@ -468,6 +468,9 @@ usage() {
   echo "  -j workidir, Jenkins working directory in which build will run.  Jenkins will not create a 'merritt-docker' directory for clone"
   echo "  -e; email build results"
   echo ""
+  echo "Build Config Options"
+  python3 build-config.py|jq -r ".[\"build-config\"] | with_entries(.value |= .description)"
+  echo ""
 }
 
 show_options() {

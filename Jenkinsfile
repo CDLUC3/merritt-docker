@@ -3,6 +3,7 @@ pipeline {
 
     environment {      
       JAVA_HOME = "/usr/lib/jvm/java-11-amazon-corretto.x86_64"
+      PATH = "$JAVA_HOME/bin:$PATH"
     }
     tools {
         // Install the Maven version 3.8.4 and add it to the path.

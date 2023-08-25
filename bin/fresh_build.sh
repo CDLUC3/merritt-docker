@@ -480,6 +480,7 @@ show_options() {
   echo TAG_PUB=$TAG_PUB
   echo CHECK_REPO_TAG=$CHECK_REPO_TAG
   echo WKDIR=$WKDIR
+  echo JAVA_RELEASE=$JAVA_RELEASE
   echo
 }
 

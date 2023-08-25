@@ -290,6 +290,8 @@ build_integration_test_images() {
   build_it_image mrt-it-database/docker-compose-audit-replic.yml ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev
   build_it_image mrt-minio-it/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it:dev
   build_it_image mrt-minio-it-with-content/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
+  build_it_image mmerritt-tomcat/docker-compose.yml ${ECR_REGISTRY}/merritt-tomcat:dev
+  build_it_image merritt-maven/docker-compose.yml ${ECR_REGISTRY}/merritt-maven:dev
 }
 
 check_maven_profile() {

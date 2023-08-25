@@ -21,10 +21,8 @@ RUN mvn install -DskipITs -Ddocker.skip --no-transfer-progress && \
 
 RUN jar uf /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war -C /build static/build.content.txt
 
-FROM public.ecr.aws/docker/library/tomcat:9-jdk11-corretto
+FROM ${ECR_REGISTRY}/merritt-tomcat:dev
 
-# RUN apt-get update -y && apt-get -y upgrade
-RUN yum -y update
 
 COPY --from=build /root/.m2/repository/org/cdlib/mrt/mrt-storewar/1.0-SNAPSHOT/mrt-storewar-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/store.war
 
@@ -34,10 +32,3 @@ RUN mkdir -p /dpr2store/mrtHomes/store \
     touch /opt/storage/test.txt
 RUN mkdir -p /usr/local/tomcat/webapps/cloudcontainer/store
 
-ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true -XX:+UseG1GC -DAccessDaemon=1"
-
-# https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
-ENV TZ=America/Los_Angeles
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-EXPOSE 8080 8009

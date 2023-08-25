@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  minio-server:
+    container_name: merritt-maven
+    image: ${ECR_REGISTRY}/merritt-maven:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
+    ports:
+    - published: 8080
+      target: 8080

@@ -7,11 +7,7 @@
 # aws ecr create-repository --repository-name mrt-core2
 # docker push ${ECR_REGISTRY}/mrt-core2:dev
 
-FROM public.ecr.aws/docker/library/maven:3-amazoncorretto-11
-
-RUN yum -y update
-
-RUN mkdir -p /build/static
+FROM ${ECR_REGISTRY}/merritt-maven:dev
 
 WORKDIR /build/mrt-core2
 

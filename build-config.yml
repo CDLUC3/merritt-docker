@@ -75,6 +75,16 @@ flagsets:
     run-maven: true
     run-maven-tests: true
     build-support: false
+  sbox-notest: &sbox-notest
+    description: "Run maven builds only. Pull IT images from ECR"
+    build-it: false
+    build-stack: false
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: true
+    run-maven-tests: false
+    build-support: false
   buildtest: &buildtest
     description: "Run docker builds and maven builds and tests."
     build-it: true
@@ -132,6 +142,14 @@ build-config:
       <<: *maintags
   main-mvn:
     <<: *mvn
+    tags:
+      <<: *maintags
+  main-sbox:
+    <<: *sbox
+    tags:
+      <<: *maintags
+  main-sbox-notest:
+    <<: *sbox-notest
     tags:
       <<: *maintags
   main-jenkins:

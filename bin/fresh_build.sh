@@ -590,7 +590,11 @@ fi
 show_flags
 
 # Build integration test docker images (these are needeed for maven integration tests)
-build_integration_test_images
+if test_flag 'build-it'
+then
+  build_integration_test_images
+fi
+
 # Build artifacts with maven
 build_maven_artifacts
 

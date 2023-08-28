@@ -9,6 +9,7 @@ flagsets:
   main: &main
     description: "Complete build and test of docker stack images and maven assets.  Scan ALL docker images."
     push: true
+    build-it: true
     build-stack: true
     scan-unfixable: true
     scan-fixable: true
@@ -16,6 +17,7 @@ flagsets:
     run-maven-tests: true
   docker: &docker
     description: "Build docker images and push to ECR"
+    build-it: true
     build-stack: true
     push: true
     scan-unfixable: false
@@ -25,6 +27,7 @@ flagsets:
     build-support: false
   docker-nopush: &docker-nopush
     description: "Build docker images.  Do not push to ECR"
+    build-it: true
     build-stack: true
     push: false
     scan-unfixable: false
@@ -34,6 +37,7 @@ flagsets:
     build-support: false
   scan: &scan
     description: "Build docker images and scan for vulnerabilities"
+    build-it: true
     build-stack: true
     push: false
     scan-unfixable: true
@@ -43,6 +47,7 @@ flagsets:
     build-support: false
   buildonly: &buildonly
     description: "Run docker and maven builds.  No tests.  No scans."
+    build-it: true
     build-stack: true
     push: false
     scan-unfixable: false
@@ -52,6 +57,7 @@ flagsets:
     build-support: false
   mvn: &mvn
     description: "Run maven builds only.  No tests."
+    build-it: true
     build-stack: false
     push: false
     scan-unfixable: false
@@ -59,8 +65,19 @@ flagsets:
     run-maven: true
     run-maven-tests: false
     build-support: false
+  sbox: &sbox
+    description: "Run maven builds and tests. Pull IT images from ECR"
+    build-it: false
+    build-stack: false
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: true
+    run-maven-tests: true
+    build-support: false
   buildtest: &buildtest
     description: "Run docker builds and maven builds and tests."
+    build-it: true
     build-stack: true
     push: false
     scan-unfixable: false
@@ -70,6 +87,7 @@ flagsets:
     build-support: false
   jenkins: &jenkins
     description: "Jenkins build: run maven builds and tests"
+    build-it: true
     build-stack: false
     push: false
     scan-unfixable: false

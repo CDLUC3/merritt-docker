@@ -544,7 +544,7 @@ show_options
 create_working_dir
 
 # Create output files for the build steps
-mkdir -p ${WKDIR_PAR}/static
+mkdir -p ${WKDIR_PAR}/static ${WKDIR_PAR}/build-output/artifacts
 BUILD_TXT_FILE=static/build.content.txt
 BUILD_TXT=${WKDIR_PAR}/${BUILD_TXT_FILE}
 LOGSUM=${WKDIR_PAR}/build-output/build-log.summary.txt

@@ -6,8 +6,16 @@
 
 # Common sets of build flags to be used in comination with a set of branches and tags
 flagsets:
-  # run only docker builds, do not run maven
+  main: &main
+    description: "Complete build and test of docker stack images and maven assets.  Scan ALL docker images."
+    push: true
+    build-stack: true
+    scan-unfixable: true
+    scan-fixable: true
+    run-maven: true
+    run-maven-tests: true
   docker: &docker
+    description: "Build docker images and push to ECR"
     build-stack: true
     push: true
     scan-unfixable: false
@@ -15,7 +23,17 @@ flagsets:
     run-maven: false
     run-maven-tests: false
     build-support: false
+  docker-nopush: &docker-nopush
+    description: "Build docker images.  Do not push to ECR"
+    build-stack: true
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: false
+    run-maven-tests: false
+    build-support: false
   scan: &scan
+    description: "Build docker images and scan for vulnerabilities"
     build-stack: true
     push: false
     scan-unfixable: true
@@ -23,8 +41,8 @@ flagsets:
     run-maven: false
     run-maven-tests: false
     build-support: false
-  # run docker and maven buids
   buildonly: &buildonly
+    description: "Run docker and maven builds.  No tests.  No scans."
     build-stack: true
     push: false
     scan-unfixable: false
@@ -32,8 +50,17 @@ flagsets:
     run-maven: true
     run-maven-tests: false
     build-support: false
-  # run docker and maven builds, include maven tests
+  mvn: &mvn
+    description: "Run maven builds only.  No tests."
+    build-stack: false
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: true
+    run-maven-tests: false
+    build-support: false
   buildtest: &buildtest
+    description: "Run docker builds and maven builds and tests."
     build-stack: true
     push: false
     scan-unfixable: false
@@ -42,14 +69,17 @@ flagsets:
     run-maven-tests: true
     build-support: false
   jenkins: &jenkins
+    description: "Jenkins build: run maven builds and tests"
     build-stack: false
     push: false
     scan-unfixable: false
     scan-fixable: false
     run-maven: true
     run-maven-tests: true
+    build-support: false
 build-config:
   main:
+    <<: *main
     tags: &maintags
       mrt-core: main
       mrt-cloud: main
@@ -62,15 +92,12 @@ build-config:
       mrt-replic: main
       mrt-dashboard: main
       mrt-integ-tests: main
-    push: true
-    build-stack: true
-    scan-unfixable: true
-    scan-fixable: true
-    run-maven: true
-    run-maven-tests: true
-    build-support: true
   main-docker:
     <<: *docker
+    tags:
+      <<: *maintags
+  main-docker-nopush:
+    <<: *docker-nopush
     tags:
       <<: *maintags
   main-scan:
@@ -81,33 +108,33 @@ build-config:
     <<: *buildonly
     tags:
       <<: *maintags
-  main-test:
+  main-buildtest:
     <<: *buildtest
+    tags:
+      <<: *maintags
+  main-mvn:
+    <<: *mvn
     tags:
       <<: *maintags
   main-jenkins:
     <<: *jenkins
     tags:
       <<: *maintags
-  newbuild-buildonly:
-    <<: *buildonly
-    tags: &newbuildtags
-      mrt-core: newbuild
-      mrt-cloud: newbuild
-      cdl-zk-queue: main
-      mrt-zoo: main
-      mrt-inventory: main
-      mrt-store: main
-      mrt-ingest: main
-      mrt-audit: main
-      mrt-replic: main
+  java11-main:
+    <<: *main
+    tags: &java11tags
+      mrt-core: java11
+      mrt-cloud: java11
+      cdl-zk-queue: java11
+      mrt-zoo: java11
+      mrt-inventory: java11
+      mrt-store: java11
+      mrt-ingest: java11
+      mrt-audit: java11
+      mrt-replic: java11
       mrt-dashboard: main
       mrt-integ-tests: main
-  newbuild-test:
-    <<: *buildtest
-    tags:
-      <<: *newbuildtags
-  newbuild-jenkins:
+  java11-jenkins:
     <<: *jenkins
-    tags:
-      <<: *newbuildtags
+    tags: 
+      <<: *java11tags

@@ -9,7 +9,7 @@
 
 ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM ${ECR_REGISTRY}/dep-cdlmvn:dev
+FROM ${ECR_REGISTRY}/merritt-maven:dev
 
 WORKDIR /build/mrt-core2
 
@@ -18,8 +18,8 @@ ADD mrt-core2 ./
 
 # Build and clean in one step to keep the image size small
 RUN mkdir appdir && \
-    mvn install -Pparent && \
-    mvn install -DskipTests && \
+    mvn -ntp install -Pparent && \
+    mvn -ntp install -DskipTests && \
     date -r core/target +'dep-core: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     cp */target/*.jar appdir && \
     mvn clean && \

@@ -1,5 +1,7 @@
 version: 0.2
 
+# This was an experiment using AWS code build.  Not actively in use...
+
 # Pre-requisites
 # - Create CodeBuild project
 #   - Provide minimal github credentials to access public repo

@@ -190,7 +190,7 @@ build_it_image() {
   echo >> $LOGSUM
   date >> $LOGSUM
 
-  docker-compose -f $1 build --pull >> $LOGDOCKER 2>&1
+  docker-compose -f $1 build >> $LOGDOCKER 2>&1
   eval_jobstat $? "FAIL" "Compose Build $2, file: $1"
 
   scan_image $2
@@ -290,6 +290,8 @@ build_integration_test_images() {
   build_it_image mrt-it-database/docker-compose-audit-replic.yml ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev
   build_it_image mrt-minio-it/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it:dev
   build_it_image mrt-minio-it-with-content/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
+  build_it_image merritt-tomcat/docker-compose.yml ${ECR_REGISTRY}/merritt-tomcat:dev
+  build_it_image merritt-maven/docker-compose.yml ${ECR_REGISTRY}/merritt-maven:dev
 }
 
 check_maven_profile() {
@@ -321,12 +323,12 @@ build_maven_artifacts() {
     date >> $LOGSUM
 
     mvn --version >> $LOGMAVEN 2>&1
-    mvn clean install -f dep_core/mrt-core2/pom.xml -Pparent >> $LOGMAVEN 2>&1
+    mvn -ntp clean install -f dep_core/mrt-core2/pom.xml -Pparent >> $LOGMAVEN 2>&1
     if test_flag 'run-maven-tests'
     then
-      mvn clean install $MAVEN_PROFILE >> $LOGMAVEN 2>&1
+      mvn -ntp clean install $MAVEN_PROFILE >> $LOGMAVEN 2>&1
     else
-      mvn clean install -Ddocker.skip -DskipITs -Dmaven.test.skip=true $MAVEN_PROFILE >> $LOGMAVEN 2>&1
+      mvn -ntp clean install -Ddocker.skip -DskipITs -Dmaven.test.skip=true $MAVEN_PROFILE >> $LOGMAVEN 2>&1
     fi
     mstat=$?
     eval_jobstat $mstat "FAIL" "Maven Build"
@@ -466,6 +468,9 @@ usage() {
   echo "  -j workidir, Jenkins working directory in which build will run.  Jenkins will not create a 'merritt-docker' directory for clone"
   echo "  -e; email build results"
   echo ""
+  echo "Build Config Options"
+  python3 build-config.py|jq -r ".[\"build-config\"] | with_entries(.value |= .description)"
+  echo ""
 }
 
 show_options() {
@@ -475,6 +480,7 @@ show_options() {
   echo TAG_PUB=$TAG_PUB
   echo CHECK_REPO_TAG=$CHECK_REPO_TAG
   echo WKDIR=$WKDIR
+  echo JAVA_RELEASE=$JAVA_RELEASE
   echo
 }
 

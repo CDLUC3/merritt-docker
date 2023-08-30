@@ -15,6 +15,8 @@ WORKDIR /build/mrt-store
 
 ADD mrt-store /build/mrt-store
 
+RUN sed -i -e "s/\${AccessDaemon}/1/" store-war/src/main/webapp/WEB-INF/web.xml
+
 RUN mvn -ntp install -DskipITs -Ddocker.skip && \
     date -r store2-src/target +'mrt-store: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean

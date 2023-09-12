@@ -466,7 +466,8 @@ usage() {
   echo "    default: /apps/dpr2/merritt-workspace/daily-builds/[merritt-docker-branch].[build-config-profile-name]/merritt-docker"
   echo "      if path contains 'merritt-workspace/daily-builds', the directory will be recreated"
   echo "  -j workidir, Jenkins working directory in which build will run.  Jenkins will not create a 'merritt-docker' directory for clone"
-  echo "  -e; email build results"
+  echo "  -e email build results"
+  echo "  -D prune all docker images and volumes (recommended to run weekly)"
   echo ""
   echo "Build Config Options"
   python3 build-config.py|jq -r ".[\"build-config\"] | with_entries(.value |= .description)"
@@ -504,7 +505,7 @@ CHECK_REPO_TAG=
 EMAIL=0
 export JAVA_RELEASE=${JAVA_RELEASE:-8}
 
-while getopts "B:C:m:p:t:w:j:he" flag 
+while getopts "B:C:m:p:t:w:j:heD" flag 
 do
     case "${flag}" in
         B) MD_BRANCH=${OPTARG};;
@@ -525,6 +526,11 @@ do
            WKDIR_PAR=$WKDIR
            ;;
         e) EMAIL=1;;
+        D) docker system df
+           docker image prune -a -f 
+           docker volume prune -f
+           docker system df
+           ;;
         h) usage
            exit
            ;;

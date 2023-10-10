@@ -170,7 +170,7 @@ build_image() {
   sleep 2
   echo >> $LOGSUM
   date >> $LOGSUM
-  docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} --force-rm $3 -t $1 $2 >> $LOGDOCKER 2>&1 
+  docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm $3 -t $1 $2 >> $LOGDOCKER 2>&1 
   eval_jobstat $? "FAIL" "Docker build $1, dir: $2, param: $3"
   scan_image $1 
 }
@@ -190,7 +190,7 @@ build_it_image() {
   echo >> $LOGSUM
   date >> $LOGSUM
 
-  docker-compose -f $1 build >> $LOGDOCKER 2>&1
+  docker-compose -f $1 build --no-cache >> $LOGDOCKER 2>&1
   eval_jobstat $? "FAIL" "Compose Build $2, file: $1"
 
   scan_image $2

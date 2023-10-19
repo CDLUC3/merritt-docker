@@ -284,7 +284,7 @@ containers to system resources on the Docker host.
   | 8094 | OpenSearch Stack| OpenSearch Dashboards|
   | 8095 | Dev Stack| Minio Web Console|
   | 8096 | IntTest Stack| Integration Test: Mock Merritt Service|
-  | 8097 | Content Stack| Pal Museum data ingest service|
+  | 8097 | OpenSearch Stack| OpenSearch API|
   | 8098 | IntTest Stack| Integration Test: Minio admin port|
   | 8098 | Dev Stack| Ingest Callback |
   | 8099 | IntTest Stack| Integration Test: service-it debug|

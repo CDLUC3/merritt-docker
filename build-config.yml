@@ -15,6 +15,7 @@ flagsets:
     scan-fixable: true
     run-maven: true
     run-maven-tests: true
+    build-support: true
   docker: &docker
     description: "Build docker images and push to ECR"
     build-it: true

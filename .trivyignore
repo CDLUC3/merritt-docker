@@ -25,3 +25,6 @@ CVE-2023-32002
 # Zookeeper issue - Added 2023-10.
 # https://github.com/CDLUC3/mrt-doc-private/issues/58
 CVE-2023-44981
+
+# Zlib - unfixed Added 2023-10
+CVE-2023-45853

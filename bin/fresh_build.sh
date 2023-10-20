@@ -150,7 +150,7 @@ checkout_tag() {
 scan_image() {
   if test_flag 'scan-fixable'
   then
-    trivy --scanners vuln image --severity CRITICAL $1 >> $LOGSCAN 2>&1
+    trivy --ignorefile /dev/null --scanners vuln image --severity CRITICAL $1 >> $LOGSCAN 2>&1
     trivy --ignorefile $WKDIR/.trivyignore --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCANIGNORE 2>&1
     eval_jobstat $? "WARN" "Scan $1"
   else 
@@ -561,7 +561,7 @@ LOGSUM=${WKDIR_PAR}/build-output/build-log.summary.txt
 LOGGIT=${WKDIR_PAR}/build-output/build-log.git.txt
 LOGDOCKER=${WKDIR_PAR}/build-output/build-log.docker.txt
 LOGSCAN=${WKDIR_PAR}/build-output/build-log.trivy-scan.txt
-LOGSCANIGNORE=${WKDIR_PAR}/build-output/build-log.trivy-scan-igore.txt
+LOGSCANIGNORE=${WKDIR_PAR}/build-output/build-log.trivy-scan-ignore.txt
 LOGSCANFIXED=${WKDIR_PAR}/build-output/build-log.trivy-scan-fixed.txt
 LOGMAVEN=${WKDIR_PAR}/build-output/build-log.maven.txt
 JOBSTAT=${WKDIR_PAR}/build-output/jobstat.txt

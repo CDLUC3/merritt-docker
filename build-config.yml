@@ -157,6 +157,20 @@ build-config:
     <<: *jenkins
     tags:
       <<: *maintags
+  fix15-jenkins:
+    <<: *jenkins
+    tags:
+      mrt-core: fix1.5
+      mrt-cloud: status
+      cdl-zk-queue: main
+      mrt-zoo: main
+      mrt-inventory: fix1.5
+      mrt-store: fix1.5
+      mrt-ingest: fix1.5
+      mrt-audit: fix1.5
+      mrt-replic: fix1.5
+      mrt-dashboard: main
+      mrt-integ-tests: main
   java11-main:
     <<: *main
     tags: &java11tags

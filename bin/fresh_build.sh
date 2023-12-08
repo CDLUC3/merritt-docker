@@ -532,7 +532,8 @@ do
         e) EMAIL=1;;
         D) docker system df
            docker image prune -a -f 
-           #docker volume prune -f
+           docker volume prune -f
+           docker system prune -f
            docker system df
            ;;
         h) usage

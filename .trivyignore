@@ -1,5 +1,3 @@
-# logstash-oss has reported the following vulnerability in snakeyaml - Added 2023-08
-CVE-2022-1471
 # logstash vulnerability - Added 2023-10
 CVE-2021-26291
 
@@ -19,12 +17,11 @@ CVE-2019-8457
 ## python
 CVE-2021-29921
 
-#Node issue - Added 2023-08
+# Node issue - Added 2023-08
 CVE-2023-32002
-
-# Zookeeper issue - Added 2023-10.
-# https://github.com/CDLUC3/mrt-doc-private/issues/58
-CVE-2023-44981
 
 # Zlib - unfixed Added 2023-10
 CVE-2023-45853
+
+# OpenSearch issue added 2023-12
+CVE-2022-46337

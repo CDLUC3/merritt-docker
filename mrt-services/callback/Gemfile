@@ -1,5 +1,8 @@
-source "https://rubygems.org"
-gem 'json'
-gem 'sinatra'
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
 gem 'httpclient'
+gem 'json'
+gem 'rubocop'
+gem 'sinatra'
 gem 'thin'

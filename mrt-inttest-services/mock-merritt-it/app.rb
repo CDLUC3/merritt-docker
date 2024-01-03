@@ -11,8 +11,8 @@ set :bind, '0.0.0.0'
 
 def readme
   renderer = Redcarpet::Render::HTML.new
-  markdown = Redcarpet::Markdown.new(renderer, {tables: true})
-  markdown.render(File.open('/data/README.md').read)
+  markdown = Redcarpet::Markdown.new(renderer, { tables: true })
+  markdown.render(File.read('/data/README.md'))
 end
 
 get '/' do
@@ -20,7 +20,8 @@ get '/' do
 end
 
 def processing
-  return false if File.exist?("/tmp/mock.hold")
+  return false if File.exist?('/tmp/mock.hold')
+
   true
 end
 
@@ -42,14 +43,14 @@ get '/status' do
 end
 
 post '/status/start' do
-  hold_file = File.new("/tmp/mock.hold", "w")
+  hold_file = File.new('/tmp/mock.hold', 'w')
   File.delete(hold_file) if File.exist?(hold_file)
   get_status
 end
 
 post '/status/stop' do
-  hold_file = File.new("/tmp/mock.hold", "w")
-  hold_file.puts("")
+  hold_file = File.new('/tmp/mock.hold', 'w')
+  hold_file.puts('')
   hold_file.close
   get_status
 end
@@ -60,10 +61,11 @@ end
 
 def get_file(fname)
   return status_404 unless processing
+
   if File.exist?(fname)
-    if fname =~ %r[\.xml$]
+    if fname =~ /\.xml$/
       content_type 'application/xml'
-    elsif fname =~ %r[\.txt$]
+    elsif fname =~ /\.txt$/
       content_type 'text/plain'
     end
     send_file fname
@@ -82,7 +84,7 @@ def get_producer(params)
   get_file("/data/producer/#{path}")
 end
 
-def get_system(params) 
+def get_system(params)
   node = params['splat'][0]
   ark = params['splat'][1]
   ver = params['splat'][2]
@@ -92,6 +94,7 @@ end
 
 get '/static/*' do
   return status_404 unless processing
+
   fn = params['splat'][0]
   fname = get_fname(fn)
   if fname.nil?
@@ -102,22 +105,24 @@ get '/static/*' do
   end
 end
 
-def get_fname(val) 
+def get_fname(val)
   fname = "/data/static/#{val}"
   return fname if File.exist?(fname)
-  fname = fname.gsub(%r[\/0\/], '/1/')
+
+  fname = fname.gsub(%r{/0/}, '/1/')
   return fname if File.exist?(fname)
+
   nil
 end
 
 # delete ingest queue directory
 delete '/ingest-queue' do
-  fname = "/tdr/ingest/queue"
-  puts %x{ find #{fname} }
-  %x{ rm -rf #{fname} }
-  %x{ mkdir #{fname} }
+  fname = '/tdr/ingest/queue'
+  puts `find #{fname}`
+  `rm -rf #{fname}`
+  `mkdir #{fname}`
   puts 'test2'
-  puts %x{ find #{fname} }
+  puts `find #{fname}`
 end
 
 # mock data creation
@@ -127,18 +132,17 @@ get '/storage-input/*' do
   get_file("/data/#{path}")
 end
 
-
 # Mock Storage
 
 get '/storage/manifest/*/*' do
   return get_status unless processing
+
   node = params['splat'][0]
   ark = params['splat'][1]
   content_type 'application/xml'
-  manifest = ark =~ %r[ark:\/v3.*] ? "manifestv3" : "manifest"
-  Mustache.render(File.open("/data/#{manifest}").read, {'node': node, 'ark': ark})
+  manifest = ark =~ %r{ark:/v3.*} ? 'manifestv3' : 'manifest'
+  Mustache.render(File.read("/data/#{manifest}"), { node: node, ark: ark })
 end
-
 
 get '/storage/content/*/*/*/producer/*' do
   get_producer(params)
@@ -157,37 +161,35 @@ get '/store/content/*/*/*/system/*' do
 end
 
 get '/store/state/7777' do
-  send_file "/data/7777.anvl" if params[:t] == "anvl"
-  "Specify ?t=anvl to download the file"
+  send_file '/data/7777.anvl' if params[:t] == 'anvl'
+  'Specify ?t=anvl to download the file'
 end
 
 get '/store/state/8888' do
-  send_file "/data/8888.anvl" if params[:t] == "anvl"
-  "Specify ?t=anvl to download the file"
+  send_file '/data/8888.anvl' if params[:t] == 'anvl'
+  'Specify ?t=anvl to download the file'
 end
 
 get '/hostname' do
   content_type 'application/json'
   {
-    "hostname": "mock-merritt-it",
-    "canonicalHostname": "mock-merritt-it",
-    "hostAddress": "na"
-  }.to_json  
+    hostname: 'mock-merritt-it',
+    canonicalHostname: 'mock-merritt-it',
+    hostAddress: 'na'
+  }.to_json
 end
 
 post '/add/*/*' do
   node = params['splat'][0]
   ark = params['splat'][1]
-  if ark == 'ark/9999/2222'
-    sleep 20
-  end
+  sleep 20 if ark == 'ark/9999/2222'
   status 200
-  "<entity>foo</entity>"
+  '<entity>foo</entity>'
 end
 
 post '/update/*' do
   status 200
-  "<entity>foo</entity>"
+  '<entity>foo</entity>'
 end
 
 # Mock Inventory
@@ -195,20 +197,20 @@ end
 get '/inventory/*' do
   status 200
   content_type 'application/xml'
-  "<entity>foo</entity>"
+  '<entity>foo</entity>'
 end
 
 post '/inventory/*' do
   status 200
   content_type 'application/xml'
-  "<entity>foo</entity>"
+  '<entity>foo</entity>'
 end
 
 # Mock EZID
 
 def fake_ark(shoulder)
   # force a relatively unique 7 digit number
-  num = Time.now.to_i % 8999999 + 1000000
+  num = (Time.now.to_i % 8_999_999) + 1_000_000
   "#{shoulder}#{num}"
 end
 

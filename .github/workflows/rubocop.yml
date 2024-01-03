@@ -14,11 +14,11 @@ jobs:
       with:
         ruby-version: '3.0'
         bundler-cache: true
-        working-directory: mrt-servcies/callback
+        working-directory: mrt-services/callback
 
     - name: 'Run Rubocop'
       run: bundle exec rubocop
-      working-directory: mrt-services
+      working-directory: mrt-services/callback
 
     - uses: ruby/setup-ruby@v1
       with:

@@ -2,23 +2,24 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    base64 (0.2.0)
     daemons (1.4.1)
     eventmachine (1.2.7)
+    httpclient (2.8.3)
     json (2.7.1)
     language_server-protocol (3.17.0.3)
-    mustache (1.1.1)
-    mustermann (2.0.2)
+    mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
     parallel (1.24.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
     racc (1.7.3)
-    rack (2.2.7)
-    rack-protection (2.2.3)
-      rack
+    rack (2.2.8)
+    rack-protection (3.2.0)
+      base64 (>= 0.1.0)
+      rack (~> 2.2, >= 2.2.4)
     rainbow (3.1.1)
-    redcarpet (3.5.1)
     regexp_parser (2.8.3)
     rexml (3.2.6)
     rubocop (1.59.0)
@@ -36,27 +37,27 @@ GEM
       parser (>= 3.2.1.0)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    sinatra (2.2.3)
-      mustermann (~> 2.0)
-      rack (~> 2.2)
-      rack-protection (= 2.2.3)
+    sinatra (3.2.0)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.2.0)
       tilt (~> 2.0)
-    thin (1.8.1)
+    thin (1.8.2)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
-    tilt (2.1.0)
+    tilt (2.3.0)
     unicode-display_width (2.5.0)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
-  mustache
-  redcarpet
+  httpclient
+  json
   rubocop
   sinatra
   thin
 
 BUNDLED WITH
-   2.1.4
+   2.2.33

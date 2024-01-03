@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'sinatra/base'
 require 'mustache'
@@ -31,7 +33,7 @@ def get_status
   }.to_json
 end
 
-def status_404
+def status404
   status 404
   {
     processing: processing
@@ -44,7 +46,7 @@ end
 
 post '/status/start' do
   hold_file = File.new('/tmp/mock.hold', 'w')
-  File.delete(hold_file) if File.exist?(hold_file)
+  FileUtils.rm_f(hold_file)
   get_status
 end
 
@@ -60,7 +62,7 @@ get '' do
 end
 
 def get_file(fname)
-  return status_404 unless processing
+  return status404 unless processing
 
   if File.exist?(fname)
     if fname =~ /\.xml$/
@@ -76,24 +78,24 @@ def get_file(fname)
 end
 
 def get_producer(params)
-  node = params['splat'][0]
-  ark = params['splat'][1]
-  ver = params['splat'][2]
+  # node = params['splat'][0]
+  # ark = params['splat'][1]
+  # ver = params['splat'][2]
   path = params['splat'][3]
 
   get_file("/data/producer/#{path}")
 end
 
 def get_system(params)
-  node = params['splat'][0]
-  ark = params['splat'][1]
-  ver = params['splat'][2]
+  # node = params['splat'][0]
+  # ark = params['splat'][1]
+  # ver = params['splat'][2]
   path = params['splat'][3]
   get_file("/data/system/#{path}")
 end
 
 get '/static/*' do
-  return status_404 unless processing
+  return status404 unless processing
 
   fn = params['splat'][0]
   fname = get_fname(fn)
@@ -180,7 +182,7 @@ get '/hostname' do
 end
 
 post '/add/*/*' do
-  node = params['splat'][0]
+  params['splat'][0]
   ark = params['splat'][1]
   sleep 20 if ark == 'ark/9999/2222'
   status 200

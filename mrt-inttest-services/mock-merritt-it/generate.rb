@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'mustache'
 
 node = 7777
-for ark in %w[2222 3333 4444] do
+%w[2222 3333 4444].each do |ark|
   `mkdir -p "/data/generated/ark:/1111/"`
   `cp -r /data/producer "/data/generated/ark:/1111/#{ark}|1|producer"`
   `cp -r /data/system "/data/generated/ark:/1111/#{ark}|1|system"`
@@ -14,5 +16,4 @@ for ark in %w[2222 3333 4444] do
   `echo "hello" > "/data/generated/ark:/7777/7777/1/producer/untracked_file_with_ark"`
   `mkdir -p "/data/generated/folder"`
   `echo "hello" > "/data/generated/folder/untracked_file_without_ark"`
-
 end

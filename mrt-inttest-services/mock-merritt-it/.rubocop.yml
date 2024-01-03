@@ -1,0 +1,63 @@
+Metrics/ClassLength:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Metrics/BlockNesting:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+Style/NestedTernaryOperator:
+  Enabled: false
+Naming/PredicateName:
+  Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+Naming/MethodParameterName:
+  Enabled: false
+Layout/MultilineOperationIndentation:
+  Enabled: false
+Style/GlobalVars:
+  Enabled: false
+Style/ConditionalAssignment:
+  Enabled: false
+Style/ClassVars:
+  Enabled: false
+
+# Rubocop errors out when the following are added: https://github.com/rubocop/rubocop/issues/12548
+#Layout/FirstArrayElementIndentation:
+#  Enabled: true
+#Layout/FirstArrayElementLineBreak:
+#  Enabled: true
+#Layout/ArrayAlignment:
+#  EnforcedStyle: with_fixed_indentation
+#Layout/MultilineArrayBraceLayout:
+#  EnforcedStyle: new_line
+
+Layout/FirstHashElementIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+Layout/MultilineHashBraceLayout:
+  EnforcedStyle: new_line
+
+
+AllCops:
+  NewCops: enable
+

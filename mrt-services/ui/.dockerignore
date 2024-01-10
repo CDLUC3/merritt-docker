@@ -7,3 +7,4 @@ mrt-dashboard/log/
 mrt-dashboard/coverage/
 mrt-dashboard/.bundle/
 mrt-dashboard/Gemfile.lock
+mrt-dashboard/public/assets

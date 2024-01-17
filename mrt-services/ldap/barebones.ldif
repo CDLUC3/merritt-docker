@@ -285,6 +285,17 @@ modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: 410da389-1db1-4753-8cff-51840e2fd100
 createTimestamp: 20100914192017Z
 
+dn: cn=download,ou=ucb_lib_prechmat,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: download
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd1aa
+createTimestamp: 20100914192017Z
+
 dn: ou=ucb_lib_metcalf,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top
 objectClass: merrittClass

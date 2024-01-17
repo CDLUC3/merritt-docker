@@ -39,15 +39,14 @@ Style/ConditionalAssignment:
 Style/ClassVars:
   Enabled: false
 
-# Rubocop errors out when the following are added: https://github.com/rubocop/rubocop/issues/12548
-#Layout/FirstArrayElementIndentation:
-#  Enabled: true
-#Layout/FirstArrayElementLineBreak:
-#  Enabled: true
-#Layout/ArrayAlignment:
-#  EnforcedStyle: with_fixed_indentation
-#Layout/MultilineArrayBraceLayout:
-#  EnforcedStyle: new_line
+Layout/FirstArrayElementIndentation:
+  Enabled: true
+Layout/FirstArrayElementLineBreak:
+  Enabled: true
+Layout/ArrayAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/MultilineArrayBraceLayout:
+  EnforcedStyle: new_line
 
 Layout/FirstHashElementIndentation:
   Enabled: true

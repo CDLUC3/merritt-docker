@@ -451,7 +451,7 @@ post_summary_report() {
   if [[ "$JENKINS_HOME" == "" ]] && [[ $EMAIL > 0 ]]
   then
     DIST=`get_ssm_value_by_name 'batch/email'`
-    cat $LOGSUM | mail -r uc3@cdlib.org -a $LOGSCAN -a $LOGSCANIGNORE -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
+    cat $LOGSUM | mail -r merritt@cdlib.org -S replyto="uc3@ucop.edu" -a $LOGSCAN -a $LOGSCANIGNORE -a $LOGSCANFIXED -s "$SUBJ" ${DIST//,/}
   else
     cat $LOGSUM
   fi

@@ -401,7 +401,7 @@ build_docker_stack_support_images(){
 
   build_image_push ${ECR_REGISTRY}/mrt-database mysql
   build_image_push ${ECR_REGISTRY}/mrt-opendj ldap
-  build_image_push ${ECR_REGISTRY}/mrt-init ldap
+  build_image_push ${ECR_REGISTRY}/mrt-init mrt-init
   build_image_push ${ECR_REGISTRY}/callback callback
 }
 

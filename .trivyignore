@@ -5,7 +5,7 @@ CVE-2021-26291
 CVE-2023-45133
 
 # openssh issues in ruby images - Added 2023-08
-CVE-2023-28531
+# CVE-2023-28531 = rm 2024-02
 # CVE-2023-38408 - rm 2023-10
 
 # rails image issues - Added 2023-08
@@ -25,3 +25,9 @@ CVE-2023-45853
 
 # OpenSearch issue added 2023-12
 CVE-2022-46337
+
+# libaom3 - added 2024-02
+CVE-2023-6879
+
+# libopenexr - added 2024-02
+CVE-2023-5841

@@ -99,11 +99,11 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: zookeeper
+    image: zookeeper:3.8.3
     networks:
       merrittnet:
     ports:
-    - published: 2181
+    - published: 8084
       target: 2181
     restart: unless-stopped
     stdin_open: true

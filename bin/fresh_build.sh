@@ -521,7 +521,7 @@ EMAIL=0
 S3PUSH=0
 export JAVA_RELEASE=${JAVA_RELEASE:-8}
 
-while getopts "B:C:m:p:t:w:j:heD" flag 
+while getopts "B:C:m:p:t:w:j:hesD" flag 
 do
     case "${flag}" in
         B) MD_BRANCH=${OPTARG};;

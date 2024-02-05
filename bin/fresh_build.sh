@@ -455,6 +455,16 @@ post_summary_report() {
   else
     cat $LOGSUM
   fi
+
+  if [[ "$JENKINS_HOME" == "" ]] && [[ $S3PUSH > 0 ]]
+  then
+    bucket=`get_ssm_value_by_name 'admintool/s3-bucket'`    
+    for file in ${WKDIR_PAR}/build-output/build-log*.txt
+    do
+      aws s3 cp $file s3://${bucket}/merritt-reports/daily-build/
+    done
+  fi
+
   echo $SUBJ
 }
 
@@ -471,6 +481,7 @@ usage() {
   echo "      if path contains 'merritt-workspace/daily-builds', the directory will be recreated"
   echo "  -j workidir, Jenkins working directory in which build will run.  Jenkins will not create a 'merritt-docker' directory for clone"
   echo "  -e email build results"
+  echo "  -s push results to s3"
   echo "  -D prune all docker images and volumes (recommended to run weekly)"
   echo ""
   echo "Build Config Options"
@@ -507,6 +518,7 @@ MAVEN_PROFILE="-P uc3"
 TAG_PUB=testall
 CHECK_REPO_TAG=
 EMAIL=0
+S3PUSH=0
 export JAVA_RELEASE=${JAVA_RELEASE:-8}
 
 while getopts "B:C:m:p:t:w:j:heD" flag 
@@ -530,6 +542,7 @@ do
            WKDIR_PAR=$WKDIR
            ;;
         e) EMAIL=1;;
+        s) S3PUSH=1;;
         D) docker system df
            docker image prune -a -f 
            docker volume prune -f

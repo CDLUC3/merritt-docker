@@ -15,6 +15,8 @@ WORKDIR /build/mrt-ingest
 
 ADD mrt-ingest /build/mrt-ingest
 
+RUN sed -i -e "s/\${ConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml
+
 RUN mvn -ntp install -Denforcer.skip=true -Dskip.surefire.tests -DskipITs -Ddocker.skip && \
     date -r ingest-src/target +'mrt-ingest: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \
     mvn clean

@@ -462,7 +462,7 @@ post_summary_report() {
     bucket=`get_ssm_value_by_name 'build/s3-bucket'`    
     for file in ${WKDIR_PAR}/build-output/build-log*.txt
     do
-      aws s3 cp $file s3://${bucket}/merritt-reports/daily-build/
+      aws s3 --content-type "text/plain charset=utf-8" cp $file s3://${bucket}/merritt-reports/daily-build/
     done
   fi
 

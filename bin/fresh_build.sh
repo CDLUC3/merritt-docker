@@ -150,8 +150,8 @@ checkout_tag() {
 scan_image() {
   if test_flag 'scan-fixable'
   then
-    trivy --ignorefile /dev/null --scanners vuln image --severity CRITICAL $1 >> $LOGSCAN 2>&1
-    trivy --ignorefile $WKDIR/.trivyignore --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCANIGNORE 2>&1
+    trivy --quiet --ignorefile /dev/null --scanners vuln image --severity CRITICAL $1 >> $LOGSCAN 2>&1
+    trivy --quiet --ignorefile $WKDIR/.trivyignore --scanners vuln image --severity CRITICAL --exit-code 100 $1 >> $LOGSCANIGNORE 2>&1
     eval_jobstat $? "WARN" "Scan $1"
   else 
     echo "       Scan disabled" >> $LOGSUM
@@ -159,7 +159,7 @@ scan_image() {
 
   if test_flag 'scan-unfixable'
   then
-    trivy --ignorefile $WKDIR/.trivyignore --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 2>&1
+    trivy --quiet --ignorefile $WKDIR/.trivyignore --scanners vuln image --severity CRITICAL  --exit-code 150 --ignore-unfixed $1 >> $LOGSCANFIXED 2>&1
     eval_jobstat $? "FAIL" "Scan (ignore unfixed) $1"
   else 
     echo "       Scan unfixed disabled" >> $LOGSUM
@@ -170,7 +170,7 @@ build_image() {
   sleep 2
   echo >> $LOGSUM
   date >> $LOGSUM
-  docker build --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm $3 -t $1 $2 >> $LOGDOCKER 2>&1 
+  docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm $3 -t $1 $2 >> $LOGDOCKER 2>&1 
   eval_jobstat $? "FAIL" "Docker build $1, dir: $2, param: $3"
   scan_image $1 
 }
@@ -179,7 +179,7 @@ build_image_push() {
   build_image $1 $2 "$3"
   if test_flag 'push'
   then
-    docker push $1 >> $LOGDOCKER 2>&1 
+    docker push --quiet $1 >> $LOGDOCKER 2>&1 
     eval_jobstat $? "FAIL" "Docker push $1"
   else 
     echo "       Image push disabled" >> $LOGSUM
@@ -458,7 +458,8 @@ post_summary_report() {
 
   if [[ "$JENKINS_HOME" == "" ]] && [[ $S3PUSH > 0 ]]
   then
-    bucket=`get_ssm_value_by_name 'admintool/s3-bucket'`    
+    echo $STATUS > ${WKDIR_PAR}/build-output/build-log.status.txt
+    bucket=`get_ssm_value_by_name 'build/s3-bucket'`    
     for file in ${WKDIR_PAR}/build-output/build-log*.txt
     do
       aws s3 cp $file s3://${bucket}/merritt-reports/daily-build/
@@ -544,10 +545,10 @@ do
         e) EMAIL=1;;
         s) S3PUSH=1;;
         D) docker system df
-           docker image prune -a -f 
-           docker volume prune -f
-           docker system prune -f
-           docker system df
+           docker image prune --quiet -a -f 
+           docker volume prune --quiet -f
+           docker system prune --quiet -f
+           docker system df --quiet 
            ;;
         h) usage
            exit

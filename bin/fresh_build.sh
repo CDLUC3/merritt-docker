@@ -545,10 +545,10 @@ do
         e) EMAIL=1;;
         s) S3PUSH=1;;
         D) docker system df
-           docker image prune --quiet -a -f 
-           docker volume prune --quiet -f
-           docker system prune --quiet -f
-           docker system df --quiet 
+           docker image prune -a -f
+           docker volume prune  -f
+           docker system prune  -f
+           docker system df 
            ;;
         h) usage
            exit

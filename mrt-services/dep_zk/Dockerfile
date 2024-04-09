@@ -23,6 +23,7 @@ RUN mkdir appdir && \
     cp target/*.jar appdir && \
     mvn clean && \
     rm -rf /root/.m2/repository/org/codehaus && \
-    rm -rf /root/.m2/repository/org/apache/maven
+    rm -rf /root/.m2/repository/org/apache/maven && \
+    rm -rf /root/.m2/repository/dom4j/dom4j
 
 ENTRYPOINT [ "ls", "appdir" ]

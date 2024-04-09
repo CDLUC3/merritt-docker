@@ -46,3 +46,7 @@
 	path = mrt-integ-tests
 	url = git@github.com:cdluc3/mrt-integ-tests.git
 	branch = main
+[submodule "mrt-zk"]
+	path = mrt-services/dep_zk/mrt-zk
+	url = git@github.com:cdluc3/mrt-zk
+	branch = main

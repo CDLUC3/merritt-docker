@@ -18,6 +18,7 @@
           </activation>   
             <modules>
                 <module>dep_core/mrt-core2</module>
+                <module>dep_zk/mrt-zk</module>
                 <module>dep_cloud/mrt-cloud</module>
                 <module>dep_cdlzk/cdl-zk-queue</module>
                 <module>dep_zoo/mrt-zoo</module>

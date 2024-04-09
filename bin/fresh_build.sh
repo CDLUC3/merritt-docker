@@ -238,6 +238,7 @@ git_repo_submodules() {
 
   checkout_build_config 'mrt-services/dep_core/mrt-core2' 'mrt-core'
   checkout_build_config 'mrt-services/dep_cloud/mrt-cloud' 'mrt-cloud'
+  checkout_build_config 'mrt-services/dep_zk/mrt-zk' 'mrt-zk'
   checkout_build_config 'mrt-services/dep_cdlzk/cdl-zk-queue' 'cdl-zk-queue'
   checkout_build_config 'mrt-services/dep_zoo/mrt-zoo' 'mrt-zoo'
 
@@ -381,6 +382,7 @@ build_microservice_images() {
   cd $WKDIR/mrt-services
 
   build_image_push ${ECR_REGISTRY}/mrt-core2:dev dep_core
+  build_image_push ${ECR_REGISTRY}/mrt-zk:dev dep_zk
   build_image_push ${ECR_REGISTRY}/cdl-zk-queue:dev dep_cdlzk
   build_image_push ${ECR_REGISTRY}/mrt-zoo:dev dep_zoo
   build_image_push ${ECR_REGISTRY}/mrt-cloud:dev dep_cloud

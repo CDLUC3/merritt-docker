@@ -44,7 +44,7 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
    merritt-docker> source bin/docker_environment.sh
    ```
 
-1. Build dependencies:
+1. Build dependencies: (Out of date)
    ```
    cd merritt-docker
    bin/dep_build.sh
@@ -396,7 +396,7 @@ sudo echo '127.0.0.1	my-minio-localhost-alias' >> /etc/hosts
 
 Dev Server
 ```
-./bin/dep_build.sh
+./bin/dep_build.sh (Out of date)
 ```
 
 Local Desktop

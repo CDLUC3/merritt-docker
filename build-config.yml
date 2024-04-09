@@ -113,6 +113,7 @@ build-config:
       mrt-core: main
       mrt-cloud: main
       cdl-zk-queue: main
+      mrt-zk: main
       mrt-zoo: main
       mrt-inventory: main
       mrt-store: main
@@ -157,35 +158,4 @@ build-config:
     <<: *jenkins
     tags:
       <<: *maintags
-  fix15-jenkins:
-    <<: *jenkins
-    tags:
-      mrt-core: fix1.5
-      mrt-cloud: status
-      cdl-zk-queue: main
-      mrt-zoo: main
-      mrt-inventory: fix1.5
-      mrt-store: fix1.5
-      mrt-ingest: fix1.5
-      mrt-audit: fix1.5
-      mrt-replic: fix1.5
-      mrt-dashboard: main
-      mrt-integ-tests: main
-  java11-main:
-    <<: *main
-    tags: &java11tags
-      mrt-core: java11
-      mrt-cloud: java11
-      cdl-zk-queue: java11
-      mrt-zoo: java11
-      mrt-inventory: java11
-      mrt-store: java11
-      mrt-ingest: java11
-      mrt-audit: java11
-      mrt-replic: java11
-      mrt-dashboard: main
-      mrt-integ-tests: main
-  java11-jenkins:
-    <<: *jenkins
-    tags: 
-      <<: *java11tags
+

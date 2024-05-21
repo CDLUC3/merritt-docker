@@ -29,7 +29,7 @@ Local desktop
 | In use | mrt-it-database | mysql | schema | Empty Merritt database with schema only |
 | In use| mrt-minio-it | minio | | Empty S3 compatible cloud storage with test buckets for nodes 7777 and 8888 |
 | In use | mrt-it-database-audit-replic | mrt-it-database | Mock storage data | Merritt database populated with integration test data using mrt-inventory library calls |
-| In use | mrt-minio-with-content-it | minio | Mock storage/cloud data for integration tests | S3 compatible cloud storage with integration test data |
+| In use | mrt-minio-it-with-content | minio | Mock storage/cloud data for integration tests | S3 compatible cloud storage with integration test data |
 
 ## Integration Test Configurations
 | Status | Repo | Images Used | Notes |

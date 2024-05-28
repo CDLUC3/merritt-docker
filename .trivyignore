@@ -2,7 +2,7 @@
 CVE-2021-26291
 
 # opensearch dashboards - Node version - Added 2023-10
-CVE-2023-45133
+# CVE-2023-45133 - rm 2024-05
 
 # openssh issues in ruby images - Added 2023-08
 # CVE-2023-28531 = rm 2024-02
@@ -10,7 +10,7 @@ CVE-2023-45133
 
 # rails image issues - Added 2023-08
 ## curl
-CVE-2023-23914
+# CVE-2023-23914 - rm 2024-05
 
 ## libdb
 CVE-2019-8457
@@ -31,3 +31,6 @@ CVE-2023-6879
 
 # libopenexr - added 2024-02
 CVE-2023-5841
+
+# git issue - added 2024-05
+CVE-2024-32002

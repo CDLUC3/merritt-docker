@@ -36,6 +36,7 @@
           </activation>   
             <modules>
                 <module>dep_core/mrt-core2</module>
+                <module>dep_zk/mrt-zk</module>
                 <module>dep_cdlzk/cdl-zk-queue</module>
                 <module>ingest/mrt-ingest</module>
             </modules>
@@ -47,6 +48,7 @@
           </activation>   
             <modules>
                 <module>dep_core/mrt-core2</module>
+                <module>dep_zk/mrt-zk</module>
                 <module>dep_cloud/mrt-cloud</module>
                 <module>dep_zoo/mrt-zoo</module>
                 <module>store/mrt-store</module>
@@ -70,6 +72,7 @@
           </activation>   
             <modules>
                 <module>dep_core/mrt-core2</module>
+                <module>dep_zk/mrt-zk</module>
                 <module>dep_cloud/mrt-cloud</module>
                 <module>dep_zoo/mrt-zoo</module>
                 <module>inventory/mrt-inventory</module>
@@ -88,6 +91,15 @@
                 <module>replic/mrt-replic</module>
             </modules>
         </profile>
-     </profiles>
+        <profile>
+            <id>zk</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>   
+              <modules>
+                <module>dep_zk/mrt-zk</module>
+              </modules>
+          </profile>
+       </profiles>
     
 </project>

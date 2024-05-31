@@ -97,6 +97,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>   
               <modules>
+                <module>dep_core/mrt-core2</module>
                 <module>dep_zk/mrt-zk</module>
               </modules>
           </profile>

@@ -12,28 +12,42 @@ Type: MRT-curatorial
 Role: MRT-content
 Aggregate:
 Owner: ark:/13030/j2rn30xp
-Notification.1: terrence.brady@ucop.edu
-# --- handler ingest processing
-Handler.1: org.cdlib.mrt.ingest.handlers.HandlerInitialize
-Handler.2: org.cdlib.mrt.ingest.handlers.HandlerAccept
-Handler.3: org.cdlib.mrt.ingest.handlers.HandlerVerify
-Handler.4: org.cdlib.mrt.ingest.handlers.HandlerDisaggregate
-Handler.5: org.cdlib.mrt.ingest.handlers.HandlerRetrieve
-Handler.6: org.cdlib.mrt.ingest.handlers.HandlerCorroborate
-Handler.7: org.cdlib.mrt.ingest.handlers.HandlerCharacterize
-Handler.8: org.cdlib.mrt.ingest.handlers.HandlerMinter
-Handler.9: org.cdlib.mrt.ingest.handlers.HandlerDescribe
-Handler.10: org.cdlib.mrt.ingest.handlers.HandlerDocument
-Handler.11: org.cdlib.mrt.ingest.handlers.HandlerDigest
-Handler.12: org.cdlib.mrt.ingest.handlers.HandlerTransfer
-Handler.13: org.cdlib.mrt.ingest.handlers.HandlerNotification
-Handler.14: org.cdlib.mrt.ingest.handlers.HandlerInventoryQueue
-Handler.15: org.cdlib.mrt.ingest.handlers.HandlerCallback
-Handler.16: org.cdlib.mrt.ingest.handlers.HandlerCleanup
-# --- handler queue submission processing
+# Notification.1: terrence.brady@ucop.edu
+# Notification.2: mark.reyes@ucop.edu
+Notification.1: skidly_2@yahoo.com
+# === START Handlers ===
+# Post Batch
+HandlerBatchProcess.1: org.cdlib.mrt.ingest.handlers.batchProcess.HandlerPost
+HandlerBatchProcess.2: org.cdlib.mrt.ingest.handlers.batchProcess.HandlerSubmit
+# Batch to Jobs
 HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
 HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
 HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
+# Process Estimating
+HandlerEstimate.1: org.cdlib.mrt.ingest.handlers.estimate.HandlerInitialize
+HandlerEstimate.2: org.cdlib.mrt.ingest.handlers.estimate.HandlerAccept
+HandlerEstimate.3: org.cdlib.mrt.ingest.handlers.estimate.HandlerVerify
+HandlerEstimate.4: org.cdlib.mrt.ingest.handlers.estimate.HandlerDisaggregate
+# Process Provisioning
+HandlerProvision.1: org.cdlib.mrt.ingest.handlers.provision.HandlerProvision
+# Process Downloading
+HandlerDownload.1: org.cdlib.mrt.ingest.handlers.download.HandlerRetrieve
+# Process Processing
+HandlerProcess.1: org.cdlib.mrt.ingest.handlers.process.HandlerCorroborate
+HandlerProcess.2: org.cdlib.mrt.ingest.handlers.process.HandlerCharacterize
+HandlerProcess.3: org.cdlib.mrt.ingest.handlers.process.HandlerMinter
+HandlerProcess.4: org.cdlib.mrt.ingest.handlers.process.HandlerDescribe
+HandlerProcess.5: org.cdlib.mrt.ingest.handlers.process.HandlerDocument
+HandlerProcess.6: org.cdlib.mrt.ingest.handlers.process.HandlerDigest
+HandlerProcess.7: org.cdlib.mrt.ingest.handlers.process.HandlerTransfer
+# Process Recording
+HandlerRecord.1: org.cdlib.mrt.ingest.handlers.record.HandlerInventoryQueue
+# Process Notify
+# HandlerNotify.1: org.cdlib.mrt.ingest.handlers.notify.HandlerCallback
+HandlerNotify.2: org.cdlib.mrt.ingest.handlers.notify.HandlerCleanup
+# Batch Notify
+HandlerBatchReport.1: org.cdlib.mrt.ingest.handlers.batchReport.HandlerNotification
+# === END Handlers ===
 StorageService: http://store:8080/store
 StorageNode: 7777
 CreationDate: 2010-01-19T13:28:14-08:00
@@ -41,7 +55,7 @@ ModificationDate: 2010-01-26T23:28:14-08:00
 ObjectMinterURL: http://ezid:4567/shoulder/ark:/99999/fk4
 # ObjectMinterURL: http://callback:8098/status/502
 CallbackURL: http://callback:8098
-Priority: 02
-NotificationType: additional
-NotificationSuppression: full
+Priority: 2
+# NotificationType: additional
+# NotificationSuppression: full
 Context: merritt_demo

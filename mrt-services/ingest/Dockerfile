@@ -15,7 +15,14 @@ WORKDIR /build/mrt-ingest
 
 ADD mrt-ingest /build/mrt-ingest
 
-RUN sed -i -e "s/\${ConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml
+RUN sed -i -e "s/\${BatchConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml && \
+    sed -i -e "s/\${BatchReportConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml && \
+    sed -i -e "s/\${EstimateConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml && \
+    sed -i -e "s/\${ProvisionConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml && \
+    sed -i -e "s/\${DownloadConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml && \
+    sed -i -e "s/\${ProcessConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml && \
+    sed -i -e "s/\${RecordConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml && \
+    sed -i -e "s/\${NotifyConsumerDaemon}/1/" ingest-war/src/main/webapp/WEB-INF/web.xml
 
 RUN mvn -ntp install -Denforcer.skip=true -Dskip.surefire.tests -DskipITs -Ddocker.skip && \
     date -r ingest-src/target +'mrt-ingest: %Y-%m-%d:%H:%M:%S' >> /build/static/build.content.txt && \

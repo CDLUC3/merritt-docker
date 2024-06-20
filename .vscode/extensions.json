@@ -6,7 +6,6 @@
 	"recommendations": [
 		"vscjava.vscode-java-debug",
 		"ms-azuretools.vscode-docker",
-		"vscjava.vscode-java-pack",
 		"vscjava.vscode-java-test",
 		"redhat.java",
 		"vscjava.vscode-maven",
@@ -15,15 +14,19 @@
 		"ms-vscode-remote.remote-ssh",
 		"ms-vscode-remote.remote-ssh-edit",
 		"ms-vscode-remote.remote-ssh-edit",
-		"ms-vscode-remote.remote-wsl",
 		"wingrunr21.vscode-ruby",
 		"redhat.vscode-yaml",
 		"bpruitt-goddard.mermaid-markdown-syntax-highlighting",
 		"ms-vscode.remote-server",
 		"ms-vscode.remote-explorer",
 		"ritwickdey.liveserver",
-		"bierner.markdown-mermaid",
-		"shopify.ruby-lsp"
+		"shopify.ruby-lsp",
+		"visualstudioexptteam.vscodeintellicode",
+		"visualstudioexptteam.intellicode-api-usage-examples",
+		"vstirbu.vscode-mermaid-preview",
+		"ms-vscode-remote.vscode-remote-extensionpack",
+		"ms-vscode-remote.remote-wsl",
+		"eamodio.gitlens"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [

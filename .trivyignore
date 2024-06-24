@@ -34,3 +34,7 @@ CVE-2023-5841
 
 # git issue - added 2024-05
 CVE-2024-32002
+
+# issue found in AWS images -- added 2024-06
+CVE-2024-24790
+CVE-2024-37902

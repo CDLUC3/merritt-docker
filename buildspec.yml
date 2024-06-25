@@ -21,7 +21,7 @@ phases:
       - aws ecr create-repository --repository-name callback || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-opendj || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name merritt-database || echo 'ignore if exists...'
+      - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
 
 
   build:

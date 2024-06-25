@@ -1,0 +1,21 @@
+version: 0.2
+
+# Pre-requisites
+# - Create CodeBuild project
+#   - Provide minimal github credentials to access public repo
+
+phases:
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain cdlib-uc3-mrt --domain-owner $AWS_ACCOUNT_ID --region us-west-2 --query authorizationToken --output text`
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+
+  build:
+    on-failure: ABORT
+    commands:
+      - docker-compose build -f mrt-inttest-services/mock-merritt-it
+      - docker-compose push -f mrt-inttest-services/mock-merritt-it
+  post_build:
+    commands:
+      #- aws s3 rm s3://${S3CFBUCKET}/api --recursive

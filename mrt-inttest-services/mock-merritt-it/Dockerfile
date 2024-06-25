@@ -4,7 +4,7 @@
 # aws ecr create-repository --repository-name mock-merritt-it
 # docker push ${ECR_REGISTRY}/mock-merritt-it:dev
 
-FROM ruby:3
+FROM public.ecr.aws/docker/library/ruby:3
 RUN apt-get update -y -qq && apt-get install -y build-essential libpq-dev nodejs && apt-get -y upgrade
 
 
@@ -21,8 +21,8 @@ COPY *.sh ./
 COPY data /data
 COPY *.md /data
 COPY static /data/static
-COPY --from=mysql:8 /usr/bin/mysql /usr/bin/mysql
-COPY --from=mysql:8 /usr/bin/mysqldump /usr/bin/mysqldump
+COPY --from=public.ecr.aws/docker/library/mysql:8 /usr/bin/mysql /usr/bin/mysql
+COPY --from=public.ecr.aws/docker/library/mysql:8 /usr/bin/mysqldump /usr/bin/mysqldump
 
 RUN ruby generate.rb
 RUN chmod 744 *.sh

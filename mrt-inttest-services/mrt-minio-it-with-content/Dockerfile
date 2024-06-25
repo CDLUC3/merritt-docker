@@ -11,7 +11,7 @@ FROM ${ECR_REGISTRY}/mock-merritt-it:dev as mock
 FROM minio/minio
 
 # https://stackoverflow.com/questions/72904999/create-minio-docker-image-with-content
-COPY --from=docker.io/minio/mc:latest /usr/bin/mc /usr/bin/mc
+COPY --from=public.ecr.aws/docker/library/minio/mc:latest /usr/bin/mc /usr/bin/mc
 
 ENV MRT_MINIO_HOST "${HOSTNAME}.cdlib.org"
 

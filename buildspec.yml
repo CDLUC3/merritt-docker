@@ -14,8 +14,8 @@ phases:
   build:
     on-failure: ABORT
     commands:
-      - docker-compose -f mrt-inttest-services/mock-merritt-it build
-      - docker-compose -f mrt-inttest-services/mock-merritt-it push
+      - docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml build
+      - docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml push
   post_build:
     commands:
       #- aws s3 rm s3://${S3CFBUCKET}/api --recursive

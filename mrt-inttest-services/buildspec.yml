@@ -25,6 +25,8 @@ phases:
 
       - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose.yml build --pull     
       - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose.yml push    
+      - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose-audit-replic.yml build --pull     
+      - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose-audit-replic.yml push    
       - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose-audit-replic.yml build --pull
       - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose-audit-replic.yml push
 

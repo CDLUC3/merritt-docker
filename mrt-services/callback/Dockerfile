@@ -6,7 +6,7 @@
 # This image is intended to simulate an ALB fronting a Lambda
 # docker build -t cdluc3/simulate-lambda-alb .
 
-FROM ruby:3
+FROM public.ecr.aws/docker/library/ruby:3
 
 RUN apt-get update -y -qq && apt-get -y upgrade
 

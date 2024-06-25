@@ -18,6 +18,12 @@ phases:
       - aws ecr create-repository --repository-name mrt-minio-it || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-minio-it-with-content || echo 'ignore if exists...'
 
+      - aws ecr create-repository --repository-name callback || echo 'ignore if exists...'
+      - aws ecr create-repository --repository-name mrt-opendj || echo 'ignore if exists...'
+      - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
+      - aws ecr create-repository --repository-name merritt-database || echo 'ignore if exists...'
+
+
   build:
     on-failure: ABORT
     commands:
@@ -33,6 +39,15 @@ phases:
       - docker-compose -f mrt-inttest-services/mrt-minio-it/docker-compose.yml push
       - docker-compose -f mrt-inttest-services/mrt-minio-it-with-content/docker-compose.yml build
       - docker-compose -f mrt-inttest-services/mrt-minio-it-with-content/docker-compose.yml push
+
+      - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/mrt-database mrt-services/mysql
+      - docker push ${ECR_REGISTRY}/mrt-database
+      - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/mrt-opendj mrt-services/ldap
+      - docker push ${ECR_REGISTRY}/mrt-opendj
+      - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/mrt-init mrt-services/merritt-init
+      - docker push ${ECR_REGISTRY}/mrt-init
+      - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/callback mrt-services/callback
+      - docker push ${ECR_REGISTRY}/callback
   post_build:
     commands:
       #- aws s3 rm s3://${S3CFBUCKET}/api --recursive

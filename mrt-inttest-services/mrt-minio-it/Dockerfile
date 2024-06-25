@@ -4,7 +4,7 @@
 # aws ecr create-repository --repository-name mrt-minio-it
 # docker push ${ECR_REGISTRY}/mrt-minio-it:dev
 
-FROM minio/minio
+FROM quay.io/minio/minio
 
 ENV MRT_MINIO_HOST "${HOSTNAME}.cdlib.org"
 

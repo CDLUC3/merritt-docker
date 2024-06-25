@@ -10,6 +10,7 @@ phases:
     commands:
       - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain cdlib-uc3-mrt --domain-owner $AWS_ACCOUNT_ID --region us-west-2 --query authorizationToken --output text`
       - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+      - aws ecr create-repository --repository-name mock-merritt-it || echo 'ignore if exists...'
 
   build:
     on-failure: ABORT

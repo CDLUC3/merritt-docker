@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM public.ecr.aws/docker/library/ubuntu
 
 # Add curl to image
 RUN apt-get update -y && \

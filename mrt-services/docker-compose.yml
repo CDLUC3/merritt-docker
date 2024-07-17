@@ -18,7 +18,7 @@ services:
     - inventory
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-ingest:dev
     build:
-      context: ingest
+      context: ingest/mrt-ingest
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
@@ -28,6 +28,14 @@ services:
       SERVICE: ingest
       HOSTNAME: ingest
       LOGLEVEL: info
+      BatchConsumerDaemon: 1
+      BatchReportConsumerDaemon: 1
+      EstimateConsumerDaemon: 1
+      ProvisionConsumerDaemon: 1
+      DownloadConsumerDaemon: 1
+      ProcessConsumerDaemon: 1
+      RecordConsumerDaemon: 1
+      NotifyConsumerDaemon: 1
     networks:
       merrittnet:
     ports:

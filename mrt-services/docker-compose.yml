@@ -107,7 +107,7 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: zookeeper:3.8.4
+    image: public.ecr.aws/docker/library/zookeeper:3.8.4
     networks:
       merrittnet:
     ports:
@@ -182,7 +182,7 @@ services:
     tty: true
   smtp:
     container_name: smtp 
-    image: ghusta/fakesmtp
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/fakesmtp:dev
     networks:
       merrittnet:
     restart: unless-stopped

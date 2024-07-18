@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  minio-server:
+  merritt-maven:
     container_name: merritt-maven
     image: ${ECR_REGISTRY}/merritt-maven:dev
     build:
@@ -9,6 +9,3 @@ services:
       args:
         ECR_REGISTRY: ${ECR_REGISTRY}
         JAVA_RELEASE_ARG: ${JAVA_RELEASE:-8}
-    ports:
-    - published: 8080
-      target: 8080

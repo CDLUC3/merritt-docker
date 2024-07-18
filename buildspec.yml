@@ -18,6 +18,7 @@ phases:
       - aws ecr create-repository --repository-name mrt-it-database-audit-replic || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-minio-it || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-minio-it-with-content || echo 'ignore if exists...'
+      - aws ecr create-repository --repository-name fakesmtp || echo 'ignore if exists...'
 
       - aws ecr create-repository --repository-name callback || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-opendj || echo 'ignore if exists...'
@@ -42,6 +43,8 @@ phases:
       - docker-compose -f mrt-inttest-services/mrt-minio-it/docker-compose.yml push
       - docker-compose -f mrt-inttest-services/mrt-minio-it-with-content/docker-compose.yml build
       - docker-compose -f mrt-inttest-services/mrt-minio-it-with-content/docker-compose.yml push
+      - docker-compose -f mrt-inttest-services/fakesmtp/docker-compose.yml build
+      - docker-compose -f mrt-inttest-services/fakesmtp/docker-compose.yml push
 
       - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/mrt-database mrt-services/mysql
       - docker push ${ECR_REGISTRY}/mrt-database

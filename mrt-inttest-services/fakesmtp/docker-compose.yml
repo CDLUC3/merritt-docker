@@ -1,0 +1,8 @@
+version: '3.3'
+services:
+  fakesmtp:
+    container_name: merritt-maven
+    image: ${ECR_REGISTRY}/fakesmtp:dev
+    build:
+      context: .
+      dockerfile: Dockerfile

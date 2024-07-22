@@ -54,7 +54,7 @@ services:
     - zoo
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-store:dev
     build:
-      context: store
+      context: store/mrt-store
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com

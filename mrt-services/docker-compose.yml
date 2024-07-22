@@ -87,7 +87,7 @@ services:
     - ezid
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-inventory:dev
     build:
-      context: inventory
+      context: inventory/mrt-inventory
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
@@ -242,7 +242,7 @@ services:
     # image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-replic:dev
     build:
-      context: replic
+      context: replic/mrt-replic
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com

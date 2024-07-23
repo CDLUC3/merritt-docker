@@ -122,17 +122,17 @@ build-config:
       mrt-replic: main
       mrt-dashboard: main
       mrt-integ-tests: main
-  buildconfig:
+  codebuild:
     <<: *mvn
-    tags: &maintags
-      mrt-core: buildconfig
-      mrt-cloud: buildconfig
-      mrt-zk: buildconfig
-      mrt-inventory: buildconfig
-      mrt-store: buildconfig
+    tags: &codebuild
+      mrt-core: codebuild
+      mrt-cloud: codebuild
+      mrt-zk: codebuild
+      mrt-inventory: codebuild
+      mrt-store: codebuild
       mrt-ingest: buildconfig
-      mrt-audit: buildconfig
-      mrt-replic: buildconfig
+      mrt-audit: codebuild
+      mrt-replic: codebuild
       mrt-dashboard: main
       mrt-integ-tests: main
   main-docker:

@@ -130,7 +130,7 @@ build-config:
       mrt-zk: codebuild
       mrt-inventory: codebuild
       mrt-store: codebuild
-      mrt-ingest: buildconfig
+      mrt-ingest: codebuild
       mrt-audit: codebuild
       mrt-replic: codebuild
       mrt-dashboard: main

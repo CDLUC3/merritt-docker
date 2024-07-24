@@ -21,6 +21,7 @@ ENV RACK_ENV='docker'
 
 # Adding gems
 COPY mrt-dashboard/Gemfile Gemfile
+COPY mrt-dashboard/Gemfile.lock Gemfile.lock
 
 RUN gem install bundler
 RUN bundle install 

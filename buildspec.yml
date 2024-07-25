@@ -78,7 +78,6 @@ phases:
           -t ${ECR_REGISTRY}/callback \
           --push mrt-services/callback
 
-phases:
   post_build:
     # this build may fail due to rate limits
     # on-failure: ABORT

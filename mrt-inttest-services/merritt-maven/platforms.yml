@@ -1,0 +1,7 @@
+version: '3.3'
+services:
+  merritt-maven:
+    build:
+      platforms:
+      - linux/amd64
+      - linux/arm64

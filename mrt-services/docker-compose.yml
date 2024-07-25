@@ -28,14 +28,7 @@ services:
       SERVICE: ingest
       HOSTNAME: ingest
       LOGLEVEL: info
-      BatchConsumerDaemon: 1
-      BatchReportConsumerDaemon: 1
-      EstimateConsumerDaemon: 1
-      ProvisionConsumerDaemon: 1
-      DownloadConsumerDaemon: 1
-      ProcessConsumerDaemon: 1
-      RecordConsumerDaemon: 1
-      NotifyConsumerDaemon: 1
+      CATALINA_OPTS: "-DBatchConsumerDaemon=-1 -DBatchReportConsumerDaemon=-1 -DEstimateConsumerDaemon=1 -DProvisionConsumerDaemon=1 -DDownloadConsumerDaemon=1 -DProcessConsumerDaemon=1 -DRecordConsumerDaemon=1 -DNotifyConsumerDaemon=1"
     networks:
       merrittnet:
     ports:
@@ -73,6 +66,7 @@ services:
       SERVICE: store
       HOSTNAME: store
       LOGLEVEL: info
+      CATALINA_OPTS: "-DAccessDaemon=1"
     networks:
       merrittnet:
         aliases:

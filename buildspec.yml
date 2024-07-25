@@ -25,8 +25,7 @@ phases:
       - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
 
-
-  build:
+  build_base:
     on-failure: ABORT
     commands:
       - docker buildx create --use 
@@ -41,6 +40,11 @@ phases:
           -t ${ECR_REGISTRY}/merritt-tomcat:dev \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-inttest-services/merritt-tomcat
+
+  build_it_services:
+    on-failure: ABORT
+    commands:
+      - docker buildx create --use 
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/mock-merritt-it:dev \
@@ -64,6 +68,11 @@ phases:
           -t ${ECR_REGISTRY}/mrt-minio-it-with-content:dev \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-inttest-services/mrt-minio-it-with-content
+
+  build_services:
+    on-failure: ABORT
+    commands:
+      - docker buildx create --use 
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/fakesmtp:dev \

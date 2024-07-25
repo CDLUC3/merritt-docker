@@ -33,6 +33,8 @@ phases:
       - docker-compose -f mrt-inttest-services/merritt-tomcat/docker-compose.yml push
       - docker-compose -f mrt-inttest-services/merritt-maven/docker-compose.yml -f mrt-inttest-services/merritt-maven/platforms.yml build
       - docker-compose -f mrt-inttest-services/merritt-maven/docker-compose.yml -f mrt-inttest-services/merritt-maven/platforms.yml push
+      - docker buildx -t ${ECR_REGISTRY}/merritt-maven:dev -b ECR_REGISTRY=${ECR_REGISTRY} -b JAVA_RELEASE_ARG=${JAVA_RELEASE:-8} --platforms="linux/amd64,linux/arm64" mrt-inttest-services/merritt-maven
+      - docker push ${ECR_REGISTRY}/merritt-maven:dev
       - docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml build
       - docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml push
       - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose.yml build

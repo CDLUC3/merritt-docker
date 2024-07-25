@@ -25,23 +25,19 @@ phases:
       - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
 
+  build:
+    on-failure: ABORT
+    commands:
       - docker buildx create --use 
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/merritt-maven:dev \
-          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --build-arg JAVA_RELEASE_ARG=${JAVA_RELEASE:-8} \
           --push mrt-inttest-services/merritt-maven
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/merritt-tomcat:dev \
-          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-inttest-services/merritt-tomcat
-
-  build:
-    on-failure: ABORT
-    commands:
-      - docker buildx create --use 
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/mock-merritt-it:dev \
@@ -58,7 +54,6 @@ phases:
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/mrt-minio-it:dev \
-          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-inttest-services/mrt-minio-it
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
@@ -66,10 +61,6 @@ phases:
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-inttest-services/mrt-minio-it-with-content
 
-  post_build:
-    on-failure: ABORT
-    commands:
-      - docker buildx create --use 
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/fakesmtp:dev \
@@ -77,20 +68,16 @@ phases:
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/mrt-database \
-          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-services/mysql
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/mrt-opendj \
-          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-services/ldap
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/mrt-init \
-          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-services/merritt-init
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/callback \
-          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-services/callback

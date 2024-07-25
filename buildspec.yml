@@ -63,10 +63,6 @@ phases:
 
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
-          -t ${ECR_REGISTRY}/fakesmtp:dev \
-          --push mrt-inttest-services/fakesmtp
-      - |
-        docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/mrt-database \
           --push mrt-services/mysql
       - |
@@ -81,3 +77,14 @@ phases:
         docker buildx build --platform linux/arm64,linux/amd64 \
           -t ${ECR_REGISTRY}/callback \
           --push mrt-services/callback
+
+phases:
+  post_build:
+    # this build may fail due to rate limits
+    # on-failure: ABORT
+    commands:
+      - docker buildx create --use 
+      - |
+        docker buildx build --platform linux/arm64,linux/amd64 \
+          -t ${ECR_REGISTRY}/fakesmtp:dev \
+          --push mrt-inttest-services/fakesmtp

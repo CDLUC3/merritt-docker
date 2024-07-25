@@ -29,6 +29,12 @@ phases:
   build:
     on-failure: ABORT
     commands:
+      - docker buildx create --use 
+      - |
+        docker buildx build --platform linux/arm64,linux/amd64 \
+          -t ${ECR_REGISTRY}/merritt-maven:dev \
+          --build-arg ECR_REGISTRY=${ECR_REGISTRY} --build-arg JAVA_RELEASE_ARG=${JAVA_RELEASE:-8} \
+          --push mrt-inttest-services/merritt-maven
       - docker-compose -f mrt-inttest-services/merritt-tomcat/docker-compose.yml build
       - docker-compose -f mrt-inttest-services/merritt-tomcat/docker-compose.yml push
       - docker-compose -f mrt-inttest-services/merritt-maven/docker-compose.yml build

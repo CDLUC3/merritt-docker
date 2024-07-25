@@ -25,9 +25,6 @@ phases:
       - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
 
-  build_base:
-    on-failure: ABORT
-    commands:
       - docker buildx create --use 
       - |
         docker buildx build --platform linux/arm64,linux/amd64 \
@@ -41,7 +38,7 @@ phases:
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-inttest-services/merritt-tomcat
 
-  build_it_services:
+  build:
     on-failure: ABORT
     commands:
       - docker buildx create --use 
@@ -69,7 +66,7 @@ phases:
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-inttest-services/mrt-minio-it-with-content
 
-  build_services:
+  post_build:
     on-failure: ABORT
     commands:
       - docker buildx create --use 
@@ -97,6 +94,3 @@ phases:
           -t ${ECR_REGISTRY}/callback \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --push mrt-services/callback
-  post_build:
-    commands:
-      #- aws s3 rm s3://${S3CFBUCKET}/api --recursive

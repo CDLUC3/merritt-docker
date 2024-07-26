@@ -85,7 +85,6 @@ phases:
     # this build may fail due to rate limits
     # on-failure: ABORT
     commands:
-      - docker buildx create --use 
       - |
         docker ${BUILDCMD} \
           -t ${ECR_REGISTRY}/fakesmtp:dev \

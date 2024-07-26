@@ -24,8 +24,8 @@ phases:
       - aws ecr create-repository --repository-name mrt-opendj || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
-      - BUILDCMD="buildx build --platform linux/arm64,linux/amd64 --push"
-      - BUILDCMD="build --push"
+      - BUILDCMD="buildx build --platform linux/arm64,linux/amd64 --push --quiet"
+      - BUILDCMD="build --push --quiet"
 
   build:
     on-failure: ABORT

@@ -20,6 +20,7 @@ RUN mkdir -p /data-load /buckets/my-bucket /buckets/my-bucket-repl
 COPY --from=mock /data/generated/ /data-load/
 
 RUN minio server /buckets & \
+    sleep 3; \
     server_pid=$!; \
     until mc alias set local http://localhost:9000 minioadmin minioadmin; do \
         sleep 1; \

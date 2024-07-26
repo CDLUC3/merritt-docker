@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   db-container:
-    container_name: mrt-it-database
+    container_name: mrt-it-database-audit-replic
     image: ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev
     build:
       context: .

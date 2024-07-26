@@ -128,12 +128,12 @@ build-config:
       mrt-core: codebuild
       mrt-cloud: codebuild
       mrt-zk: codebuild
-      mrt-inventory: codebuild
+      mrt-inventory: codebuild2
       mrt-store: codebuild
       mrt-ingest: codebuild
       mrt-audit: codebuild
       mrt-replic: codebuild
-      mrt-dashboard: main
+      mrt-dashboard: codebuild
       mrt-integ-tests: main
   main-docker:
     <<: *docker

@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   fakesmtp:
-    container_name: merritt-maven
+    container_name: fakesmtp
     image: ${ECR_REGISTRY}/fakesmtp:dev
     build:
       context: .

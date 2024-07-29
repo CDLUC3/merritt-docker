@@ -38,3 +38,7 @@ CVE-2024-32002
 # issue found in AWS images -- added 2024-06
 CVE-2024-24790
 CVE-2024-37902
+
+# overflow/out of bounds - added 2024-07
+CVE-2024-5171
+CVE-2024-37407

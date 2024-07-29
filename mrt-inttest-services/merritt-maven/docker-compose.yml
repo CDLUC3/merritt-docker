@@ -7,5 +7,4 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        ECR_REGISTRY: ${ECR_REGISTRY}
         JAVA_RELEASE_ARG: ${JAVA_RELEASE:-8}

@@ -66,6 +66,16 @@ flagsets:
     run-maven: true
     run-maven-tests: false
     build-support: false
+  codebuildflags: &codebuildflags
+    description: "Run maven builds only.  No tests."
+    build-it: true
+    build-stack: true
+    push: false
+    scan-unfixable: false
+    scan-fixable: false
+    run-maven: true
+    run-maven-tests: false
+    build-support: true
   sbox: &sbox
     description: "Run maven builds and tests. Pull IT images from ECR"
     build-it: false
@@ -123,7 +133,7 @@ build-config:
       mrt-dashboard: main
       mrt-integ-tests: main
   codebuild:
-    <<: *mvn
+    <<: *codebuildflags
     tags: &codebuild
       mrt-core: codebuild
       mrt-cloud: codebuild

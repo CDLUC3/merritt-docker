@@ -291,7 +291,10 @@ build_integration_test_images() {
   build_it_image mrt-minio-it-with-content/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
   build_it_image merritt-tomcat/docker-compose.yml ${ECR_REGISTRY}/merritt-tomcat:dev
   build_it_image merritt-maven/docker-compose.yml ${ECR_REGISTRY}/merritt-maven:dev
-  build_it_image fakesmtp/docker-compose.yml ${ECR_REGISTRY}/fakesmtp:dev
+  if [[ -f fakesmtp ]]
+  then
+    build_it_image fakesmtp/docker-compose.yml ${ECR_REGISTRY}/fakesmtp:dev
+  fi
 }
 
 check_maven_profile() {

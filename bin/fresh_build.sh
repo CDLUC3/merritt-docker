@@ -383,8 +383,9 @@ build_microservice_images() {
 
   cd $WKDIR/mrt-services
 
-  if [[ -f "ingest/Dockerfile" ]]
+  if [[ -f ingest/Dockerfile ]]
   then
+    echo "using old Dockerfiles..."
     build_image_push ${ECR_REGISTRY}/mrt-ingest:dev ingest
     build_image_push ${ECR_REGISTRY}/mrt-inventory:dev inventory
     build_image_push ${ECR_REGISTRY}/mrt-store:dev store

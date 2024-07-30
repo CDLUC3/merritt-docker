@@ -383,13 +383,22 @@ build_microservice_images() {
 
   cd $WKDIR/mrt-services
 
-  build_image_push ${ECR_REGISTRY}/mrt-ingest:dev ingest/mrt-ingest
-  build_image_push ${ECR_REGISTRY}/mrt-inventory:dev inventory/mrt-inventory
-  build_image_push ${ECR_REGISTRY}/mrt-store:dev store/mrt-store
-  build_image_push ${ECR_REGISTRY}/mrt-audit:dev audit/mrt-audit
-  build_image_push ${ECR_REGISTRY}/mrt-replic:dev replic/mrt-replic
-
-  build_image_push ${ECR_REGISTRY}/mrt-dashboard ui/mrt-dashboard
+  if [[ -f "ingest/Dockerfile" ]]
+  then
+    build_image_push ${ECR_REGISTRY}/mrt-ingest:dev ingest
+    build_image_push ${ECR_REGISTRY}/mrt-inventory:dev inventory
+    build_image_push ${ECR_REGISTRY}/mrt-store:dev store
+    build_image_push ${ECR_REGISTRY}/mrt-audit:dev audit
+    build_image_push ${ECR_REGISTRY}/mrt-replic:dev replic
+    build_image_push ${ECR_REGISTRY}/mrt-dashboard ui
+  else
+    build_image_push ${ECR_REGISTRY}/mrt-ingest:dev ingest/mrt-ingest
+    build_image_push ${ECR_REGISTRY}/mrt-inventory:dev inventory/mrt-inventory
+    build_image_push ${ECR_REGISTRY}/mrt-store:dev store/mrt-store
+    build_image_push ${ECR_REGISTRY}/mrt-audit:dev audit/mrt-audit
+    build_image_push ${ECR_REGISTRY}/mrt-replic:dev replic/mrt-replic
+    build_image_push ${ECR_REGISTRY}/mrt-dashboard ui/mrt-dashboard
+  fi
 }
 
 build_docker_stack_support_images(){

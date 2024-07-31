@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  minio-server:
+  merritt-tomcat:
     container_name: merritt-tomcat
     image: ${ECR_REGISTRY}/merritt-tomcat:dev
     build:

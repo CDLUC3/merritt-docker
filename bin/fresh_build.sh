@@ -239,8 +239,6 @@ git_repo_submodules() {
   checkout_build_config 'mrt-services/dep_core/mrt-core2' 'mrt-core'
   checkout_build_config 'mrt-services/dep_cloud/mrt-cloud' 'mrt-cloud'
   checkout_build_config 'mrt-services/dep_zk/mrt-zk' 'mrt-zk'
-  # checkout_build_config 'mrt-services/dep_cdlzk/cdl-zk-queue' 'cdl-zk-queue'
-  # checkout_build_config 'mrt-services/dep_zoo/mrt-zoo' 'mrt-zoo'
 
   if [[ "$MAVEN_PROFILE" == "-P inventory" ]] && [[ "$CHECK_REPO_TAG" != "" ]]
   then
@@ -293,6 +291,10 @@ build_integration_test_images() {
   build_it_image mrt-minio-it-with-content/docker-compose.yml ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
   build_it_image merritt-tomcat/docker-compose.yml ${ECR_REGISTRY}/merritt-tomcat:dev
   build_it_image merritt-maven/docker-compose.yml ${ECR_REGISTRY}/merritt-maven:dev
+  if [[ -f fakesmtp ]]
+  then
+    build_it_image fakesmtp/docker-compose.yml ${ECR_REGISTRY}/fakesmtp:dev
+  fi
 }
 
 check_maven_profile() {
@@ -339,35 +341,35 @@ build_maven_artifacts() {
       if check_maven_profile 'store'
       then
         mkdir -p $ARTIFACTS/mrt-store
-        cp $WKDIR/mrt-services/store/mrt-store/store-war/target/mrt-storewar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-store/mrt-store-${TAG_PUB}.war
+        cp $WKDIR/mrt-services/store/mrt-store/store-war/target/mrt-storewar-*-SNAPSHOT.war $ARTIFACTS/mrt-store/mrt-store-${TAG_PUB}.war
         jar uf $ARTIFACTS/mrt-store/mrt-store-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
 
       if check_maven_profile 'replic'
       then
         mkdir -p $ARTIFACTS/mrt-replic
-        cp $WKDIR/mrt-services/replic/mrt-replic/replication-war/target/mrt-replicationwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-replic/mrt-replic-${TAG_PUB}.war
+        cp $WKDIR/mrt-services/replic/mrt-replic/replication-war/target/mrt-replicationwar-*-SNAPSHOT.war $ARTIFACTS/mrt-replic/mrt-replic-${TAG_PUB}.war
         jar uf $ARTIFACTS/mrt-replic/mrt-replic-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
 
       if check_maven_profile 'ingest'
       then
         mkdir -p $ARTIFACTS/mrt-ingest
-        cp $WKDIR/mrt-services/ingest/mrt-ingest/ingest-war/target/mrt-ingestwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-ingest/mrt-ingest-${TAG_PUB}.war
+        cp $WKDIR/mrt-services/ingest/mrt-ingest/ingest-war/target/mrt-ingestwar-*-SNAPSHOT.war $ARTIFACTS/mrt-ingest/mrt-ingest-${TAG_PUB}.war
         jar uf $ARTIFACTS/mrt-ingest/mrt-ingest-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
 
       if check_maven_profile 'audit'
       then
         mkdir -p $ARTIFACTS/mrt-audit
-        cp $WKDIR/mrt-services/audit/mrt-audit/audit-war/target/mrt-auditwarpub-1.0-SNAPSHOT.war $ARTIFACTS/mrt-audit/mrt-audit-${TAG_PUB}.war
+        cp $WKDIR/mrt-services/audit/mrt-audit/audit-war/target/mrt-auditwarpub-*-SNAPSHOT.war $ARTIFACTS/mrt-audit/mrt-audit-${TAG_PUB}.war
         jar uf $ARTIFACTS/mrt-audit/mrt-audit-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
 
       if check_maven_profile 'inventory'
       then
         mkdir -p $ARTIFACTS/mrt-inventory
-        cp $WKDIR/mrt-services/inventory/mrt-inventory/inv-war/target/mrt-invwar-1.0-SNAPSHOT.war $ARTIFACTS/mrt-inventory/mrt-inventory-${TAG_PUB}.war
+        cp $WKDIR/mrt-services/inventory/mrt-inventory/inv-war/target/mrt-invwar-*-SNAPSHOT.war $ARTIFACTS/mrt-inventory/mrt-inventory-${TAG_PUB}.war
         jar uf $ARTIFACTS/mrt-inventory/mrt-inventory-${TAG_PUB}.war -C ${WKDIR_PAR} ${BUILD_TXT_FILE}
       fi
     fi
@@ -381,13 +383,23 @@ build_microservice_images() {
 
   cd $WKDIR/mrt-services
 
-  build_image_push ${ECR_REGISTRY}/mrt-ingest:dev ingest
-  build_image_push ${ECR_REGISTRY}/mrt-inventory:dev inventory
-  build_image_push ${ECR_REGISTRY}/mrt-store:dev store
-  build_image_push ${ECR_REGISTRY}/mrt-audit:dev audit
-  build_image_push ${ECR_REGISTRY}/mrt-replic:dev replic
-
-  build_image_push ${ECR_REGISTRY}/mrt-dashboard ui
+  if [[ -f ingest/Dockerfile ]]
+  then
+    echo "using old Dockerfiles..."
+    build_image_push ${ECR_REGISTRY}/mrt-ingest:dev ingest
+    build_image_push ${ECR_REGISTRY}/mrt-inventory:dev inventory
+    build_image_push ${ECR_REGISTRY}/mrt-store:dev store
+    build_image_push ${ECR_REGISTRY}/mrt-audit:dev audit
+    build_image_push ${ECR_REGISTRY}/mrt-replic:dev replic
+    build_image_push ${ECR_REGISTRY}/mrt-dashboard ui
+  else
+    build_image_push ${ECR_REGISTRY}/mrt-ingest:dev ingest/mrt-ingest
+    build_image_push ${ECR_REGISTRY}/mrt-inventory:dev inventory/mrt-inventory
+    build_image_push ${ECR_REGISTRY}/mrt-store:dev store/mrt-store
+    build_image_push ${ECR_REGISTRY}/mrt-audit:dev audit/mrt-audit
+    build_image_push ${ECR_REGISTRY}/mrt-replic:dev replic/mrt-replic
+    build_image_push ${ECR_REGISTRY}/mrt-dashboard ui/mrt-dashboard
+  fi
 }
 
 build_docker_stack_support_images(){

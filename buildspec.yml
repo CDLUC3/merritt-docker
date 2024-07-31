@@ -18,39 +18,74 @@ phases:
       - aws ecr create-repository --repository-name mrt-it-database-audit-replic || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-minio-it || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-minio-it-with-content || echo 'ignore if exists...'
+      - aws ecr create-repository --repository-name fakesmtp || echo 'ignore if exists...'
 
       - aws ecr create-repository --repository-name callback || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-opendj || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
       - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
 
+      # - docker buildx create --use 
+      # - BUILDCMD="buildx build --platform linux/arm64,linux/amd64 --push --quiet"
+      - BUILDCMD="build --push --quiet"
 
   build:
     on-failure: ABORT
     commands:
-      - docker-compose -f mrt-inttest-services/merritt-tomcat/docker-compose.yml build
-      - docker-compose -f mrt-inttest-services/merritt-tomcat/docker-compose.yml push
-      - docker-compose -f mrt-inttest-services/merritt-maven/docker-compose.yml build
-      - docker-compose -f mrt-inttest-services/merritt-maven/docker-compose.yml push
-      - docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml build
-      - docker-compose -f mrt-inttest-services/mock-merritt-it/docker-compose.yml push
-      - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose.yml build
-      - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose.yml push
-      - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose-audit-replic.yml build
-      - docker-compose -f mrt-inttest-services/mrt-it-database/docker-compose-audit-replic.yml push
-      - docker-compose -f mrt-inttest-services/mrt-minio-it/docker-compose.yml build
-      - docker-compose -f mrt-inttest-services/mrt-minio-it/docker-compose.yml push
-      - docker-compose -f mrt-inttest-services/mrt-minio-it-with-content/docker-compose.yml build
-      - docker-compose -f mrt-inttest-services/mrt-minio-it-with-content/docker-compose.yml push
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/merritt-maven:dev \
+          --build-arg JAVA_RELEASE_ARG=${JAVA_RELEASE:-8} \
+          mrt-inttest-services/merritt-maven
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/merritt-tomcat:dev \
+          mrt-inttest-services/merritt-tomcat
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/mock-merritt-it:dev \
+          mrt-inttest-services/mock-merritt-it
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/mrt-it-database:dev \
+          mrt-inttest-services/mrt-it-database
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev \
+          --build-arg LOAD_SQL=/tmp/audit_replic_data.sql \
+          mrt-inttest-services/mrt-it-database
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/mrt-minio-it:dev \
+          mrt-inttest-services/mrt-minio-it
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/mrt-minio-it-with-content:dev \
+          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
+          mrt-inttest-services/mrt-minio-it-with-content
 
-      - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/mrt-database mrt-services/mysql
-      - docker push ${ECR_REGISTRY}/mrt-database
-      - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/mrt-opendj mrt-services/ldap
-      - docker push ${ECR_REGISTRY}/mrt-opendj
-      - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/mrt-init mrt-services/merritt-init
-      - docker push ${ECR_REGISTRY}/mrt-init
-      - docker build --quiet --build-arg ECR_REGISTRY=${ECR_REGISTRY} --no-cache --force-rm -t ${ECR_REGISTRY}/callback mrt-services/callback
-      - docker push ${ECR_REGISTRY}/callback
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/mrt-database \
+          mrt-services/mysql
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/mrt-opendj \
+          mrt-services/ldap
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/mrt-init \
+          mrt-services/merritt-init
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/callback \
+          mrt-services/callback
+
   post_build:
+    # this build may fail due to rate limits
+    # on-failure: ABORT
     commands:
-      #- aws s3 rm s3://${S3CFBUCKET}/api --recursive
+      - |
+        docker ${BUILDCMD} \
+          -t ${ECR_REGISTRY}/fakesmtp:dev \
+          --push mrt-inttest-services/fakesmtp

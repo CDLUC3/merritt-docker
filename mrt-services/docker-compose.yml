@@ -18,7 +18,7 @@ services:
     - inventory
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-ingest:dev
     build:
-      context: ingest
+      context: ingest/mrt-ingest
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
@@ -28,6 +28,7 @@ services:
       SERVICE: ingest
       HOSTNAME: ingest
       LOGLEVEL: info
+      CATALINA_OPTS: "-DBatchConsumerDaemon=-1 -DBatchReportConsumerDaemon=-1 -DEstimateConsumerDaemon=1 -DProvisionConsumerDaemon=1 -DDownloadConsumerDaemon=1 -DProcessConsumerDaemon=1 -DRecordConsumerDaemon=1 -DNotifyConsumerDaemon=1"
     networks:
       merrittnet:
     ports:
@@ -46,7 +47,7 @@ services:
     - zoo
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-store:dev
     build:
-      context: store
+      context: store/mrt-store
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
@@ -65,6 +66,7 @@ services:
       SERVICE: store
       HOSTNAME: store
       LOGLEVEL: info
+      CATALINA_OPTS: "-DAccessDaemon=1"
     networks:
       merrittnet:
         aliases:
@@ -79,7 +81,7 @@ services:
     - ezid
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-inventory:dev
     build:
-      context: inventory
+      context: inventory/mrt-inventory
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
@@ -99,7 +101,7 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: zookeeper:3.8.4
+    image: public.ecr.aws/docker/library/zookeeper:3.8.4
     networks:
       merrittnet:
     ports:
@@ -174,7 +176,7 @@ services:
     tty: true
   smtp:
     container_name: smtp 
-    image: ghusta/fakesmtp
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/fakesmtp:dev
     networks:
       merrittnet:
     restart: unless-stopped
@@ -234,7 +236,7 @@ services:
     # image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-replic:dev
     build:
-      context: replic
+      context: replic/mrt-replic
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
@@ -258,7 +260,7 @@ services:
     # image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-audit:dev
     build:
-      context: audit
+      context: audit/mrt-audit
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com

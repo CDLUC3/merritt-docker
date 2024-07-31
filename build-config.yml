@@ -135,15 +135,15 @@ build-config:
   codebuild:
     <<: *codebuildflags
     tags: &codebuild
-      mrt-core: codebuild
-      mrt-cloud: codebuild
-      mrt-zk: codebuild
-      mrt-inventory: codebuild2
-      mrt-store: codebuild
-      mrt-ingest: codebuild
-      mrt-audit: codebuild
-      mrt-replic: codebuild
-      mrt-dashboard: codebuild
+      mrt-core: main
+      mrt-cloud: main
+      mrt-zk: main
+      mrt-inventory: zooInv
+      mrt-store: main
+      mrt-ingest: queue_LIB
+      mrt-audit: main
+      mrt-replic: main
+      mrt-dashboard: main
       mrt-integ-tests: main
   main-docker:
     <<: *docker

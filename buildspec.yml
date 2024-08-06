@@ -8,84 +8,88 @@ phases:
   pre_build:
     on-failure: ABORT
     commands:
-      - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain cdlib-uc3-mrt --domain-owner $AWS_ACCOUNT_ID --region $AWS_REGION --query authorizationToken --output text`
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+    - COMMIT=`git rev-parse --short HEAD`
+    - BRANCH=`git symbolic-ref -q --short HEAD || git name-rev $(git rev-parse --short HEAD) | cut -d' ' -f2 || ''`
+    - TAG=`git describe --tags --exact-match 2> /dev/null || ''`
+    - BRANCHTAG=`git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git name-rev $(git rev-parse --short HEAD) | cut -d' ' -f2 || git rev-parse --short HEAD`
+    - echo "Branchtag ${BRANCHTAG}"
 
-      - aws ecr create-repository --repository-name merritt-tomcat || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name merritt-maven || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name mock-merritt-it || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name mrt-it-database || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name mrt-it-database-audit-replic || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name mrt-minio-it || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name mrt-minio-it-with-content || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name fakesmtp || echo 'ignore if exists...'
+    - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain cdlib-uc3-mrt --domain-owner $AWS_ACCOUNT_ID --region $AWS_REGION --query authorizationToken --output text`
+    - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}
 
-      - aws ecr create-repository --repository-name callback || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name mrt-opendj || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
-      - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name merritt-tomcat || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name merritt-maven || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name mock-merritt-it || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name mrt-it-database || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name mrt-it-database-audit-replic || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name mrt-minio-it || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name mrt-minio-it-with-content || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name fakesmtp || echo 'ignore if exists...'
 
-      # - docker buildx create --use 
-      # - BUILDCMD="buildx build --platform linux/arm64,linux/amd64 --push --quiet"
-      - BUILDCMD="build --push --quiet"
+    - aws ecr create-repository --repository-name callback || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name mrt-opendj || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
+    - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
+
+    - BUILDCMD="build --push --quiet"
 
   build:
     on-failure: ABORT
     commands:
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/merritt-maven:dev \
-          --build-arg JAVA_RELEASE_ARG=${JAVA_RELEASE:-8} \
-          mrt-inttest-services/merritt-maven
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/merritt-tomcat:dev \
-          mrt-inttest-services/merritt-tomcat
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/mock-merritt-it:dev \
-          mrt-inttest-services/mock-merritt-it
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/mrt-it-database:dev \
-          mrt-inttest-services/mrt-it-database
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev \
-          --build-arg LOAD_SQL=/tmp/audit_replic_data.sql \
-          mrt-inttest-services/mrt-it-database
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/mrt-minio-it:dev \
-          mrt-inttest-services/mrt-minio-it
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/mrt-minio-it-with-content:dev \
-          --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
-          mrt-inttest-services/mrt-minio-it-with-content
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/merritt-maven:dev \
+        --build-arg JAVA_RELEASE_ARG=${JAVA_RELEASE:-8} \
+        mrt-inttest-services/merritt-maven
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/merritt-tomcat:dev \
+        mrt-inttest-services/merritt-tomcat
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/mock-merritt-it:dev \
+        mrt-inttest-services/mock-merritt-it
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/mrt-it-database:dev \
+        mrt-inttest-services/mrt-it-database
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev \
+        --build-arg LOAD_SQL=/tmp/audit_replic_data.sql \
+        mrt-inttest-services/mrt-it-database
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/mrt-minio-it:dev \
+        mrt-inttest-services/mrt-minio-it
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/mrt-minio-it-with-content:dev \
+        --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
+        mrt-inttest-services/mrt-minio-it-with-content
 
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/mrt-database \
-          mrt-services/mysql
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/mrt-opendj \
-          mrt-services/ldap
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/mrt-init \
-          mrt-services/merritt-init
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/callback \
-          mrt-services/callback
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/mrt-database \
+        mrt-services/mysql
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/mrt-opendj \
+        mrt-services/ldap
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/mrt-init \
+        mrt-services/merritt-init
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/callback \
+        mrt-services/callback
 
   post_build:
     # this build may fail due to rate limits
     # on-failure: ABORT
     commands:
-      - |
-        docker ${BUILDCMD} \
-          -t ${ECR_REGISTRY}/fakesmtp:dev \
-          --push mrt-inttest-services/fakesmtp
+    - |
+      docker ${BUILDCMD} \
+        -t ${ECR_REGISTRY}/fakesmtp:dev \
+        --push mrt-inttest-services/fakesmtp

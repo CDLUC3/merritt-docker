@@ -9,8 +9,8 @@ phases:
     on-failure: ABORT
     commands:
     - COMMIT=`git rev-parse --short HEAD`
-    - BRANCH=`git symbolic-ref -q --short HEAD || git name-rev $(git rev-parse --short HEAD) | cut -d' ' -f2 || ''`
-    - TAG=`git describe --tags --exact-match 2> /dev/null || ''`
+    - BRANCH=`git symbolic-ref -q --short HEAD || git name-rev $(git rev-parse --short HEAD) | cut -d' ' -f2 || echo ''`
+    - TAG=`git describe --tags --exact-match 2> /dev/null || echo ''`
     - BRANCHTAG=`git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git name-rev $(git rev-parse --short HEAD) | cut -d' ' -f2 || git rev-parse --short HEAD`
     - echo "Branchtag ${BRANCHTAG}"
 

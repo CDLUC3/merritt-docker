@@ -28,7 +28,7 @@ services:
       SERVICE: ingest
       HOSTNAME: ingest
       LOGLEVEL: info
-      CATALINA_OPTS: "-DBatchConsumerDaemon=-1 -DBatchReportConsumerDaemon=-1 -DEstimateConsumerDaemon=1 -DProvisionConsumerDaemon=1 -DDownloadConsumerDaemon=1 -DProcessConsumerDaemon=1 -DRecordConsumerDaemon=1 -DNotifyConsumerDaemon=1"
+      CATALINA_OPTS: "-DBatchConsumerDaemon=1 -DBatchReportConsumerDaemon=-1 -DEstimateConsumerDaemon=1 -DProvisionConsumerDaemon=1 -DDownloadConsumerDaemon=1 -DProcessConsumerDaemon=1 -DRecordConsumerDaemon=1 -DNotifyConsumerDaemon=1"
     networks:
       merrittnet:
     ports:
@@ -114,7 +114,7 @@ services:
     container_name: ui
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-dashboard
     build:
-      context: ui
+      context: ui/mrt-dashboard
       dockerfile: Dockerfile
     networks:
       merrittnet:

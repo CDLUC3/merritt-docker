@@ -112,7 +112,7 @@ services:
     tty: true
   ui:
     container_name: ui
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-dashboard
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-dashboard:dev
     build:
       context: ui/mrt-dashboard
       dockerfile: Dockerfile

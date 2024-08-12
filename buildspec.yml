@@ -17,17 +17,6 @@ phases:
     - export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain cdlib-uc3-mrt --domain-owner $AWS_ACCOUNT_ID --region $AWS_REGION --query authorizationToken --output text`
     - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}
 
-    - aws ecr create-repository --repository-name merritt-tomcat || echo 'ignore if exists...'
-    - aws ecr create-repository --repository-name mrt-it-database || echo 'ignore if exists...'
-    - aws ecr create-repository --repository-name mrt-it-database-audit-replic || echo 'ignore if exists...'
-    - aws ecr create-repository --repository-name mrt-minio-it || echo 'ignore if exists...'
-    - aws ecr create-repository --repository-name mrt-minio-it-with-content || echo 'ignore if exists...'
-    - aws ecr create-repository --repository-name fakesmtp || echo 'ignore if exists...'
-
-    - aws ecr create-repository --repository-name callback || echo 'ignore if exists...'
-    - aws ecr create-repository --repository-name mrt-opendj || echo 'ignore if exists...'
-    - aws ecr create-repository --repository-name mrt-init || echo 'ignore if exists...'
-    - aws ecr create-repository --repository-name mrt-database || echo 'ignore if exists...'
 
   build:
     on-failure: ABORT

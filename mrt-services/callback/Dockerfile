@@ -4,7 +4,6 @@
 #*********************************************************************
 
 # This image is intended to simulate an ALB fronting a Lambda
-# docker build -t cdluc3/simulate-lambda-alb .
 
 FROM public.ecr.aws/docker/library/ruby:3
 

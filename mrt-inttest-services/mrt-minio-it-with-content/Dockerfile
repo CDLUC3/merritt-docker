@@ -1,8 +1,4 @@
 # Mock ezid and storage service for ingest integration testing
-#
-# docker build -t ${ECR_REGISTRY}/mrt-minio-it-with-content:dev .
-# aws ecr create-repository --repository-name mrt-minio-it-with-content
-# docker push ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
 
 ARG ECR_REGISTRY=ecr_registry_not_set
 

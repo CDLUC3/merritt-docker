@@ -2,9 +2,6 @@
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
 #*********************************************************************
-# docker build -t ${ECR_REGISTRY}/mrt-it-database:dev .
-# aws ecr create-repository --repository-name mrt-it-database
-# docker push ${ECR_REGISTRY}/mrt-it-database:dev
 
 FROM public.ecr.aws/ubuntu/mysql:8.0-20.04_beta
 

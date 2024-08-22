@@ -176,7 +176,7 @@ services:
     tty: true
   smtp:
     container_name: smtp 
-    image: registry-1.docker.io/ghusta/fakesmtp
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/docker-hub/ghusta/fakesmtp
     networks:
       merrittnet:
     restart: unless-stopped

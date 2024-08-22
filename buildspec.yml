@@ -64,7 +64,3 @@ phases:
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/callback \
         mrt-services/callback
-    - |
-      docker build --push --quiet \
-        -t ${ECR_REGISTRY}/fakesmtp:dev \
-        --push mrt-inttest-services/fakesmtp  || echo "dockerhub rate limiting may occur"

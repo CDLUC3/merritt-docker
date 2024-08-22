@@ -1,6 +1,5 @@
 #!/bin/sh
 docker-compose \
-  -f mrt-inttest-services/fakesmtp/docker-compose.yml \
   -f mrt-inttest-services/merritt-maven/docker-compose.yml \
   -f mrt-inttest-services/merritt-tomcat/docker-compose.yml \
   -f mrt-inttest-services/mock-merritt-it/docker-compose.yml \

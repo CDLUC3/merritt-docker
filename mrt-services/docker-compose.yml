@@ -16,12 +16,12 @@ services:
     - zoo
     - store
     - inventory
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-ingest:dev
+    image: ${ECR_REGISTRY}/mrt-ingest:dev
     build:
       context: ingest/mrt-ingest
       dockerfile: Dockerfile
       args:
-        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+        ECR_REGISTRY: ${ECR_REGISTRY}
     environment:
       SSM_SKIP_RESOLUTION: Y
       MERRITT_INGEST: ingest-docker
@@ -45,12 +45,12 @@ services:
     hostname: store
     depends_on:
     - zoo
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-store:dev
+    image: ${ECR_REGISTRY}/mrt-store:dev
     build:
       context: store/mrt-store
       dockerfile: Dockerfile
       args:
-        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+        ECR_REGISTRY: ${ECR_REGISTRY}
     ports:
     - published: 8081
       target: 8080
@@ -79,12 +79,12 @@ services:
     depends_on:
     - zoo
     - ezid
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-inventory:dev
+    image: ${ECR_REGISTRY}/mrt-inventory:dev
     build:
       context: inventory/mrt-inventory
       dockerfile: Dockerfile
       args:
-        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+        ECR_REGISTRY: ${ECR_REGISTRY}
     networks:
       merrittnet:
     ports:
@@ -112,7 +112,7 @@ services:
     tty: true
   ui:
     container_name: ui
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-dashboard:dev
+    image: ${ECR_REGISTRY}/mrt-dashboard:dev
     build:
       context: ui/mrt-dashboard
       dockerfile: Dockerfile
@@ -142,7 +142,7 @@ services:
     tty: true
   db-container:
     container_name: db-container
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-database
+    image: ${ECR_REGISTRY}/mrt-database
     build:
       context: mysql
       dockerfile: Dockerfile
@@ -158,7 +158,7 @@ services:
     - my-db:/var/lib/mysql
   ldap:
     container_name: ldap
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-opendj
+    image: ${ECR_REGISTRY}/mrt-opendj
     build:
       context: ldap
       dockerfile: Dockerfile
@@ -176,14 +176,14 @@ services:
     tty: true
   smtp:
     container_name: smtp 
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/docker-hub/ghusta/fakesmtp
+    image: ${ECR_REGISTRY}/docker-hub/ghusta/fakesmtp
     networks:
       merrittnet:
     restart: unless-stopped
   # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect my-minio-localhost-alias:8088 to localhost:8088.
   minio:
     container_name: minio
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-minio-it:dev
+    image: ${ECR_REGISTRY}/mrt-minio-it:dev
     ports:
     - published: 8088
       target: 8088
@@ -200,7 +200,7 @@ services:
     restart: unless-stopped
   ezid:
     container_name: ezid
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mock-merritt-it:dev
+    image: ${ECR_REGISTRY}/mock-merritt-it:dev
     ports:
     - published: 4567
       target: 4567
@@ -209,7 +209,7 @@ services:
     restart: unless-stopped
   merritt-init:
     container_name: merritt-init
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-init
+    image: ${ECR_REGISTRY}/mrt-init
     build:
       context: merritt-init
       dockerfile: Dockerfile
@@ -233,13 +233,13 @@ services:
           curl -v -X POST http://audit:8080/audit/service/start?t=json
   replic:
     container_name: replic
-    # image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-replic:dev
+    # image: ${ECR_REGISTRY}/scratch
+    image: ${ECR_REGISTRY}/mrt-replic:dev
     build:
       context: replic/mrt-replic
       dockerfile: Dockerfile
       args:
-        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+        ECR_REGISTRY: ${ECR_REGISTRY}
     networks:
       merrittnet:
     ports:
@@ -257,13 +257,13 @@ services:
     tty: true
   audit:
     container_name: audit
-    # image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/scratch
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-audit:dev
+    # image: ${ECR_REGISTRY}/scratch
+    image: ${ECR_REGISTRY}/mrt-audit:dev
     build:
       context: audit/mrt-audit
       dockerfile: Dockerfile
       args:
-        ECR_REGISTRY: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+        ECR_REGISTRY: ${ECR_REGISTRY}
     networks:
       merrittnet:
     ports:
@@ -287,7 +287,7 @@ services:
     networks:
       merrittnet:
     container_name: callback
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/callback
+    image: ${ECR_REGISTRY}/callback
     build:
       context: callback
       dockerfile: Dockerfile

@@ -39,7 +39,7 @@ host.  It does this by setting up a volume bind mount to `/var/run/docker.sock`
 From `merritt-docker/mrt-services/opensearch.yml`:
 ```
   filebeat:
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/filebeat:dev
+    image: ${ECR_REGISTRY}/filebeat:dev
     container_name: filebeat
     build:
       context: opensearch/filebeat

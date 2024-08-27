@@ -329,9 +329,11 @@ Most docker-compose scripts in this project rely on AWS Elastic Container
 Registry (ECR) for publishing and loading custom docker images.  To 
 make use of ECR you must set up the following shell enviromnent vars:
 ```
+export UC3_ACCOUNT_ID=`get_ssm_value_by_name admintool/uc3account`
 export AWS_ACCOUNT_ID=`aws sts get-caller-identity| jq -r .Account`
 export AWS_REGION=us-west-2
-export ECR_REGISTRY=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+# export ECR_REGISTRY=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+export ECR_REGISTRY=${UC3_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 ```
 
 You also must set up docker login credentials with our ECR instance.  This

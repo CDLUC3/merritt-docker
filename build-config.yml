@@ -8,11 +8,11 @@
 flagsets:
   main: &main
     description: "Complete build and test of docker stack images and maven assets.  Scan ALL docker images."
-    push: true
+    push: fasle
     build-it: true
     build-stack: true
-    scan-unfixable: true
-    scan-fixable: true
+    scan-unfixable: false
+    scan-fixable: false
     run-maven: true
     run-maven-tests: true
     build-support: true
@@ -20,7 +20,7 @@ flagsets:
     description: "Build docker images and push to ECR"
     build-it: true
     build-stack: true
-    push: true
+    push: false
     scan-unfixable: false
     scan-fixable: false
     run-maven: false
@@ -41,8 +41,8 @@ flagsets:
     build-it: true
     build-stack: true
     push: false
-    scan-unfixable: true
-    scan-fixable: true
+    scan-unfixable: false
+    scan-fixable: false
     run-maven: false
     run-maven-tests: false
     build-support: false

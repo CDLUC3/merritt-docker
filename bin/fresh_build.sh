@@ -179,8 +179,9 @@ build_image_push() {
   build_image $1 $2 "$3"
   if test_flag 'push'
   then
-    docker push --quiet $1 >> $LOGDOCKER 2>&1 
-    eval_jobstat $? "FAIL" "Docker push $1"
+    # disable docker push to main account ECR
+    # docker push --quiet $1 >> $LOGDOCKER 2>&1 
+    # eval_jobstat $? "FAIL" "Docker push $1"
   else 
     echo "       Image push disabled" >> $LOGSUM
   fi

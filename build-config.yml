@@ -9,8 +9,8 @@ flagsets:
   main: &main
     description: "Complete build and test of docker stack images and maven assets.  Scan ALL docker images."
     push: fasle
-    build-it: true
-    build-stack: true
+    build-it: false
+    build-stack: false
     scan-unfixable: false
     scan-fixable: false
     run-maven: true
@@ -18,8 +18,8 @@ flagsets:
     build-support: true
   docker: &docker
     description: "Build docker images and push to ECR"
-    build-it: true
-    build-stack: true
+    build-it: false
+    build-stack: false
     push: false
     scan-unfixable: false
     scan-fixable: false
@@ -28,8 +28,8 @@ flagsets:
     build-support: false
   docker-nopush: &docker-nopush
     description: "Build docker images.  Do not push to ECR"
-    build-it: true
-    build-stack: true
+    build-it: false
+    build-stack: false
     push: false
     scan-unfixable: false
     scan-fixable: false
@@ -38,8 +38,8 @@ flagsets:
     build-support: false
   scan: &scan
     description: "Build docker images and scan for vulnerabilities"
-    build-it: true
-    build-stack: true
+    build-it: false
+    build-stack: false
     push: false
     scan-unfixable: false
     scan-fixable: false
@@ -48,8 +48,8 @@ flagsets:
     build-support: false
   buildonly: &buildonly
     description: "Run docker and maven builds.  No tests.  No scans."
-    build-it: true
-    build-stack: true
+    build-it: false
+    build-stack: false
     push: false
     scan-unfixable: false
     scan-fixable: false
@@ -58,7 +58,7 @@ flagsets:
     build-support: false
   mvn: &mvn
     description: "Run maven builds only.  No tests."
-    build-it: true
+    build-it: false
     build-stack: false
     push: false
     scan-unfixable: false
@@ -88,8 +88,8 @@ flagsets:
     build-support: false
   buildtest: &buildtest
     description: "Run docker builds and maven builds and tests."
-    build-it: true
-    build-stack: true
+    build-it: false
+    build-stack: false
     push: false
     scan-unfixable: false
     scan-fixable: false
@@ -98,7 +98,7 @@ flagsets:
     build-support: false
   jenkins: &jenkins
     description: "Jenkins build: run maven builds and tests"
-    build-it: true
+    build-it: false
     build-stack: false
     push: false
     scan-unfixable: false

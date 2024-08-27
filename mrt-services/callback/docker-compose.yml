@@ -10,7 +10,7 @@ services:
     networks:
       merrittnet:
     container_name: callback
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/callback
+    image: ${ECR_REGISTRY}/callback
     build:
       context: .
       dockerfile: Dockerfile

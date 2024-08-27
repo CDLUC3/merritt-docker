@@ -16,7 +16,7 @@ version: '3.9'
 services:
   mysql-rspec:
     container_name: mysql-rspec
-    image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/mrt-database
+    image: ${ECR_REGISTRY}/mrt-database
     build:
       context: mysql
       dockerfile: Dockerfile

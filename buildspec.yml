@@ -9,11 +9,13 @@ phases:
     on-failure: ABORT
     commands:
     - COMMIT=`git rev-parse --short HEAD`
-    - TAG=`git describe --tags --exact-match 2> /dev/null || echo ''`
+    - # Get semantic tags for commit otherwise get all tags for commit, sort and choose the last value
+    - TAG=`(git tag --contains $COMMIT | egrep "^\d+\.\d+\.\d+$" || git tag --contains $COMMIT || echo '') | sort | tail -1`
     - |
       if [[ "$MODE" == "OnPush" ]]
       then
-        BRANCHTAG=`git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git name-rev $(git rev-parse --short HEAD) | cut -d' ' -f2 || git rev-parse --short HEAD`
+        # Get Tag || Get Branch || Alternate Branch Lookup || Get Committ
+        BRANCHTAG=`echo $TAG | grep . || git symbolic-ref -q --short HEAD || git name-rev $(git rev-parse --short HEAD) | cut -d' ' -f2 || git rev-parse --short HEAD`
       else
         BRANCHTAG=$BRANCHNAME
       fi

@@ -10,7 +10,7 @@ phases:
     commands:
     - COMMIT=`git rev-parse --short HEAD`
     - # Get semantic tags for commit otherwise get all tags for commit, sort and choose the last value
-    - TAG=`(git tag --contains $COMMIT | egrep "^\d+\.\d+\.\d+$" || git tag --contains $COMMIT || echo '') | sort | tail -1`
+    - TAG=`(git tag --contains $COMMIT | egrep "^[0-9]+\.[0-9]+\.[0-9]+$" || git tag --contains $COMMIT || echo '') | sort | tail -1`
     - |
       if [[ "$MODE" == "OnPush" ]]
       then

@@ -1,9 +1,9 @@
 CREATE TABLE `annita` (
-  `xnum` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  `xnum` smallint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `annita_tbl` (
-  `id` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `number` int(11) NOT NULL,
+  `id` smallint unsigned NOT NULL DEFAULT '0',
+  `number` int NOT NULL,
   `media_type` enum('magnetic-disk','magnetic-tape','optical-disk','solid-state','unknown') NOT NULL,
   `media_connectivity` enum('cloud','das','nas','san','unknown') NOT NULL,
   `access_mode` enum('on-line','near-line','off-line','unknown') NOT NULL,
@@ -14,22 +14,22 @@ CREATE TABLE `annita_tbl` (
   `verify_on_read` tinyint(1) NOT NULL,
   `verify_on_write` tinyint(1) NOT NULL,
   `base_url` varchar(2045) NOT NULL,
-  `created` timestamp NOT NULL DEFAULT '1970-01-01 00:00:00',
-  `source_node` smallint(5) unsigned DEFAULT NULL,
-  `target_node` smallint(5) unsigned DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  `created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `source_node` smallint unsigned DEFAULT NULL,
+  `target_node` smallint unsigned DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_audits` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inv_node_id` smallint(5) unsigned NOT NULL,
-  `inv_object_id` int(10) unsigned NOT NULL,
-  `inv_version_id` int(10) unsigned NOT NULL,
-  `inv_file_id` int(10) unsigned NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inv_node_id` smallint unsigned NOT NULL,
+  `inv_object_id` int unsigned NOT NULL,
+  `inv_version_id` int unsigned NOT NULL,
+  `inv_file_id` int unsigned NOT NULL,
   `url` varchar(16383) DEFAULT NULL,
   `status` enum('verified','unverified','size-mismatch','digest-mismatch','system-unavailable','processing','unknown') NOT NULL DEFAULT 'unknown',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `verified` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
-  `failed_size` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `failed_size` bigint unsigned NOT NULL DEFAULT '0',
   `failed_digest_value` varchar(255) DEFAULT NULL,
   `note` text,
   PRIMARY KEY (`id`),
@@ -40,14 +40,14 @@ CREATE TABLE `inv_audits` (
   KEY `id_idx3` (`inv_file_id`),
   KEY `verified` (`verified`),
   KEY `status` (`status`),
-  CONSTRAINT `inv_audits_ibfk_1` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_audits_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_audits_ibfk_3` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_audits_ibfk_4` FOREIGN KEY (`inv_file_id`) REFERENCES `inv_files` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_audits_ibfk_1` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`),
+  CONSTRAINT `inv_audits_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`),
+  CONSTRAINT `inv_audits_ibfk_3` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`),
+  CONSTRAINT `inv_audits_ibfk_4` FOREIGN KEY (`inv_file_id`) REFERENCES `inv_files` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_collections` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_object_id` int(10) unsigned DEFAULT NULL,
+  `id` smallint unsigned NOT NULL AUTO_INCREMENT,
+  `inv_object_id` int unsigned DEFAULT NULL,
   `ark` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `mnemonic` varchar(255) DEFAULT NULL,
@@ -60,35 +60,35 @@ CREATE TABLE `inv_collections` (
   UNIQUE KEY `ark_UNIQUE` (`ark`),
   KEY `id_idx` (`inv_object_id`),
   KEY `id_hp` (`harvest_privilege`),
-  CONSTRAINT `inv_collections_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_collections_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_collections_inv_nodes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inv_collection_id` smallint(5) unsigned NOT NULL,
-  `inv_node_id` smallint(5) unsigned NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inv_collection_id` smallint unsigned NOT NULL,
+  `inv_node_id` smallint unsigned NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx__cn_dedup` (`inv_collection_id`,`inv_node_id`),
   KEY `id_idx` (`inv_collection_id`),
   KEY `id_idx1` (`inv_node_id`),
-  CONSTRAINT `inv_collections_inv_nodes_ibfk_1` FOREIGN KEY (`inv_collection_id`) REFERENCES `inv_collections` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_collections_inv_nodes_ibfk_2` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_collections_inv_nodes_ibfk_1` FOREIGN KEY (`inv_collection_id`) REFERENCES `inv_collections` (`id`),
+  CONSTRAINT `inv_collections_inv_nodes_ibfk_2` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_collections_inv_objects` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_collection_id` smallint(5) unsigned NOT NULL,
-  `inv_object_id` int(10) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `inv_collection_id` smallint unsigned NOT NULL,
+  `inv_object_id` int unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_idx` (`inv_collection_id`),
   KEY `id_idx1` (`inv_object_id`),
   KEY `inv_object_id` (`inv_object_id`,`inv_collection_id`),
-  CONSTRAINT `inv_collections_inv_objects_ibfk_1` FOREIGN KEY (`inv_collection_id`) REFERENCES `inv_collections` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_collections_inv_objects_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_collections_inv_objects_ibfk_1` FOREIGN KEY (`inv_collection_id`) REFERENCES `inv_collections` (`id`),
+  CONSTRAINT `inv_collections_inv_objects_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_duas` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_collection_id` smallint(5) unsigned DEFAULT NULL,
-  `inv_object_id` int(10) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `inv_collection_id` smallint unsigned DEFAULT NULL,
+  `inv_object_id` int unsigned NOT NULL,
   `identifier` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `terms` varchar(16383) NOT NULL,
@@ -104,41 +104,41 @@ CREATE TABLE `inv_duas` (
   KEY `id_idx` (`inv_collection_id`),
   KEY `id_idx1` (`inv_object_id`),
   KEY `identifier` (`identifier`),
-  CONSTRAINT `inv_duas_ibfk_1` FOREIGN KEY (`inv_collection_id`) REFERENCES `inv_collections` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_duas_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_duas_ibfk_1` FOREIGN KEY (`inv_collection_id`) REFERENCES `inv_collections` (`id`),
+  CONSTRAINT `inv_duas_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_dublinkernels` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_object_id` int(10) unsigned NOT NULL,
-  `inv_version_id` int(10) unsigned NOT NULL,
-  `seq_num` smallint(5) unsigned NOT NULL,
-  `element` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `qualifier` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `inv_object_id` int unsigned NOT NULL,
+  `inv_version_id` int unsigned NOT NULL,
+  `seq_num` smallint unsigned NOT NULL,
+  `element` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qualifier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_idx` (`inv_object_id`),
   KEY `id_idx1` (`inv_version_id`),
-  CONSTRAINT `inv_dublinkernels_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_dublinkernels_ibfk_2` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `inv_dublinkernels_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`),
+  CONSTRAINT `inv_dublinkernels_ibfk_2` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_embargoes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inv_object_id` int(10) unsigned NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inv_object_id` int unsigned NOT NULL,
   `embargo_end_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inv_object_id_UNIQUE` (`inv_object_id`),
   KEY `embargo_end_date` (`embargo_end_date`),
-  CONSTRAINT `inv_embargoes_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `inv_embargoes_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 CREATE TABLE `inv_files` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_object_id` int(10) unsigned NOT NULL,
-  `inv_version_id` int(10) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `inv_object_id` int unsigned NOT NULL,
+  `inv_version_id` int unsigned NOT NULL,
   `pathname` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `source` enum('consumer','producer','system') NOT NULL,
   `role` enum('data','metadata') NOT NULL,
-  `full_size` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `billable_size` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `full_size` bigint unsigned NOT NULL DEFAULT '0',
+  `billable_size` bigint unsigned NOT NULL DEFAULT '0',
   `mime_type` varchar(255) DEFAULT NULL,
   `digest_type` enum('adler-32','crc-32','md2','md5','sha-1','sha-256','sha-384','sha-512') DEFAULT NULL,
   `digest_value` varchar(255) DEFAULT NULL,
@@ -149,15 +149,15 @@ CREATE TABLE `inv_files` (
   KEY `id_idx` (`inv_version_id`),
   KEY `id_idx1` (`inv_object_id`),
   KEY `source` (`source`),
-  KEY `pathname` (`pathname`(768)),
   KEY `role` (`role`),
-  CONSTRAINT `inv_files_ibfk_1` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_files_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  KEY `pathname` (`pathname`(768)),
+  CONSTRAINT `inv_files_ibfk_1` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`),
+  CONSTRAINT `inv_files_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_ingests` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_object_id` int(10) unsigned NOT NULL,
-  `inv_version_id` int(10) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `inv_object_id` int unsigned NOT NULL,
+  `inv_version_id` int unsigned NOT NULL,
   `filename` varchar(255) NOT NULL,
   `ingest_type` enum('file','container','object-manifest','single-file-batch-manifest','container-batch-manifest','batch-manifest') NOT NULL,
   `profile` varchar(255) NOT NULL,
@@ -173,11 +173,11 @@ CREATE TABLE `inv_ingests` (
   KEY `batch_id` (`batch_id`),
   KEY `user_agent` (`user_agent`),
   KEY `submitted` (`submitted`),
-  CONSTRAINT `inv_ingests_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_ingests_ibfk_2` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_ingests_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`),
+  CONSTRAINT `inv_ingests_ibfk_2` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_localids` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `inv_object_ark` varchar(255) NOT NULL,
   `inv_owner_ark` varchar(255) NOT NULL,
   `local_id` varchar(255) NOT NULL,
@@ -187,26 +187,26 @@ CREATE TABLE `inv_localids` (
   KEY `id_idoba` (`inv_object_ark`),
   KEY `id_idowa` (`inv_owner_ark`),
   KEY `id_idloc` (`local_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_metadatas` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_object_id` int(10) unsigned NOT NULL,
-  `inv_version_id` int(10) unsigned NOT NULL,
-  `filename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `md_schema` enum('DataCite','DublinCore','CSDGM','EML','OAI_DublinCore','StashWrapper') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `version` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `serialization` enum('anvl','json','xml') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `inv_object_id` int unsigned NOT NULL,
+  `inv_version_id` int unsigned NOT NULL,
+  `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `md_schema` enum('DataCite','DublinCore','CSDGM','EML','OAI_DublinCore','StashWrapper') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `version` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serialization` enum('anvl','json','xml') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `id_idx` (`inv_object_id`),
   KEY `id_idx1` (`inv_version_id`),
   KEY `id_metax` (`version`(191)),
-  CONSTRAINT `inv_metadatas_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_metadatas_ibfk_2` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `inv_metadatas_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`),
+  CONSTRAINT `inv_metadatas_ibfk_2` FOREIGN KEY (`inv_version_id`) REFERENCES `inv_versions` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_nodes` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `number` int(11) NOT NULL,
+  `id` smallint unsigned NOT NULL AUTO_INCREMENT,
+  `number` int NOT NULL,
   `media_type` enum('magnetic-disk','magnetic-tape','optical-disk','solid-state','unknown') NOT NULL,
   `media_connectivity` enum('cloud','das','nas','san','unknown') NOT NULL,
   `access_mode` enum('on-line','near-line','off-line','unknown') NOT NULL,
@@ -220,20 +220,20 @@ CREATE TABLE `inv_nodes` (
   `base_url` varchar(2045) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `description` varchar(255) DEFAULT NULL,
-  `source_node` smallint(5) unsigned DEFAULT NULL,
-  `target_node` smallint(5) unsigned DEFAULT NULL,
+  `source_node` smallint unsigned DEFAULT NULL,
+  `target_node` smallint unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_nodes_inv_objects` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inv_node_id` smallint(5) unsigned NOT NULL,
-  `inv_object_id` int(10) unsigned NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inv_node_id` smallint unsigned NOT NULL,
+  `inv_object_id` int unsigned NOT NULL,
   `role` enum('primary','secondary') NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `replicated` timestamp NULL DEFAULT NULL,
-  `version_number` smallint(5) unsigned DEFAULT NULL,
+  `version_number` smallint unsigned DEFAULT NULL,
   `replic_start` timestamp NULL DEFAULT NULL,
-  `replic_size` bigint(20) unsigned DEFAULT NULL,
+  `replic_size` bigint unsigned DEFAULT NULL,
   `completion_status` enum('ok','fail','partial','unknown') DEFAULT NULL,
   `note` mediumtext,
   PRIMARY KEY (`id`),
@@ -244,22 +244,22 @@ CREATE TABLE `inv_nodes_inv_objects` (
   KEY `irep_start` (`replic_start`) USING BTREE,
   KEY `irep_size` (`replic_size`) USING BTREE,
   KEY `irep_status` (`completion_status`) USING BTREE,
-  CONSTRAINT `inv_nodes_inv_objects_ibfk_1` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inv_nodes_inv_objects_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+  CONSTRAINT `inv_nodes_inv_objects_ibfk_1` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`),
+  CONSTRAINT `inv_nodes_inv_objects_ibfk_2` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
 CREATE TABLE `inv_objects` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_owner_id` smallint(5) unsigned NOT NULL,
-  `ark` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `md5_3` char(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `object_type` enum('MRT-curatorial','MRT-system') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role` enum('MRT-class','MRT-content') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `aggregate_role` enum('MRT-collection','MRT-owner','MRT-service-level-agreement','MRT-submission-agreement','MRT-none') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `version_number` smallint(5) unsigned NOT NULL,
-  `erc_who` mediumtext COLLATE utf8mb4_unicode_ci,
-  `erc_what` mediumtext COLLATE utf8mb4_unicode_ci,
-  `erc_when` mediumtext COLLATE utf8mb4_unicode_ci,
-  `erc_where` mediumtext COLLATE utf8mb4_unicode_ci,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `inv_owner_id` smallint unsigned NOT NULL,
+  `ark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `md5_3` char(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `object_type` enum('MRT-curatorial','MRT-system') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` enum('MRT-class','MRT-content') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aggregate_role` enum('MRT-collection','MRT-owner','MRT-service-level-agreement','MRT-submission-agreement','MRT-none') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `version_number` smallint unsigned NOT NULL,
+  `erc_who` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `erc_what` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `erc_when` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `erc_where` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -267,71 +267,87 @@ CREATE TABLE `inv_objects` (
   KEY `created` (`created`),
   KEY `modified` (`modified`),
   KEY `id_idx` (`inv_owner_id`),
-  CONSTRAINT `inv_objects_ibfk_1` FOREIGN KEY (`inv_owner_id`) REFERENCES `inv_owners` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `inv_objects_ibfk_1` FOREIGN KEY (`inv_owner_id`) REFERENCES `inv_owners` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_owners` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_object_id` int(10) unsigned DEFAULT NULL,
+  `id` smallint unsigned NOT NULL AUTO_INCREMENT,
+  `inv_object_id` int unsigned DEFAULT NULL,
   `ark` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ark_UNIQUE` (`ark`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_storage_maints` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `inv_storage_scan_id` int(10) NOT NULL,
-  `inv_node_id` smallint(5) unsigned NOT NULL,
-  `keymd5` char(32) CHARACTER SET utf8 NOT NULL,
-  `size` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inv_storage_scan_id` int NOT NULL,
+  `inv_node_id` smallint unsigned NOT NULL,
+  `keymd5` char(32) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `size` bigint unsigned NOT NULL DEFAULT '0',
   `file_created` timestamp NULL DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `file_removed` timestamp NULL DEFAULT NULL,
-  `maint_status` enum('review','hold','delete','removed','note','error','unknown') CHARACTER SET utf8 NOT NULL DEFAULT 'unknown',
-  `maint_type` enum('non-ark','missing-ark','orphan-copy','missing-file','unknown') CHARACTER SET utf8 NOT NULL DEFAULT 'unknown',
+  `maint_status` enum('review','hold','delete','removed','note','error','unknown') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT 'unknown',
+  `maint_type` enum('non-ark','missing-ark','orphan-copy','missing-file','unknown') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT 'unknown',
   `s3key` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note` mediumtext CHARACTER SET utf8,
+  `note` mediumtext CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `keymd5_idx` (`inv_node_id`,`keymd5`) USING BTREE,
   KEY `type_idx` (`maint_type`) USING BTREE,
   KEY `status_idx` (`maint_status`) USING BTREE,
-  CONSTRAINT `inv_scans_ibfk_2` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_scans_ibfk_2` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_storage_scans` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `inv_node_id` smallint(5) unsigned NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `inv_node_id` smallint unsigned NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `scan_status` enum('pending','started','completed','cancelled','failed','unknown') NOT NULL DEFAULT 'unknown',
-  `scan_type` enum('list','next','delete','build','unknown') NOT NULL DEFAULT 'unknown',
-  `keys_processed` bigint(20) NOT NULL DEFAULT '0',
+  `scan_status` enum('pending','started','completed','cancelled','failed','unknown') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'unknown',
+  `scan_type` enum('list','next','delete','build','unknown') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'unknown',
+  `keys_processed` bigint NOT NULL DEFAULT '0',
   `key_list_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_s3_key` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `scan_type_idx` (`scan_type`) USING BTREE,
   KEY `scan_status_idx` (`scan_status`) USING BTREE,
   KEY `inv_scans_node_id_ibfk_3` (`inv_node_id`) USING BTREE,
-  CONSTRAINT `inv_scans_node_id_ibfk_3` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_scans_node_id_ibfk_3` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT=DYNAMIC;
+CREATE TABLE `inv_tasks` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `task_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `task_item` varchar(511) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `retries` int NOT NULL DEFAULT '0',
+  `current_status` enum('ok','fail','pending','partial','unknown') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unknown',
+  `note` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `inx_tasks` (`task_name`,`task_item`) USING BTREE,
+  KEY `updated_inx` (`updated`) USING BTREE,
+  KEY `task_name_inx` (`task_name`) USING BTREE,
+  KEY `task_item_inx` (`task_item`) USING BTREE,
+  KEY `status_inx` (`current_status`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 CREATE TABLE `inv_versions` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `inv_object_id` int(10) unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `inv_object_id` int unsigned NOT NULL,
   `ark` varchar(255) NOT NULL,
-  `number` smallint(5) unsigned NOT NULL,
+  `number` smallint unsigned NOT NULL,
   `note` varchar(16383) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `created` (`created`),
   KEY `id_idx` (`inv_object_id`),
   KEY `ark` (`ark`),
-  CONSTRAINT `inv_versions_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+  CONSTRAINT `inv_versions_ibfk_1` FOREIGN KEY (`inv_object_id`) REFERENCES `inv_objects` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) NOT NULL,
   UNIQUE KEY `unique_schema_migrations` (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=DYNAMIC;
 CREATE TABLE `sha_dublinkernels` (
-  `id` int(10) unsigned NOT NULL,
-  `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` int unsigned NOT NULL,
+  `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `value` (`value`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;

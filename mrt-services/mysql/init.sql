@@ -388,6 +388,27 @@ ENGINE=InnoDB
 ROW_FORMAT=DYNAMIC
 ;
 
+CREATE TABLE `inv_tasks` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`created` TIMESTAMP NOT NULL DEFAULT 'CURRENT_TIMESTAMP',
+	`updated` TIMESTAMP NOT NULL DEFAULT 'CURRENT_TIMESTAMP',
+	`task_name` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`task_item` VARCHAR(511) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+	`retries` INT(10) NOT NULL DEFAULT '0',
+	`current_status` ENUM('ok','fail','pending','partial','unknown') NOT NULL DEFAULT 'unknown' COLLATE 'utf8mb4_unicode_ci',
+	`note` MEDIUMTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	UNIQUE INDEX `inx_tasks` (`task_name`, `task_item`) USING BTREE,
+	INDEX `updated_inx` (`updated`) USING BTREE,
+	INDEX `task_name_inx` (`task_name`) USING BTREE,
+	INDEX `task_item_inx` (`task_item`) USING BTREE,
+	INDEX `status_inx` (`current_status`) USING BTREE
+)
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+ROW_FORMAT=DYNAMIC
+;
+
 #CREATE USER user@'%';
 GRANT ALL ON *.* to 'user'@'%';
 

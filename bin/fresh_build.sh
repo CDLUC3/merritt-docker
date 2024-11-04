@@ -419,7 +419,6 @@ build_merritt_lambda_images() {
   build_image_push ${ECR_REGISTRY}/uc3-mrt-admin-common:dev mrt-admin-lambda/src-common
   build_image_push ${ECR_REGISTRY}/uc3-mrt-admin-lambda:dev mrt-admin-lambda/src-admintool
   build_image_push ${ECR_REGISTRY}/uc3-mrt-colladmin-lambda:dev mrt-admin-lambda/src-colladmin
-  build_image_push ${ECR_REGISTRY}/uc3-mrt-cognitousers:dev mrt-admin-lambda/cognito-lambda-nonvpc
 
   # This image facilitates dev testing of our lambda code without deploying to lambda
   # We rarely use this approach any longer, but the image code is being maintained in case that development workflow 

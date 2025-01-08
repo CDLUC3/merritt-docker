@@ -415,7 +415,7 @@ GRANT ALL ON *.* to 'user'@'%';
 CREATE USER travis@'%';
 GRANT ALL ON *.* to 'travis'@'%';
 
-ALTER USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+ALTER USER 'user'@'%' IDENTIFIED WITH caching_sha2_password BY 'password';
 
 flush privileges;
 

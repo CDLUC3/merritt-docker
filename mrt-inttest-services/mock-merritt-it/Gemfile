@@ -2,8 +2,8 @@
 
 source 'https://rubygems.org'
 gem 'mustache'
+gem 'puma'
 gem 'rackup'
 gem 'redcarpet'
 gem 'rubocop'
 gem 'sinatra'
-gem 'puma'

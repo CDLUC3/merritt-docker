@@ -8,7 +8,7 @@ require 'cgi'
 require 'json'
 
 set :bind, '0.0.0.0'
-set :host_authorization => { permitted_hosts: [] }
+set host_authorization: { permitted_hosts: [] }
 
 # Useful functions
 

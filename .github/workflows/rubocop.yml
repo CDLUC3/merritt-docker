@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   rubocop:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
     # Checkout the repo
@@ -12,7 +12,7 @@ jobs:
 
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.0'
+        ruby-version: '3.2'
         bundler-cache: true
         working-directory: mrt-services/callback
 
@@ -22,7 +22,7 @@ jobs:
 
     - uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.0'
+        ruby-version: '3.2'
         bundler-cache: true
         working-directory: mrt-inttest-services/mock-merritt-it
 

@@ -48,6 +48,7 @@ GEM
     unicode-display_width (2.6.0)
 
 PLATFORMS
+  ruby
   x86_64-linux
 
 DEPENDENCIES
@@ -58,4 +59,4 @@ DEPENDENCIES
   thin
 
 BUNDLED WITH
-   2.2.33
+   2.6.2

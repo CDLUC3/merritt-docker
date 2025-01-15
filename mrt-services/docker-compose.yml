@@ -101,7 +101,7 @@ services:
     tty: true
   zoo:
     container_name: zoo
-    image: public.ecr.aws/docker/library/zookeeper:3.8.4
+    image: public.ecr.aws/docker/library/zookeeper:3.9.3
     networks:
       merrittnet:
     ports:

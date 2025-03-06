@@ -1,5 +1,5 @@
 # https://github.com/ghchinoy/forgerock-docker
-FROM public.ecr.aws/docker/library/openjdk:11-jdk-bookworm
+FROM public.ecr.aws/docker/library/openjdk:11-jre-bullseye
 
 WORKDIR /opt
 

@@ -7,4 +7,4 @@
 /bin/sh /opt/opendj/import.sh
 
 # Do not exit, docker container will stop
-/usr/bin/tail -f /dev/null
+/usr/bin/tail -f /opt/opendj/logs/access

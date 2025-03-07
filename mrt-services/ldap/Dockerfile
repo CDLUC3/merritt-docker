@@ -6,7 +6,7 @@ WORKDIR /opt
 RUN apt-get update -y && apt-get -y upgrade
 RUN apt-get install -y wget unzip
 
-RUN curl --silent -LO https://github.com/OpenIdentityPlatform/OpenDJ/releases/download/4.4.5/opendj-4.4.5.zip && unzip -q opendj-4.4.5.zip && rm -r opendj-4.4.5.zip
+RUN curl --silent -LO https://github.com/OpenIdentityPlatform/OpenDJ/releases/download/4.6.3/opendj-4.6.3.zip && unzip -q opendj-4.6.3.zip && rm -r opendj-4.6.3.zip
 
 # Merritt data
 COPY barebones.ldif /opt/barebones.ldif

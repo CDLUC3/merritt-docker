@@ -14,19 +14,4 @@ The following instruction will check the status of the LDAP server.
 
 ## Migration
 
-```
-ARG ECR_REGISTRY=ecr_registry_not_set
-
-FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:4.6.3
-
-WORKDIR /opt/opendj
-
-ENV ROOT_PASSWORD password
-
-# RUN apt-get update -y && apt-get -y upgrade
-# Merritt data
-COPY barebones.ldif /opt/barebones.ldif
-COPY 99-user.ldif /opt/opendj/config/schema/99-user.ldif
-
-EXPOSE 1389 1636 4444
-```
+Dockerfile.opendj is likely a suitable replacement for this test container.

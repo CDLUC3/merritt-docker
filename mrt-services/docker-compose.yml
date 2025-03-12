@@ -28,7 +28,7 @@ services:
       SERVICE: ingest
       HOSTNAME: ingest
       LOGLEVEL: info
-      CATALINA_OPTS: "-DInitializeConsumerDaemon=1 -DBatchConsumerDaemon=1 -DBatchReportConsumerDaemon=1 -DEstimateConsumerDaemon=1 -DProvisionConsumerDaemon=1 -DDownloadConsumerDaemon=1 -DProcessConsumerDaemon=1 -DRecordConsumerDaemon=1 -DNotifyConsumerDaemon=1 -Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
+      CATALINA_OPTS: "-DUpdateBatchReportConsumerDaemon=1 -DInitializeConsumerDaemon=1 -DBatchConsumerDaemon=1 -DBatchReportConsumerDaemon=1 -DEstimateConsumerDaemon=1 -DProvisionConsumerDaemon=1 -DDownloadConsumerDaemon=1 -DProcessConsumerDaemon=1 -DRecordConsumerDaemon=1 -DNotifyConsumerDaemon=1 -Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
     networks:
       merrittnet:
     ports:

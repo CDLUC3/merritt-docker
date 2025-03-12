@@ -529,7 +529,6 @@ select
   (select id from inv_nodes where number='8888')
 ;
 
-CALL create_synonym_db('db-name', 'inv');
 create database billing;
 use billing;
 

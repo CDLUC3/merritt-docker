@@ -528,3 +528,595 @@ select
   (select id from inv_collections where name='demo'),
   (select id from inv_nodes where number='8888')
 ;
+
+create database billing;
+use billing;
+
+/*
+   This table replicates the CSV files generated once per day in the old Merritt Billing process.
+   Records will be added to this table based on the inv.inv_files.created field.
+ */
+/*
+DROP TABLE IF EXISTS daily_billing;
+*/
+CREATE TABLE daily_billing (
+  id int unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  billing_totals_date date,
+  inv_owner_id smallint unsigned,
+  inv_collection_id smallint unsigned not null,
+  billable_size bigint unsigned NOT NULL DEFAULT '0',
+  INDEX billing_totals_date (billing_totals_date),
+  UNIQUE INDEX collection_daily (billing_totals_date, inv_collection_id, inv_owner_id),
+  INDEX inv_owner_id (inv_owner_id),
+  INDEX inv_collection_id (inv_collection_id)
+);
+
+/*
+   This table is designed to optimized mime_type reporting in the Merritt Admin tool.
+   Records will be added to this table based on the inv.inv_files.created field.
+ */
+/* 
+DROP TABLE IF EXISTS daily_mime_use_details;
+*/
+CREATE TABLE daily_mime_use_details (
+  date_added date,
+  mime_type varchar(255),
+  inv_owner_id int,
+  inv_collection_id int,
+  source enum('consumer','producer','system'),
+  count_files bigint,
+  full_size bigint,
+  billable_size bigint,
+  INDEX date_added(date_added),
+  INDEX mime_type(mime_type),
+  INDEX collection_id(inv_collection_id),
+  INDEX owner_id(inv_owner_id),
+  UNIQUE INDEX daily(date_added, mime_type, inv_collection_id, inv_owner_id, source)
+);
+
+/*
+DROP TABLE IF EXISTS billing_owner_exemptions;
+*/
+CREATE TABLE billing_owner_exemptions (
+  inv_owner_id int,
+  exempt_bytes bigint
+);
+
+/*
+DROP TABLE IF EXISTS object_size;
+*/
+CREATE TABLE object_size (
+  inv_object_id int,
+  file_count bigint,
+  billable_size bigint,
+  max_size bigint,
+  average_size bigint,
+  updated datetime,
+  INDEX object_id(inv_object_id)
+);
+
+/*
+ALTER TABLE object_size add column max_size bigint;
+ALTER TABLE object_size add column average_size bigint;
+update 
+  object_size 
+set
+  max_size = (select max(billable_size) from inv.inv_files where inv_object_id=object_size.inv_object_id),
+  average_size = (select avg(billable_size) from inv.inv_files where inv_object_id=object_size.inv_object_id and billable_size = full_size)
+where
+  max_size is null
+and exists (select 1 from inv.inv_objects o where object_size.inv_object_id = o.id)
+limit 
+  10;
+*/
+
+/*
+DROP TABLE IF EXISTS audits_processed;
+*/
+CREATE TABLE audits_processed (
+  audit_date date,
+  all_files bigint,
+  online_files bigint,
+  online_bytes bigint,
+  s3_files bigint,
+  s3_bytes bigint,
+  glacier_files bigint,
+  glacier_bytes bigint,
+  sdsc_files bigint,
+  sdsc_bytes bigint,
+  wasabi_files bigint,
+  wasabi_bytes bigint,
+  other_files bigint,
+  other_bytes bigint,
+  INDEX audit_date(audit_date)
+);
+
+/*
+DROP TABLE IF EXISTS ingests_completed;
+*/
+CREATE TABLE ingests_completed (
+  ingest_date date,
+  profile varchar(255), 
+  batch_id varchar(255),
+  object_count int, 
+  INDEX ingest_date(ingest_date)
+);
+  
+
+/*
+DROP TABLE IF EXISTS daily_node_counts;
+*/
+CREATE TABLE daily_node_counts (
+  as_of_date date,
+  inv_node_id int,
+  number int,
+  object_count bigint,
+  object_count_primary bigint,
+  object_count_secondary bigint,
+  file_count bigint,
+  billable_size bigint,
+  index node_id(inv_node_id),
+  INDEX as_of_date(as_of_date)
+);
+
+/*
+DROP TABLE IF EXISTS object_health_json;
+*/
+CREATE TABLE object_health_json (
+  inv_object_id int,
+  updated datetime default now(),
+  object_health json,
+  UNIQUE INDEX object_id(inv_object_id)
+);
+
+/*
+  Roll up Merritt Owner objects to each campus + CDL.
+  Other views will re-use this mapping.
+ */
+drop view if exists owner_list;
+create view owner_list as
+  select distinct
+    CASE
+      WHEN own.name REGEXP '^(CDL|UC3)' THEN 'CDL'
+      WHEN own.name REGEXP '(^UCB |Berkeley)' THEN 'UCB'
+      WHEN own.name REGEXP '(^UCD)' THEN 'UCD'
+      WHEN own.name REGEXP '(^UCLA)' THEN 'UCLA'
+      WHEN own.name REGEXP '(^UCSB)' THEN 'UCSB'
+      WHEN own.name REGEXP '(^UCI)' THEN 'UCI'
+      WHEN own.name REGEXP '(^UCM)' THEN 'UCM'
+      WHEN own.name REGEXP '(^UCR)' THEN 'UCR'
+      WHEN own.name REGEXP '(^UCSC)' THEN 'UCSC'
+      WHEN own.name REGEXP '(^UCSD)' THEN 'UCSD'
+      WHEN own.name REGEXP '(^UCSF)' THEN 'UCSF'
+      ELSE 'Other'
+    END as ogroup,
+    CASE
+      WHEN own.name is null and own.id = 42 THEN 'Dryad'
+      WHEN own.name is null THEN '(No name specified)'
+      ELSE own.name
+    END as own_name,
+    own.id as inv_owner_id
+  from
+    inv.inv_owners own
+;
+
+/*
+  Roll up mime types into logical groupings reported to the Digital Preservation working group.
+  By default, the first part of the mime type will be used as a grouping.
+  Regular expressions are applied first in order to handle excpetion types.
+  Other views will re-use this mapping.
+ */
+drop view if exists owner_coll_mime_use_details;
+create view owner_coll_mime_use_details as
+  select
+    ol.ogroup,
+    ol.own_name,
+    c.name as collection_name,
+    c.mnemonic,
+    dmud.date_added,
+    dmud.mime_type,
+    CASE
+      WHEN mime_type = 'text/csv' THEN 'data'
+      WHEN mime_type = 'plain/turtle' THEN 'data'
+      WHEN mime_type REGEXP '^application/(json|atom\.xml|marc|mathematica|x-hdf|x-matlab-data|x-sas|x-sh$|x-sqlite|x-stata)' THEN 'data'
+      WHEN mime_type REGEXP '^application/.*(zip|gzip|tar|compress|zlib)' THEN 'container'
+      WHEN mime_type REGEXP '^application/(x-font|x-web)' THEN 'web'
+      WHEN mime_type REGEXP '^application/(x-dbf|vnd\.google-earth)' THEN 'geo'
+      WHEN mime_type REGEXP '^application/vnd\.(rn-real|chipnuts)' THEN 'audio'
+      WHEN mime_type REGEXP '^application/mxf' THEN 'video'
+      WHEN mime_type REGEXP '^(message|model)/' THEN 'text'
+      WHEN mime_type REGEXP '^(multipart|text/x-|application/java|application/x-executable|application/x-shockwave-flash)' THEN 'software'
+      WHEN mime_type REGEXP '^application/' THEN 'text'
+      ELSE substring_index(mime_type, '/', 1)
+    END as mime_group,
+    dmud.inv_owner_id,
+    dmud.inv_collection_id,
+    dmud.source,
+    dmud.count_files,
+    dmud.full_size,
+    dmud.billable_size
+  from
+    owner_list ol
+  inner join daily_mime_use_details dmud
+    on dmud.inv_owner_id = ol.inv_owner_id
+  inner join inv.inv_collections c
+    on c.id = dmud.inv_collection_id
+  inner join inv.inv_objects o 
+    on c.inv_object_id = o.id and o.aggregate_role = 'MRT-collection'
+;
+
+/*
+  Aggregate mime type usage by owner and collection
+ */
+drop view if exists mime_use_details;
+create view mime_use_details as
+select
+  mime_type,
+  mime_group,
+  inv_owner_id,
+  inv_collection_id,
+  source,
+  sum(count_files) as count_files,
+  sum(full_size) as full_size,
+  sum(billable_size) as billable_size
+from
+  owner_coll_mime_use_details
+group by
+  mime_type,
+  mime_group,
+  inv_owner_id,
+  inv_collection_id,
+  source
+;
+
+/*
+  Aggregate mime type usage by campus. Also include collection name.
+ */
+drop view if exists owner_collections;
+create view owner_collections as
+  select distinct
+    dmud.ogroup,
+    dmud.own_name,
+    c.name as collection_name,
+    c.mnemonic,
+    dmud.inv_owner_id,
+    dmud.inv_collection_id
+  from
+    inv.inv_collections c
+  inner join owner_coll_mime_use_details dmud
+    on dmud.inv_collection_id = c.id
+;
+
+
+/*
+  Aggregate object counts by campus, owner and collection.
+ */
+drop view if exists owner_collections_objects;
+create view owner_collections_objects as
+  select
+    ol.ogroup,
+    ol.own_name as own_name,
+    c.name as collection_name,
+    ol.inv_owner_id,
+    c.id as inv_collection_id,
+    count(o.id) count_objects
+  from
+    inv.inv_collections c
+  inner join inv.inv_objects o2
+    on c.inv_object_id = o2.id and o2.aggregate_role = 'MRT-collection'
+  inner join inv.inv_collections_inv_objects icio
+    on c.id = icio.inv_collection_id
+  inner join inv.inv_objects o
+    on o.id = icio.inv_object_id
+  inner join owner_list ol
+    on o.inv_owner_id = ol.inv_owner_id
+  group by
+    ogroup,
+    collection_name,
+    inv_owner_id,
+    inv_collection_id
+;
+
+drop view if exists node_counts;
+create view node_counts as
+  select
+    inv_node_id,
+    number,
+    object_count,
+    object_count_primary,
+    object_count_secondary,
+    file_count,
+    billable_size
+  from 
+    daily_node_counts
+  where
+    as_of_date = (
+      select
+        max(as_of_date)
+      from 
+        daily_node_counts
+    )
+;
+
+DELIMITER $$
+
+/*
+  Delete a range of daily records from the billing database.
+  This procedure is only needed when troubleshooting a range of records.
+
+  call clear_range('2013-05-22', '2013-05-23');
+ */
+DROP PROCEDURE IF EXISTS clear_range$$
+CREATE PROCEDURE clear_range(dstart date, dend date)
+BEGIN
+  delete from
+    daily_mime_use_details
+  where
+    date_added >= dstart and date_added < dend
+  ;
+
+  delete from
+    daily_billing
+  where
+    billing_totals_date >= dstart and billing_totals_date < dend
+  ;
+END$$
+
+DELIMITER $$
+
+
+/*
+  Pull a range of records into the daily_mime_use_details table.
+
+  If a record already exists for a date/mime/owner/collection/source, a new record will not be inserted.
+  This will allow missing records to be inserted over a range of dates.
+
+  This should not be called directly.  This procedure is called by iterate_range.
+ */
+DROP PROCEDURE IF EXISTS pull_range$$
+CREATE PROCEDURE pull_range(dstart date, dend date)
+BEGIN
+  insert into daily_mime_use_details(
+    date_added,
+    mime_type,
+    inv_owner_id,
+    inv_collection_id,
+    source,
+    count_files,
+    full_size,
+    billable_size
+  )
+  select
+    date(f.created) as date_added,
+    f.mime_type,
+    o.inv_owner_id,
+    icio.inv_collection_id,
+    f.source,
+    count(f.id),
+    sum(f.full_size),
+    sum(f.billable_size)
+  from
+    inv.inv_files f
+  inner join inv.inv_collections_inv_objects icio
+    on icio.inv_object_id = f.inv_object_id
+  inner join inv.inv_objects o
+    on o.id = f.inv_object_id
+  where
+    f.created >= dstart and f.created < dend
+  and not exists (
+    select 1
+    from
+      daily_mime_use_details dmud
+    where
+      dmud.date_added = date(f.created)
+    and
+      dmud.mime_type = f.mime_type
+    and
+      dmud.inv_owner_id = o.inv_owner_id
+    and
+      dmud.inv_collection_id = icio.inv_collection_id
+    and
+      dmud.source = f.source
+  )
+  group by
+    date_added,
+    icio.inv_collection_id,
+    o.inv_owner_id,
+    f.mime_type,
+    f.source
+  ;
+END$$
+
+DELIMITER $$
+
+/*
+  Pull a range of records into the daily_billing table.
+
+  If a record already exists for a date/owner/collection, a new record will not be inserted.
+  This will allow missing records to be inserted over a range of dates.
+
+  This should not be called directly.  This procedure is called by iterate_range.
+ */
+DROP PROCEDURE IF EXISTS billing_day$$
+CREATE PROCEDURE billing_day(dstart date)
+BEGIN
+  insert into daily_billing(
+    billing_totals_date,
+    inv_owner_id,
+    inv_collection_id,
+    billable_size
+  )
+  select
+    dstart,
+    inv_owner_id,
+    inv_collection_id,
+    sum(billable_size)
+  from
+    daily_mime_use_details dmud
+  where
+    date_added <= dstart
+  and not exists (
+    select 1
+    from
+      daily_billing db
+    where
+      db.billing_totals_date = dstart
+    and
+      db.inv_owner_id = dmud.inv_owner_id
+    and
+      db.inv_collection_id = dmud.inv_collection_id
+  )
+  group by
+    dstart,
+    inv_owner_id,
+    inv_collection_id
+  ;
+END$$
+
+DELIMITER $$
+
+/*
+  Pull a range of records into the daily_billing and daily_mime_use_details tables.
+
+  Records will be pulled day by day to keep the transactions efficient.
+
+  call iterate_range('2013-05-22', '2013-05-23');
+ */
+DROP PROCEDURE IF EXISTS iterate_range$$
+CREATE PROCEDURE iterate_range(dstart date, dend date)
+BEGIN
+  if dend > dstart then
+    set @dcur = dstart;
+    loop_label: LOOP
+      set @dnext = adddate(@dcur, interval 1 day);
+
+      call pull_range(@dcur, @dnext);
+      call billing_day(@dcur);
+
+      set @dcur = @dnext;
+      if @dcur >= dend then
+        LEAVE loop_label;
+      end if;
+    END LOOP;
+  end if;
+END$$
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS update_billing_range$$
+CREATE PROCEDURE update_billing_range()
+BEGIN
+  call iterate_range(
+    (
+      select
+        date_add(max(billing_totals_date), interval 1 day)
+      from
+        daily_billing
+    ),
+    date(now())
+  );
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS update_object_size$$
+CREATE PROCEDURE update_object_size()
+BEGIN
+
+  select
+    ifnull(max(updated), '2013-01-01')
+  into
+    @lastupdated
+  from
+    object_size
+  ;
+
+  delete from
+    object_size
+  where exists (
+    select
+      1
+    from
+      inv.inv_objects o
+    where
+      o.id = object_size.inv_object_id
+    and
+      o.modified > @lastupdated
+  );
+
+  insert into
+    object_size(
+      inv_object_id, 
+      file_count, 
+      billable_size, 
+      max_size, 
+      average_size,
+      updated
+    )
+  select
+    inv_object_id,
+    count(*) as file_count,
+    sum(billable_size) as billable_size,
+    max(billable_size) as max_size,
+    avg(billable_size) as average_size,
+    now()
+  from
+    inv.inv_files f
+  inner join inv.inv_objects o
+    on o.id = f.inv_object_id
+  where
+    f.billable_size = f.full_size
+  and
+    o.modified > @lastupdated
+  group by
+    inv_object_id
+  ;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS update_node_counts$$
+CREATE PROCEDURE update_node_counts()
+BEGIN
+  delete from 
+    daily_node_counts 
+  where 
+    as_of_date = date(now());
+  insert into daily_node_counts (
+    as_of_date,
+    inv_node_id,
+    number,
+    object_count,
+    object_count_primary,
+    object_count_secondary,
+    file_count,
+    billable_size
+  )
+  select
+    date(now()),
+    n.id,
+    n.number,
+    count(inio.inv_object_id),
+    sum(case when role ='primary' then 1 else 0 end),
+    sum(case when role ='secondary' then 1 else 0 end),
+    sum(os.file_count),
+    sum(os.billable_size)
+  from
+    inv.inv_nodes n
+  inner join inv.inv_nodes_inv_objects inio 
+    on n.id = inio.inv_node_id
+  inner join object_size os
+    on inio.inv_object_id = os.inv_object_id
+  group by 
+    n.id,
+    n.number
+  ;
+END$$
+
+DELIMITER ;
+
+GRANT ALL ON *.* to 'user'@'%';

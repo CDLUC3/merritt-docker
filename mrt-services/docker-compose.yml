@@ -150,7 +150,7 @@ services:
       merrittnet:
     restart: always
     environment:
-      MYSQL_DATABASE: 'db-name'
+      MYSQL_DATABASE: 'inv'
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'root-password'

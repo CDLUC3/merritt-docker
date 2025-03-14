@@ -52,6 +52,15 @@ bundle install || exit
 bundle update || exit
 bundle exec rubocop -A || exit
 
+cd ${ROOTDIR}/mrt-services/callback
+echo
+pwd
+echo '==========='
+bundle update --bundler || exit
+bundle install || exit
+bundle update || exit
+bundle exec rubocop -A || exit
+
 cd ${ROOTDIR}/mrt-services/mrt-admin-sinatra
 
 echo

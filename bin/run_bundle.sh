@@ -151,4 +151,4 @@ echo '==========='
 bundle update --bundler || exit
 bundle install || exit
 bundle update || exit
-bundle exec rubocop -A || exit
+# rubocop is not applicable

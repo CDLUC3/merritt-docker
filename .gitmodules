@@ -42,3 +42,23 @@
 	path = mrt-services/dep_zk/mrt-zk
 	url = git@github.com:cdluc3/mrt-zk
 	branch = main
+[submodule "mrt-admin-sinatra"]
+	path = mrt-services/mrt-admin-sinatra
+	url = git@github.com:CDLUC3/mrt-admin-sinatra.git
+	branch = main
+[submodule "mrt-cron"]
+	path = mrt-other/mrt-cron
+	url = git@github.com:CDLUC3/mrt-cron.git
+	branch = main
+[submodule "mrt-atom"]
+	path = mrt-other/mrt-atom
+	url = git@github.com:CDLUC3/mrt-atom.git
+	branch = main
+[submodule "s3-sinatra"]
+	path = mrt-other/s3-sinatra
+	url = git@github.com:CDLUC3/s3-sinatra.git
+	branch = main
+[submodule "uc3-ssm"]
+	path = mrt-other/uc3-ssm
+	url = git@github.com:CDLUC3/uc3-ssm.git
+	branch = main

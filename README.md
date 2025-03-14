@@ -132,13 +132,6 @@ and it provides access to individual containers.
 | Minio            | minio/minio                     | Containerized storage service - for testing presigned functionality |
 | Minio Cmd        | minio/mc                        | Initialized bucket in Minio container |
 
-### Lambda Testing Stack
-
-| Component        | Image Name                      | Notes |
-| -----------      | ----------                      | ----- |
-| ALB Simulator    | ${ECR}/simulate-lambda-alb      | Simulates an ALB running in front of a Lambda for Collection Admin |
-| Collection Admin | ${ECR}/uc3-mrt-colladmin-lambda | Merritt collection admin tool |
-
 ### Optional OpenSearch Stack
 
 see [Using OpenSearch with Merritt Services](docs/using_opensearch.md)
@@ -187,8 +180,6 @@ graph LR
   click INIT href "https://github.com/CDLUC3/merritt-docker/blob/main/mrt-services/docker-compose.yml#L230-L249" "source code"
   COLLADMIN([Merritt Collection Admin])
   click COLLADMIN href "https://github.com/CDLUC3/mrt-admin-lambda" "source code"
-  ALB([ALB Simulation])
-  click ALB href "https://github.com/CDLUC3/mrt-admin-lambda/tree/main/simulate-lambda-alb" "source code"
   AUDIT([Audit placeholder])
   REPLIC([Replication placeholder])
   SMTP([SMTP])
@@ -210,7 +201,6 @@ graph LR
     DOCK -.-> EZID
     DOCK -.-> INIT
     DOCK -.-> COLLADMIN
-    DOCK -.-> ALB
     DOCK -.-> AUDIT
     DOCK -.-> REPLIC
     DOCK -.-> SMTP
@@ -278,7 +268,6 @@ containers to system resources on the Docker host.
   | 8088 | Dev Stack| Minio API|
   | 8089 | `***` | CDL Reserved, do not use|
   | 8090 | Lambda Stack| Lambda Container, Collection Admin|
-  | 8091 | Lambda Stack| ALB Simulator in front of Lambda Container|
   | 8092 | Dev Stack| Replic|
   | 8093 | Dev Stack| Audit|
   | 8094 | OpenSearch Stack| OpenSearch Dashboards|

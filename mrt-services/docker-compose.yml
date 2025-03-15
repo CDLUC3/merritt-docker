@@ -297,3 +297,24 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
+  admin:
+    networks:
+      merrittnet:
+    container_name: admin
+    image: ${ECR_REGISTRY}/mrt-admin-sinatra
+    ports:
+    - published: 8099
+      target: 9292
+    environment:
+      config-key: docker
+      baseurl: ${HOSTNAME}.cdlib.org:8099
+    entrypoint:
+      - /bin/sh
+      - '-c'
+      - |
+          bundle exec puma app/config_mrt.ru
+    depends_on:
+    - db-container
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

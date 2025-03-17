@@ -308,6 +308,12 @@ services:
     environment:
       config-key: docker
       baseurl: ${HOSTNAME}.cdlib.org:8099
+      ADMINDEPLOY: webapp
+    build:
+      context: mrt-admin-sinatra
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
     entrypoint:
       - /bin/sh
       - '-c'

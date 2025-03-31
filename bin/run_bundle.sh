@@ -80,7 +80,7 @@ echo '==========='
 bundle update --bundler || exit
 bundle install || exit
 bundle update || exit
-bundle exec rubocop || exit
+bundle exec rubocop -A|| exit
 cd ../src-common
 echo
 pwd
@@ -88,7 +88,7 @@ echo '==========='
 bundle update --bundler || exit
 bundle install || exit
 bundle update || exit
-bundle exec rubocop || exit
+bundle exec rubocop -A || exit
 cd ../src-admintool
 echo
 pwd
@@ -96,7 +96,7 @@ echo '==========='
 bundle update --bundler || exit
 bundle install || exit
 bundle update || exit
-bundle exec rubocop || exit
+bundle exec rubocop -A|| exit
 cd ../src-colladmin
 echo
 pwd
@@ -105,7 +105,7 @@ rm -rf vendor/bundle/ruby/3*/bundler/gems/mrt-zk*
 bundle update --bundler || exit
 bundle install || exit
 bundle update || exit
-bundle exec rubocop || exit
+bundle exec rubocop -A|| exit
 cd ../src-testdriver
 echo
 pwd

@@ -8,11 +8,6 @@ WORKDIR /opt
 # Merritt data
 COPY barebones.ldif /opt/barebones.ldif
 
-# Entrypoint script
-COPY --chmod=0755 start_import.sh /opt/start_import.sh
-
-COPY --chmod=0755 import.sh /opt/opendj/import.sh
-
 COPY keystore /opt/opendj/keystore
 COPY keystore.pin /opt/opendj/keystore.pin
 

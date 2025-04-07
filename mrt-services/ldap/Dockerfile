@@ -1,25 +1,18 @@
-# https://github.com/ghchinoy/forgerock-docker
-FROM public.ecr.aws/docker/library/openjdk:11-jre-bullseye
+ARG ECR_REGISTRY=ecr_registry_not_set
+
+FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:4.6.3
 
 WORKDIR /opt
 
-RUN apt-get update -y && apt-get -y upgrade
-RUN apt-get install -y wget unzip
-
-RUN curl --silent -LO https://github.com/OpenIdentityPlatform/OpenDJ/releases/download/4.6.3/opendj-4.6.3.zip && unzip -q opendj-4.6.3.zip && rm -r opendj-4.6.3.zip
-
+# RUN apt-get update -y && apt-get -y upgrade
 # Merritt data
 COPY barebones.ldif /opt/barebones.ldif
 
 # Entrypoint script
-COPY start_import.sh /opt/start_import.sh
-RUN chmod +x /opt/start_import.sh
+COPY --chmod=0755 start_import.sh /opt/start_import.sh
 
-# Import script
-COPY import.sh /opt/opendj/import.sh
-RUN chmod +x /opt/opendj/import.sh
+COPY --chmod=0755 import.sh /opt/opendj/import.sh
 
-# Self signed cert
 COPY keystore /opt/opendj/keystore
 COPY keystore.pin /opt/opendj/keystore.pin
 
@@ -46,6 +39,15 @@ RUN ./setup \
 # Schema data
 COPY 99-user.ldif /opt/opendj/config/schema/99-user.ldif
 
-EXPOSE 1389 1636 4444
+RUN /bin/sh ./bin/import-ldif \
+        --offline \
+        --hostname localhost \
+        --port 4444 \
+	      --bindDN "cn=Directory Manager" \
+        --bindPassword password \
+        --backendID userRoot \
+        --includeBranch "ou=uc3,dc=cdlib,dc=org" \
+	      --trustAll \
+        --ldifFile /opt/barebones.ldif
 
-ENTRYPOINT ["/opt/start_import.sh"]
+EXPOSE 1389 1636 4444

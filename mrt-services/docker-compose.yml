@@ -162,6 +162,8 @@ services:
     build:
       context: ldap
       dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
     networks:
       merrittnet:
     ports:

@@ -62,6 +62,7 @@ phases:
     - |
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj \
+        --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
         mrt-services/ldap
     - |
       docker build --push --quiet \

@@ -299,10 +299,10 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
-  admin:
+  admintool:
     networks:
       merrittnet:
-    container_name: admin
+    container_name: admintool
     image: ${ECR_REGISTRY}/mrt-admin-sinatra
     ports:
     - published: 8099

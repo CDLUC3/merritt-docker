@@ -323,6 +323,8 @@ services:
           bundle exec puma app/config_mrt.ru
     depends_on:
     - db-container
+    volumes:
+    - my-ingest-folder:/tdr/ingest/queue
     restart: unless-stopped
     stdin_open: true
     tty: true

@@ -1445,3 +1445,4 @@ END$$
 DELIMITER ;
 
 GRANT ALL ON *.* to 'user'@'%';
+ 

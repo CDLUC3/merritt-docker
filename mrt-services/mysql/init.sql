@@ -1017,20 +1017,6 @@ BEGIN
   );
 END$$
 
-DROP PROCEDURE IF EXISTS update_billing_range_ecs$$
-CREATE PROCEDURE update_billing_range_ecs()
-BEGIN
-  call iterate_range(
-    (
-      select
-        ifnull(date_add(max(billing_totals_date), interval 1 day), '2025-01-01')
-      from
-        daily_billing
-    ),
-    date_add(date(now()), INTERVAL 1 DAY)
-  );
-END$$
-
 DELIMITER ;
 
 DELIMITER $$

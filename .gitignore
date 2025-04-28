@@ -13,3 +13,5 @@ mrt-services/war.txt
 build-output/*.txt
 build-output/artifacts/
 build.content.txt
+repos.sorted.txt
+repos.txt

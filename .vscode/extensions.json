@@ -32,7 +32,8 @@
 		"visualstudioexptteam.vscodeintellicode",
 		"visualstudioexptteam.intellicode-api-usage-examples",
 
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"amazonwebservices.aws-toolkit-vscode"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [

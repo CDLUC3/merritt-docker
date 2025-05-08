@@ -1,0 +1,56 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+version: '3.9'
+services:
+  ingest:
+    image: ${ECR_REGISTRY}/mrt-ingest:dev
+    build:
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
+  store:
+    image: ${ECR_REGISTRY}/mrt-store:dev
+    build:
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
+    environment:
+      MRT_DOCKER_HOST: my-minio-localhost-alias
+      MRT_MINIO_HOST: my-minio-localhost-alias
+  inventory:
+    image: ${ECR_REGISTRY}/mrt-inventory:dev
+    build:
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
+  ui:
+    image: ${ECR_REGISTRY}/mrt-dashboard
+    environment:
+      MRT_DOCKER_HOST: my-minio-localhost-alias
+  db-container:
+    image: ${ECR_REGISTRY}/mrt-database
+  ldap:
+    image: ${ECR_REGISTRY}/mrt-opendj
+  minio:
+    image: ${ECR_REGISTRY}/mrt-minio-it:dev
+    networks:
+      merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+    environment:
+      MINIO_SERVER_URL: http://my-minio-localhost-alias:8088
+  ezid:
+    image: ${ECR_REGISTRY}/mock-merritt-it:dev
+  merritt-init:
+    image: ${ECR_REGISTRY}/mrt-init
+  replic:
+    image: ${ECR_REGISTRY}/mrt-replic:dev
+    build:
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
+  audit:
+    image: ${ECR_REGISTRY}/mrt-audit:dev
+    build:
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
+  callback:
+    image: ${ECR_REGISTRY}/callback

@@ -87,13 +87,13 @@ Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as nor
 1. Build docker images for micro-services
    ```
    merritt-docker> cd mrt-services
-   mrt-services> docker-compose build --pull
+   mrt-services> docker compose build --pull
    ```
 
 1. Run core merritt services:
    ```
-   mrt-services> docker-compose -p merritt up -d
-   mrt-services> docker-compose -p merritt down
+   mrt-services> docker compose -p merritt up -d
+   mrt-services> docker compose -p merritt down
    ```
 
 1. Connect to service menu on your merritt-docker host:
@@ -288,7 +288,7 @@ merritt-docker/
 ├── bin			# helper scripts 
 ├── docs
 ├── mrt-integ-tests	# submodule path for running Merritt integrity checks
-├── mrt-services	# docker-compose scripts and submodule paths for 
+├── mrt-services	# docker compose scripts and submodule paths for 
 |                         dependencies and micro-services
 └── README.md
 ```
@@ -314,7 +314,7 @@ all this up elsewhere.
 
 ### Elastic Container Registry
 
-Most docker-compose scripts in this project rely on AWS Elastic Container
+Most docker compose scripts in this project rely on AWS Elastic Container
 Registry (ECR) for publishing and loading custom docker images.  To 
 make use of ECR you must set up the following shell enviromnent vars:
 ```
@@ -402,18 +402,18 @@ Local Desktop
 Dev Server
 _Add --build or --pull as needed_
 ```
-docker-compose -p merritt -f mrt-services/docker-compose.yml up -d
+docker compose -p merritt -f mrt-services/docker-compose.yml up -d
 ```
 
 Local Desktop
 _Add --build or --pull as needed_
 ```
-docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml up -d
+docker compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml up -d
 ```
 
 #### Run Merritt with OpenSearch (see [Using OpenSearch with Merritt Services](docs/using_opensearch.md):
 ```
-docker-compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/opensearch.yml up -d
+docker compose -p merritt -f mrt-services/docker-compose.yml -f mrt-services/local.yml -f mrt-services/opensearch.yml up -d
 ```
 
 ### Maven Builds from merritt-docker
@@ -442,7 +442,7 @@ mvn dependency:tree
 mvn dependency:build-classpath
 ```
 
-### Helper docker-compose Files
+### Helper docker compose Files
 
 | Goal                     | File                                                      | Comment |
 | --                       | --                                                        | -- |

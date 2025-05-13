@@ -9,8 +9,8 @@ Using OpenSearch with Merritt Services
 ### Launch OpenSearch stack together with Merritt services:
 
 ```
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml up -d --build
-mrt-services> docker-compose -p merritt -f docker-compose.yml -f opensearch.yml down
+mrt-services> docker compose -p merritt -f docker-compose.yml -f opensearch.yml up -d --build
+mrt-services> docker compose -p merritt -f docker-compose.yml -f opensearch.yml down
 ```
 
 
@@ -67,7 +67,7 @@ merritt-docker/mrt-services/opensearch
 
 ### Docker Compose
 
-There are two docker-compose files for launching an OpenSearch stack.  These live under `mrt-services/:
+There are two docker compose files for launching an OpenSearch stack.  These live under `mrt-services/:
 
 - **`opensearch.yml`**
   Launch three opensearch containers and add overlay docker log-driver configs to select merritt micro-service containers.

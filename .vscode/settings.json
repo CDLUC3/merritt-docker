@@ -415,4 +415,5 @@
             "template": "MDIR=$PWD/mrt-services/replic/mrt-replic docker-compose -f mrt-services/replic/mrt-replic/replication-it/src/test/docker/docker-compose.yml down"
         }
     ],
+    "git.detectSubmodulesLimit": 20,
 }

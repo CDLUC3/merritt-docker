@@ -1,3 +1,2 @@
 [mysqld]
-default-authentication-plugin=mysql_native_password
 bind-address = 0.0.0.0

@@ -311,7 +311,7 @@ services:
     - published: 8099
       target: 9292
     environment:
-      config-key: docker
+      configkey: docker
       baseurl: ${HOSTNAME}.cdlib.org:8099
       ADMINDEPLOY: webapp
     build:

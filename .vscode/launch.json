@@ -2,13 +2,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Listen for rdebug-ide",
-            "type": "Ruby",
-            "request": "attach",
-            "remoteHost": "127.0.0.1",
-            "remotePort": "1234",
-            "remoteWorkspaceRoot": "/var/www/app_name",
-            "cwd": "${workspaceRoot}/mrt-services/ui/mrt-dashboard"
+            "type": "ruby_lsp",
+            "name": "Debug Ruby LSP",
+            "request": "attach"
         },
         {
             "type": "java",

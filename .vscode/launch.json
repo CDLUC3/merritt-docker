@@ -1,10 +1,12 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "ruby_lsp",
             "name": "Debug Ruby LSP",
-            "request": "attach"
+            "request": "attach",
+            "debugServer": 8000
         },
         {
             "type": "java",

@@ -24,6 +24,7 @@ services:
         ECR_REGISTRY: ${ECR_REGISTRY}
     environment:
       SSM_SKIP_RESOLUTION: Y
+      ZKCONN: zoo:2181
       MERRITT_INGEST: ingest-docker
       SERVICE: ingest
       HOSTNAME: ingest
@@ -63,6 +64,7 @@ services:
       LOG_STORE: /dpr2store/mrtHomes/logs
       MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
       MRT_MINIO_HOST: ${HOSTNAME}.cdlib.org
+      ZKCONN: zoo:2181
       SERVICE: store
       HOSTNAME: store
       LOGLEVEL: info
@@ -92,6 +94,7 @@ services:
       target: 8080
     environment:
       SSM_SKIP_RESOLUTION: Y
+      ZKCONN: zoo:2181
       MERRITT_INV_INFO: inv-info-docker
       SERVICE: inventory
       HOSTNAME: inventory
@@ -314,6 +317,7 @@ services:
       configkey: docker
       baseurl: ${HOSTNAME}.cdlib.org:8099
       ADMINDEPLOY: webapp
+      ZKCONN: zoo:2181
     build:
       context: mrt-admin-sinatra
       dockerfile: Dockerfile

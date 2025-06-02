@@ -1,0 +1,50 @@
+#*********************************************************************
+#   Copyright 2019 Regents of the University of California
+#   All rights reserved
+#*********************************************************************
+services:
+  zoo1:
+    container_name: zoo1
+    image: public.ecr.aws/docker/library/zookeeper:3.9.3
+    networks:
+      merrittnet:
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: 'server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181'
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+  zoo2:
+    container_name: zoo2
+    image: public.ecr.aws/docker/library/zookeeper:3.9.3
+    networks:
+      merrittnet:
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: 'server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181'
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+  zoo3:
+    container_name: zoo3
+    image: public.ecr.aws/docker/library/zookeeper:3.9.3
+    networks:
+      merrittnet:
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: 'server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181'
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+  ingest:
+    environment:
+      ZKCONN: zoo1:2181,zoo2:2181,zoo3:2181
+  store:
+    environment:
+      ZKCONN: zoo1:2181,zoo2:2181,zoo3:2181
+  inventory:
+    environment:
+      ZKCONN: zoo1:2181,zoo2:2181,zoo3:2181
+  admintool:
+    environment:
+      ZKCONN: zoo1:2181,zoo2:2181,zoo3:2181

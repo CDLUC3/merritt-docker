@@ -1,4 +1,3 @@
-version: '3.3'
 services:
   mock-merritt-it:
     container_name: mock-merritt-it

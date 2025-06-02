@@ -1,4 +1,3 @@
-version: '3.3'
 services:
   minio-server:
     container_name: minio-server-with-content

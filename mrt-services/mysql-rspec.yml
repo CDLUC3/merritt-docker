@@ -12,7 +12,6 @@
 # bundle exec rails coverage
 # bundle exec rubocop
  
-version: '3.9'
 services:
   mysql-rspec:
     container_name: mysql-rspec

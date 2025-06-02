@@ -1,4 +1,3 @@
-version: '3.3'
 services:
   merritt-tomcat:
     container_name: merritt-tomcat

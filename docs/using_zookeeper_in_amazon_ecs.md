@@ -225,7 +225,7 @@ Resources:
         - Name: ZOO_MY_ID
           Value: 1
         - Name: ZOO_SERVERS
-          Value: 'server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181'
+          Value: 'server.1=0.0.0.0:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181'
       Cpu: ...
       Memory: ..
       RequiresCompatibilities:
@@ -234,7 +234,7 @@ Resources:
       ExecutionRoleArn: ...
 ```
 
-Change "zoo1" above to "zoo2", Note that ZOO_MY_ID must be set to 2
+Change "zoo1" above to "zoo2", Note that ZOO_MY_ID must be set to 2.  Note the placement of 0.0.0.0 in ZOO_SERVERS.
 ```yaml
   ServiceZoo2:
   TaskDefinitionzoo2:
@@ -243,9 +243,11 @@ Change "zoo1" above to "zoo2", Note that ZOO_MY_ID must be set to 2
         Environment:
         - Name: ZOO_MY_ID
           Value: 2
+        - Name: ZOO_SERVERS
+          Value: 'server.1=zoo1:2888:3888;2181 server.2=0.0.0.0:2888:3888;2181 server.3=zoo3:2888:3888;2181'
 ```
 
-Change "zoo1" above to "zoo3", Note that ZOO_MY_ID must be set to 3
+Change "zoo1" above to "zoo3", Note that ZOO_MY_ID must be set to 3.  Note the placement of 0.0.0.0 in ZOO_SERVERS.
 ```yaml
   ServiceZoo3:
   TaskDefinitionzoo3:
@@ -254,6 +256,8 @@ Change "zoo1" above to "zoo3", Note that ZOO_MY_ID must be set to 3
         Environment:
         - Name: ZOO_MY_ID
           Value: 3
+        - Name: ZOO_SERVERS
+          Value: 'server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=0.0.0.0:2888:3888;2181'
 ```
 
 ## Cycle Through ZK instances for a controlled restart

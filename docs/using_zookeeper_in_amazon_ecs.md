@@ -161,7 +161,7 @@ Resources:
           DiscoveryName: zoo1_3888
           ClientAliases:
           - DnsName: zoo1
-            Port: 2388
+            Port: 3888
         # Make Admin Port Available
         - PortName: zoo1_8080_port
           DiscoveryName: zoo1_8080

@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     vim \
     mysql-client \
+    apache2 \
     nano \
     python3 \
     python3-pip \
@@ -21,9 +22,10 @@ RUN apt-get update && apt-get install -y \
     iputils-ping \
     && apt-get clean
 
-CMD ["tail", "-f", "/dev/null"]
+# Write hello world message
+RUN echo 'Hello World!' > /var/www/html/index.html
 
-# Set up a non-root user (optional)
-# RUN useradd -ms /bin/bash devuser
-# USER devuser
-# WORKDIR /home/devuser
+EXPOSE 80
+
+CMD service apache2 start && \
+    tail -f /var/log/apache2/access.log /var/log/apache2/error.log  

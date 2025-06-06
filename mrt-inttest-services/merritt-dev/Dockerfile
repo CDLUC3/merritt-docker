@@ -22,6 +22,11 @@ RUN apt-get update && apt-get install -y \
     iputils-ping \
     && apt-get clean
 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm -rf awscliv2.zip aws
+
 # Write hello world message
 RUN echo 'Hello World!' > /var/www/html/index.html
 

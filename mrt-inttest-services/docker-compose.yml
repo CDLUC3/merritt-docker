@@ -1,0 +1,48 @@
+# this file exists as a convenience mechanism for PULLing images
+services:
+  merritt-dev:
+    container_name: merritt-dev
+    image: ${ECR_REGISTRY}/merritt-dev:dev
+    build:
+      context: merritt-dev
+      dockerfile: Dockerfile
+  merritt-tomcat:
+    container_name: merritt-tomcat
+    image: ${ECR_REGISTRY}/merritt-tomcat:dev
+    build:
+      context: merritt-tomcat
+      dockerfile: Dockerfile
+  mock-merritt-it:
+    container_name: mock-merritt-it
+    image: ${ECR_REGISTRY}/mock-merritt-it:dev
+    build:
+      context: mock-merritt-it
+      dockerfile: Dockerfile
+  db-container:
+    container_name: mrt-it-database
+    image: ${ECR_REGISTRY}/mrt-it-database:dev
+    build:
+      context: mrt-it-database
+      dockerfile: Dockerfile
+  db-container-audit-replic:
+    container_name: mrt-it-database-audit-replic
+    image: ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev
+    build:
+      context: mrt-it-database
+      dockerfile: Dockerfile
+      args:
+        LOAD_SQL: /tmp/audit_replic_data.sql
+  minio-server:
+    container_name: minio-server
+    image: ${ECR_REGISTRY}/mrt-minio-it:dev
+    build:
+      context: mrt-minio-it
+      dockerfile: Dockerfile
+  minio-server-with-content:
+    container_name: minio-server-with-content
+    image: ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
+    build:
+      context: mrt-minio-it-with-content
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}

@@ -29,31 +29,8 @@ phases:
     on-failure: ABORT
     commands:
     - |
-      docker build --push --quiet \
-        -t ${ECR_REGISTRY}/merritt-tomcat:dev \
-        mrt-inttest-services/merritt-tomcat
-    - |
-      docker build --push --quiet \
-        -t ${ECR_REGISTRY}/mock-merritt-it:dev \
-        mrt-inttest-services/mock-merritt-it
-    - |
-      docker build --push --quiet \
-        -t ${ECR_REGISTRY}/mrt-it-database:dev \
-        mrt-inttest-services/mrt-it-database
-    - |
-      docker build --push --quiet \
-        -t ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev \
-        --build-arg LOAD_SQL=/tmp/audit_replic_data.sql \
-        mrt-inttest-services/mrt-it-database
-    - |
-      docker build --push --quiet \
-        -t ${ECR_REGISTRY}/mrt-minio-it:dev \
-        mrt-inttest-services/mrt-minio-it
-    - |
-      docker build --push --quiet \
-        -t ${ECR_REGISTRY}/mrt-minio-it-with-content:dev \
-        --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
-        mrt-inttest-services/mrt-minio-it-with-content
+      docker compose build --push --quiet \
+        -f mrt-inttest-services/docker-compose.yml
 
     - |
       docker build --push --quiet \

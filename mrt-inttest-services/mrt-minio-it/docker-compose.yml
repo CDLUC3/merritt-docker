@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        ECR_REGISTRY: ${ECR_REGISTRY}
     ports:
     - published: 9000
       target: 9000

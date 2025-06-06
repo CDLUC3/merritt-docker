@@ -29,8 +29,8 @@ phases:
     on-failure: ABORT
     commands:
     - |
-      docker compose build --push --quiet \
-        -f mrt-inttest-services/docker-compose.yml
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build --push --quiet
 
     - |
       docker build --push --quiet \

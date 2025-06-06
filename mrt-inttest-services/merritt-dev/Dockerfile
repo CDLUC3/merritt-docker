@@ -27,7 +27,7 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install && \
     rm -rf awscliv2.zip aws
 
-COPY . ./
+COPY README.md /README.md
 
 # Write hello world message
 RUN echo 'Hello World!' > /var/www/html/index.html

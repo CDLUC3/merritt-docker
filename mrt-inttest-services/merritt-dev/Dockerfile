@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM public.ecr.aws/ubuntu/ubuntu
 
 # Install common development tools
 RUN apt-get update && apt-get install -y \

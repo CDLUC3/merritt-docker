@@ -3,7 +3,7 @@
 #   All rights reserved
 #*********************************************************************
 
-FROM public.ecr.aws/ubuntu/mysql:8.0-20.04_beta
+FROM public.ecr.aws/ubuntu/mysql
 RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
 
 RUN apt-get update -y
@@ -18,4 +18,4 @@ ENV TZ=America/Los_Angeles
 
 EXPOSE 3306 33060
 
-CMD ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+CMD ["mysqld", "--sql_mode=", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]

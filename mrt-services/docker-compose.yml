@@ -334,3 +334,13 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
+  merrittdev:
+    networks:
+      merrittnet:
+    container_name: merrittdev
+    image: ${ECR_REGISTRY}/merritt-dev:dev
+    volumes:
+    - my-ingest-folder:/tdr/ingest/queue
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

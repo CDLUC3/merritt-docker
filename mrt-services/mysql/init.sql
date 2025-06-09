@@ -570,7 +570,7 @@ DROP TABLE IF EXISTS daily_mime_use_details;
 */
 CREATE TABLE daily_mime_use_details (
   date_added date,
-  mime_type varchar(255),
+  mime_type varchar(255) collate 'utf8mb4_unicode_ci',
   inv_owner_id int,
   inv_collection_id int,
   source enum('consumer','producer','system'),
@@ -582,7 +582,7 @@ CREATE TABLE daily_mime_use_details (
   INDEX collection_id(inv_collection_id),
   INDEX owner_id(inv_owner_id),
   UNIQUE INDEX daily(date_added, mime_type, inv_collection_id, inv_owner_id, source)
-);
+) default charset utf8mb4 default collate 'utf8mb4_unicode_ci';
 
 /*
 DROP TABLE IF EXISTS billing_owner_exemptions;

@@ -6,6 +6,14 @@ services:
     build:
       context: merritt-dev
       dockerfile: Dockerfile
+  # merritt-coder:
+  #   container_name: merritt-coder
+  #   image: ${ECR_REGISTRY}/merritt-coder:dev
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #       args:
+  #         ECR_REGISTRY: ${ECR_REGISTRY}
   merritt-tomcat:
     container_name: merritt-tomcat
     image: ${ECR_REGISTRY}/merritt-tomcat:dev

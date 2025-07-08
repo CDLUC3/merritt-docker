@@ -1,3 +1,5 @@
+create database inv CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 #*********************************************************************
 #   Copyright 2019 Regents of the University of California
 #   All rights reserved
@@ -539,7 +541,7 @@ select
   (select id from inv_nodes where number='8888')
 ;
 
-create database billing;
+create database billing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 use billing;
 
 /*

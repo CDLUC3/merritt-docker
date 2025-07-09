@@ -687,7 +687,7 @@ DROP TABLE IF EXISTS daily_consistency_checks;
 CREATE TABLE daily_consistency_checks (
   check_name varchar(255),
   updated datetime default now(),
-  status enum('PASS', 'INFO', 'WARN', 'FAIL', 'SKIP'),
+  status enum('PASS', 'INFO', 'WARN', 'FAIL', 'SKIP', 'ERROR'),
   index check_name(check_name),
   index check_name_updated(check_name, updated)
 );

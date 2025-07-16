@@ -1428,7 +1428,12 @@ BEGIN
       from 
         ingests_completed
     ), 
-    date(now())
+    (
+      select 
+        ifnull(date_add(max(date(submitted)), INTERVAL 1 DAY), date(now())) 
+      from 
+        inv.inv_ingests
+    )
   );
 END$$
 

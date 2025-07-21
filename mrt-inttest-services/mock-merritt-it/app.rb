@@ -6,11 +6,17 @@ require 'mustache'
 require 'redcarpet'
 require 'cgi'
 require 'json'
+require 'logger'
 
 set :bind, '0.0.0.0'
 set host_authorization: { permitted_hosts: [] }
 
+disable :logging
 # Useful functions
+
+def logit
+  puts request.env.to_json
+end
 
 def readme
   renderer = Redcarpet::Render::HTML.new
@@ -19,6 +25,7 @@ def readme
 end
 
 get '/' do
+  logit
   readme
 end
 
@@ -29,6 +36,8 @@ def processing
 end
 
 def get_status
+  logit
+  
   {
     processing: processing
   }.to_json

@@ -37,7 +37,7 @@ end
 
 def get_status
   logit
-  
+
   {
     processing: processing
   }.to_json

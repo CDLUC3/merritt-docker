@@ -1,4 +1,6 @@
+/*
 create database inv CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+*/
 
 #*********************************************************************
 #   Copyright 2019 Regents of the University of California

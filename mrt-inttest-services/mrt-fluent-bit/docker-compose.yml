@@ -1,0 +1,7 @@
+services:
+  mrt-fluent-big:
+    container_name: mrt-fluent-bit
+    image: ${ECR_REGISTRY}/mrt-fluent-bit
+    build:
+      context: .
+      dockerfile: Dockerfile

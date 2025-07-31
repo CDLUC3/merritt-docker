@@ -1,5 +1,5 @@
 services:
-  mrt-fluent-big:
+  mrt-fluent-bit:
     container_name: mrt-fluent-bit
     image: ${ECR_REGISTRY}/mrt-fluent-bit
     build:

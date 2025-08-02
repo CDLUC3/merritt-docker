@@ -1,3 +1,11 @@
+## Test
+
+```
+docker run -it --rm \
+  -v ./test-driver-stdin.conf:/fluent-bit/etc/fluent-bit.conf \
+  671846987296.dkr.ecr.us-west-2.amazonaws.com/mrt-fluent-bit 
+```
+
 ## TODOs
 - [ ] java - get access logs
 - [ ] java - get json logs

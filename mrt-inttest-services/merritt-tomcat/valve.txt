@@ -1,0 +1,7 @@
+        <Valve className="org.apache.catalina.valves.AccessLogValve"
+               directory="/dev"
+               prefix="stdout"
+               suffix=""
+               pattern="%h %l %u %t &quot;%r&quot; %s %b"
+               buffered="false"
+               fileDateFormat="" />

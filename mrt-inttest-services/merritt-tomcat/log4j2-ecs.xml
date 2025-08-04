@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+  <Appenders>
+    <Console name="Text-Console" target="SYSTEM_OUT">
+      <EcsLayout
+          serviceName="${env:SERVICE:-service}"
+          serviceNodeName="${env:HOSTNAME:-${env:SERVICE:-service}}"
+          eventDataset="tomcat"
+          includeMarkers="true"
+          stackTraceAsArray="false"
+          includeOrigin="true">
+      </EcsLayout>
+    </Console>
+    
+  </Appenders>
+
+  <Loggers>
+    
+    <Root level="${env:LOGLEVEL:-info}">
+        <AppenderRef ref="Text-Console" level="DEBUG"/>
+    </Root>
+        
+  </Loggers>
+</Configuration>

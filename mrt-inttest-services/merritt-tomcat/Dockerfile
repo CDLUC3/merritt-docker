@@ -12,3 +12,9 @@ ENV CATALINA_OPTS="-Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.AL
 # https://serverfault.com/questions/683605/docker-container-time-timezone-will-not-reflect-changes
 ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+COPY valve.txt /tmp
+COPY modify_server.jsh /tmp
+RUN cp /usr/local/tomcat/conf/server.xml /tmp/server.xml
+RUN jshell -s /tmp/modify_server.jsh > /usr/local/tomcat/conf/server.xml
+COPY log4j2-ecs.xml /

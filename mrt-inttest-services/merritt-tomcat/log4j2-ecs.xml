@@ -19,6 +19,18 @@
     <Root level="${env:LOGLEVEL:-info}">
         <AppenderRef ref="Text-Console" level="DEBUG"/>
     </Root>
+    
+    <Logger name="FileLog" level="DEBUG" additivity="false">
+        <AppenderRef ref="Text-Console" />
+    </Logger>
+    
+    <Logger name="FixJson" level="INFO" additivity="false">
+        <AppenderRef ref="Text-Console" />
+    </Logger>
+    
+    <Logger name="JSONLog" level="INFO" additivity="false">
+        <AppenderRef ref="Text-Console" />
+    </Logger>
         
   </Loggers>
 </Configuration>

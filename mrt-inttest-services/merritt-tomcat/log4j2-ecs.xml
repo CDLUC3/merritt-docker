@@ -3,8 +3,6 @@
   <Appenders>
     <Console name="Text-Console" target="SYSTEM_OUT">
       <EcsLayout
-          serviceName="${env:SERVICE:-service}"
-          serviceNodeName="${env:HOSTNAME:-${env:SERVICE:-service}}"
           eventDataset="tomcat"
           includeMarkers="true"
           stackTraceAsArray="false"

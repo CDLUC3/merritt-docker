@@ -1,9 +1,9 @@
 # Base image for all Merritt tomcat usage
 
-FROM public.ecr.aws/docker/library/tomcat:11-jdk21-temurin
+FROM public.ecr.aws/docker/library/tomcat:9-jdk21-corretto
 
-RUN apt-get update -y && apt-get -y upgrade
-#RUN yum -y update
+# RUN apt-get update -y && apt-get -y upgrade
+RUN yum -y update
 
 EXPOSE 8080 8009
 

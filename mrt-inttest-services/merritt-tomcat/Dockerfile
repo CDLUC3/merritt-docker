@@ -1,6 +1,6 @@
 # Base image for all Merritt tomcat usage
 
-FROM public.ecr.aws/docker/library/tomcat:11-jdk21-corretto
+FROM public.ecr.aws/docker/library/tomcat:11-jdk21-temurin
 
 # RUN apt-get update -y && apt-get -y upgrade
 RUN yum -y update

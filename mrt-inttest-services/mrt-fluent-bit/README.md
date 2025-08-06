@@ -110,22 +110,30 @@ Scenario, we have a service named app that logs in the following format
 127.0.0.1 /bar/foo 404
 ```
 
-After firelens processing, the following will be generated
+After firelens processing, the following will be generated.
+
+Note that the fluentd logging driver adds: container_name, container_id.
 ```
 
 {
+  "container_name": "...",
+  "container_id": "...",
   "ecs_cluster": "...",
   "ecs_task_arn": "...",
   "ecs_task_definition": "...",
   "log": "127.0.0.1 /foo/bar 200"
 }
 {
+  "container_name": "...",
+  "container_id": "...",
   "ecs_cluster": "...",
   "ecs_task_arn": "...",
   "ecs_task_definition": "...",
   "log": "127.0.0.1 /foo/bar?hi=x 200"
 }
 {
+  "container_name": "...",
+  "container_id": "...",
   "ecs_cluster": "...",
   "ecs_task_arn": "...",
   "ecs_task_definition": "...",
@@ -158,6 +166,8 @@ Add a custom rule to `app-customizations.conf`
 After running this customization, the following is generated
 ```
 {
+  "container_name": "...",
+  "container_id": "...",
   "ecs_cluster": "...",
   "ecs_task_arn": "...",
   "ecs_task_definition": "...",
@@ -166,6 +176,8 @@ After running this customization, the following is generated
   "code":	200
 }
 {
+  "container_name": "...",
+  "container_id": "...",
   "ecs_cluster": "...",
   "ecs_task_arn": "...",
   "ecs_task_definition": "...",
@@ -174,6 +186,8 @@ After running this customization, the following is generated
   "code":	200
 }
 {
+  "container_name": "...",
+  "container_id": "...",
   "ecs_cluster": "...",
   "ecs_task_arn": "...",
   "ecs_task_definition": "...",

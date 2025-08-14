@@ -28,6 +28,8 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     rm -rf awscliv2.zip aws
 
 COPY README.md /README.md
+COPY scripts /
+RUN chmod 744 /*.sh
 
 # Write hello world message
 RUN echo 'Hello World!' > /var/www/html/index.html

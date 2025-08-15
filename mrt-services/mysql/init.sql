@@ -464,38 +464,6 @@ select id, value from inv_dublinkernels
 where not inv_dublinkernels.element='where' 
 and not inv_dublinkernels.value='(:unas)';
 
-# Configure content
-
-/*
-insert into inv_owners(ark, name)
-select 'ark:/13030/j2rn30xp', 'UC3 Merritt administrator';
-
-insert into inv_objects(inv_owner_id, ark, version_number, object_type, role, aggregate_role)
-select (select max(id) from inv_owners), 'ark:/13030/m5rn35s8', 1, 'MRT-curatorial','MRT-class','MRT-collection'
-union
-select (select max(id) from inv_owners), 'ark:/13030/m5qv8jks', 1, 'MRT-curatorial','MRT-class','MRT-collection'
-union
-select (select max(id) from inv_owners), 'ark:/13030/m5154f09', 1, 'MRT-curatorial','MRT-class','MRT-collection'
-;
-
-insert into inv_collections(ark,name,mnemonic,harvest_privilege, inv_object_id)
-select 'ark:/13030/j2cc0900','Merritt owners',null, 'none', null
-union
-select 'ark:/13030/j2h41690','Merritt service level agreements',null,'none', null
-union
-select 'ark:/13030/j27p88qw','Merritt curatorial classes','mrt_curatorial_classes','none', null
-union
-select 'ark:/13030/j2mw23mp','Merritt system classes','mrt_system_classes','none', null
-union
-select 'ark:/13030/m5rn35s8','demo','merritt_demo','public', (select id from inv_objects where ark='ark:/13030/m5rn35s8') 
-union
-select 'ark:/13030/m5qv8jks','cdl_dryaddev','cdl_dryaddev','public' , (select id from inv_objects where ark='ark:/13030/m5qv8jks')
-union
-select 'ark:/13030/m5154f09','escholarship','escholarship','none', (select id from inv_objects where ark='ark:/13030/m5154f09')
-;
-*/
-
-
 insert into inv_nodes(
   number,
   media_type,
@@ -537,12 +505,6 @@ select
   1,
   1,
   'http://store:8080/store'
-;
-
-insert into inv_collections_inv_nodes(inv_collection_id, inv_node_id)
-select 
-  (select id from inv_collections where name='demo'),
-  (select id from inv_nodes where number='8888')
 ;
 
 create database billing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

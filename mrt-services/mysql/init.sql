@@ -466,6 +466,7 @@ and not inv_dublinkernels.value='(:unas)';
 
 # Configure content
 
+/*
 insert into inv_owners(ark, name)
 select 'ark:/13030/j2rn30xp', 'UC3 Merritt administrator';
 
@@ -492,6 +493,7 @@ select 'ark:/13030/m5qv8jks','cdl_dryaddev','cdl_dryaddev','public' , (select id
 union
 select 'ark:/13030/m5154f09','escholarship','escholarship','none', (select id from inv_objects where ark='ark:/13030/m5154f09')
 ;
+*/
 
 
 insert into inv_nodes(

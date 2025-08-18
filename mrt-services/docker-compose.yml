@@ -347,3 +347,21 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
+  ldapadmin:
+    networks:
+      merrittnet:
+    container_name: ldapadmin
+    image: phpldapadmin/phpldapadmin
+    environment:
+      LDAP_HOST: ldap
+      LDAP_PASSWORD: password
+      LDAP_USERNAME: 'cn=Directory Manager'
+      LDAP_PORT: 1389
+      # see the instructions to generate a real key when deploying offically
+      APP_KEY: base64:sJJjN1h/12TILfeCTQGKlOCMGFSgSkinxptRdyU1kTo=
+    ports:
+    - published: 8097
+      target: 8080
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

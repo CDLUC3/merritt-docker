@@ -2,7 +2,7 @@
 
 admintool_ip() {
   aws servicediscovery discover-instances \
-    --service-name admintool --namespace-name merritt-ecs-dev | \
+    --service-name admintool --namespace-name merritt-${MERRITT_ECS} | \
     jq -r ".Instances[ $RANDOM % (.Instances | length)].Attributes.AWS_INSTANCE_IPV4"
 }
 
@@ -50,4 +50,19 @@ admintool_run_consistency_checks() {
   do
     test_route $route
   done
+}
+
+zk_snapshot() {
+  echo "POST $(admintool_base)/ops/zk/snapshot... then wait 30 sec"
+  curl --no-progress-meter -X POST $(admintool_base)/ops/zk/snapshot
+}
+
+zk_restore() {
+  echo "POST $(admintool_base)/ops/zk/restore"
+  curl --no-progress-meter -X POST $(admintool_base)/ops/zk/restore
+}
+
+stack_init() {
+  echo "POST $(admintool_base)/stack-init"
+  curl --no-progress-meter -X POST $(admintool_base)/stack-init
 }

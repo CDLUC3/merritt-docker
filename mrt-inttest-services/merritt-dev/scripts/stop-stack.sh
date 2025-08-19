@@ -1,0 +1,66 @@
+#! /bin/bash
+
+source ./ecs-helpers.sh
+
+if [[ "$MERRITT_ECS" == "ecs-dev" ]]
+then
+  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  zk_snapshot
+  sleep 30
+
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output yaml --no-cli-pager > /dev/null
+
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service store        --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output yaml --no-cli-pager > /dev/null
+
+  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo1         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo2         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo3         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ezid         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
+then
+  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  zk_snapshot
+  sleep 30
+
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output yaml --no-cli-pager > /dev/null
+
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service store        --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output yaml --no-cli-pager > /dev/null
+
+  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo          --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service db-container --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service minio        --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ezid         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+elif [[ "$MERRITT_ECS" == "ecs-dbsnapshot" ]]
+then
+  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output yaml --no-cli-pager > /dev/null
+elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
+then
+  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output yaml --no-cli-pager > /dev/null
+elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
+then
+  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output yaml --no-cli-pager > /dev/null
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output yaml --no-cli-pager > /dev/null
+fi

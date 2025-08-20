@@ -4,7 +4,7 @@ source ./ecs-helpers.sh
 
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
-  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   echo "Starting AUX services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service zoo1         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager > /dev/null
   aws ecs update-service --cluster $ECS_STACK_NAME --service zoo2         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager > /dev/null
@@ -29,7 +29,7 @@ then
   stack_init
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
-  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   echo "Starting AUX services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service zoo          --force-new-deployment --desired-count 1 --output yaml --no-cli-pager > /dev/null
   aws ecs update-service --cluster $ECS_STACK_NAME --service db-container --force-new-deployment --desired-count 1 --output yaml --no-cli-pager > /dev/null
@@ -54,7 +54,7 @@ then
   stack_init
 elif [[ "$MERRITT_ECS" == "ecs-dbsnapshot" ]]
 then
-  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager > /dev/null
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap
 
@@ -66,13 +66,13 @@ then
   stack_init
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
-  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output yaml --no-cli-pager > /dev/null
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output yaml --no-cli-pager > /dev/null
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merrittdev
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
-  export ECS_STACK_NAME=mrt-${$MERRITT_ECS}-stack
+  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output yaml --no-cli-pager > /dev/null
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output yaml --no-cli-pager > /dev/null
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merrittdev

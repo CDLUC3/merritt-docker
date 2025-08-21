@@ -2,9 +2,23 @@
 
 FROM quay.io/minio/minio
 
+# https://stackoverflow.com/questions/72904999/create-minio-docker-image-with-content
+COPY --from=quay.io/minio/mc:latest /usr/bin/mc /usr/bin/mc
+
 ENV MRT_MINIO_HOST "${HOSTNAME}.cdlib.org"
 
-RUN mkdir -p /buckets/my-bucket /buckets/my-bucket-repl
+RUN mkdir -p /data-load /buckets/my-bucket /buckets/my-bucket-repl /buckets/mrt-config
+
+COPY mrt-config /data-load
+
+RUN minio server /buckets & \
+    sleep 3; \
+    server_pid=$!; \
+    until mc alias set local http://localhost:9000 minioadmin minioadmin; do \
+        sleep 1; \
+    done; \
+    mc cp --recursive /data-load/* local/mrt-config; \
+    kill $server_pid
 
 EXPOSE 9000 9001
 

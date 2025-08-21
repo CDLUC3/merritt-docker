@@ -12,6 +12,7 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service ezid         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
+  sleep 15
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap smtp ezid zoo1 zoo2 zoo3
 
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output yaml --no-cli-pager 
@@ -21,6 +22,7 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 --output yaml --no-cli-pager 
+  sleep 15
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store ui
 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
@@ -37,6 +39,7 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service ezid         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
+  sleep 15
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap smtp ezid zoo minio db-container
 
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output yaml --no-cli-pager 
@@ -46,6 +49,7 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 --output yaml --no-cli-pager 
+  sleep 15
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store ui
 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
@@ -56,11 +60,13 @@ elif [[ "$MERRITT_ECS" == "ecs-dbsnapshot" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
+  sleep 15
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap
 
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
+  sleep 15
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ui merrittdev
 
   stack_init
@@ -69,11 +75,13 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
+  sleep 15
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merrittdev
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output yaml --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output yaml --no-cli-pager 
+  sleep 15
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merrittdev
 fi

@@ -12,25 +12,28 @@ admintool_base() {
 
 
 curl_format() {
-  echo "\tStatus: %{http_code}\n\tContent-Type: %{content_type}\n\tSize: %{size_download}\n\tTime: %{time_total}\n"
+  echo "Status: %{http_code}; Size: %{size_download}; Time: %{time_total}"
 }
 
 test_route() {
   route=$1
-  curl -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route}
-  title=$(cat /tmp/curl.json | jq -r '"\t\tTitle:\t" + .context.title // "na"' 2>/dev/null)
-  rows=$(cat /tmp/curl.json | jq -r '"\t\tRows:\t" + (.table | length | tostring)' 2>/dev/null)
-  status=$(cat /tmp/curl.json | jq -r '"\t\t\t" + ((.status // "NA") + ":\t" + .status_message)' 2>/dev/null)
-  echo "$route: $status, $rows rows, $title"
+  status=$(curl -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route})
+  title=$(cat /tmp/curl.json | jq -r '.context.title // "na"' 2>/dev/null)
+  rows=$(cat /tmp/curl.json | jq -r '(.table | length | tostring)' 2>/dev/null)
+  result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)
+  echo $route
+  echo "  Result: $result; Rows: $rows; $status; Title: $title"
 }
+
 
 post_route() {
   route=$1
-  curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route}
-  title=$(cat /tmp/curl.json | jq -r '"\t\tTitle:\t" + .context.title // "na"' 2>/dev/null)
-  rows=$(cat /tmp/curl.json | jq -r '"\t\tRows:\t" + (.table | length | tostring)' 2>/dev/null)
-  status=$(cat /tmp/curl.json | jq -r '"\t\t\t" + ((.status // "NA") + ":\t" + .status_message)' 2>/dev/null)
-  echo "$route: $status, $rows rows, $title"
+  status=$(curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route})
+  title=$(cat /tmp/curl.json | jq -r '.context.title // "na"' 2>/dev/null)
+  rows=$(cat /tmp/curl.json | jq -r '(.table | length | tostring)' 2>/dev/null)
+  result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)
+  echo $route
+  echo "  Result: $result; Rows: $rows; $status; Title: $title"
 }
 
 admintool_test_routes() {

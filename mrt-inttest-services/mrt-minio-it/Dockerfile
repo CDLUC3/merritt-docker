@@ -7,9 +7,11 @@ COPY --from=quay.io/minio/mc:latest /usr/bin/mc /usr/bin/mc
 
 ENV MRT_MINIO_HOST "${HOSTNAME}.cdlib.org"
 
-RUN mkdir -p /data-load /buckets/my-bucket /buckets/my-bucket-repl /buckets/mrt-config
+RUN mkdir -p /data-load/uc3/mrt /buckets/my-bucket /buckets/my-bucket-repl /buckets/mrt-config
 
-COPY mrt-config /data-load
+# Eventually, this data load content should be built into a docker image mrt-ingest-profiles:latest
+# and copied from there.  For now, the desired content is local to this repo.
+COPY mrt-config /data-load/uc3/mrt
 
 RUN minio server /buckets & \
     sleep 3; \

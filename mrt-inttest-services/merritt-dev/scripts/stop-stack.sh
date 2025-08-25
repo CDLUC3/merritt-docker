@@ -15,7 +15,8 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
 
   echo " ==> Stopping Merritt Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output text --no-cli-pager 
+  # Per team discussion, always keep an admin instance running
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --desired-count 0 --output text --no-cli-pager 
@@ -40,7 +41,8 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
 
   echo " ==> Stopping Merritt Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output text --no-cli-pager 
+  # Per team discussion, always keep an admin instance running
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --desired-count 0 --output text --no-cli-pager 
@@ -60,7 +62,8 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
   echo " ==> Stopping All Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output text --no-cli-pager 
+  # Per team discussion, always keep an admin instance running
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
@@ -69,14 +72,16 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
   echo " ==> Stopping All Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output text --no-cli-pager 
+  # Per team discussion, always keep an admin instance running
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
   echo " ==> Stopping All Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 0 --output text --no-cli-pager 
+  # Per team discussion, always keep an admin instance running
+  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
 fi
 

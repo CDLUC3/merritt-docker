@@ -1,15 +1,15 @@
 ---
 cdl_dryaddev_content:
-  :ProfileID: cdl_dryaddev_content
-  :Owner: ark:/13030/j2rn30xp
-  :StorageNode: '7777'
-  :Priority: ''
-  :ProfileDescription: UC3 collection for Dryad dev
-  :CallbackURL: ''
+  Match: true
+  Owner: ark:/13030/j2rn30xp
+  StorageNode: '7777'
+  Priority: ''
+  ProfileDescription: UC3 collection for Dryad dev
+  CallbackURL: ''
 merritt_demo_content:
-  :ProfileID: merritt_demo_content
-  :Owner: ark:/13030/j2rn30xp
-  :StorageNode: '7777'
-  :Priority: '2'
-  :ProfileDescription: Merritt Demo
-  :CallbackURL: http://callback:8098
+  Match: true
+  Owner: ark:/13030/j2rn30xp
+  StorageNode: '7777'
+  Priority: '2'
+  ProfileDescription: Merritt Demo
+  CallbackURL: http://callback:8098

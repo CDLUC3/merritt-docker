@@ -6,6 +6,7 @@ cdl_dryaddev_content:
   Priority: ''
   ProfileDescription: UC3 collection for Dryad dev
   CallbackURL: ''
+  Notification: terrence.brady@ucop.edu
 merritt_demo_content:
   Match: true
   Owner: ark:/13030/j2rn30xp
@@ -13,3 +14,4 @@ merritt_demo_content:
   Priority: '2'
   ProfileDescription: Merritt Demo
   CallbackURL: http://callback:8098
+  Notification: mark.reyes@ucop.edu

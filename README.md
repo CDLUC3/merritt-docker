@@ -123,6 +123,17 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 mysql> 
 ```
 
+## Cloud Access
+
+```bash
+ docker compose exec merrittdev /bin/bash
+root@fd1f9ead7479:/# AWS_ACCESS_KEY_ID=minioadmin AWS_SECRET_ACCESS_KEY=minioadmin aws s3 --endpoint-url http://minio:8088 ls
+1-01-01 00:00:00    mrt-config
+1-01-01 00:00:00    my-bucket
+1-01-01 00:00:00    my-bucket-repl
+root@fd1f9ead7479:/#
+```
+
 ## View Logs
 
 ```bash

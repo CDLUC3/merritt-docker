@@ -100,6 +100,29 @@ root@1ed17e89ce16:/# curl http://store:8080/store/state?t=json|jq
 }
 ```
 
+## Database Access
+
+```bash
+docker compose exec merrittdev /merritt-mysql.sh
+mysql: [Warning] Using a password on the command line interface can be insecure.
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 43
+Server version: 8.0.41-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+```
+
 ## View Logs
 
 ```bash

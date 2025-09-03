@@ -1,109 +1,124 @@
 Merritt Docker Images and Orchestration
-=======================================
-
+---
 
 This library is part of the [Merritt Preservation System](https://github.com/CDLUC3/mrt-doc).
 
 The purpose of this repository is to build docker images for local developer
 testing of the [Merritt system](https://github.com/cdluc3/mrt-doc/wiki).
 
-## Quick Start Guide
+## Deployment Options
 
-### Prerequisites
-
-#### UC3 Docker Dev Server
+### UC3 Docker Dev Server
 - You must me a member of group `docker`.
-- You must deploy this repository on a merritt docker host under directory
-  `/dpr2/merritt-workspace`.
+- Clone this repo under `/dpr2/merritt-workspace/$USER`
+  - A large file system has been created for this purpose 
 
-#### Local Workstation
+### Local Workstation
 - M2 Macbook Pro (16G RAM) or equivalent
 - Docker Desktop installed
+  - Allocate 10G of RAM for Docker Desktop 
 
-### Installation
-
-#### UC3 Docker Dev Server
+## Clone the repo
 Log into one of our uc3-mrt-docker-dev hosts.  Run the following commands as normal user.
 
-1. Ensure user writable directory from which to do initial cloning:
-   ```
-   cd /dpr2/merritt-workspace
-   mkdir $USER
-   cd $USER
-   ```
+Clone merritt-docker repo and pull in submodules:
 
-1. Clone merritt-docker repo and pull in submodules:
-   ```
-   BRANCH=main
-   git clone git@github.com:CDLUC3/merritt-docker.git -b $BRANCH \
-	--remote-submodules --recurse-submodules
-   ```
+```bash
+BRANCH=main git clone git@github.com:CDLUC3/merritt-docker.git -b $BRANCH \
+  --remote-submodules --recurse-submodules
+```
 
-1. Set up docker environment vars:
-   ```
-   merritt-docker> source bin/docker_environment.sh
-   ```
+### Local Workstation
 
-1. Build dependencies: (Out of date)
-   ```
-   cd merritt-docker
-   bin/dep_build.sh
-   bin/it_build.sh
-   ```
+Allow Minio container to resolve local pre-signed URL's
+```bash
+sudo echo '127.0.0.1	my-minio-localhost-alias' >> /etc/hosts
+```
 
-#### Local Workstation
+## Code Repo Synchronization
 
-1. Clone merritt-docker repo and pull in submodules:
-   ```
-   BRANCH=main
-   git clone git@github.com:CDLUC3/merritt-docker.git -b $BRANCH \
-	--remote-submodules --recurse-submodules
-   ```
+Ensure all submodule code is up-to-date with respective remotes:
+```bash
+git submodule update --remote
+```
 
-1. Set up local variables
-   ```
-   export ECR_REGISTRY=it-docker-registry
-   ```
+## ECR Login
 
-1. Allow Minio container to resolve local pre-signed URL's
-   ```
-   sudo echo '127.0.0.1	my-minio-localhost-alias' >> /etc/hosts
-   ```
+Login to AWS
+```bash
+aws sso login
+```
 
-1. Build dependencies:
-   ```
-   cd merritt-docker
-   bin/local_dep_build.sh
-   bin/local_it_build.sh
-   ```
 
-### Usage
+It is recommended that you save this to a script named `~/bin/devops.sh`
+```bash
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity)
+export UC3_ACCOUNT_ID=$(aws ssm get-parameter --name /uc3/mrt/dev/admintool/uc3account --query Parameter.Value --output text)
+export CODEARTIFACT_URL=https://cdlib-uc3-mrt-${UC3_ACCOUNT_ID}.d.codeartifact.us-west-2.amazonaws.com/maven/uc3-mrt-java/
+export AWS_REGION=us-west-2
+export ECR_REGISTRY=${UC3_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
 
-1. Ensure all submodule code is up-to-date with respective remotes:
-   ```
-   merritt-docker> git submodule update --remote
-   ```
+export CODEARTIFACT_AUTH_TOKEN=`aws codeartifact get-authorization-token --domain cdlib-uc3-mrt --domain-owner $UC3_ACCOUNT_ID --region $AWS_REGION --query authorizationToken --output text`
+aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+```
 
-1. Build docker images for micro-services
-   ```
-   merritt-docker> cd mrt-services
-   mrt-services> docker compose build --pull
-   ```
+## Stack Creation
 
-1. Run core merritt services:
-   ```
-   mrt-services> docker compose -p merritt up -d
-   mrt-services> docker compose -p merritt down
-   ```
+```bash
+cd mrt-services
+# this pulls the latest docker images from ECR, these are build daily in CodeBuild
+docker compose pull
+docker compose up -d
+```
 
-1. Connect to service menu on your merritt-docker host:
-   http://_my-docker-host_:8086/docker.html
+## Use Port Fowarding to access the stack in a browser
+- 8086: opens the UI
+- 8099: opens the Admin Tool
 
-For more detailed usage instructions see [Running Merritt Docker](#running-merritt-docker) below.
+## Access the Merritt Dev container to access all services
 
+```bash
+bash-5.2$ docker compose exec merrittdev /bin/bash
+root@1ed17e89ce16:/# curl http://store:8080/store/state?t=json|jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   380  100   380    0     0    213      0  0:00:01  0:00:01 --:--:--   213
+{
+  "sto:storageServiceState": {
+    "sto:nodeStates": {
+      "sto:nodeState": [
+        "http://uc3-mrtdocker-dev01.cdlib.org:8081/store/state/7777",
+        "http://uc3-mrtdocker-dev01.cdlib.org:8081/store/state/8888"
+      ]
+    },
+    "sto:failNodes": "",
+    "sto:failNodesCnt": 0,
+    "xmlns:sto": "http://uc3.cdlib.org/ontology/mrt/store/storage",
+    "sto:logRootLevel": "INFO",
+    "sto:baseURI": "http://uc3-mrtdocker-dev01.cdlib.org:8081/store"
+  }
+}
+```
+
+## View Logs
+
+```bash
+docker compse logs store
+```
+
+## Shutdown the Stack (preserve content)
+```bash
+docker compose down
+```
+
+## Shutdown the Stack and destroy all content
+```bash
+docker compose down --volumes
+```
 
 ---
 
+## Older Documentation
 
 
 ## Component Overview
@@ -127,7 +142,7 @@ and it provides access to individual containers.
 | Storage          | ${ECR}/mrt-storage              |       |
 | Inventory        | ${ECR}/mrt-inventory            |       |
 | Audit            | ${ECR}/mrt-audit                |       |
-| Replic           | ${ECR}/mrt-audit                |       |
+| Replic           | ${ECR}/mrt-replic                |       |
 | Merritt Init     | ${ECR}/mrt-init                 | Init inventory services.|
 | Minio            | minio/minio                     | Containerized storage service - for testing presigned functionality |
 | Minio Cmd        | minio/mc                        | Initialized bucket in Minio container |
@@ -267,7 +282,6 @@ containers to system resources on the Docker host.
   | 8086 | Dev Stack| UI|
   | 8088 | Dev Stack| Minio API|
   | 8089 | `***` | CDL Reserved, do not use|
-  | 8090 | Lambda Stack| Lambda Container, Collection Admin|
   | 8092 | Dev Stack| Replic|
   | 8093 | Dev Stack| Audit|
   | 8094 | OpenSearch Stack| OpenSearch Dashboards|
@@ -276,7 +290,7 @@ containers to system resources on the Docker host.
   | 8097 | OpenSearch Stack| OpenSearch API|
   | 8098 | IntTest Stack| Integration Test: Minio admin port|
   | 8098 | Dev Stack| Ingest Callback |
-  | 8099 | IntTest Stack| Integration Test: service-it debug|
+  | 8099 | Admin Tool| Integration Test: service-it debug|
 
 ## Project Internals
 

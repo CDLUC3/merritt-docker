@@ -15,3 +15,11 @@ merritt_demo_content:
   ProfileDescription: Merritt Demo
   CallbackURL: http://callback:8098
   Notification: mark.reyes@ucop.edu
+merritt_test_content:
+  Match: true
+  Owner: ark:/99999/j2000000
+  StorageNode: '7777'
+  Priority: '3'
+  ProfileDescription: Merritt Test
+  CallbackURL: ''
+  Notification: test.email@test.edu

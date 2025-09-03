@@ -1,0 +1,54 @@
+# Merritt Test -- USED FOR INGEST IT TESTS
+ProfileID: merritt_test_content
+ProfileDescription: Merritt Test
+Identifier-scheme: ARK
+Identifier-namespace: 99999
+Collection.1: ark:/99999/m5000000
+Type: MRT-curatorial
+Role: MRT-content
+Aggregate:
+Owner: ark:/99999/j2000000
+Notification.1: test.email@test.edu
+# === START Handlers ===
+# Post Batch
+HandlerBatchProcess.1: org.cdlib.mrt.ingest.handlers.batchProcess.HandlerPost
+HandlerBatchProcess.2: org.cdlib.mrt.ingest.handlers.batchProcess.HandlerSubmit
+# Batch to Jobs
+HandlerQueue.1: org.cdlib.mrt.ingest.handlers.queue.HandlerDisaggregate
+HandlerQueue.2: org.cdlib.mrt.ingest.handlers.queue.HandlerSubmit
+HandlerQueue.3: org.cdlib.mrt.ingest.handlers.queue.HandlerNotification
+# Process Initialize
+HandlerInitialize.1: org.cdlib.mrt.ingest.handlers.initialize.HandlerInitialize
+HandlerInitialize.2: org.cdlib.mrt.ingest.handlers.initialize.HandlerAccept
+HandlerInitialize.3: org.cdlib.mrt.ingest.handlers.initialize.HandlerVerify
+HandlerInitialize.4: org.cdlib.mrt.ingest.handlers.initialize.HandlerDisaggregate
+# Process Estimating
+HandlerEstimate.1: org.cdlib.mrt.ingest.handlers.estimate.HandlerEstimate
+# Process Provisioning
+HandlerProvision.1: org.cdlib.mrt.ingest.handlers.provision.HandlerProvision
+# Process Downloading
+HandlerDownload.1: org.cdlib.mrt.ingest.handlers.download.HandlerRetrieve
+# Process Processing
+HandlerProcess.1: org.cdlib.mrt.ingest.handlers.process.HandlerCorroborate
+HandlerProcess.2: org.cdlib.mrt.ingest.handlers.process.HandlerCharacterize
+HandlerProcess.3: org.cdlib.mrt.ingest.handlers.process.HandlerMinter
+HandlerProcess.4: org.cdlib.mrt.ingest.handlers.process.HandlerDescribe
+HandlerProcess.5: org.cdlib.mrt.ingest.handlers.process.HandlerDocument
+HandlerProcess.6: org.cdlib.mrt.ingest.handlers.process.HandlerDigest
+HandlerProcess.7: org.cdlib.mrt.ingest.handlers.process.HandlerTransfer
+# Process Recording
+HandlerRecord.1: org.cdlib.mrt.ingest.handlers.record.HandlerInventoryQueue
+# Process Notify
+# HandlerNotify.1: org.cdlib.mrt.ingest.handlers.notify.HandlerCallback
+HandlerNotify.2: org.cdlib.mrt.ingest.handlers.notify.HandlerCleanup
+# Batch Notify
+HandlerBatchReport.1: org.cdlib.mrt.ingest.handlers.batchReport.HandlerNotification
+# === END Handlers ===
+StorageService: http://mock-merritt-it:4567
+StorageNode: 7777
+Priority: 03
+CreationDate: 2022-03-30T13:28:14-08:00
+ModificationDate: 2022-03-30T23:28:14-08:00
+ObjectMinterURL: http://mock-merritt-it:4567/shoulder/ark:/99999/fk4
+NotificationType: additional
+Context: merritt_test

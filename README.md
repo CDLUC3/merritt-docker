@@ -75,6 +75,9 @@ docker compose up -d
 - 8086: opens the UI
 - 8099: opens the Admin Tool
 
+## VPN Testing
+- http://$(hostname).cdlib.org:8086/docker.html
+
 ## Access the Merritt Dev container to access all services
 
 ```bash

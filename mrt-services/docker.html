@@ -27,6 +27,9 @@
             <h2>Core Merritt Containers</h2>
             <ul>
                 <li>
+                    <a class="ref" data=":8099">Merritt Admin</a>
+                </li>
+                 <li>
                     <a class="ref" data=":8086">Merritt UI</a>
                     <ul>
                         <li><a class="ref" data=":8086/state">State</a></li>
@@ -45,13 +48,6 @@
                         <li><a class="ref" data=":8081/store/static/build.content.txt">Build info</a></li>
                         <li><a class="ref" data=":8081/store/state/7777">Storage Service - Node 7777</a></li>
                         <li><a class="ref" data=":8081/store/state/8888">Storage Service - Node 8888</a></li>
-                        <fieldset>
-                            <legend>Set Queue Processing State in Zookeeper</legend>
-                            <form class="ref" data=":8081/store/flag/set/access/LargeAccessHold?t=xml" method="POST"><input type="submit" value="Pause Access Large"/></form>
-                            <form class="ref" data=":8081/store/flag/clear/access/LargeAccessHold?t=xml" method="POST"><input type="submit" value="Unpause Access Large"/></form>
-                            <form class="ref" data=":8081/store/flag/set/access/SmallAccessHold?t=xml" method="POST"><input type="submit" value="Pause Access Small"/></form>
-                            <form class="ref" data=":8081/store/flag/clear/access/SmallAccessHold?t=xml" method="POST"><input type="submit" value="Unpause Access Small"/></form>
-                        </fieldset>
                         </ul>
                 </li>
                 <li>
@@ -65,13 +61,12 @@
                 </li>
                 <li><a class="ref" data=":8095">Minio Web Console (api on 8088)</a></li>
                 <li><a class="ref" data=":8096">Mock Merritt Integration Test Service</a></li>
-                <li><a class="ref" data=":8097">Pal Museum Data Ingest Service</a></li>
             </ul>
             <h2>Open Search Dashboard for Merritt Logs(If enabled)</h2>
             <ul>
                 <li><a class="ref" data=":8094">Open Search Dashboard</a></li>
             </ul>
-            <h2>Audit/Replic Containers (If enabled)</h2>
+            <h2>Audit/Replic Containers</h2>
             <ul>
                 <li>
                     <a class="ref" data=":8092/replic/state">Replic Service State</a>
@@ -92,8 +87,6 @@
                     </fieldset>
                 </li>
             </ul>
-            <h2>Useful Commands</h2>
-            <a href="https://github.com/cdluc3/merritt-docker#other-useful-tasks">Useful Tasks</a>
         </div>
     </body>
 </html>

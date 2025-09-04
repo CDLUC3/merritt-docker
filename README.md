@@ -176,6 +176,7 @@ mvn install -Ddocker.skip -DskipITs -Dmaven.test.skip=true
 ```
 
 ## Rebuild a Merritt Service, Restart
+_The docker build process does NOT run maven.  It incorporates a locally built war file into the docker image._
 
 ```bash
 cd mrt-services
@@ -191,6 +192,8 @@ docker compose pull store
 docker compose up -d
 ```
 
+> [!NOTE]
+> Do not PUSH to ECR.  The only images that should be pushed to ECR are ones that have been built by AWS CodeBuild
 ---
 
 ## Older Documentation

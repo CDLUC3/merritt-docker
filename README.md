@@ -90,15 +90,15 @@ root@1ed17e89ce16:/# curl http://store:8080/store/state?t=json|jq
   "sto:storageServiceState": {
     "sto:nodeStates": {
       "sto:nodeState": [
-        "http://uc3-mrtdocker-dev01.cdlib.org:8081/store/state/7777",
-        "http://uc3-mrtdocker-dev01.cdlib.org:8081/store/state/8888"
+        "http://hostname.cdlib.org:8081/store/state/7777",
+        "http://hostname.cdlib.org:8081/store/state/8888"
       ]
     },
     "sto:failNodes": "",
     "sto:failNodesCnt": 0,
     "xmlns:sto": "http://uc3.cdlib.org/ontology/mrt/store/storage",
     "sto:logRootLevel": "INFO",
-    "sto:baseURI": "http://uc3-mrtdocker-dev01.cdlib.org:8081/store"
+    "sto:baseURI": "http://hostname.cdlib.org:8081/store"
   }
 }
 ```
@@ -130,7 +130,8 @@ mysql>
 
 ```bash
  docker compose exec merrittdev /bin/bash
-root@fd1f9ead7479:/# AWS_ACCESS_KEY_ID=minioadmin AWS_SECRET_ACCESS_KEY=minioadmin aws s3 --endpoint-url http://minio:8088 ls
+root@fd1f9ead7479:/# AWS_ACCESS_KEY_ID=minioadmin AWS_SECRET_ACCESS_KEY=minioadmin \
+  aws s3 --endpoint-url http://minio:8088 ls
 1-01-01 00:00:00    mrt-config
 1-01-01 00:00:00    my-bucket
 1-01-01 00:00:00    my-bucket-repl
@@ -175,6 +176,7 @@ mvn install -Ddocker.skip -DskipITs -Dmaven.test.skip=true
 ```
 
 ## Rebuild a Merritt Service, Restart
+_The docker build process does NOT run maven.  It incorporates a locally built war file into the docker image._
 
 ```bash
 cd mrt-services
@@ -190,6 +192,8 @@ docker compose pull store
 docker compose up -d
 ```
 
+> [!NOTE]
+> Do not PUSH to ECR.  The only images that should be pushed to ECR are ones that have been built by AWS CodeBuild
 ---
 
 ## Older Documentation

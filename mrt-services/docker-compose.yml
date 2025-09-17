@@ -215,30 +215,6 @@ services:
     networks:
       merrittnet:
     restart: unless-stopped
-  merritt-init:
-    container_name: merritt-init
-    image: ${ECR_REGISTRY}/mrt-init
-    build:
-      context: merritt-init
-      dockerfile: Dockerfile
-    networks:
-      merrittnet:
-    depends_on:
-    - inventory
-    entrypoint:
-      - /bin/bash
-      - '-c'
-      - |
-          echo "*** Merritt Initialization"
-          echo "    ----------------------"
-          echo "*** Pause 30 seconds then init the inventory service"
-          sleep 30
-          echo "*** Starting the inventory service"
-          curl -v -X POST http://inventory:8080/inventory/service/start?t=json
-          echo "*** Starting the replic service"
-          curl -v -X POST http://replic:8080/replic/service/start?t=json
-          echo "*** Starting the audit service"
-          curl -v -X POST http://audit:8080/audit/service/start?t=json
   replic:
     container_name: replic
     # image: ${ECR_REGISTRY}/scratch

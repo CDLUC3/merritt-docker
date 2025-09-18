@@ -3,11 +3,12 @@
 #   All rights reserved
 #*********************************************************************
 
-FROM public.ecr.aws/ubuntu/mysql
+FROM public.ecr.aws/ubuntu/mysql:8.0-20.04_beta
 RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzinfo_to_sql /usr/share/zoneinfo >> /docker-entrypoint-initdb.d/timezones.sql
 
 RUN apt-get update -y
 # RUN yum -y update
+# RUN dnf update -y
 
 COPY init.sql /docker-entrypoint-initdb.d/start.sql
 COPY custom.cnf /etc/mysql/conf.d/

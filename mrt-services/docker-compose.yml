@@ -27,6 +27,11 @@ services:
       MERRITT_INGEST: ingest-docker
       SERVICE: ingest
       HOSTNAME: ingest
+      S3ENDPOINT: http://minio:8088
+      S3ACCESSKEY: minioadmin
+      S3SECRETKEY: minioadmin
+      S3CONFIG_BUCKET: mrt-config
+      S3CONFIG_PATH: uc3/mrt/mrt-ingest-profiles
       LOGLEVEL: info
       CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml -DUpdateBatchReportConsumerDaemon=1 -DInitializeConsumerDaemon=1 -DBatchConsumerDaemon=1 -DBatchReportConsumerDaemon=1 -DEstimateConsumerDaemon=1 -DProvisionConsumerDaemon=1 -DDownloadConsumerDaemon=1 -DProcessConsumerDaemon=1 -DRecordConsumerDaemon=1 -DNotifyConsumerDaemon=1 -Dfile.encoding=UTF8 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
     networks:

@@ -9,6 +9,8 @@ RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzin
 RUN apt-get update -y
 # RUN yum -y update
 # RUN dnf update -y
+# TODO: update to public.ecr.aws/docker/library/mysql:8.4
+# microdnf update -y
 
 COPY init.sql /docker-entrypoint-initdb.d/start.sql
 COPY custom.cnf /etc/mysql/conf.d/

@@ -74,8 +74,6 @@ then
   echo " ==> Redeploying Merritt Dev"
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
 
-  echo " ==> ZK Restore"
-  zk_restore
   echo " ==> Stack Init"
   stack_init
 elif [[ "$MERRITT_ECS" == "ecs-dbsnapshot" ]]

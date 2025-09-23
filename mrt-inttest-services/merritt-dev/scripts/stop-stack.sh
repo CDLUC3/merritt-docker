@@ -34,9 +34,6 @@ then
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
-  zk_snapshot
-  sleep 30
-
   echo " ==> Stopping Merritt Dev"
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
 

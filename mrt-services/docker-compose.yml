@@ -103,7 +103,7 @@ services:
       SERVICE: inventory
       HOSTNAME: inventory
       LOGLEVEL: info
-      CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml"
+      CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -241,7 +241,7 @@ services:
       SERVICE: replic
       HOSTNAME: replic
       LOGLEVEL: info
-      CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml"
+      CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -266,7 +266,7 @@ services:
       SERVICE: audit
       HOSTNAME: audit
       LOGLEVEL: info
-      CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml"
+      CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
       # Uncomment the followign lines to increase throughput of the audit service
       # AUDIT_THREAD_POOL: 5
       # AUDIT_SLEEP_MS: 100

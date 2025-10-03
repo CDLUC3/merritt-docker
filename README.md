@@ -154,6 +154,21 @@ docker compose down
 docker compose down --volumes
 ```
 
+Note that the database takes a while to re-build
+
+```bash
+docker compose up db-container
+```
+
+Once the initialization is complete, press Cntl-C
+
+Then restart as normal
+
+```bash
+docker compose up -d
+```
+
+
 ## Maven Build Tips
 
 Set Merritt Maven Vars

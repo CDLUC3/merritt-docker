@@ -505,7 +505,20 @@ select
   1,
   1,
   'http://store:8080/store'
-;
+union
+select
+  8889,
+  'magnetic-disk',
+  'cloud',
+  'on-line',
+  's3',
+  'physical',
+  'http',
+  'yaml:|8889',
+  'nodeio',
+  1,
+  1,
+  'http://store:8080/store';
 
 create database billing CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 use billing;

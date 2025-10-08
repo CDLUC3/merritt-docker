@@ -346,7 +346,7 @@ CREATE TABLE `inv_storage_maints` (
             'unknown'
             ) NOT NULL DEFAULT 'unknown',
 	`s3key` MEDIUMTEXT NOT NULL,
-	`note` MEDIUMTEXT not NULL,
+	`note` MEDIUMTEXT NULL,
 	PRIMARY KEY (`id`) USING BTREE,
 	UNIQUE INDEX `keymd5_idx` (`inv_node_id`, `keymd5`) USING BTREE,
 	INDEX `type_idx` (`maint_type`) USING BTREE,

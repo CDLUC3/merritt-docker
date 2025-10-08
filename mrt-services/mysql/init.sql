@@ -353,7 +353,7 @@ CREATE TABLE `inv_storage_maints` (
 	INDEX `status_idx` (`maint_status`) USING BTREE,
 	CONSTRAINT `inv_scans_ibfk_2` FOREIGN KEY (`inv_node_id`) REFERENCES `inv_nodes` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION
 )
-COLLATE='utf8mb4_general_ci'
+COLLATE='utf8mb4_unicode_ci'
 ENGINE=InnoDB
 ROW_FORMAT=DYNAMIC
 ;

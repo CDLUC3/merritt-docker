@@ -7,19 +7,27 @@ cdl_dryaddev_content:
   ProfileDescription: UC3 collection for Dryad dev
   CallbackURL: ''
   Notification: terrence.brady@ucop.edu
+escholarship_content:
+  Match: true
+  Owner: ark:/13030/j2rn30xp
+  StorageNode: '7777'
+  Priority: '2'
+  ProfileDescription: Escholarship
+  CallbackURL: ''
+  Notification: mark.reyes@ucop.edu
 merritt_demo_content:
   Match: true
   Owner: ark:/13030/j2rn30xp
   StorageNode: '7777'
   Priority: '2'
   ProfileDescription: Merritt Demo
-  CallbackURL: http://callback:8098
-  Notification: mark.reyes@ucop.edu
-merritt_test_content:
-  Match: true
-  Owner: ark:/99999/j2000000
-  StorageNode: '7777'
-  Priority: '3'
-  ProfileDescription: Merritt Test
   CallbackURL: ''
-  Notification: test.email@test.edu
+  Notification: mark.reyes@ucop.edu
+terry_test_content:
+  Match: true
+  Owner: ark:/13030/j2rn30xp
+  StorageNode: '7777'
+  Priority: '2'
+  ProfileDescription: Terry Test
+  CallbackURL: ''
+  Notification: mark.reyes@ucop.edu

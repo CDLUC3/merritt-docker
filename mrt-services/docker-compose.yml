@@ -329,6 +329,9 @@ services:
     networks:
       merrittnet:
     container_name: merrittdev
+    environment:
+      BUCKET7777: my-bucket
+      BUCKET8888: my-bucket-repl
     image: ${ECR_REGISTRY}/merritt-dev:dev
     volumes:
     - my-ingest-folder:/tdr/ingest/queue

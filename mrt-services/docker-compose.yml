@@ -308,6 +308,7 @@ services:
       S3CONFIG_PATH: uc3/mrt/mrt-ingest-profiles
       # default for a minio container per searching
       S3REGION: us-east-1
+      MERRITT_ECS: docker
     build:
       context: mrt-admin-sinatra
       dockerfile: Dockerfile

@@ -120,6 +120,66 @@ modifyTimestamp: 20200409210326Z
 modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: dc28d19e-bfef-4212-b0e5-c9abf87b2c68
 
+dn: ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: terry_test_content
+description: Terry Test
+arkId: ark:/13030/99999999
+ou: terry_test
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20181114162350Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 8538b908-0e6c-436c-bd4a-14f8b855b001
+createTimestamp: 20181106182135Z
+
+dn: cn=read,ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe4002
+
+dn: cn=write,ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: write
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe4003
+
+dn: cn=download,ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: download
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe4004
+
+dn: cn=admin,ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: admin
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe4005
+
 dn: ou=cdl_dryaddev,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top
 objectClass: merrittClass
@@ -260,6 +320,17 @@ creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
 modifyTimestamp: 20200409222232Z
 modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: 410da389-1db1-4753-8cff-51840e2fd13e
+createTimestamp: 20100914192017Z
+
+dn: cn=write,ou=escholarship,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: write
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd1ff
 createTimestamp: 20100914192017Z
 
 dn: ou=ucb_lib_prechmat,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org

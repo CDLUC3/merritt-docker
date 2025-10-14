@@ -7,6 +7,12 @@
 /merritt-mysql.sh -e "select 1"
 ```
 
+### Cloud Storage
+
+```
+/merritt-s3.sh ls
+```
+
 ### EFS
 
 ```

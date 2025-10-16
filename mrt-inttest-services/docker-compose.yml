@@ -60,3 +60,9 @@ services:
     build:
       context: mrt-fluent-bit
       dockerfile: Dockerfile
+  mysql-ruby-lambda:
+    container_name: mysql-ruby-lambda
+    image: ${ECR_REGISTRY}/mysql-ruby-lambda
+    build:
+      context: mysql-ruby-lambda
+      dockerfile: Dockerfile

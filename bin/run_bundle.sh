@@ -16,6 +16,18 @@ bundle install || exit
 bundle update || exit
 bundle exec rubocop -A || exit
 
+cd ${ROOTDIR}/mrt-inttest-services/mysql-ruby-lambda
+
+echo
+pwd
+echo '==========='
+echo '  mysql-ruby-lambda'
+echo '==========='
+bundle update --bundler || exit
+bundle install || exit
+bundle update || exit
+bundle exec rubocop -A || exit
+
 cd ${ROOTDIR}/mrt-integ-tests
 
 echo
@@ -84,60 +96,6 @@ bundle update --bundler 2>&1 | grep -v "is ignoring" || exit
 bundle install || exit
 bundle update || exit
 bundle exec rubocop -A || exit
-
-cd ${ROOTDIR}/mrt-services/mrt-admin-lambda
-
-cd mysql-ruby-lambda
-echo
-pwd
-echo '==========='
-echo '  mysql-ruby-lambda'
-echo '==========='
-bundle update --bundler 2>&1 | grep -v "is ignoring" || exit
-bundle install || exit
-bundle update || exit
-bundle exec rubocop -A|| exit
-cd ../src-common
-echo
-pwd
-echo '==========='
-echo '  src-common'
-echo '==========='
-bundle update --bundler 2>&1 | grep -v "is ignoring" || exit
-bundle install || exit
-bundle update || exit
-bundle exec rubocop -A || exit
-cd ../src-admintool
-echo
-pwd
-echo '==========='
-echo '  src-admintool'
-echo '==========='
-bundle update --bundler 2>&1 | grep -v "is ignoring" || exit
-bundle install || exit
-bundle update || exit
-bundle exec rubocop -A|| exit
-cd ../src-colladmin
-echo
-pwd
-echo '==========='
-echo '  src-colladmin'
-echo '==========='
-rm -rf vendor/bundle/ruby/3*/bundler/gems/mrt-zk*
-bundle update --bundler 2>&1 | grep -v "is ignoring" || exit
-bundle install || exit
-bundle update || exit
-bundle exec rubocop -A|| exit
-cd ../src-testdriver
-echo
-pwd
-echo '==========='
-echo '  src-testdriver'
-echo '==========='
-bundle update --bundler 2>&1 | grep -v "is ignoring" || exit
-bundle install || exit
-bundle update || exit
-bundle exec rubocop || exit
 
 cd ${ROOTDIR}/mrt-other/mrt-cron
 

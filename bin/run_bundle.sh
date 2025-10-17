@@ -97,39 +97,6 @@ bundle install || exit
 bundle update || exit
 bundle exec rubocop -A || exit
 
-cd ${ROOTDIR}/mrt-other/mrt-cron
-
-cd coll-health
-echo
-pwd
-echo '==========='
-echo '  coll-health'
-echo '==========='
-bundle update --bundler || exit
-bundle install || exit
-bundle update || exit
-bundle exec rubocop -A || exit
-cd ../coll-health-obj-analysis
-echo
-pwd
-echo '==========='
-echo '  coll-health-obj-analysis'
-echo '==========='
-bundle update --bundler || exit
-bundle install || exit
-bundle update || exit
-bundle exec rubocop -A || exit
-cd ../consistency-driver
-echo
-pwd
-echo '==========='
-echo '  consistency-driver'
-echo '==========='
-bundle update --bundler || exit
-bundle install || exit
-bundle update || exit
-bundle exec rubocop -A || exit
-
 cd ${ROOTDIR}/mrt-other/s3-sinatra
 
 echo

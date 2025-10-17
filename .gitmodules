@@ -26,10 +26,6 @@
 	path = mrt-services/replic/mrt-replic
 	url = git@github.com:cdluc3/mrt-replic
 	branch = main
-[submodule "mrt-services/mrt-admin-lambda"]
-	path = mrt-services/mrt-admin-lambda
-	url = git@github.com:CDLUC3/mrt-admin-lambda
-	branch = main
 [submodule "mrt-services/dep_cloud/mrt-cloud"]
 	path = mrt-services/dep_cloud/mrt-cloud
 	url = git@github.com:cdluc3/mrt-cloud
@@ -45,10 +41,6 @@
 [submodule "mrt-admin-sinatra"]
 	path = mrt-services/mrt-admin-sinatra
 	url = git@github.com:CDLUC3/mrt-admin-sinatra.git
-	branch = main
-[submodule "mrt-cron"]
-	path = mrt-other/mrt-cron
-	url = git@github.com:CDLUC3/mrt-cron.git
 	branch = main
 [submodule "mrt-atom"]
 	path = mrt-other/mrt-atom

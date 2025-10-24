@@ -120,7 +120,7 @@ services:
     tty: true
   ui:
     container_name: ui
-    image: ${ECR_REGISTRY}/mrt-dashboard:dev
+    image: ${ECR_REGISTRY}/mrt-dashboard:ecs-dev
     build:
       context: ui/mrt-dashboard
       dockerfile: Dockerfile
@@ -292,7 +292,7 @@ services:
     networks:
       merrittnet:
     container_name: admintool
-    image: ${ECR_REGISTRY}/mrt-admin-sinatra
+    image: ${ECR_REGISTRY}/mrt-admin-sinatra:ecs-dev
     ports:
     - published: 8099
       target: 9292

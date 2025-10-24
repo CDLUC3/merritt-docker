@@ -11,6 +11,7 @@
 
 ```
 /merritt-s3.sh ls
+/merritt-s3api.sh help
 ```
 
 ### EFS
@@ -19,7 +20,7 @@
 cd /tdr/ingest/queue
 ```
 
-### Access Services
+### Access Merritt Services
 
 ```
 curl -s http://ui:8086/state.json|jq

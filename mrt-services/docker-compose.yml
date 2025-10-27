@@ -15,7 +15,7 @@ services:
     - zoo
     - store
     - inventory
-    image: ${ECR_REGISTRY}/mrt-ingest:dev
+    image: ${ECR_REGISTRY}/mrt-ingest:ecs-dev
     build:
       context: ingest/mrt-ingest
       dockerfile: Dockerfile

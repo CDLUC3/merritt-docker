@@ -72,7 +72,7 @@ services:
       SERVICE: store
       HOSTNAME: store
       LOGLEVEL: info
-      CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml -DAccessDaemon=1 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
+      CATALINA_OPTS: "-Dlog4j.configurationFile=/log4j2-ecs.xml -DAccessDaemon=1 -DStoreDaemon=2 -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true"
     networks:
       merrittnet:
         aliases:

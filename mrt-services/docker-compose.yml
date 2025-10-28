@@ -50,7 +50,7 @@ services:
     hostname: store
     depends_on:
     - zoo
-    image: ${ECR_REGISTRY}/mrt-store:dev
+    image: ${ECR_REGISTRY}/mrt-store:ecs-dev
     build:
       context: store/mrt-store
       dockerfile: Dockerfile
@@ -85,7 +85,7 @@ services:
     depends_on:
     - zoo
     - ezid
-    image: ${ECR_REGISTRY}/mrt-inventory:dev
+    image: ${ECR_REGISTRY}/mrt-inventory:ecs-dev
     build:
       context: inventory/mrt-inventory
       dockerfile: Dockerfile
@@ -223,7 +223,7 @@ services:
   replic:
     container_name: replic
     # image: ${ECR_REGISTRY}/scratch
-    image: ${ECR_REGISTRY}/mrt-replic:dev
+    image: ${ECR_REGISTRY}/mrt-replic:ecs-dev
     build:
       context: replic/mrt-replic
       dockerfile: Dockerfile
@@ -248,7 +248,7 @@ services:
   audit:
     container_name: audit
     # image: ${ECR_REGISTRY}/scratch
-    image: ${ECR_REGISTRY}/mrt-audit:dev
+    image: ${ECR_REGISTRY}/mrt-audit:ecs-dev
     build:
       context: audit/mrt-audit
       dockerfile: Dockerfile

@@ -12,27 +12,29 @@ ECS
 Docker compose
 - `docker compose exec -it merrittdev /bin/bash`
 
-### Database
+## How To
+
+### Connect to Inventory Database
 
 ```
 /merritt-mysql.sh 
 /merritt-mysql.sh -e "select 1"
 ```
 
-### Cloud Storage
+### Connect to Merritt Cloud Storage
 
 ```
 /merritt-s3.sh ls
 /merritt-s3api.sh help
 ```
 
-### EFS
+### Connect to EFS (if configured for the stack)
 
 ```
 cd /tdr/ingest/queue
 ```
 
-### Access Merritt Services
+### Access Merritt Services (assumes the services have migrated to the stack)
 
 ```
 curl -s http://ui:8086/state.json|jq
@@ -40,15 +42,45 @@ curl -s http://store:8080/store/state?t=json|jq
 curl -s http://ingest:8080/ingest/state?t=json|jq
 ```
 
-### Get Hostnames in Service Connect
+### Get Hostnames in Service Connect (ECS)
 
 ```
 cat /etc/hosts | grep 127
 ```
 
-### Get My Real IP Address
+### Get My Real IP Address (ECS)
 
 ```
 # exlude the compaion fargate and ecs-service-connect containers
 curl -s ${ECS_CONTAINER_METADATA_URI_V4}/task | jq '.Containers[] | select(.Name | startswith("aws-") | not) | select(.Name | startswith("ecs-") | not) | .Networks[].PrivateDNSName'
 ```
+
+## Script Inventory
+
+### ECS Task Scripts
+- [start-stack.sh](start-stack.sh)
+  - start a stack of merritt services
+- [stop-stack.sh](stop-stack.sh)
+  - stop a stack of merritt services
+- [redeploy-stack.sh](redeploy-stack.sh)
+  - redeploy a stack of merritt microservices (base services should already be started)
+- [redeploy-zk.sh](redeploy-zk.sh)
+  - controlled redeployment of zookeeper workers in order to preserve the health of the quorum
+- [run-consistency-endpoints.sh](run-consistency-endpoints.sh)
+  - run daily billing database consistency checks
+- [run-unit-test-endpoints.sh](run-unit-test-endpoints.sh)
+  - run the unit tests for the merritt admin tool
+
+### Utility Scripts
+- [merritt-mysql.sh](merritt-mysql.sh)
+  - wrapper for `mysql`
+- [merritt-s3.sh](merritt-s3.sh)
+  - wrapper for `aws s3`
+- [merritt-s3api.sh](merritt-s3api.sh)
+  - untested with minio, used for actions requiring `aws s3api`
+
+### As needed
+- [create-audit-error.sh](create-audit-error.sh)
+  - dev stacks only: force a fixity failure in the inv database
+- [create-scan-error.sh](create-scan-error.sh)
+  - dev stacks only: force a storage scan failure in cloud storage

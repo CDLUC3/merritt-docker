@@ -1,4 +1,16 @@
-## Using the `merrritt-dev` container
+# Using the `merrritt-dev` container
+
+## How to connect
+
+ECS
+- `session mrt-ecs-dev-stack/merrittdev`
+- `session mrt-ecs-ephemeral-stack/merrittdev`
+- `session mrt-ecs-dbsnapshot-stack/merrittdev`
+- `session mrt-ecs-stg-stack/merrittdev`
+- `session mrt-ecs-prd-stack/merrittdev`
+
+Docker compose
+- `docker compose exec -it merrittdev /bin/bash`
 
 ### Database
 

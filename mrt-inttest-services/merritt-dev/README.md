@@ -58,29 +58,29 @@ curl -s ${ECS_CONTAINER_METADATA_URI_V4}/task | jq '.Containers[] | select(.Name
 ## Script Inventory
 
 ### ECS Task Scripts
-- [start-stack.sh](start-stack.sh)
+- [/start-stack.sh](scripts/start-stack.sh)
   - start a stack of merritt services
-- [stop-stack.sh](stop-stack.sh)
+- [/stop-stack.sh](scripts/stop-stack.sh)
   - stop a stack of merritt services
-- [redeploy-stack.sh](redeploy-stack.sh)
+- [/redeploy-stack.sh](scripts/redeploy-stack.sh)
   - redeploy a stack of merritt microservices (base services should already be started)
-- [redeploy-zk.sh](redeploy-zk.sh)
+- [/redeploy-zk.sh](scripts/redeploy-zk.sh)
   - controlled redeployment of zookeeper workers in order to preserve the health of the quorum
-- [run-consistency-endpoints.sh](run-consistency-endpoints.sh)
+- [/run-consistency-endpoints.sh](scripts/run-consistency-endpoints.sh)
   - run daily billing database consistency checks
-- [run-unit-test-endpoints.sh](run-unit-test-endpoints.sh)
+- [/run-unit-test-endpoints.sh](scripts/run-unit-test-endpoints.sh)
   - run the unit tests for the merritt admin tool
 
 ### Utility Scripts
-- [merritt-mysql.sh](merritt-mysql.sh)
+- [/merritt-mysql.sh](scripts/merritt-mysql.sh)
   - wrapper for `mysql`
-- [merritt-s3.sh](merritt-s3.sh)
+- [/merritt-s3.sh](scripts/merritt-s3.sh)
   - wrapper for `aws s3`
-- [merritt-s3api.sh](merritt-s3api.sh)
+- [/merritt-s3api.sh](scripts/merritt-s3api.sh)
   - untested with minio, used for actions requiring `aws s3api`
 
 ### As needed
-- [create-audit-error.sh](create-audit-error.sh)
+- [/create-audit-error.sh](scripts/create-audit-error.sh)
   - dev stacks only: force a fixity failure in the inv database
-- [create-scan-error.sh](create-scan-error.sh)
+- [/create-scan-error.sh](scripts/create-scan-error.sh)
   - dev stacks only: force a storage scan failure in cloud storage

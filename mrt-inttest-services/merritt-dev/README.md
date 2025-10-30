@@ -55,6 +55,27 @@ cat /etc/hosts | grep 127
 curl -s ${ECS_CONTAINER_METADATA_URI_V4}/task | jq '.Containers[] | select(.Name | startswith("aws-") | not) | select(.Name | startswith("ecs-") | not) | .Networks[].PrivateDNSName'
 ```
 
+## Tools Not in This Image
+
+### ZooKeeper Tools 
+
+#### Connect to ZooKeeper
+- `session mrt-ecs-dev-stack/zoo1`
+- `docker compose exec -it zoo1 /bin/bash`
+
+#### Tools
+- `bin/zkCli.sh`
+
+### LDAP Tools 
+
+#### Connect to LDAP
+- `session mrt-ecs-dev-stack/ldap`
+- `docker compose exec -it ldap /bin/bash`
+
+#### Useful Tools
+- TODO add notes about useful command line tools
+
+
 ## Script Inventory
 
 ### ECS Task Scripts

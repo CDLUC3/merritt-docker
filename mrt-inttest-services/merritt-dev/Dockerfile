@@ -33,6 +33,11 @@ COPY README.md /README.md
 COPY scripts /
 RUN chmod 744 /*.sh
 
+RUN mkdir -p /root/.aws
+COPY .awsconfig-template /root/.aws/config
+COPY .awscredentials-template /root/.aws/credentials
+RUN chmod 400 /root/.aws/config /root/.aws/credentials
+
 # Write hello world message
 RUN echo 'Hello World!' > /var/www/html/index.html
 

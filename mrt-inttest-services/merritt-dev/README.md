@@ -23,10 +23,11 @@ Docker compose
 
 ### Connect to Merritt Cloud Storage
 
-```
-/merritt-s3.sh ls
-/merritt-s3api.sh help
-```
+- `aws s3 ls`
+- `aws s3 ls --profile minio-docker`
+- `aws s3 ls --profile minio-ephemeral`
+- `aws s3 ls --profile sdsc`
+- `aws s3 ls --profile wasabi`
 
 ### Connect to EFS (if configured for the stack)
 
@@ -95,10 +96,8 @@ curl -s ${ECS_CONTAINER_METADATA_URI_V4}/task | jq '.Containers[] | select(.Name
 ### Utility Scripts
 - [/merritt-mysql.sh](scripts/merritt-mysql.sh)
   - wrapper for `mysql`
-- [/merritt-s3.sh](scripts/merritt-s3.sh)
-  - wrapper for `aws s3`
-- [/merritt-s3api.sh](scripts/merritt-s3api.sh)
-  - untested with minio, used for actions requiring `aws s3api`
+- [/set-credentails.sh](scripts/set-credentials.sh)
+  - pull ssm credentials and modify aws credential files
 
 ### As needed
 - [/create-audit-error.sh](scripts/create-audit-error.sh)

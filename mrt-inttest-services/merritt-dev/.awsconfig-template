@@ -1,0 +1,18 @@
+[profile minio-docker]
+region = us-east-1
+endpoint_url = http://minio:8088
+
+[profile minio-ephemeral]
+region = us-east-1
+endpoint_url = http://minio:9000
+
+[profile sdsc]
+region = us-west-2
+endpoint_url = TEMPLATE_SDSC_ENDPOINT_URL
+
+[profile wasabi]
+region = us-east-1
+endpoint_url = TEMPLATE_WASABI_ENDPOINT_URL
+
+[profile default]
+region = us-west-2

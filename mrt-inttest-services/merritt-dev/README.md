@@ -104,3 +104,5 @@ curl -s ${ECS_CONTAINER_METADATA_URI_V4}/task | jq '.Containers[] | select(.Name
   - dev stacks only: force a fixity failure in the inv database
 - [/create-scan-error.sh](scripts/create-scan-error.sh)
   - dev stacks only: force a storage scan failure in cloud storage
+- [/create-scanlist.sh](scripts/create-scanlist.sh)
+  - dev stacks only: creates a scanlist for node 7777, saves it as 8888:scanlist/7777.log

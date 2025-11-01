@@ -331,6 +331,7 @@ services:
       merrittnet:
     container_name: merrittdev
     environment:
+      MERRITT_ECS: docker
       BUCKET7777: my-bucket
       BUCKET8888: my-bucket-repl
     image: ${ECR_REGISTRY}/merritt-dev:dev

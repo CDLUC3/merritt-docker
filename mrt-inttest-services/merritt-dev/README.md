@@ -98,6 +98,8 @@ curl -s ${ECS_CONTAINER_METADATA_URI_V4}/task | jq '.Containers[] | select(.Name
   - wrapper for `mysql`
 - [/set-credentails.sh](scripts/set-credentials.sh)
   - pull ssm credentials and modify aws credential files
+- [/list-stack-buckets.sh](scripts/list-stack-buckets.sh)
+  - pull ssm credentials and modify aws credential files
 
 ### As needed
 - [/create-audit-error.sh](scripts/create-audit-error.sh)

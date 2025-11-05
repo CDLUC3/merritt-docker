@@ -2,7 +2,10 @@
 
 source ./ecs-helpers.sh
 
-echo " ==> stopStack"
+label=Stop Stack
+statfile="/tmp/stop-log.txt"
+
+task_init
 
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
@@ -82,4 +85,4 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
 fi
 
-echo " ==> Complete"
+task_complete

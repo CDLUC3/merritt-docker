@@ -65,3 +65,20 @@ stack_init() {
   echo "POST $(admintool_base)/stack-init"
   curl --no-progress-meter -X POST $(admintool_base)/stack-init
 }
+
+task_init() {
+  echo " ==> $label Started"
+  date "+%Y-%m-%d %H:%M:%S: $label Started" > $statfile
+}
+
+task_complete() {
+  echo " ==> $label Complete"
+  date "+%Y-%m-%d %H:%M:%S: $label Complete" >> $statfile
+  aws sns publish --topic-arn "$SNS_ARN" --subject "Merritt ECS $label for $MERRITT_ECS" --message "$(cat $statfile)"
+}
+
+task_fail() {
+  echo " ==> $label Failed"
+  date "+%Y-%m-%d %H:%M:%S: $label Failed" >> $statfile
+  aws sns publish --topic-arn "$SNS_ARN" --subject "FAIL: Merritt ECS $label for $MERRITT_ECS" --message "$(cat $statfile)"
+}

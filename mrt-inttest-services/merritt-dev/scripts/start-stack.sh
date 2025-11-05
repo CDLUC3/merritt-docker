@@ -2,7 +2,10 @@
 
 source ./ecs-helpers.sh
 
-echo " ==> startStack"
+label=Start Stack
+statfile="/tmp/start-log.txt"
+
+task_init
 
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
@@ -125,4 +128,4 @@ then
   echo " ==> Service Wait Complete"
 fi
 
-echo " ==> Complete"
+task_complete

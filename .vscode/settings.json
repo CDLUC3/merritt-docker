@@ -416,4 +416,12 @@
         }
     ],
     "git.detectSubmodulesLimit": 20,
+    "java.maven.downloadSources": true,
+    "java.test.config": {
+      "workingDirectory": "${workspaceFolder}"
+    },
+    "java.test.defaultConfig": "default",
+    "maven.executable.path": "mvn",
+    "java.configuration.maven.userSettings": "${workspaceFolder}/mrt-services/dep_core/mrt-core2/settings.xml",
+    "java.jdt.ls.java.home": "/opt/homebrew/opt/openjdk/"
 }

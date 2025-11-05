@@ -2,7 +2,10 @@
 
 source ./ecs-helpers.sh
 
-echo " ==> redeployStack"
+label=Redeploy Stack
+statfile="/tmp/redeploy-log.txt"
+
+task_init
 
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
@@ -89,4 +92,4 @@ then
   echo " ==> Service Wait Complete"
 fi
 
-echo " ==> Complete"
+task_complete

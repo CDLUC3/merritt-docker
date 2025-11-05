@@ -2,7 +2,10 @@
 
 source ./ecs-helpers.sh
 
-echo " ==> redeployZk"
+label=Redeploy ZK
+statfile="/tmp/redeploy-zk.txt"
+
+task_init
 
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
@@ -60,4 +63,4 @@ then
   echo "No action - will cycle 1-5"
 fi
 
-echo " ==> Complete"
+task_complete

@@ -17,7 +17,7 @@ curl_format() {
 
 test_route() {
   route=$1
-  status=$(curl -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route})
+  status=$(curl -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route}) || return
   title=$(cat /tmp/curl.json | jq -r '.context.title // "na"' 2>/dev/null)
   rows=$(cat /tmp/curl.json | jq -r '(.table | length | tostring)' 2>/dev/null)
   result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)
@@ -28,7 +28,7 @@ test_route() {
 
 post_route() {
   route=$1
-  status=$(curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route})
+  status=$(curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route}) || return
   title=$(cat /tmp/curl.json | jq -r '.context.title // "na"' 2>/dev/null)
   rows=$(cat /tmp/curl.json | jq -r '(.table | length | tostring)' 2>/dev/null)
   result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)
@@ -44,10 +44,10 @@ admintool_test_routes() {
 }
 
 admintool_run_consistency_checks() {
-  post_route '/queries/update-billing'
+  post_route '/queries/update-billing' || return
   for route in $(curl --no-progress-meter "$(admintool_base)/test/consistency" | jq -r '.[]')
   do
-    test_route $route
+    test_route $route || return
   done
 }
 
@@ -83,4 +83,5 @@ task_fail() {
   echo " ==> $label Failed"
   date "+%Y-%m-%d %H:%M:%S: $label Failed" >> $statfile
   aws sns publish --topic-arn "$SNS_ARN" --subject "FAIL: Merritt ECS $label for $MERRITT_ECS" --message "$(cat $statfile)"
+  exit 1
 }

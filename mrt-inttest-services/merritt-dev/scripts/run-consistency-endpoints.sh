@@ -6,6 +6,6 @@ export statfile="/tmp/consistency-log.txt"
 
 task_init
 
-admintool_run_consistency_checks
+admintool_run_consistency_checks || task_fail
 
 task_complete

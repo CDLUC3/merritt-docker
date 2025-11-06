@@ -7,6 +7,6 @@ export statfile="/tmp/admin-unit-log.txt"
 
 task_init
 
-admintool_test_routes
+admintool_test_routes || task_fail
 
 task_complete

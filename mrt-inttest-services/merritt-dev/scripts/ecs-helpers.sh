@@ -23,6 +23,11 @@ test_route() {
   result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)
   echo $route
   echo "  Result: $result; Rows: $rows; $status; Title: $title"
+  if [ $status -ge 400 ]; then
+    echo $route >> $statfile
+    echo "  Result: $result; Rows: $rows; $status; Title: $title" >> $statfile
+    return 1
+  fi
 }
 
 
@@ -38,9 +43,11 @@ post_route() {
 
 admintool_test_routes() {
   for route in $(curl --no-progress-meter "$(admintool_base)/test/routes" | jq -r '.[]')
+  stat=0
   do
-    test_route $route
+    test_route $route || stat=1
   done
+  return $stat
 }
 
 admintool_run_consistency_checks() {

@@ -98,8 +98,9 @@ task_fail() {
 
 duration() {
   duration=$(( $(date +%s) - $STARTTIME ))
-  min=$(( duration / 60 ))
-  sec=$(( duration % 60 ))
-  sec=$(( sec < 10 ? "0$sec" : sec ))
+  min=$(( $duration / 60 ))
+  sec=$(( $duration % 60 ))
+  # Pad seconds with a leading zero when < 10
+  if [ "$sec" -lt 10 ]; then sec="0$sec"; fi
   echo "($min:$sec sec)"
 }

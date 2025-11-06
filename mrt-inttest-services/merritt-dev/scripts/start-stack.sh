@@ -2,7 +2,7 @@
 
 source ./ecs-helpers.sh
 
-export label=Start Stack
+export label="Start Stack"
 export statfile="/tmp/start-log.txt"
 
 task_init

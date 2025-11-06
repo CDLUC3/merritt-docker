@@ -80,18 +80,24 @@ task_init() {
 }
 
 task_complete() {
-  duration=$(( $(date +%s) - $STARTTIME ))
-  echo " ==> $label Complete ($duration seconds)"
+  echo " ==> $label Complete $(duration)"
   date "+%Y-%m-%d %H:%M:%S: $label Complete" >> $statfile
-  aws sns publish --topic-arn "$SNS_ARN" --subject "Merritt ECS $label for $MERRITT_ECS ($duration seconds)" \
+  aws sns publish --topic-arn "$SNS_ARN" --subject "Merritt ECS $label for $MERRITT_ECS $(duration)" \
     --message "$(cat $statfile)"
 }
 
 task_fail() {
-  duration=$(( $(date +%s) - $STARTTIME ))
-  echo " ==> $label Failed"
+  echo " ==> $label Failed $(duration)"
   date "+%Y-%m-%d %H:%M:%S: $label Failed" >> $statfile
-  aws sns publish --topic-arn "$SNS_ARN" --subject "FAIL: Merritt ECS $label for $MERRITT_ECS ($duration seconds)" \
+  aws sns publish --topic-arn "$SNS_ARN" --subject "FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)" \
     --message "$(cat $statfile)"
   exit 1
+}
+
+duration() {
+  duration=$(( $(date +%s) - $STARTTIME ))
+  min=$(( duration / 60 ))
+  sec=$(( duration % 60 ))
+  sec=$(( sec < 10 ? "0$sec" : sec ))
+  echo "($min:$sec sec)"
 }

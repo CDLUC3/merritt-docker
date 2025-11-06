@@ -2,7 +2,7 @@
 
 source ./ecs-helpers.sh
 
-export label=Redeploy ZK
+export label="Redeploy ZK"
 export statfile="/tmp/redeploy-zk.txt"
 
 task_init

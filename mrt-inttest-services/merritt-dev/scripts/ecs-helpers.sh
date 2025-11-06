@@ -23,7 +23,9 @@ test_route() {
   result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)
   echo $route
   echo "  Result: $result; Rows: $rows; $status; Title: $title"
-  if [ $status -ge 400 ]; then
+  # Extract numeric HTTP status code from curl -w output (e.g., "Status: 200; ...")
+  code=$(echo "$status" | sed -nE 's/.*Status: ([0-9]{3}).*/\1/p')
+  if [ "${code:-0}" -ge 400 ]; then
     echo $route >> $statfile
     echo "  Result: $result; Rows: $rows; $status; Title: $title" >> $statfile
     return 1

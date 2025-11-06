@@ -2,8 +2,8 @@
 
 source ./ecs-helpers.sh
 
-label=Stop Stack
-statfile="/tmp/stop-log.txt"
+export label=Stop Stack
+export statfile="/tmp/stop-log.txt"
 
 task_init
 

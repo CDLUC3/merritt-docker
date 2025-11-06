@@ -69,11 +69,13 @@ stack_init() {
 task_init() {
   echo " ==> $label Started"
   date "+%Y-%m-%d %H:%M:%S: $label Started" > $statfile
+  export STARTTIME=$(date +%s)
 }
 
 task_complete() {
-  echo " ==> $label Complete"
-  date "+%Y-%m-%d %H:%M:%S: $label Complete" >> $statfile
+  duration=$(( $(date +%s) - $STARTTIME ))
+  echo " ==> $label Complete ($duration seconds)"
+  date "+%Y-%m-%d %H:%M:%S: $label Complete ($duration seconds)" >> $statfile
   aws sns publish --topic-arn "$SNS_ARN" --subject "Merritt ECS $label for $MERRITT_ECS" --message "$(cat $statfile)"
 }
 

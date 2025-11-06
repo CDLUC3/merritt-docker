@@ -1,8 +1,8 @@
 #! /bin/bash
 source ./ecs-helpers.sh
 
-label=Consistency Checks
-statfile="/tmp/consistency-log.txt"
+export label=Consistency Checks
+export statfile="/tmp/consistency-log.txt"
 
 task_init
 

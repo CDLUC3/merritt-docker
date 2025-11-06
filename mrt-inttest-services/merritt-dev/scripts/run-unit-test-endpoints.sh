@@ -2,8 +2,8 @@
 
 source ./ecs-helpers.sh
 
-label=Admin Unit Tests
-statfile="/tmp/admin-unit-log.txt"
+export label=Admin Unit Tests
+export statfile="/tmp/admin-unit-log.txt"
 
 task_init
 

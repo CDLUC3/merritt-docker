@@ -2,8 +2,8 @@
 
 source ./ecs-helpers.sh
 
-label=Redeploy Stack
-statfile="/tmp/redeploy-log.txt"
+export label=Redeploy Stack
+export statfile="/tmp/redeploy-log.txt"
 
 task_init
 

@@ -25,10 +25,11 @@ test_route() {
   echo "  Result: $result; Rows: $rows; $status; Title: $title"
   # Extract numeric HTTP status code from curl -w output (e.g., "Status: 200; ...")
   code=$(echo "$status" | sed -nE 's/.*Status: ([0-9]{3}).*/\1/p')
-  
+
   # Note that is it valid for a test to "FAIL"
   # On the other hand, "ERROR" indicates a software or enviornment bug
-  if [ "${code:-0}" -ge 400 ] || [[ "$result" == "ERROR" ]]; then
+  if [ "${code:-0}" -ge 400 ] || [[ "$result" == "ERROR"* ]]
+  then
     echo $route >> $statfile
     echo "  Result: $result; Rows: $rows; $status; Title: $title" >> $statfile
     return 1

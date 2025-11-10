@@ -1214,7 +1214,7 @@ BEGIN
       ifnull(
         sum(
           case 
-            when a.inv_node_id in (select id from inv.inv_nodes where number in (5001, 3041, 3042)) 
+            when a.inv_node_id in (select id from inv.inv_nodes where number in (5001)) 
                 then 1
             else 0
             end
@@ -1224,7 +1224,7 @@ BEGIN
         ifnull(
         sum(
             case 
-            when a.inv_node_id in (select id from inv.inv_nodes where number in (5001, 3041, 3042)) 
+            when a.inv_node_id in (select id from inv.inv_nodes where number in (5001)) 
                 then full_size
             else 0
             end
@@ -1254,7 +1254,7 @@ BEGIN
         ifnull(
         sum(
             case 
-            when a.inv_node_id in (select id from inv.inv_nodes where number in (2001, 2002)) 
+            when a.inv_node_id in (select id from inv.inv_nodes where number in (9501, 9502)) 
                 then 1
             else 0
             end
@@ -1264,7 +1264,7 @@ BEGIN
         ifnull(
         sum(
             case 
-            when a.inv_node_id in (select id from inv.inv_nodes where number in (2001, 2002)) 
+            when a.inv_node_id in (select id from inv.inv_nodes where number in (9501, 9502)) 
                 then full_size
             else 0
             end
@@ -1274,7 +1274,7 @@ BEGIN
         ifnull(
         sum(
             case 
-            when a.inv_node_id in (select id from inv.inv_nodes where number in (9501, 9502)) 
+            when a.inv_node_id in (select id from inv.inv_nodes where number in (2001, 2002)) 
                 then 1
             else 0
             end
@@ -1284,7 +1284,7 @@ BEGIN
         ifnull(
         sum(
             case 
-            when a.inv_node_id in (select id from inv.inv_nodes where number in (9501, 9502)) 
+            when a.inv_node_id in (select id from inv.inv_nodes where number in (2001, 2002)) 
                 then full_size
             else 0
             end
@@ -1294,7 +1294,7 @@ BEGIN
         ifnull(
         sum(
             case 
-            when a.inv_node_id in (select id from inv.inv_nodes where number in (5001, 3041, 3042)) 
+            when a.inv_node_id in (select id from inv.inv_nodes where number in (5001)) 
                 then 0
             when a.inv_node_id in (select id from inv.inv_nodes where access_mode != 'on-line') 
                 then 0
@@ -1310,7 +1310,7 @@ BEGIN
         ifnull(
         sum(
             case 
-            when a.inv_node_id in (select id from inv.inv_nodes where number in (5001, 3041, 3042)) 
+            when a.inv_node_id in (select id from inv.inv_nodes where number in (5001)) 
                 then 0
             when a.inv_node_id in (select id from inv.inv_nodes where access_mode != 'on-line') 
                 then 0

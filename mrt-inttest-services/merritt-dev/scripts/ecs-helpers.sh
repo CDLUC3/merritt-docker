@@ -23,6 +23,7 @@ test_route() {
   result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)
   echo $route
   echo "  Result: $result; Rows: $rows; $status; Title: $title"
+
   # Extract numeric HTTP status code from curl -w output (e.g., "Status: 200; ...")
   code=$(echo "$status" | sed -nE 's/.*Status: ([0-9]{3}).*/\1/p')
 
@@ -43,8 +44,19 @@ post_route() {
   title=$(cat /tmp/curl.json | jq -r '.context.title // "na"' 2>/dev/null)
   rows=$(cat /tmp/curl.json | jq -r '(.table | length | tostring)' 2>/dev/null)
   result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)
+
   echo $route
   echo "  Result: $result; Rows: $rows; $status; Title: $title"
+
+  # Extract numeric HTTP status code from curl -w output (e.g., "Status: 200; ...")
+  code=$(echo "$status" | sed -nE 's/.*Status: ([0-9]{3}).*/\1/p')
+
+  if [ "${code:-0}" -ge 400 ] || [[ "$result" == "ERROR"* ]]
+  then
+    echo $route >> $statfile
+    echo "  Result: $result; Rows: $rows; $status; Title: $title" >> $statfile
+    return 1
+  fi
 }
 
 admintool_test_routes() {

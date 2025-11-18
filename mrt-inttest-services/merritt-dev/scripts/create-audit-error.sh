@@ -5,9 +5,13 @@ if [[ -z $BUCKET8888 ]]; then
   exit 1
 fi
 
-if [[ "$MERRITT_ECS" == "docker" || "$MERRITT_ECS" == "ecs-ephemeral" ]]
+if [[ "$MERRITT_ECS" == "docker" ]]
 then
-  export AWS_PROFILE=minio
+  export AWS_PROFILE=minio-docker
+  export AWS_REGION=us-east-1
+elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
+then
+  export AWS_PROFILE=minio-ephemeral
   export AWS_REGION=us-east-1
 fi
 

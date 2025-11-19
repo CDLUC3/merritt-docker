@@ -309,6 +309,8 @@ services:
       # default for a minio container per searching
       S3REGION: us-east-1
       MERRITT_ECS: docker
+      BUCKET7777: my-bucket
+      BUCKET8888: my-bucket-repl
     build:
       context: mrt-admin-sinatra
       dockerfile: Dockerfile

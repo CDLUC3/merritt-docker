@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     jq \
     yq \
+    time \
     net-tools \
     iputils-ping \
     mandoc \

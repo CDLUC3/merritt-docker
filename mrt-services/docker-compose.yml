@@ -311,6 +311,7 @@ services:
       MERRITT_ECS: docker
       BUCKET7777: my-bucket
       BUCKET8888: my-bucket-repl
+      GHAPIPAT: ${GHAPIPAT}
     build:
       context: mrt-admin-sinatra
       dockerfile: Dockerfile

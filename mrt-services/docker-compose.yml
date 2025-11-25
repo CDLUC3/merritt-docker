@@ -311,6 +311,8 @@ services:
       MERRITT_ECS: docker
       BUCKET7777: my-bucket
       BUCKET8888: my-bucket-repl
+      # Set the following to prevent github api rate limiting issues
+      # Terry can provide an example of how to set this in your devops.sh script
       GHAPIPAT: ${GHAPIPAT}
     build:
       context: mrt-admin-sinatra

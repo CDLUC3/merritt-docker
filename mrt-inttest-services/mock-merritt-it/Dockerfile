@@ -17,8 +17,8 @@ COPY *.sh ./
 COPY data /data
 COPY *.md /data
 COPY static /data/static
-COPY --from=public.ecr.aws/docker/library/mysql:8 /usr/bin/mysql /usr/bin/mysql
-COPY --from=public.ecr.aws/docker/library/mysql:8 /usr/bin/mysqldump /usr/bin/mysqldump
+COPY --from=public.ecr.aws/docker/library/mysql:8.4 /usr/bin/mysql /usr/bin/mysql
+COPY --from=public.ecr.aws/docker/library/mysql:8.4 /usr/bin/mysqldump /usr/bin/mysqldump
 
 RUN ruby generate.rb
 RUN chmod 744 *.sh

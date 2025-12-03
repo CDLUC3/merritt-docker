@@ -14,6 +14,7 @@ RUN echo "USE mysql;" > /docker-entrypoint-initdb.d/timezones.sql &&  mysql_tzin
 RUN microdnf update -y
 
 COPY *.sql schema.prd.norm /tmp/
+COPY custom.cnf /etc/mysql/conf.d/
 
 RUN cat /tmp/schema.addition.pre.sql \
         /tmp/schema.prd.norm \

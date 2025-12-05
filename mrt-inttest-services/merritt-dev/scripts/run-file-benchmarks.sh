@@ -22,7 +22,7 @@ benchmark_fixity() {
 
   aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
     --dimensions "filename=$filename,cloud_service=$cloud,retrieval_method=$method" \
-    --unit seconds --metric-name duration-sec --value $rettime
+    --unit seconds --metric-name retrieval-duration-sec --value $rettime
 
   printf "%s\t%s\t%s\t%s\t%s\t%6.2f\n" $filename $cloud $nodenum $method $stat $rettime >> $statfile
 }

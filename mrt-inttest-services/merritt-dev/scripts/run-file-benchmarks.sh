@@ -36,8 +36,7 @@ run_tests() {
   do
     for method in access audit
     do
-      benchmark_fixity Audit_benchmark_20mb 20_mb_random.dat $node $method
-      benchmark_fixity Audit_benchmark_100mb 100_mb_random.dat $node $method
+      benchmark_fixity $localid $filename $node $method
     done
   done
 
@@ -46,6 +45,7 @@ run_tests() {
 if [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   run_tests Audit_benchmark_20mb 20_mb_random.dat '5001 9501 2001'
+  run_tests Audit_benchmark_100mb 100_mb_random.dat '5001 9501 2001'
 fi
 
 grep -qv "ERROR|FAIL" $statfile || task_fail

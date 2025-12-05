@@ -16,8 +16,8 @@ benchmark_fixity() {
   base="$(admintool_base)/ops/storage/benchmark-fixity-localid"
   url="${base}?localid=${localid}&filename=${filename}&node_number=${nodenum}&retrieval_method=${method}"
   curl --no-progress-meter -o /tmp/benchmark.json "$url" 
-  stat=$(jq -r '.status' /tmp/benchmark.json)
-  rettime=$(jq -r '.retrieval_time_sec' /tmp/benchmark.json)
+  stat=$(jq -r '.results.status' /tmp/benchmark.json)
+  rettime=$(jq -r '.results.retrieval_time_sec' /tmp/benchmark.json)
   cloud=$(jq -r '.cloud_service' /tmp/benchmark.json)
 
   aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \

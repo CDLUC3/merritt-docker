@@ -16,15 +16,17 @@ benchmark_fixity() {
   base="$(admintool_base)/ops/storage/benchmark-fixity-localid"
   url="${base}?localid=${localid}&filename=${filename}&node_number=${nodenum}&retrieval_method=${method}"
   curl --no-progress-meter -o /tmp/benchmark.json "$url" 
+
   stat=$(jq -r '.results.status' /tmp/benchmark.json)
   rettime=$(jq -r '.results.retrieval_time_sec' /tmp/benchmark.json)
   cloud=$(jq -r '.cloud_service' /tmp/benchmark.json)
+  errormsg=$(jq -r '.results.error_message // ""' /tmp/benchmark.json)
 
   aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
     --dimensions "filename=$filename,cloud_service=$cloud,retrieval_method=$method" \
     --unit Seconds --metric-name retrieval-duration-sec --value $rettime
 
-  printf "%s\t%s\t%s\t%s\t%s\t%6.2f\n" $filename $cloud $nodenum $method $stat $rettime >> $statfile
+  printf "%s\t%s\t%s\t%s\t%s\t%6.2f\t%s\n" $filename $cloud $nodenum $method $stat $rettime $errormsg >> $statfile
 }
 
 run_tests() {
@@ -51,6 +53,6 @@ then
   run_tests 2025_10_20_0834_combo README.md '7777 8888'
 fi
 
-grep -qv "ERROR|FAIL" $statfile || task_fail
+egrep -qv "ERROR|FAIL" $statfile || task_fail
 
 task_complete

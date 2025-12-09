@@ -55,4 +55,5 @@ fi
 
 egrep -qv "ERROR|FAIL" $statfile || task_fail
 
-task_complete
+# do not send a report unless there is a failure
+# task_complete

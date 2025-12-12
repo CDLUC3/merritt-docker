@@ -1,7 +1,7 @@
 services:
-  merritt-dev:
-    container_name: merritt-dev
-    image: ${ECR_REGISTRY}/merritt-dev:dev
+  merritt-ops:
+    container_name: merritt-ops
+    image: ${ECR_REGISTRY}/merritt-ops:dev
     build:
       context: .
       dockerfile: Dockerfile

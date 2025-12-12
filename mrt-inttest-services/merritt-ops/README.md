@@ -3,14 +3,14 @@
 ## How to connect
 
 ECS
-- `session mrt-ecs-dev-stack/merrittdev`
-- `session mrt-ecs-ephemeral-stack/merrittdev`
-- `session mrt-ecs-dbsnapshot-stack/merrittdev`
-- `session mrt-ecs-stg-stack/merrittdev`
-- `session mrt-ecs-prd-stack/merrittdev`
+- `session mrt-ecs-dev-stack/merritt-ops`
+- `session mrt-ecs-ephemeral-stack/merritt-ops`
+- `session mrt-ecs-dbsnapshot-stack/merritt-ops`
+- `session mrt-ecs-stg-stack/merritt-ops`
+- `session mrt-ecs-prd-stack/merritt-ops`
 
 Docker compose
-- `docker compose exec -it merrittdev /bin/bash`
+- `docker compose exec -it merritt-ops /bin/bash`
 
 ## How To
 

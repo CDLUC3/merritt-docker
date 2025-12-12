@@ -85,12 +85,12 @@ bash-4.2# cat /fluent-bit/etc/fluent-bit.conf
 
 [OUTPUT]
     Name opensearch
-    Match merrittdev-firelens*
+    Match merritt-ops-firelens*
     Aws_Auth On
     Aws_Region us-west-2
     Aws_Service_Name aoss
     Host ....us-west-2.aoss.amazonaws.com
-    Index my_index_merrittdev
+    Index my_index_merritt-ops
     Port 443
     Suppress_Type_Name On
     Trace_Error On

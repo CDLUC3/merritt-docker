@@ -81,7 +81,7 @@ docker compose up -d
 ## Access the Merritt Dev container to access all services
 
 ```bash
-bash-5.2$ docker compose exec merrittdev /bin/bash
+bash-5.2$ docker compose exec merritt-ops /bin/bash
 root@1ed17e89ce16:/# curl http://store:8080/store/state?t=json|jq
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
@@ -106,7 +106,7 @@ root@1ed17e89ce16:/# curl http://store:8080/store/state?t=json|jq
 ## Database Access
 
 ```bash
-docker compose exec merrittdev /merritt-mysql.sh
+docker compose exec merritt-ops /merritt-mysql.sh
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Reading table information for completion of table and column names
 You can turn off this feature to get a quicker startup with -A
@@ -129,7 +129,7 @@ mysql>
 ## Cloud Access
 
 ```bash
- docker compose exec merrittdev /bin/bash
+ docker compose exec merritt-ops /bin/bash
 root@fd1f9ead7479:/# AWS_ACCESS_KEY_ID=minioadmin AWS_SECRET_ACCESS_KEY=minioadmin \
   aws s3 --endpoint-url http://minio:8088 ls
 1-01-01 00:00:00    mrt-config

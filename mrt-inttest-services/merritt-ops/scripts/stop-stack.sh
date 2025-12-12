@@ -15,7 +15,7 @@ then
   sleep 30
 
   echo " ==> Stopping Merritt Dev"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --desired-count 0 --output text --no-cli-pager 
 
   echo " ==> Stopping Merritt Services"
   # Per team discussion, always keep an admin instance running
@@ -38,7 +38,7 @@ elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   echo " ==> Stopping Merritt Dev"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --desired-count 0 --output text --no-cli-pager 
 
   echo " ==> Stopping Merritt Services"
   # Per team discussion, always keep an admin instance running
@@ -66,7 +66,7 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --desired-count 0 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --desired-count 0 --output text --no-cli-pager 
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
@@ -74,7 +74,7 @@ then
   echo " ==> Stopping All Services"
   # Per team discussion, always keep an admin instance running
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --desired-count 0 --output text --no-cli-pager 
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
@@ -82,7 +82,7 @@ then
   echo " ==> Stopping All Services"
   # Per team discussion, always keep an admin instance running
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --desired-count 0 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --desired-count 0 --output text --no-cli-pager 
 fi
 
 task_complete

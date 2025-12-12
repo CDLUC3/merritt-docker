@@ -1,10 +1,10 @@
 # this file exists as a convenience mechanism for PULLing images
 services:
-  merritt-dev:
-    container_name: merritt-dev
-    image: ${ECR_REGISTRY}/merritt-dev:dev
+  merritt-ops:
+    container_name: merritt-ops
+    image: ${ECR_REGISTRY}/merritt-ops:dev
     build:
-      context: merritt-dev
+      context: merritt-ops
       dockerfile: Dockerfile
   # merritt-coder:
   #   container_name: merritt-coder

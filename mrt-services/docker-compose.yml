@@ -331,15 +331,15 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
-  merrittdev:
+  merritt-ops:
     networks:
       merrittnet:
-    container_name: merrittdev
+    container_name: merritt-ops
     environment:
       MERRITT_ECS: docker
       BUCKET7777: my-bucket
       BUCKET8888: my-bucket-repl
-    image: ${ECR_REGISTRY}/merritt-dev:dev
+    image: ${ECR_REGISTRY}/merritt-ops:dev
     volumes:
     - my-ingest-folder:/tdr/ingest/queue
     restart: unless-stopped

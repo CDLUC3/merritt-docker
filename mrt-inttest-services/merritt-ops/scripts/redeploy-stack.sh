@@ -25,7 +25,7 @@ then
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store ui
   echo " ==> Service Wait Complete"
 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   echo " ==> Merritt Dev Deployment Complete"
 
   stack_init
@@ -47,7 +47,7 @@ then
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store ui
   echo " ==> Service Wait Complete"
 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   echo " ==> Merritt Dev Deployment Complete"
   
   stack_init
@@ -58,11 +58,11 @@ then
   echo " ==> Redeploying Merritt Services and Merritt Dev"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 1 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   sleep 75
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ui merrittdev
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ui merritt-ops
   echo " ==> Service Wait Complete"
 
   stack_init
@@ -72,11 +72,11 @@ then
 
   echo " ==> Redeploying Merritt Services and Merritt Dev"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   sleep 60
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merrittdev
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merritt-ops
   echo " ==> Service Wait Complete"
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
@@ -84,11 +84,11 @@ then
 
   echo " ==> Redeploying Merritt Services and Merritt Dev"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merrittdev   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   sleep 60
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merrittdev
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merritt-ops
   echo " ==> Service Wait Complete"
 fi
 

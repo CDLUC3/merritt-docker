@@ -21,6 +21,13 @@ Docker compose
 /merritt-mysql.sh -e "select 1"
 ```
 
+### Connect to Inventory Database (readwrite creds)
+
+```
+/merritt-mysql-write.sh 
+/merritt-mysql-write.sh -e "select 1"
+```
+
 ### Connect to Merritt Cloud Storage
 
 - `aws s3 ls`

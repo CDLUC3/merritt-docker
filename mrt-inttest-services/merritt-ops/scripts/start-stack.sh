@@ -37,7 +37,7 @@ then
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store ui
   echo " ==> Service Wait Complete"
 
-  echo " ==> Redeploying Merritt Dev"
+  echo " ==> Redeploying Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
 
   echo " ==> ZK Restore"
@@ -74,7 +74,7 @@ then
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store ui
   echo " ==> Service Wait Complete"
 
-  echo " ==> Redeploying Merritt Dev"
+  echo " ==> Redeploying Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
 
   echo " ==> Stack Init"
@@ -91,7 +91,7 @@ then
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap
   echo " ==> Service Wait Complete"
 
-  echo " ==> Redeploying Merritt Services and Merritt Dev"
+  echo " ==> Redeploying Merritt Services and Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
@@ -106,7 +106,7 @@ elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
-  echo " ==> Redeploying Merritt Services and Merritt Dev"
+  echo " ==> Redeploying Merritt Services and Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   sleep 60
@@ -118,7 +118,7 @@ elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
-  echo " ==> Redeploying Merritt Services and Merritt Dev"
+  echo " ==> Redeploying Merritt Services and Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   sleep 60

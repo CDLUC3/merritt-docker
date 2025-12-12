@@ -78,7 +78,7 @@ docker compose up -d
 ## VPN Testing
 - http://$(hostname).cdlib.org:8086/docker.html
 
-## Access the Merritt Dev container to access all services
+## Access the Merritt Ops container to access all services
 
 ```bash
 bash-5.2$ docker compose exec merritt-ops /bin/bash

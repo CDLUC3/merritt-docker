@@ -5,6 +5,13 @@ DBUSER=user
 DBPASS=password
 DBDATABASE=inv
 
+if [[ "OPS_MODE" == "readwrite" ]]
+then
+  OPSMODE_PARAM="readwrite"
+else
+  OPSMODE_PARAM="readonly"
+fi
+
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
   # for dev environments, readonly credentials are not needed
@@ -20,13 +27,13 @@ then
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
   DBHOST=$(aws ssm get-parameter --name /uc3/mrt/stg/inv/db-host --query Parameter.Value --output text)
-  DBUSER=$(aws ssm get-parameter --name /uc3/mrt/stg/inv/readonly/db-user --query Parameter.Value --output text)
-  DBPASS=$(aws ssm get-parameter --name /uc3/mrt/stg/inv/readonly/db-password --query Parameter.Value --with-decryption --output text)
+  DBUSER=$(aws ssm get-parameter --name /uc3/mrt/stg/inv/${OPSMODE_PARAM}/db-user --query Parameter.Value --output text)
+  DBPASS=$(aws ssm get-parameter --name /uc3/mrt/stg/inv/${OPSMODE_PARAM}/db-password --query Parameter.Value --with-decryption --output text)
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   DBHOST=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/db-host --query Parameter.Value --output text)
-  DBUSER=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/readonly/db-user --query Parameter.Value --output text)
-  DBPASS=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/readonly/db-password --query Parameter.Value --with-decryption --output text)
+  DBUSER=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/${OPSMODE_PARAM}/db-user --query Parameter.Value --output text)
+  DBPASS=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/${OPSMODE_PARAM}/db-password --query Parameter.Value --with-decryption --output text)
 fi
 
 mysql -h $DBHOST -u $DBUSER --password=$DBPASS --database=$DBDATABASE "$@"

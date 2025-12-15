@@ -19,8 +19,6 @@
 		"ms-vscode.remote-server",
 		"ms-vscode.remote-explorer",
 		"ms-vscode-remote.vscode-remote-extensionpack",
-		"ms-vscode-remote.remote-wsl",
-
 		"shopify.ruby-lsp",
 
 		"redhat.vscode-yaml",
@@ -29,11 +27,12 @@
 		"vstirbu.vscode-mermaid-preview",
 		"ritwickdey.liveserver",
 
-		"visualstudioexptteam.vscodeintellicode",
-		"visualstudioexptteam.intellicode-api-usage-examples",
-
 		"eamodio.gitlens",
-		"amazonwebservices.aws-toolkit-vscode"
+		"amazonwebservices.aws-toolkit-vscode",
+		"ms-azuretools.vscode-containers",
+		"bierner.markdown-mermaid",
+		"shopify.ruby-extensions-pack",
+		"sorbet.sorbet-vscode-extension"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [

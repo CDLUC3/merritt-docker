@@ -20,3 +20,4 @@ endpoint_url = TEMPLATE_WASABI_ENDPOINT_URL
 
 [profile default]
 region = us-west-2
+

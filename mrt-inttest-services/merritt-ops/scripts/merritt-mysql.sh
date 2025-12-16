@@ -5,7 +5,7 @@ DBUSER=user
 DBPASS=password
 DBDATABASE=inv
 
-if [[ "OPS_MODE" == "readwrite" ]]
+if [[ "${OPS_MODE}" == "readwrite" ]]
 then
   OPSMODE_PARAM="readwrite"
 else

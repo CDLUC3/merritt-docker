@@ -5,7 +5,7 @@ if [[ -z $SSM_ROOT_PATH ]]; then
   exit 1
 fi
 
-if [[ "OPS_MODE" == "readwrite" ]]
+if [[ "${OPS_MODE}" == "readwrite" ]]
 then
   OPSMODE_PARAM="cloud"
 else

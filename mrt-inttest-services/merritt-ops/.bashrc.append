@@ -1,0 +1,1 @@
+export PS1="\[\e]0;\u@\h: \w\a\]${MERRITT_ECS} ${OPS_MODE}: \u@\h:\w\# "

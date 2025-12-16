@@ -37,9 +37,10 @@ RUN chmod 744 /*.sh
 RUN mkdir -p /root/.aws
 COPY .awsconfig-template /root/.aws/config
 COPY .awscredentials-template /root/.aws/credentials
+COPY .bashrc.append /tmp/.bashrc.append
 RUN chmod 400 /root/.aws/config /root/.aws/credentials
 
-RUN echo export PS1='\[\e]0;\u@\h: \w\a\]${MERRITT_ECS} ${OPS_MODE}: \u@\h:\w\$ ' >> /root/.bashrc
+RUN cat /tmp/.bashrc.append >> /root/.bashrc
 
 # Write hello world message
 RUN echo 'Hello World!' > /var/www/html/index.html

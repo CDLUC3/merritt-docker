@@ -36,4 +36,4 @@ then
   DBPASS=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/${OPSMODE_PARAM}/db-password --query Parameter.Value --with-decryption --output text)
 fi
 
-mysql -h $DBHOST -u $DBUSER --password=$DBPASS --database=$DBDATABASE "$@"
+MYSQL_PWD=$DBPASS mysql -h $DBHOST -u $DBUSER --password=$DBPASS --database=$DBDATABASE "$@"

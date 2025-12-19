@@ -30,9 +30,11 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install && \
     rm -rf awscliv2.zip aws
 
+RUN python3 -m venv .venv && source .venv/bin/activate
+
 COPY README.md /README.md
 COPY scripts /
-RUN chmod 744 /*.sh
+RUN chmod 744 /*.sh /mrt-locust/*.sh
 
 RUN mkdir -p /root/.aws
 COPY .awsconfig-template /root/.aws/config

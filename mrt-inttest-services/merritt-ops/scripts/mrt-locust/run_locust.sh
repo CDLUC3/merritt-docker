@@ -1,5 +1,8 @@
 #! /bin/bash
-      
+
+python3 -m venv venv
+source venv/bin/activate
+
 pip3 -q install locust
 pip3 -q install bs4
 source ./config.sh

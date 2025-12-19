@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     mysql-client \
     apache2 \
     nano \
-    python3 \
+    python3-full \
     python3-pip \
     ruby \
     ruby-dev \
@@ -29,8 +29,6 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     unzip awscliv2.zip && \
     ./aws/install && \
     rm -rf awscliv2.zip aws
-
-RUN python3 -m venv .venv && source .venv/bin/activate
 
 COPY README.md /README.md
 COPY scripts /

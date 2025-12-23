@@ -5,10 +5,10 @@ source venv/bin/activate
 
 pip3 -q install locust
 pip3 -q install bs4
-source ./config.sh
+source /mrt-locust/config.sh
 
 echo; echo; echo " === Run ${DURATION} locust test"; echo
-locust --headless -u ${USERCOUNT} -r 1 -t ${DURATION} -H $MERRITTURL --only-summary -L ERROR --csv out.csv --reset-stats --json > out.json
+locust -f /mrt-locust/locustfile.py --headless -u ${USERCOUNT} -r 1 -t ${DURATION} -H $MERRITTURL --only-summary -L ERROR --csv out.csv --reset-stats --json > out.json
 cut -d, -f2,3,4,10,15 out.csv_stats.csv
 
 echo; echo; echo " === Analyze Failures"; echo

@@ -21,16 +21,16 @@ jq "[.[] | {name: .name, resp_ms_80pct: (.response_times | (. as \$s | [([(keys[
 cat out80.json
 
 echo; echo; echo " === Test for failure... fail if file is not empty"; echo
-if [ -s fail.json ]; then echo " ** FAILURE found"; false; fi
+if [ -s fail.json ]; then echo " ** FAILURE found"; exit 1; fi
 
 echo; echo; echo " === Test for login response times greater than #{MS_LOGIN}ms... fail if file is not empty"; echo
 jq ".[] | select(.resp_ms_80pct > $MS_LOGIN) | select(.name | test(\"login\$\"))" out80.json > out.test.txt
 ls -l out.test.txt
 cat out.test.txt
-if [ -s out.test.txt ]; then echo " ** FAIL login reposonse time"; false; fi
+if [ -s out.test.txt ]; then echo " ** FAIL login reposonse time"; exit 1; fi
 
 echo; echo; echo " === Test for response times greater than ${MS_RESP}ms... fail if file is not empty"; echo
 jq ".[] | select(.resp_ms_80pct > $MS_RESP) | select(.name | test(\"login\$\") | not)" out80.json > out.test.txt
 ls -l out.test.txt
 cat out.test.txt
-if [ -s out.test.txt ]; then echo " ** FAIL response time"; false; fi
+if [ -s out.test.txt ]; then echo " ** FAIL response time"; exit 1; fi

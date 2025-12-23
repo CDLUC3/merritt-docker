@@ -7,6 +7,6 @@ export statfile="/tmp/locust-benchmarks.txt"
 
 task_init
 
-echo 'This is a placeholder script' || task_fail
+/mrt-locust/run_locust.sh || task_fail
 
 task_complete

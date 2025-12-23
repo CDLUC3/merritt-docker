@@ -29,7 +29,7 @@ class HelloWorldUser(HttpUser):
         #the following does not work with rails CSRF protection
         response = self.client.get("/")
         soup = BeautifulSoup(response.content, features="html.parser")
-        auth = soup.findAll("meta", {"name": "csrf-token"})[0].get("content")
+        auth = soup.find_all("meta", {"name": "csrf-token"})[0].get("content")
         if "MERRITTUSER" in os.environ:
           self.client.post("/login", json={"login": os.environ["MERRITTUSER"], "password": os.environ["MERRITTPASS"], "authenticity_token": auth})
         else:

@@ -7,6 +7,6 @@ export statfile="/tmp/locust-benchmarks.txt"
 
 task_init
 
-/mrt-locust/run_locust.sh || task_fail
+/mrt-locust/run_locust.sh > $statfile || task_fail
 
 task_complete

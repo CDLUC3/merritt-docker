@@ -53,7 +53,7 @@ then
   run_tests 2025_10_20_0834_combo README.md '7777 8888'
 fi
 
-egrep -qv "ERROR|FAIL|WARN" $statfile || task_fail
+egrep -q "ERROR|FAIL|WARN" $statfile && task_fail
 
 # do not send a report unless there is a failure
 task_complete

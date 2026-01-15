@@ -35,7 +35,7 @@ then
   get_delete_lists
 else
   task_init
-  run_delete_list $filepath 2>&1 | tee $statfile
+  run_delete_list $filepath 2>&1 | tee -a $statfile
   task_complete
 fi
 

@@ -25,7 +25,7 @@ if [[ "$MERRITT_ECS" != "ecs-prd" ]]
 then
   for coll in merritt_demo merritt_benchmark cdl_wasabi
   do
-    run_purge $coll >> $statfile
+    run_purge $coll | tee -a $statfile
   done
 fi
 

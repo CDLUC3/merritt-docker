@@ -26,7 +26,7 @@ benchmark_fixity() {
     --dimensions "filename=$filename,cloud_service=$cloud,retrieval_method=$method" \
     --unit Seconds --metric-name retrieval-duration-sec --value $rettime
 
-  printf "%s\t%s\t%s\t%s\t%s\t%6.2f\t%s\n" $filename $cloud $nodenum $method $stat $rettime $errormsg >> $statfile
+  printf "%s\t%s\t%s\t%s\t%s\t%6.2f\t%s\n" $filename $cloud $nodenum $method $stat $rettime $errormsg | tee -a $statfile
 }
 
 run_tests() {

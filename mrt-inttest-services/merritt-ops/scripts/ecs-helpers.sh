@@ -31,8 +31,8 @@ test_route() {
   # On the other hand, "ERROR" indicates a software or enviornment bug
   if [ "${code:-0}" -ge 400 ] || [[ "$result" == "ERROR"* ]]
   then
-    echo $route >> $statfile
-    echo "  Result: $result; Rows: $rows; $status; Title: $title" >> $statfile
+    echo $route | tee -a $statfile
+    echo "  Result: $result; Rows: $rows; $status; Title: $title" | tee -a $statfile
     return 1
   fi
 }
@@ -53,8 +53,8 @@ post_route() {
 
   if [ "${code:-0}" -ge 400 ] || [[ "$result" == "ERROR"* ]]
   then
-    echo $route >> $statfile
-    echo "  Result: $result; Rows: $rows; $status; Title: $title" >> $statfile
+    echo $route | tee -a $statfile
+    echo "  Result: $result; Rows: $rows; $status; Title: $title" | tee -a $statfile
     return 1
   fi
 }
@@ -92,21 +92,18 @@ stack_init() {
 }
 
 task_init() {
-  echo " ==> $label Started"
-  date "+%Y-%m-%d %H:%M:%S: $label Started" > $statfile
+  date "+ ==> %Y-%m-%d %H:%M:%S: $label Started" | tee $statfile
   export STARTTIME=$(date +%s)
 }
 
 task_complete() {
-  echo " ==> $label Complete $(duration)"
-  date "+%Y-%m-%d %H:%M:%S: $label Complete" >> $statfile
+  date "+ ==> %Y-%m-%d %H:%M:%S: $label Complete $(duration)" | tee -a $statfile
   aws sns publish --topic-arn "$SNS_ARN" --subject "Merritt ECS $label for $MERRITT_ECS $(duration)" \
     --message "$(cat $statfile)"
 }
 
 task_fail() {
-  echo " ==> $label Failed $(duration)"
-  date "+%Y-%m-%d %H:%M:%S: $label Failed" >> $statfile
+  date "+ ==> %Y-%m-%d %H:%M:%S: $label Failed $(duration)" | tee -a $statfile
   aws sns publish --topic-arn "$SNS_ARN" --subject "FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)" \
     --message "$(cat $statfile)"
   exit 1

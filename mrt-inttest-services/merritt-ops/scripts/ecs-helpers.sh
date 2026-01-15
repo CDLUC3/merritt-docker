@@ -94,25 +94,26 @@ stack_init() {
 make_status() {
   datetime=$(date "+%Y-%m-%d %H:%M:%S")
   status=$1
+  duration=$2
 
   statobj=$(jq -n \
     --arg datetime "$datetime" \
     --arg environment "$MERRITT_ECS" \
     --arg status "$status" \
     --arg label "$label" \
-    --arg duration "$(duration)" \
+    --arg duration "${duration}" \
     '$ARGS.named')
 }
 
 task_init() {
   date "+ ==> %Y-%m-%d %H:%M:%S: START: $label for $MERRITT_ECS" | tee $statfile
-  echo $(make_status "STARTED")
+  echo $(make_status "STARTED" "")
   export STARTTIME=$(date +%s)
 }
 
 task_complete() {
   date "+ ==> %Y-%m-%d %H:%M:%S: COMPLETE: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
-  echo $(make_status "COMPLETE")
+  echo $(make_status "COMPLETE" "$(duration)")
   subject="Merritt ECS $label for $MERRITT_ECS $(duration)"
   aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
     --message "$(cat $statfile)"
@@ -120,7 +121,7 @@ task_complete() {
 
 task_fail() {
   date "+ ==> %Y-%m-%d %H:%M:%S: FAIL: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
-  echo $(make_status "FAIL")
+  echo $(make_status "FAIL" "$(duration)")
   subject="FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)"
   aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
     --message "$(cat $statfile)"

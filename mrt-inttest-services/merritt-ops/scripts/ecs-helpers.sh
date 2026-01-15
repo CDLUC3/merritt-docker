@@ -101,7 +101,7 @@ make_status() {
     --arg status "$status" \
     --arg label "$label" \
     --arg duration "$(duration)" \
-    'ARGS.named')
+    '$ARGS.named')
 }
 
 task_init() {

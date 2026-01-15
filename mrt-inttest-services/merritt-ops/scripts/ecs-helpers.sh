@@ -92,19 +92,21 @@ stack_init() {
 }
 
 task_init() {
-  date "+ ==> %Y-%m-%d %H:%M:%S: $label Started" | tee $statfile
+  date "+ ==> %Y-%m-%d %H:%M:%S: START: $label for $MERRITT_ECS" | tee $statfile
   export STARTTIME=$(date +%s)
 }
 
 task_complete() {
-  date "+ ==> %Y-%m-%d %H:%M:%S: $label Complete $(duration)" | tee -a $statfile
-  aws sns publish --topic-arn "$SNS_ARN" --subject "Merritt ECS $label for $MERRITT_ECS $(duration)" \
+  date "+ ==> %Y-%m-%d %H:%M:%S: COMPLETE: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
+  subject="Merritt ECS $label for $MERRITT_ECS $(duration)"
+  aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
     --message "$(cat $statfile)"
 }
 
 task_fail() {
-  date "+ ==> %Y-%m-%d %H:%M:%S: $label Failed $(duration)" | tee -a $statfile
-  aws sns publish --topic-arn "$SNS_ARN" --subject "FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)" \
+  date "+ ==> %Y-%m-%d %H:%M:%S: FAIL: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
+  subject="FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)"
+  aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
     --message "$(cat $statfile)"
   exit 1
 }

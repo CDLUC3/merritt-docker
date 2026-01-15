@@ -97,11 +97,11 @@ make_status() {
   duration=$2
 
   echo $(jq -n \
-    --arg datetime "$datetime" \
-    --arg environment "$MERRITT_ECS" \
-    --arg status "$status" \
-    --arg label "$label" \
-    --arg duration "${duration}" \
+    --arg task_datetime "$datetime" \
+    --arg task_environment "$MERRITT_ECS" \
+    --arg task_status "$status" \
+    --arg task_label "$label" \
+    --arg task_duration "${duration}" \
     '$ARGS.named')
 }
 

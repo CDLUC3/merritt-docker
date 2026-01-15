@@ -96,7 +96,7 @@ make_status() {
   status=$1
   duration=$2
 
-  statobj=$(jq -n \
+  echo $(jq -n \
     --arg datetime "$datetime" \
     --arg environment "$MERRITT_ECS" \
     --arg status "$status" \

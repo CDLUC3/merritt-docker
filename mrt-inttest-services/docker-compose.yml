@@ -54,12 +54,6 @@ services:
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${ECR_REGISTRY}
-  mrt-fluent-bit:
-    container_name: mrt-fluent-bit
-    image: ${ECR_REGISTRY}/mrt-fluent-bit
-    build:
-      context: mrt-fluent-bit
-      dockerfile: Dockerfile
   mysql-ruby-lambda:
     container_name: mysql-ruby-lambda
     image: ${ECR_REGISTRY}/mysql-ruby-lambda

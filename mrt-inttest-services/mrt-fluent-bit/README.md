@@ -1,5 +1,9 @@
 # Fluent Bit Configuration Files for Merritt ECS
 
+> [!NOTE]
+> This is no longer supported by the Merritt Team.
+> Daily builds have been disabled.
+
 ## Resources
 - [Fluent Bit](https://docs.fluentbit.io/manual/about/what-is-fluent-bit)
   - [Filters](https://docs.fluentbit.io/manual/data-pipeline/filters)

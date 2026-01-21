@@ -92,7 +92,7 @@ stack_init() {
 }
 
 make_status() {
-  datetime=$(date "+%Y-%m-%d %H:%M:%S")
+  datetime=$(TZ="America/Los_Angeles" date "+%Y-%m-%d %H:%M:%S")
   status=$1
   duration=$2
 

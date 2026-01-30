@@ -40,7 +40,7 @@ test_route() {
 
 post_route() {
   route=$1
-  status=$(curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)/${route}) || return
+  status=$(curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s -w "$(curl_format)" $(admintool_base)${route}) || return
   title=$(cat /tmp/curl.json | jq -r '.context.title // "na"' 2>/dev/null)
   rows=$(cat /tmp/curl.json | jq -r '(.table | length | tostring)' 2>/dev/null)
   result=$(cat /tmp/curl.json | jq -r '((.status // "NA") + ": " + .status_message)' 2>/dev/null)

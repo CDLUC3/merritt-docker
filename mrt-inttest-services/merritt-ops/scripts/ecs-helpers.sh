@@ -69,7 +69,7 @@ admintool_test_routes() {
 }
 
 admintool_run_consistency_checks() {
-  post_route '/queries/update-billing' || return
+  post_route '/queries/update-billing' || return 1
   for route in $(curl --no-progress-meter "$(admintool_base)/test/consistency" | jq -r '.[]')
   do
     test_route $route || return

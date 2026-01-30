@@ -1,15 +1,54 @@
 #! /bin/bash
 
-admintool_ip() {
+service_ip() {
+  service=$1
   aws servicediscovery discover-instances \
-    --service-name admintool --namespace-name merritt-${MERRITT_ECS} | \
+    --service-name $service --namespace-name merritt-${MERRITT_ECS} | \
     jq -r ".Instances[ $RANDOM % (.Instances | length)].Attributes.AWS_INSTANCE_IPV4"
+}
+
+admintool_ip() {
+  service_ip admintool
 }
 
 admintool_base() {
   echo "http://$(admintool_ip):9292"
 }
 
+ingest_base() {
+  host=$(service_ip ingest):8080/ingest
+  echo ${SVC_INGEST:-$host}
+}
+
+store_base() {
+  host=$(service_ip store):8080/store
+  echo ${SVC_STORE:-$host}
+}
+
+acceess_base() {
+  host=$(service_ip access):8080/access
+  echo ${SVC_ACCESS:-$host}
+}
+
+audit_base() {
+  host=$(service_ip audit):8080/audit
+  echo ${SVC_AUDIT:-$host}
+}
+
+replic_base() {
+  host=$(service_ip replic):8080/replic
+  echo ${SVC_REPLIC:-$host}
+}
+
+inventory_base() {
+  host=$(service_ip inventory):8080/inventory
+  echo ${SVC_INVENTORY:-$host}
+}
+
+ui_base() {
+  host=$(service_ip ui):8086
+  echo ${SVC_UI:-$host}
+}
 
 curl_format() {
   echo "Status: %{http_code}; Size: %{size_download}; Time: %{time_total}"

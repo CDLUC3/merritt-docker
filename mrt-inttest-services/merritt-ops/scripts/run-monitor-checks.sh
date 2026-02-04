@@ -6,7 +6,7 @@ export statfile="/tmp/stack-monitoring-log.txt"
 
 # Fetch URL and save response to /tmp/test.json
 # Returns 0 on success (HTTP 200), 1 otherwise
-monitor_url() {
+monitor_url_json() {
   local url=$1
   local connect_timeout=${2:-5}
   local max_time=${3:-20}
@@ -38,73 +38,125 @@ send_monitor_status() {
 }
 
 # Check a service with a jq validation query
-# Usage: check_service <name> <url> <jq_query> <error_message>
-check_service() {
+# Usage: check_service_json <name> <url> <jq_query> <error_message>
+check_service_json() {
   local service=$1
   local url=$2
-  local jq_query=$3
-  local error_msg=$4
 
-  if ! monitor_url "$url"; then
-    send_monitor_status "$service" "CRITICAL" "$(cat /tmp/status.code)"
-    return 1
+  local state='OK'
+  local cause=''
+
+  if ! monitor_url_json "$url"; then
+    state="CRITICAL"
+    cause="$(cat /tmp/status.code)"
+  else
+    if ! jq -e 'type == "object"' /tmp/test.json >/dev/null
+    then
+      state="CRITICAL"
+      cause="Bad JSON returned"
+    fi
   fi
 
-  if ! jq -e "$jq_query" /tmp/test.json >/dev/null 2>&1; then
-    send_monitor_status "$service" "CRITICAL" "$error_msg"
+  send_monitor_status "$service" "$state" "$cause"
+
+  if [ "$state" == "CRITICAL" ]; then
     return 1
   fi
+  return 0
+}
 
-  send_monitor_status "$service"
+validation_check_json() {
+  local service=$1
+  local jq_query=$2
+  local error_msg=$3
+  local suffix=${4:-}
+
+  local label="appcheck-$service$suffix"
+  local state='OK'
+  local cause=''
+
+  if ! jq -e "$jq_query" /tmp/test.json >/dev/null 2>&1
+  then
+    state="CRITICAL"
+    cause="$error_msg"
+  fi
+
+  send_monitor_status "$label" "$state" "$cause"
+  
+  if [ "$state" == "CRITICAL" ]; then
+    return 1
+  fi
   return 0
 }
 
 monitor_services() {
   # Admintool
-  check_service "admintool" \
-    "$(admintool_base)/context?admintoolformat=json" \
-    'type == "object"' \
-    "admintool context not valid JSON object"
+  check_service_json "admintool" \
+    "$(admintool_base)/state"
 
+  validation_check_json "admintool" \
+    '.[zk] == "running"' \
+    "Zookeeper not running" \
+    "-zk"
+
+  validation_check_json "admintool" \
+    '.[mysql] == "running"' \
+    "MySQL not running" \
+    "-mysql"
+
+  validation_check_json "admintool" \
+    '.[ldap] == "running"' \
+    "LDAP not running" \
+    "-ldap"
   # UI
-  check_service "ui" \
-    "$(ui_base)/state.json" \
-    'type == "object"' \
-    "ui state not valid JSON object"
+  check_service_json "ui" \
+    "$(ui_base)/state.json"
 
   # Ingest
-  check_service "ingest" \
-    "$(ingest_base)/state?t=json" \
+  check_service_json "ingest" \
+    "$(ingest_base)/state?t=json"
+
+  validation_check_json "ingest" \
     '.["ing:ingestServiceState"].["ing:submissionState"] == "thawed"' \
-    "ingest submissionState not thawed"
+    "ingest submissionState not thawed" 
 
   # Store
-  check_service "store" \
-    "$(store_base)/state?t=json" \
-    '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' \
-    "store failNodesCnt not 0"
+  check_service_json "store" \
+    "$(store_base)/state?t=json"
 
-  # Access
-  check_service "access" \
-    "$(access_base)/state?t=json" \
+  validation_check_json "store" \
     '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' \
-    "access failNodesCnt not 0"
+    "store failNodesCnt not 0" 
+  
+  # Access
+  check_service_json "access" \
+    "$(access_base)/state?t=json"
+  
+  validation_check_json "access" \
+    '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' \
+    "access failNodesCnt not 0" 
 
   # Inventory (multiple checks)
-  check_service "inventory" \
-    "$(inventory_base)/state?t=json" \
-    '.["invsv:invServiceState"].["invsv:systemStatus"] == "running" and .["invsv:invServiceState"].["invsv:zookeeperStatus"] == "running"' \
-    "inventory systemStatus or zookeeperStatus not running"
+  check_service_json "inventory" \
+    "$(inventory_base)/state?t=json"
+  
+  validation_check_json "inventory" \
+    '.["invsv:invServiceState"].["invsv:systemStatus"] == "running"' \
+    "inventory systemStatus not running"
 
   # Audit
-  check_service "audit" \
-    "$(audit_base)/state?t=json" \
+  check_service_json "audit" \
+    "$(audit_base)/state?t=json"
+  
+  validation_check_json "audit" \
     '.["fix:fixityServiceState"].["fix:status"] == "running"' \
     "fixity status not running"
 
   # Replication (uses status instead of state)
-  check_service "replic" \
-    "$(replic_base)/status?t=json" \
+  check_service_json "replic" \
+    "$(replic_base)/status?t=json"
+  
+  validation_check_json "replic" \
     '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' \
     "replication status not running"
 }

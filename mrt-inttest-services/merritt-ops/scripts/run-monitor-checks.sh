@@ -4,157 +4,115 @@ source ./ecs-helpers.sh
 export label="Stack Monitoring Checks"
 export statfile="/tmp/stack-monitoring-log.txt"
 
+# Fetch URL and save response to /tmp/test.json
+# Returns 0 on success (HTTP 200), 1 otherwise
 monitor_url() {
-  url=$1
-  connect_timeout=${2:-5}
-  max_time=${3:-20}
+  local url=$1
+  local connect_timeout=${2:-5}
+  local max_time=${3:-20}
 
-  status=$(curl -o /tmp/test.json -s -w "%{http_code}" --connect-timeout $connect_timeout --max-time $max_time "$url") || return
+  local status=$(curl -o /tmp/test.json -s -w "%{http_code}" \
+    --connect-timeout "$connect_timeout" \
+    --max-time "$max_time" \
+    "$url") || return 1
+  
   if [ "$status" -ne 200 ]; then
     echo "Return Status: $status" > /tmp/status.code
     return 1
   fi
+  return 0
 }
 
+# Send monitoring status as JSON
 send_monitor_status() {
-  service=$1
-  status=${2:-OK}
-  cause=${3:-}
+  local service=$1
+  local status=${2:-OK}
+  local cause=${3:-}
 
-  echo $(jq -n \
+  jq -n \
     --arg host "$MERRITT_ECS" \
     --arg service "$service" \
     --arg status "$status" \
     --arg cause "$cause" \
-    '$ARGS.named')
+    '$ARGS.named'
+}
+
+# Check a service with a jq validation query
+# Usage: check_service <name> <url> <jq_query> <error_message>
+check_service() {
+  local service=$1
+  local url=$2
+  local jq_query=$3
+  local error_msg=$4
+
+  if ! monitor_url "$url"; then
+    send_monitor_status "$service" "CRITICAL" "$(cat /tmp/status.code)"
+    return 1
+  fi
+
+  if ! jq -e "$jq_query" /tmp/test.json >/dev/null 2>&1; then
+    send_monitor_status "$service" "CRITICAL" "$error_msg"
+    return 1
+  fi
+
+  send_monitor_status "$service"
+  return 0
 }
 
 monitor_services() {
-  monitor_url "$(admintool_base)/context?admintoolformat=json"
-  if [[ $? -ne 0 ]]
-  then
-    send_monitor_status "admintool" "CRITICAL" "$(cat /tmp/status.code)"
-  else
-    jq -e 'type == "object"' /tmp/test.json
-    if [[ $? -ne 0 ]]
-    then
-      send_monitor_status "admintool" "CRITICAL" "admintool context not valid JSON object"
-    else
-      send_monitor_status "admintool"
-    fi
-  fi
+  # Admintool
+  check_service "admintool" \
+    "$(admintool_base)/context?admintoolformat=json" \
+    'type == "object"' \
+    "admintool context not valid JSON object"
 
-  monitor_url "$(ui_base)/state.json"
-  if [[ $? -ne 0 ]]
-  then
-    send_monitor_status "ui" "CRITICAL" "$(cat /tmp/status.code)"
-  else 
-    jq -e 'type == "object"' /tmp/test.json
-    if [[ $? -ne 0 ]]
-    then
-      send_monitor_status "ui" "CRITICAL" "ui state not valid JSON object"
-    else
-      send_monitor_status "ui"
-    fi
-  fi
+  # UI
+  check_service "ui" \
+    "$(ui_base)/state.json" \
+    'type == "object"' \
+    "ui state not valid JSON object"
 
-  monitor_url "$(ingest_base)/state?t=json"
-  if [[ $? -ne 0 ]]
-  then
-    send_monitor_status "ingest" "CRITICAL" "$(cat /tmp/status.code)"
-  else 
-    jq -e '.["ing:ingestServiceState"].["ing:submissionState"] == "thawed"' /tmp/test.json
-    if [[ $? -ne 0 ]]
-    then
-      send_monitor_status "ingest" "CRITICAL" "ingest submissionState not thawed"
-    else
-      send_monitor_status "ingest"
-    fi
-  fi
+  # Ingest
+  check_service "ingest" \
+    "$(ingest_base)/state?t=json" \
+    '.["ing:ingestServiceState"].["ing:submissionState"] == "thawed"' \
+    "ingest submissionState not thawed"
 
-  monitor_url "$(store_base)/state?t=json"
-  if [[ $? -ne 0 ]]
-  then
-    send_monitor_status "store" "CRITICAL" "$(cat /tmp/status.code)"
-  else 
-    jq -e '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' /tmp/test.json
-    if [[ $? -ne 0 ]]
-    then
-      send_monitor_status "store" "CRITICAL" "store failNodesCnt not 0"
-    else
-      send_monitor_status "store"
-    fi
-  fi
+  # Store
+  check_service "store" \
+    "$(store_base)/state?t=json" \
+    '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' \
+    "store failNodesCnt not 0"
 
-  monitor_url "$(access_base)/state?t=json"
-  if [[ $? -ne 0 ]]
-  then
-    send_monitor_status "access" "CRITICAL" "$(cat /tmp/status.code)"
-  else 
-    jq -e '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' /tmp/test.json
-    if [[ $? -ne 0 ]]
-    then
-      send_monitor_status "access" "CRITICAL" "access failNodesCnt not 0"
-    else
-      send_monitor_status "access"
-    fi
-  fi
+  # Access
+  check_service "access" \
+    "$(access_base)/state?t=json" \
+    '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' \
+    "access failNodesCnt not 0"
 
-  monitor_url "$(inventory_base)/state?t=json"
-  if [[ $? -ne 0 ]]
-  then
-    send_monitor_status "inventory" "CRITICAL" "$(cat /tmp/status.code)"
-  else
-    jq -e '.["invsv:invServiceState"].["invsv:systemStatus"] == "running"' /tmp/test.json
-    test1=$?
-    jq -e '.["invsv:invServiceState"].["invsv:zookeeperStatus"] == "running"' /tmp/test.json
-    test2=$?
+  # Inventory (multiple checks)
+  check_service "inventory" \
+    "$(inventory_base)/state?t=json" \
+    '.["invsv:invServiceState"].["invsv:systemStatus"] == "running" and .["invsv:invServiceState"].["invsv:zookeeperStatus"] == "running"' \
+    "inventory systemStatus or zookeeperStatus not running"
 
-    if [[ $test1 -ne 0 ]]
-    then
-      send_monitor_status "inventory" "CRITICAL" "inventory systemStatus not running"
-    elif [[ $test2 -ne 0 ]]
-    then
-      send_monitor_status "inventory" "CRITICAL" "inventory zookeeperStatus not running"
-    else
-      send_monitor_status "inventory"
-    fi
-  fi
+  # Audit
+  check_service "audit" \
+    "$(audit_base)/state?t=json" \
+    '.["fix:fixityServiceState"].["fix:status"] == "running"' \
+    "fixity status not running"
 
-  monitor_url "$(audit_base)/state?t=json"
-  if [[ $? -ne 0 ]]
-  then
-    send_monitor_status "audit" "CRITICAL" "$(cat /tmp/status.code)"
-  else
-    jq -e '.["fix:fixityServiceState"].["fix:status"] == "running"' /tmp/test.json
-    if [[ $? -ne 0 ]]
-    then
-      send_monitor_status "audit" "CRITICAL" "fixity status not running"
-    else
-      send_monitor_status "audit"
-    fi
-  fi
-
-  # Per David, replic uses status instead of state
-  monitor_url "$(replic_base)/status?t=json"
-  if [[ $? -ne 0 ]]
-  then
-    send_monitor_status "replic" "CRITICAL" "$(cat /tmp/status.code)"
-  else
-    jq -e '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' /tmp/test.json
-    if [[ $? -ne 0 ]]
-    then
-      send_monitor_status "replic" "CRITICAL" "$(cat /tmp/status.code)"
-    else
-      send_monitor_status "replic"
-    fi
-  fi
+  # Replication (uses status instead of state)
+  check_service "replic" \
+    "$(replic_base)/status?t=json" \
+    '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' \
+    "replication status not running"
 }
 
 task_init
 
-monitor_services 2>&1 | tee -a $statfile
+monitor_services 2>&1 | tee -a "$statfile"
 
-egrep -q "FAIL" $statfile && task_fail
+grep -q "CRITICAL" "$statfile" && task_fail
 
 task_complete

@@ -37,7 +37,8 @@ monitor_services() {
   monitor_url "$(audit_base)/state?t=json"
   jq -e '.["fix:fixityServiceState"].["fix:status"] == "running"' /tmp/test.json || echo "FAIL: fixity status not running"
 
-  monitor_url "$(replic_base)/state?t=json"
+  # Per David, replic uses status instead of state
+  monitor_url "$(replic_base)/status?t=json"
   jq -e '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' /tmp/test.json || echo "FAIL: replication status not running"
 }
 

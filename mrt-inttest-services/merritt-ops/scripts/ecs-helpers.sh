@@ -25,7 +25,7 @@ store_base() {
   echo ${SVC_STORE:-$host}
 }
 
-acceess_base() {
+access_base() {
   host=$(service_ip access):8080/access
   echo ${SVC_ACCESS:-$host}
 }

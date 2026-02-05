@@ -4,6 +4,8 @@ source ./ecs-helpers.sh
 export label="Stack Monitoring Checks"
 export statfile="/tmp/stack-monitoring-log.txt"
 
+export escalope_token=$(aws ssm get-parameter --name /uc3/mrt/escalope/token --query Parameter.Value --output text --with-decryption)
+
 # Fetch URL and save response to /tmp/test.json
 # Returns 0 on success (HTTP 200), 1 otherwise
 monitor_url_json() {
@@ -29,12 +31,18 @@ send_monitor_status() {
   local status=${2:-OK}
   local cause=${3:-}
 
-  jq -n \
+  local payload=$(jq -n \
     --arg host "uc3-mrt-$MERRITT_ECS-stack" \
     --arg service "$service" \
     --arg status "$status" \
     --arg cause "$cause" \
-    '$ARGS.named'
+    '$ARGS.named')
+
+  echo $payload
+
+  curl -s -X POST -H "Content-Type: application/json" \
+    "https://escalope.cdlib.org/notification_from_webcheck?CDLCognitoBypass=${escalope_token}" \
+    -d "$payload" >/dev/null
 }
 
 # Check a service with a jq validation query

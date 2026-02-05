@@ -28,13 +28,13 @@ monitor_url_json() {
 # Send monitoring status as JSON
 send_monitor_status() {
   local service=$1
-  local status=${2:-OK}
+  local state=${2:-OK}
   local cause=${3:-}
 
   local payload=$(jq -n \
-    --arg host "uc3-mrt-$MERRITT_ECS-stack" \
+    --arg host "ecs-uc3-mrt-$MERRITT_ECS-stack" \
     --arg service "$service" \
-    --arg state "$status" \
+    --arg state "$state" \
     --arg cause "$cause" \
     '$ARGS.named')
 

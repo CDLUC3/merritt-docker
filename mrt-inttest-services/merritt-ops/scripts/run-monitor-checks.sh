@@ -82,7 +82,7 @@ validation_check_json() {
   fi
 
   send_monitor_status "$label" "$state" "$cause"
-  
+
   if [ "$state" == "CRITICAL" ]; then
     return 1
   fi
@@ -95,19 +95,20 @@ monitor_services() {
     "$(admintool_base)/state"
 
   validation_check_json "admintool" \
-    '.[zk] == "running"' \
+    '.zk == "running"' \
     "Zookeeper not running" \
     "-zk"
 
   validation_check_json "admintool" \
-    '.[mysql] == "running"' \
+    '.mysql == "running"' \
     "MySQL not running" \
     "-mysql"
 
   validation_check_json "admintool" \
-    '.[ldap] == "running"' \
+    '.ldap == "running"' \
     "LDAP not running" \
     "-ldap"
+
   # UI
   check_service_json "ui" \
     "$(ui_base)/state.json"

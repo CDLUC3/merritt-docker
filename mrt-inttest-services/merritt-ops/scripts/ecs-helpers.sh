@@ -1,10 +1,18 @@
 #! /bin/bash
 
 service_ip() {
-  service=$1
-  aws servicediscovery discover-instances \
-    --service-name $service --namespace-name merritt-${MERRITT_ECS} | \
-    jq -r ".Instances[ $RANDOM % (.Instances | length)].Attributes.AWS_INSTANCE_IPV4"
+  local service=$1
+  local result=$(aws servicediscovery discover-instances \
+    --service-name "$service" --namespace-name "merritt-${MERRITT_ECS}")
+  
+  local count=$(echo "$result" | jq '.Instances | length')
+  
+  if [ "$count" -eq 0 ]; then
+    echo "no-host-found-for-$service"
+    return
+  fi
+  
+  echo "$result" | jq -r ".Instances[ $RANDOM % $count ].Attributes.AWS_INSTANCE_IPV4"
 }
 
 admintool_ip() {

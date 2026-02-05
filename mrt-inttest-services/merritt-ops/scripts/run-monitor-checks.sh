@@ -30,7 +30,7 @@ send_monitor_status() {
   local cause=${3:-}
 
   jq -n \
-    --arg host "$MERRITT_ECS" \
+    --arg host "uc3-mrt-$MERRITT_ECS-stack" \
     --arg service "$service" \
     --arg status "$status" \
     --arg cause "$cause" \

@@ -42,7 +42,7 @@ send_monitor_status() {
 
   curl -s -X POST -H "Content-Type: application/json" \
     "https://escalope.cdlib.org/notification_from_webcheck?CDLCognitoBypass=${escalope_token}" \
-    -d "$payload"
+    -d "$payload" >/dev/null
 }
 
 # Check a service with a jq validation query

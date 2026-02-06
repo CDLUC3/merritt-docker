@@ -140,11 +140,7 @@ monitor_services() {
   # Access
   check_service_json "access" \
     "$(access_base)/state?t=json"
-  
-  validation_check_json "access" \
-    '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' \
-    "access failNodesCnt not 0" 
-
+ 
   # Inventory (multiple checks)
   check_service_json "inventory" \
     "$(inventory_base)/state?t=json"

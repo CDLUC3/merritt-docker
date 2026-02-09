@@ -6,6 +6,8 @@ export statfile="/tmp/consistency-log.txt"
 
 task_init
 
-admintool_run_consistency_checks || task_fail
+set -o pipefail
+admintool_run_consistency_checks  | tee -a $statfile || task_fail
+set +o pipefail
 
 task_complete

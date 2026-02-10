@@ -40,8 +40,7 @@ services:
     - published: 8080
       target: 8080
     volumes:
-    # - my-ingest-folder:/merritt-filesys/ingest/queue
-    - my-ingest-folder:/tdr/ingest/queue
+    - my-ingest-folder:/merritt-filesys/ingest/queue
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -61,8 +60,7 @@ services:
     - published: 8081
       target: 8080
     volumes:
-    # - my-ingest-folder:/merritt-filesys/ingest/queue
-    - my-ingest-folder:/tdr/ingest/queue
+    - my-ingest-folder:/merritt-filesys/ingest/queue
     environment:
       SSM_SKIP_RESOLUTION: Y
       NODE_TABLE: nodes-pairtree-docker

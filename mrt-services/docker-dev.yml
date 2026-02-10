@@ -22,7 +22,7 @@ services:
       MERRITT_STORE_INFO: store-info-dev-docker
   ingest:
     volumes:
-    - ./ingest/profiles-dev/:/tdr/ingest/profiles/
+    ./ingest/profiles-dev/:/merritt-filesys/ingest/profiles/
   # The following setting will connect to the DEV database
   # But, the contents of the cloud nodes will not be compatible with this stack
   audit:

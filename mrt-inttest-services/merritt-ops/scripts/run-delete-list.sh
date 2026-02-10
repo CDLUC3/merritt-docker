@@ -36,6 +36,6 @@ then
 else
   task_init
   run_delete_list $filepath 2>&1 | tee -a $statfile
-  task_complete
+  task_complete Y
 fi
 

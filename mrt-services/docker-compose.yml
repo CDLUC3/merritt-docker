@@ -40,6 +40,7 @@ services:
     - published: 8080
       target: 8080
     volumes:
+    # - my-ingest-folder:/merritt-filesys/ingest/queue
     - my-ingest-folder:/tdr/ingest/queue
     restart: unless-stopped
     stdin_open: true
@@ -60,6 +61,7 @@ services:
     - published: 8081
       target: 8080
     volumes:
+    # - my-ingest-folder:/merritt-filesys/ingest/queue
     - my-ingest-folder:/tdr/ingest/queue
     environment:
       SSM_SKIP_RESOLUTION: Y
@@ -327,7 +329,7 @@ services:
     depends_on:
     - db-container
     volumes:
-    - my-ingest-folder:/tdr/ingest/queue
+    - my-ingest-folder:/merritt-filesys
     restart: unless-stopped
     stdin_open: true
     tty: true
@@ -341,7 +343,7 @@ services:
       BUCKET8888: my-bucket-repl
     image: ${ECR_REGISTRY}/merritt-ops:dev
     volumes:
-    - my-ingest-folder:/tdr/ingest/queue
+    - my-ingest-folder:/merritt-filesys
     restart: unless-stopped
     stdin_open: true
     tty: true

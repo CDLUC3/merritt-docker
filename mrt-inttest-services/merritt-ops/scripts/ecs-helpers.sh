@@ -159,17 +159,26 @@ task_init() {
 }
 
 task_complete() {
+  local send_sms=${1:-N}
+
   TZ="America/Los_Angeles" date "+ ==> %Y-%m-%d %H:%M:%S: COMPLETE: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
   echo $(make_status "COMPLETE" "$(duration)")
-  subject="Merritt ECS $label for $MERRITT_ECS $(duration)"
-  aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
-    --message "$(cat $statfile)"
+
+  if [[ "$send_sms" == "Y" ]]
+  then
+    subject="Merritt ECS $label for $MERRITT_ECS $(duration)"
+
+    aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
+      --message "$(cat $statfile)"
+  fi
 }
 
 task_fail() {
   TZ="America/Los_Angeles" date "+ ==> %Y-%m-%d %H:%M:%S: FAIL: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
   echo $(make_status "FAIL" "$(duration)")
+
   subject="FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)"
+
   aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
     --message "$(cat $statfile)"
   exit 1

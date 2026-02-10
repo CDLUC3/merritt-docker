@@ -172,4 +172,4 @@ monitor_services 2>&1 | tee -a "$statfile"
 
 grep -q "CRITICAL" "$statfile" && task_fail
 
-# task_complete
+task_complete

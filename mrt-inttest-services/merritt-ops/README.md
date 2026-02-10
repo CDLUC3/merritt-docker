@@ -39,7 +39,7 @@ Docker compose
 ### Connect to EFS (if configured for the stack)
 
 ```
-cd /tdr/ingest/queue
+cd /merritt-filesys
 ```
 
 ### Access Merritt Services (assumes the services have migrated to the stack)

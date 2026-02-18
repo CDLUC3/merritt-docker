@@ -41,4 +41,8 @@ if [[ "$LOCUST_MODE" == "long" ]]
 then
   USERCOUNT=$((USERCOUNT * 3))
   DURATION=10m
+elif [[ "$LOCUST_MODE" == "stress" ]]
+then
+  USERCOUNT=$((USERCOUNT * 10))
+  DURATION=20m
 fi

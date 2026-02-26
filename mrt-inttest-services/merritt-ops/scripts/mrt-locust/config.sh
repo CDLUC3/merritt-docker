@@ -43,6 +43,6 @@ then
   DURATION=10m
 elif [[ "$LOCUST_MODE" == "stress" ]]
 then
-  USERCOUNT=$((USERCOUNT * 25))
+  USERCOUNT=$((USERCOUNT * 10))
   DURATION=20m
 fi

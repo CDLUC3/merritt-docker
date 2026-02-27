@@ -53,17 +53,24 @@ check_service_json() {
 
   local state='OK'
   local cause=''
+  local healthycount=1
 
   if ! monitor_url_json "$url"; then
     state="CRITICAL"
     cause="$(cat /tmp/status.code)"
+    healthycount=0
   else
     if ! jq -e 'type == "object"' /tmp/test.json >/dev/null
     then
       state="CRITICAL"
       cause="Bad JSON returned"
+      healthycount=0
     fi
   fi
+
+  aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
+    --dimensions "stack=$MERRITT_ECS,service=$service" \
+    --unit Count --metric-name healthy-count --value $healthycount
 
   send_monitor_status "$service" "$state" "$cause"
 
@@ -82,12 +89,18 @@ validation_check_json() {
   local label="appcheck-$service$suffix"
   local state='OK'
   local cause=''
+  local healthycount=1
 
   if ! jq -e "$jq_query" /tmp/test.json >/dev/null 2>&1
   then
     state="CRITICAL"
     cause="$error_msg"
+    healthycount=0
   fi
+
+  aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
+    --dimensions "stack=$MERRITT_ECS,service=$service" \
+    --unit Count --metric-name "$error_msg" --value $healthycount
 
   send_monitor_status "$label" "$state" "$cause"
 

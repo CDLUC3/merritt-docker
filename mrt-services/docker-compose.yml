@@ -143,6 +143,7 @@ services:
       SERVICE: ui
       HOSTNAME: ui
       LOGLEVEL: info
+      RAILS_MAX_THREADS: 16
     volumes:
     - "./docker.html:/var/www/app_name/public/docker.html"
     restart: unless-stopped

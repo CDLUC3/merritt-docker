@@ -71,6 +71,7 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ui    --force-new-deployment --desired-count 2 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   sleep 60

@@ -133,10 +133,6 @@ stack_metrics() {
     aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
       --dimensions "stack=$MERRITT_ECS" \
       --unit Count --metric-name "$key" --value "$val"
-
-    echo aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
-      --dimensions "stack=$MERRITT_ECS" \
-      --unit Count --metric-name "$key" --value "$val"
   done
 
   return 0

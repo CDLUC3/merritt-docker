@@ -302,6 +302,7 @@ CREATE TABLE `inv_nodes_inv_objects` (
   KEY `id_idx` (`inv_node_id`),
   KEY `id_idx1` (`inv_object_id`),
   KEY `id_idx2` (`replicated`),
+  KEY `inio_replicatedrole` (`replicated`, `role`),
   key `irep_start` (`replic_start`),
   key `irep_size` (`replic_size`),
   key `irep_status` (`completion_status`),

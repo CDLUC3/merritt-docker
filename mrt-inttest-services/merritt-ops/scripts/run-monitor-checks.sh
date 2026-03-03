@@ -121,7 +121,7 @@ stack_metrics() {
     "$url") || return 1
   
   if [ "$status" -ne 200 ]; then
-    echo "Return Status: $status" > /tmp/status.code
+    echo "Metrics Return Status: $status"
     return 1
   fi
 

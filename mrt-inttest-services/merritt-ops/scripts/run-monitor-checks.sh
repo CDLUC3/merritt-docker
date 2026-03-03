@@ -112,10 +112,11 @@ validation_check_json() {
 
 stack_metrics() {
   local url=$1
-  local connect_timeout=${2:-10}
-  local max_time=${3:-30}
+  local connect_timeout=${2:-5}
+  local max_time=${3:-60}
 
   echo "Metrics Check: $url"
+
   local status=$(curl -o /tmp/test.json -s -w "%{http_code}" \
     --connect-timeout "$connect_timeout" \
     --max-time "$max_time" \

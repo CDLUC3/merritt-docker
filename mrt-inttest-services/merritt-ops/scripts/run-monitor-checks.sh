@@ -112,8 +112,8 @@ validation_check_json() {
 
 stack_metrics() {
   local url=$1
-  local connect_timeout=${2:-5}
-  local max_time=${3:-20}
+  local connect_timeout=${2:-10}
+  local max_time=${3:-30}
 
   local status=$(curl -o /tmp/test.json -s -w "%{http_code}" \
     --connect-timeout "$connect_timeout" \
@@ -125,9 +125,14 @@ stack_metrics() {
     return 1
   fi
 
+  jq /tmp/test.json
   cat /tmp/test.json | jq -r 'keys[]' | while IFS= read -r key; do
     val=$(jq -e ".$key" /tmp/test.json)
     aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
+      --dimensions "stack=$MERRITT_ECS" \
+      --unit Count --metric-name "$key" --value "$val"
+
+    echo aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
       --dimensions "stack=$MERRITT_ECS" \
       --unit Count --metric-name "$key" --value "$val"
   done

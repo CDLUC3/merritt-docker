@@ -129,7 +129,7 @@ stack_metrics() {
     val=$(jq -e ".$key" /tmp/test.json)
     aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
       --dimensions "stack=$MERRITT_ECS,service=$service" \
-      --unit Count --metric-name "$key" --value $val
+      --unit Count --metric-name "$key" --value "$val"
   done
 
   return 0

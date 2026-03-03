@@ -110,6 +110,31 @@ validation_check_json() {
   return 0
 }
 
+stack_metrics() {
+  local url=$1
+  local connect_timeout=${2:-5}
+  local max_time=${3:-20}
+
+  local status=$(curl -o /tmp/test.json -s -w "%{http_code}" \
+    --connect-timeout "$connect_timeout" \
+    --max-time "$max_time" \
+    "$url") || return 1
+  
+  if [ "$status" -ne 200 ]; then
+    echo "Return Status: $status" > /tmp/status.code
+    return 1
+  fi
+
+  cat /tmp/test.json | jq -r 'keys[]' | while IFS= read -r key; do
+    val=$(jq -e ".$key" /tmp/test.json)
+    aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
+      --dimensions "stack=$MERRITT_ECS,service=$service" \
+      --unit Count --metric-name "$key" --value $val
+  done
+
+  return 0
+}
+
 monitor_services() {
   # Admintool
   check_service_json "admintool" \
@@ -177,6 +202,8 @@ monitor_services() {
   validation_check_json "replic" \
     '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' \
     "replication status not running"
+
+  stack_metrics "$(admintool_base)/metrics"
 }
 
 task_init

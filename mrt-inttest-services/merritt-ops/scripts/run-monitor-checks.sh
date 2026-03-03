@@ -115,17 +115,19 @@ stack_metrics() {
   local connect_timeout=${2:-10}
   local max_time=${3:-30}
 
+  echo "Metrics Check: $url"
   local status=$(curl -o /tmp/test.json -s -w "%{http_code}" \
     --connect-timeout "$connect_timeout" \
     --max-time "$max_time" \
     "$url") || return 1
   
-  if [ "$status" -ne 200 ]; then
+  if [ "$status" -ne 200 ]
+  then
     echo "Metrics Return Status: $status"
     return 1
   fi
 
-  jq /tmp/test.json
+  jq . /tmp/test.json
   cat /tmp/test.json | jq -r 'keys[]' | while IFS= read -r key; do
     val=$(jq -e ".$key" /tmp/test.json)
     aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \

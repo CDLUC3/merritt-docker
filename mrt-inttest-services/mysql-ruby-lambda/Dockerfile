@@ -3,7 +3,7 @@
 #   All rights reserved
 #*********************************************************************
 
-FROM public.ecr.aws/lambda/ruby:3.3
+FROM public.ecr.aws/lambda/ruby:3.4
 
 RUN dnf -y update && dnf -y upgrade
 

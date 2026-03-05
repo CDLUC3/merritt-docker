@@ -124,6 +124,8 @@ services:
     build:
       context: ui/mrt-dashboard
       dockerfile: Dockerfile
+      # args:
+      #  BUILD_TAG: 'footag'
     networks:
       merrittnet:
         aliases:

@@ -132,7 +132,7 @@ stack_metrics() {
   cat /tmp/test.json | jq -r 'keys[]' | while IFS= read -r key; do
     val=$(jq -e ".$key" /tmp/test.json)
 
-    if [ "$key" =~ ^gb_ ]
+    if [[ "$key" =~ ^gb_ ]]
     then
       aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
         --dimensions "stack=$MERRITT_ECS" \

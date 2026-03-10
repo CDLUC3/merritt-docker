@@ -24,7 +24,7 @@ all_service_ips() {
   for ip in $ips
   do
     echo "http://${ip}:8080/${service}/${endpoint}"
-    curl -X POST "http://${ip}:8080/${service}/${endpoint}"
+    curl -X POST --no-progress-meter "http://${ip}:8080/${service}/${endpoint}"
   done
 }
 

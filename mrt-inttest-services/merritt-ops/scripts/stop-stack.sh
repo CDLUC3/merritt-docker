@@ -20,10 +20,15 @@ then
   echo " ==> Stopping Merritt Services"
   # Per team discussion, always keep an admin instance running
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
+  # all_service_ips ingest service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --desired-count 0 --output text --no-cli-pager 
+  all_service_ips inventory service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --desired-count 0 --output text --no-cli-pager 
+  all_service_ips audit service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --desired-count 0 --output text --no-cli-pager 
+  all_service_ips replic service/pause?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --desired-count 0 --output text --no-cli-pager 
+  # all_service_ips store service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output text --no-cli-pager 
 
@@ -43,10 +48,15 @@ then
   echo " ==> Stopping Merritt Services"
   # Per team discussion, always keep an admin instance running
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --desired-count 1 --output text --no-cli-pager 
+  # all_service_ips ingest service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --desired-count 0 --output text --no-cli-pager 
+  all_service_ips inventory service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --desired-count 0 --output text --no-cli-pager 
+  all_service_ips audit service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --desired-count 0 --output text --no-cli-pager 
+  all_service_ips replic service/pause?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --desired-count 0 --output text --no-cli-pager 
+  # all_service_ips store service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output text --no-cli-pager 
 

@@ -15,6 +15,19 @@ service_ip() {
   echo "$result" | jq -r ".Instances[ $RANDOM % $count ].Attributes.AWS_INSTANCE_IPV4"
 }
 
+all_service_ips() {
+  local service=$1
+  local endpoint=$2
+  local ips=$(aws servicediscovery discover-instances \
+    --service-name "$service" --namespace-name "merritt-${MERRITT_ECS}" \
+    | jq -r '.Instances[].Attributes.AWS_INSTANCE_IPV4')
+  for ip in $ips
+  do
+    echo "http://${ip}:8080/${service}/${endpoint}"
+    curl -X POST "http://${ip}:8080/${service}/${endpoint}"
+  done
+}
+
 admintool_ip() {
   service_ip admintool
 }

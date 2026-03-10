@@ -13,10 +13,15 @@ then
 
   echo " ==> Redeploying Merritt Services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output text --no-cli-pager 
+  # all_service_ips ingest service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  all_service_ips inventory service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  all_service_ips audit service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  all_service_ips replic service/pause?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  # all_service_ips store service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 --output text --no-cli-pager 
   sleep 75
@@ -35,10 +40,15 @@ then
 
   echo " ==> Redeploying Merritt Services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 --output text --no-cli-pager 
+  # all_service_ips ingest service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  all_service_ips inventory service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  all_service_ips audit service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  all_service_ips replic service/pause?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  # all_service_ips store service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 --output text --no-cli-pager 
   sleep 75

@@ -72,7 +72,8 @@ check_service_json() {
     --dimensions "stack=$MERRITT_ECS,service=$service" \
     --unit Count --metric-name healthy-count --value $healthycount
 
-  send_monitor_status "$service" "$state" "$cause"
+  # Disable escalope alerting from the script.  CWAlarms will provide notifications instead.
+  # send_monitor_status "$service" "$state" "$cause"
 
   if [ "$state" == "CRITICAL" ]; then
     return 1

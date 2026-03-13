@@ -25,26 +25,6 @@ monitor_url_json() {
   return 0
 }
 
-# Send monitoring status as JSON
-send_monitor_status() {
-  local service=$1
-  local state=${2:-OK}
-  local cause=${3:-}
-
-  local payload=$(jq -n \
-    --arg host "ecs-uc3-mrt-$MERRITT_ECS-stack" \
-    --arg service "$service" \
-    --arg state "$state" \
-    --arg cause "$cause" \
-    '$ARGS.named')
-
-  echo $payload
-
-  curl -s -X POST -H "Content-Type: application/json" \
-    "https://escalope.cdlib.org/notification_from_webcheck?CDLCognitoBypass=${escalope_token}" \
-    -d "$payload" >/dev/null
-}
-
 # Check a service with a jq validation query
 # Usage: check_service_json <name> <url> <jq_query> <error_message>
 check_service_json() {
@@ -71,9 +51,6 @@ check_service_json() {
   aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
     --dimensions "stack=$MERRITT_ECS,service=$service" \
     --unit Count --metric-name healthy-count --value $healthycount
-
-  # Disable escalope alerting from the script.  CWAlarms will provide notifications instead.
-  # send_monitor_status "$service" "$state" "$cause"
 
   if [ "$state" == "CRITICAL" ]; then
     return 1
@@ -102,8 +79,6 @@ validation_check_json() {
   aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
     --dimensions "stack=$MERRITT_ECS,service=$service" \
     --unit Count --metric-name "$error_msg" --value $healthycount
-
-  send_monitor_status "$label" "$state" "$cause"
 
   if [ "$state" == "CRITICAL" ]; then
     return 1

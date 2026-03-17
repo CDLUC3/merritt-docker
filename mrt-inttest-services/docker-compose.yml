@@ -60,3 +60,11 @@ services:
     build:
       context: mysql-ruby-lambda
       dockerfile: Dockerfile
+  reveal-md:
+    container_name: reveal-md
+    image: ${ECR_REGISTRY}/reveal-md
+    build:
+      context: reveal-md
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}

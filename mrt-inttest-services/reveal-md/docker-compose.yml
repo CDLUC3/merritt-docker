@@ -1,0 +1,9 @@
+services:
+  reveal-md:
+    container_name: reveal-md
+    image: ${ECR_REGISTRY}/reveal-md
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}

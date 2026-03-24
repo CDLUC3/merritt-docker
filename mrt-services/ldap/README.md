@@ -15,3 +15,5 @@ The following instruction will check the status of the LDAP server.
 ## Migration
 
 Dockerfile.opendj is likely a suitable replacement for this test container.
+
+ECS update

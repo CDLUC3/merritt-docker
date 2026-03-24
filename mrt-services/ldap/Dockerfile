@@ -1,6 +1,6 @@
 ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:4.6.3
+FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.0.3
 
 WORKDIR /opt
 

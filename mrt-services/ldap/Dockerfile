@@ -15,6 +15,7 @@ COPY barebones.ldif /opt/barebones.ldif
 
 COPY keystore /opt/opendj/keystore
 COPY keystore.pin /opt/opendj/keystore.pin
+COPY README.merritt.md /opt/opendj/README.merritt.md
 
 WORKDIR /opt/opendj
 

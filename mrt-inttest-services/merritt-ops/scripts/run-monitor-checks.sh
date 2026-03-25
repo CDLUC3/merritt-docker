@@ -189,7 +189,7 @@ monitor_services() {
   
   validation_check_json "replic" \
     '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' \
-    "replication status not running"
+    "replication status not running" 30
 
   stack_metrics "$(admintool_base)/metrics"
 }

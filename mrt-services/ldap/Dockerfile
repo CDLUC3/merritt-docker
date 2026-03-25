@@ -3,7 +3,7 @@ ARG ECR_REGISTRY=ecr_registry_not_set
 FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.0.3
 
 ARG ADMIN_PASSWORD=password
-ENV ADMIN_PASSWORD=$ADMIN_PASSWORD
+ENV ROOT_PASSWORD=$ADMIN_PASSWORD
 
 WORKDIR /opt
 
@@ -28,7 +28,7 @@ RUN ./setup \
   --ldapPort 1389 \
   --adminConnectorPort 4444 \
   --rootUserDN 'cn=Directory Manager' \
-  --rootUserPassword "$ADMIN_PASSWORD" \
+  --rootUserPassword "$ROOT_PASSWORD" \
   --enableStartTLS \
   --ldapsPort 1636 \
   --useJavaKeystore /opt/opendj/keystore \
@@ -44,7 +44,7 @@ RUN /bin/sh ./bin/import-ldif \
   --hostname localhost \
   --port 4444 \
   --bindDN "cn=Directory Manager" \
-  --bindPassword $ADMIN_PASSWORD \
+  --bindPassword $ROOT_PASSWORD \
   --backendID userRoot \
   --includeBranch "ou=uc3,dc=cdlib,dc=org" \
   --trustAll \

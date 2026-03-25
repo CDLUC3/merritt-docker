@@ -46,13 +46,13 @@ phases:
         -t ${ECR_REGISTRY}/mrt-opendj:ecs-prd \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --build-arg ADMIN_PASSWORD=$(aws ssm get-parameter --name /uc3/mrt/prd/ldap/ecs-admin-password --query Parameter.Value --output text --with-decryption) \
-        mrt-services/ldap
+        -f Dockerfile.noimport mrt-services/ldap
 
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj:ecs-stg \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --build-arg ADMIN_PASSWORD=$(aws ssm get-parameter --name /uc3/mrt/stg/ldap/ecs-admin-password --query Parameter.Value --output text --with-decryption) \
-        mrt-services/ldap
+        -f Dockerfile.noimport mrt-services/ldap
 
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj:ecs-dev \

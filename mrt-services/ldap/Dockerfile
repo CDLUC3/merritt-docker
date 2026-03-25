@@ -2,12 +2,13 @@ ARG ECR_REGISTRY=ecr_registry_not_set
 
 FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.0.3
 
-WORKDIR /opt
-
-RUN apt-get update -y && apt-get -y upgrade
-
 ARG ADMIN_PASSWORD=password
 ENV ADMIN_PASSWORD=$ADMIN_PASSWORD
+
+WORKDIR /opt
+
+# user is not root, so the following cannot be run
+# RUN apt-get update -y && apt-get -y upgrade
 
 # Merritt data
 COPY barebones.ldif /opt/barebones.ldif

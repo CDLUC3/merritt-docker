@@ -14,7 +14,6 @@ bin/ldapsearch -h localhost -p 1389 -b "" "(objectclass=merrittClass)"
 
 ```
 ./bin/import-ldif \
-  --offline \
   --hostname localhost \
   --port 4444 \
   --bindDN "cn=Directory Manager" \

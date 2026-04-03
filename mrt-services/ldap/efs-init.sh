@@ -1,5 +1,12 @@
 #!/bin/bash
 
+source ./ecs-helpers.sh
+
+export label="Run LDAP Load"
+export statfile="/tmp/ldap-load.txt"
+
+task_init
+
 ./setup \
   --cli \
   --no-prompt \
@@ -31,3 +38,5 @@ cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
   --includeBranch "ou=uc3,dc=cdlib,dc=org" \
   --trustAll \
   --ldifFile /opt/import/import.ldif
+
+task_complete

@@ -23,10 +23,12 @@ task_init
   --useJavaKeystore /opt/opendj/keystore \
   --keyStorePasswordFile /opt/opendj/keystore.pin \
   --hostname ldap \
-  --noPropertiesFile
+  --noPropertiesFile || task_fail
+
+echo "setup step complete"
 
 # Schema data
-cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
+cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif || task_fail
 
 ./bin/import-ldif \
   --offline \
@@ -37,6 +39,8 @@ cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
   --backendID userRoot \
   --includeBranch "ou=uc3,dc=cdlib,dc=org" \
   --trustAll \
-  --ldifFile /opt/import/import.ldif
+  --ldifFile /opt/import/import.ldif || task_fail
+
+echo "import step complete"
 
 task_complete

@@ -1,0 +1,10 @@
+ARG ECR_REGISTRY=ecr_registry_not_set
+
+FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.0.3
+
+ARG ADMIN_PASSWORD=password
+ENV ROOT_PASSWORD=$ADMIN_PASSWORD
+
+WORKDIR /opt/opendj
+
+EXPOSE 1389 1636 4444

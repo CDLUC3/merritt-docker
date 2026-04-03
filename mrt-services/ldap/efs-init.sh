@@ -30,4 +30,4 @@ cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
   --backendID userRoot \
   --includeBranch "ou=uc3,dc=cdlib,dc=org" \
   --trustAll \
-  --ldifFile /opt/barebones.ldif
+  --ldifFile /opt/import/import.ldif

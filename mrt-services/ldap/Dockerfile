@@ -12,6 +12,7 @@ WORKDIR /opt
 
 # Merritt data
 COPY barebones.ldif /opt/barebones.ldif
+COPY 99-user.ldif /opt/99-user.ldif
 
 COPY keystore /opt/opendj/keystore
 COPY keystore.pin /opt/opendj/keystore.pin
@@ -38,7 +39,7 @@ RUN ./setup \
   --noPropertiesFile
 
 # Schema data
-COPY 99-user.ldif /opt/opendj/config/schema/99-user.ldif
+RUN cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
 
 RUN /bin/sh ./bin/import-ldif \
   --offline \

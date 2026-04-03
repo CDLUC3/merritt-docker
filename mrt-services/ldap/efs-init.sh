@@ -1,26 +1,6 @@
-ARG ECR_REGISTRY=ecr_registry_not_set
+# !/bin/sh
 
-FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.0.3
-
-ARG ADMIN_PASSWORD=password
-ENV ROOT_PASSWORD=$ADMIN_PASSWORD
-
-WORKDIR /opt
-
-# user is not root, so the following cannot be run
-# RUN apt-get update -y && apt-get -y upgrade
-
-# Merritt data
-COPY barebones.ldif /opt/barebones.ldif
-COPY 99-user.ldif /opt/99-user.ldif
-
-COPY keystore /opt/opendj/keystore
-COPY keystore.pin /opt/opendj/keystore.pin
-COPY README.merritt.md /opt/opendj/README.merritt.md
-
-WORKDIR /opt/opendj
-
-RUN ./setup \
+./setup \
   --cli \
   --no-prompt \
   --acceptLicense \
@@ -39,9 +19,9 @@ RUN ./setup \
   --noPropertiesFile
 
 # Schema data
-RUN cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
+cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
 
-RUN /bin/sh ./bin/import-ldif \
+./bin/import-ldif \
   --offline \
   --hostname localhost \
   --port 4444 \
@@ -51,5 +31,3 @@ RUN /bin/sh ./bin/import-ldif \
   --includeBranch "ou=uc3,dc=cdlib,dc=org" \
   --trustAll \
   --ldifFile /opt/barebones.ldif
-
-ENTRYPOINT [ "echo", "OpenDJ initialized" ]

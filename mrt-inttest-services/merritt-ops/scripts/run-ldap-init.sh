@@ -9,7 +9,7 @@ task_init
 
 rm -rf /merritt-filesys/ldap
 mkdir -p /merritt-filesys/ldap/config /merritt-filesys/ldap/db
-chmod 666 /merritt-filesys/ldap/config /merritt-filesys/ldap/db
+chmod 777 /merritt-filesys/ldap/config /merritt-filesys/ldap/db
 
 if [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then

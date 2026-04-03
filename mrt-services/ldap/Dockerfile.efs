@@ -20,7 +20,6 @@ COPY README.merritt.md /opt/opendj/README.merritt.md
 
 WORKDIR /opt/opendj
 
-COPY efs-init.sh /opt/efs-init.sh
-RUN chmod 755 /opt/efs-init.sh
+COPY efs-init.sh /opt/run-ldap-init.sh
 
 EXPOSE 1389 1636 4444

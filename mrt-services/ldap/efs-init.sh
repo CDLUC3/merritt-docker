@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./ecs-helpers.sh
+source /opt/ecs-helpers.sh
 
 export label="Run LDAP Load"
 export statfile="/tmp/ldap-load.txt"

@@ -21,6 +21,5 @@ COPY README.merritt.md /opt/opendj/README.merritt.md
 WORKDIR /opt/opendj
 
 COPY efs-init.sh /opt/run-ldap-init.sh
-COPY ecs-helpers.sh /opt/ecs-helpers.sh
 
 EXPOSE 1389 1636 4444

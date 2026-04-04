@@ -1,12 +1,5 @@
 #!/bin/bash
 
-source /opt/ecs-helpers.sh
-
-export label="Run LDAP Load"
-export statfile="/tmp/ldap-load.txt"
-
-task_init
-
 ./setup \
   --cli \
   --no-prompt \
@@ -23,12 +16,14 @@ task_init
   --useJavaKeystore /opt/opendj/keystore \
   --keyStorePasswordFile /opt/opendj/keystore.pin \
   --hostname ldap \
-  --noPropertiesFile || task_fail
+  --noPropertiesFile
 
 echo "setup step complete"
 
+/opt/opendj/bin/stop-ds --quiet
+
 # Schema data
-cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif || task_fail
+cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
 
 ./bin/import-ldif \
   --offline \
@@ -39,8 +34,6 @@ cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif || task_fail
   --backendID userRoot \
   --includeBranch "ou=uc3,dc=cdlib,dc=org" \
   --trustAll \
-  --ldifFile /opt/import/import.ldif || task_fail
+  --ldifFile /opt/import/import.ldif
 
 echo "import step complete"
-
-task_complete

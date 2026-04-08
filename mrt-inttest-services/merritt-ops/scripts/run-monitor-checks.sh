@@ -29,21 +29,30 @@ monitor_url_json() {
 # Usage: check_service_json <name> <url> <jq_query> <error_message>
 check_service_json() {
   local service=$1
-  local url=$2
+  local host=$2
+  local endpoint=$3
+  local hosts=$4
 
-  local state='OK'
-  local cause=''
   local healthycount=1
 
-  if ! monitor_url_json "$url"; then
-    state="CRITICAL"
-    cause="$(cat /tmp/status.code)"
+  for hh in $(echo $hosts | tr ',' '\n')
+  do
+    local url="$hh/$endpoint"
+    if ! monitor_url_json "$url"
+    then
+      echo "Host failure for $url"
+      healthycount=0
+    fi
+  done
+
+  local url="$host/$endpoint"
+
+  if ! monitor_url_json "$url"
+  then
     healthycount=0
   else
     if ! jq -e 'type == "object"' /tmp/test.json >/dev/null
     then
-      state="CRITICAL"
-      cause="Bad JSON returned"
       healthycount=0
     fi
   fi
@@ -52,7 +61,7 @@ check_service_json() {
     --dimensions "stack=$MERRITT_ECS,service=$service" \
     --unit Count --metric-name healthy-count --value $healthycount
 
-  if [ "$state" == "CRITICAL" ]; then
+  if [ $healthycount -eq 0 ]; then
     return 1
   fi
   return 0
@@ -126,7 +135,7 @@ stack_metrics() {
 monitor_services() {
   # Admintool
   check_service_json "admintool" \
-    "$(admintool_base)/state"
+    "$(admintool_base)" "state" ""
 
   validation_check_json "admintool" \
     '.zk == "running"' \
@@ -145,11 +154,11 @@ monitor_services() {
 
   # UI
   check_service_json "ui" \
-    "$(ui_base)/state.json"
+    "$(ui_base)" "state.json" ""
 
   # Ingest
   check_service_json "ingest" \
-    "$(ingest_base)/state?t=json"
+    "$(ingest_base)" "state?t=json" "$HOSTS_INGEST"
 
   validation_check_json "ingest" \
     '.["ing:ingestServiceState"].["ing:submissionState"] == "thawed"' \
@@ -157,7 +166,7 @@ monitor_services() {
 
   # Store
   check_service_json "store" \
-    "$(store_base)/state?t=json"
+    "$(store_base)" "state?t=json" "$HOSTS_STORE"
 
   validation_check_json "store" \
     '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' \
@@ -165,11 +174,11 @@ monitor_services() {
   
   # Access
   check_service_json "access" \
-    "$(access_base)/state?t=json"
+    "$(access_base)" "state?t=json" "$HOSTS_ACCESS"
  
   # Inventory (multiple checks)
   check_service_json "inventory" \
-    "$(inventory_base)/state?t=json"
+    "$(inventory_base)" "state?t=json" "$HOSTS_INVENTORY"
   
   validation_check_json "inventory" \
     '.["invsv:invServiceState"].["invsv:systemStatus"] == "running"' \
@@ -177,7 +186,7 @@ monitor_services() {
 
   # Audit
   check_service_json "audit" \
-    "$(audit_base)/state?t=json"
+    "$(audit_base)" "state?t=json" "$HOSTS_AUDIT"
   
   validation_check_json "audit" \
     '.["fix:fixityServiceState"].["fix:status"] == "running"' \
@@ -185,7 +194,7 @@ monitor_services() {
 
   # Replication (uses status instead of state)
   check_service_json "replic" \
-    "$(replic_base)/status?t=json"
+    "$(replic_base)" "status?t=json" "$HOSTS_REPLIC"
   
   validation_check_json "replic" \
     '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' \

@@ -37,6 +37,9 @@ check_service_json() {
 
   for hh in $(echo $hosts | tr ',' '\n')
   do
+    if [ -z "$hh" ]; then
+      continue
+    fi
     local url="$hh/$endpoint"
     if ! monitor_url_json "$url"
     then

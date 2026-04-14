@@ -13,6 +13,8 @@ monitor_url_json() {
   local connect_timeout=${2:-5}
   local max_time=${3:-20}
 
+  echo "Checking URL: $url"
+
   local status=$(curl -o /tmp/test.json -s -w "%{http_code}" \
     --connect-timeout "$connect_timeout" \
     --max-time "$max_time" \

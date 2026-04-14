@@ -54,10 +54,12 @@ check_service_json() {
 
   if ! monitor_url_json "$url"
   then
+    echo "Service failure for $url"
     healthycount=0
   else
     if ! jq -e 'type == "object"' /tmp/test.json >/dev/null
     then
+      echo "Service json failure for $url"
       healthycount=0
     fi
   fi

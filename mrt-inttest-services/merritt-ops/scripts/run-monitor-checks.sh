@@ -4,8 +4,6 @@ source ./ecs-helpers.sh
 export label="Stack Monitoring Checks"
 export statfile="/tmp/stack-monitoring-log.txt"
 
-export escalope_token=$(aws ssm get-parameter --name /uc3/mrt/escalope_token --query Parameter.Value --output text --with-decryption)
-
 # Fetch URL and save response to /tmp/test.json
 # Returns 0 on success (HTTP 200), 1 otherwise
 monitor_url_json() {

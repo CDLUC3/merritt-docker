@@ -30,31 +30,37 @@ phases:
     on-failure: ABORT
     commands:
     - |
+      echo 111
       docker compose -f mrt-inttest-services/docker-compose.yml \
         build --push --quiet
 
     - |
+      echo 222
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-database \
         mrt-services/mysql
     - |
+      echo 333
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj \
         --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
         mrt-services/ldap
 
+      echo 444 
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj:ecs-dev \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --build-arg ADMIN_PASSWORD=$(aws ssm get-parameter --name /uc3/mrt/dev/ldap/ecs-admin-password --query Parameter.Value --output text --with-decryption) \
         mrt-services/ldap
 
+      echo 555
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj:ecs-prd \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --build-arg ADMIN_PASSWORD=$(aws ssm get-parameter --name /uc3/mrt/prd/ldap/ecs-admin-password --query Parameter.Value --output text --with-decryption) \
         -f mrt-services/ldap/Dockerfile.efs mrt-services/ldap
 
+      echo 666  
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj:ecs-stg \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
@@ -62,10 +68,14 @@ phases:
         -f mrt-services/ldap/Dockerfile.efs mrt-services/ldap
 
     - |
+      echo 777
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-init \
         mrt-services/merritt-init
     - |
+      echo 888
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/callback \
         mrt-services/callback
+
+      echo 999

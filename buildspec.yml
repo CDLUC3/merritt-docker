@@ -37,6 +37,16 @@ phases:
         build mock-merritt-it --push --quiet
       docker compose -f mrt-inttest-services/docker-compose.yml \
         build db-container --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build db-container-audit-replic --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build minio-server --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build minio-server-with-content --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build mysql-ruby-lambda --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build reveal-md --push --quiet
 
     - |
       echo 222

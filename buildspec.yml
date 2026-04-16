@@ -32,7 +32,11 @@ phases:
     - |
       echo 111
       docker compose -f mrt-inttest-services/docker-compose.yml \
-        build --push --quiet
+        build merritt-tomcat --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build mock-merritt-it --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build db-container --push --quiet
 
     - |
       echo 222

@@ -31,7 +31,7 @@ phases:
     commands:
     - |
       docker compose -f mrt-inttest-services/docker-compose.yml \
-        build --push --quiet
+        --parallel 1 build --push --quiet
 
     - |
       docker build --push --quiet \

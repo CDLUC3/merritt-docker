@@ -30,8 +30,27 @@ phases:
     on-failure: ABORT
     commands:
     - |
+      # This command stopped working on 4/16/2026, so I broke out each build.
+      # docker compose -f mrt-inttest-services/docker-compose.yml \
+      #   build --push --quiet
+
+
       docker compose -f mrt-inttest-services/docker-compose.yml \
-        --parallel 1 build --push --quiet
+        build merritt-tomcat --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build mock-merritt-it --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build db-container --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build db-container-audit-replic --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build minio-server --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build minio-server-with-content --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build mysql-ruby-lambda --push --quiet
+      docker compose -f mrt-inttest-services/docker-compose.yml \
+        build reveal-md --push --quiet
 
     - |
       docker build --push --quiet \

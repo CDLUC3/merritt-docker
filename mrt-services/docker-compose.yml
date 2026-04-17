@@ -66,7 +66,7 @@ services:
       NODE_TABLE: nodes-pairtree-docker
       MERRITT_STORE_INFO: store-info-docker
       LOG_STORE: /dpr2store/mrtHomes/logs
-      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
+      SVC_STORE: ${HOSTNAME}.cdlib.org:8081/store
       MRT_MINIO_HOST: ${HOSTNAME}.cdlib.org
       ZKCONN: zoo:2181
       SERVICE: store
@@ -141,7 +141,7 @@ services:
       target: 8086
     environment:
       SSM_SKIP_RESOLUTION: Y
-      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.
+      MRT_DOCKER_HOST: ${HOSTNAME}.cdlib.org
       SERVICE: ui
       HOSTNAME: ui
       LOGLEVEL: info

@@ -23,11 +23,12 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   # all_service_ips store service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service access       --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 --output text --no-cli-pager 
   sleep 75
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store ui
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store access ui
   echo " ==> Service Wait Complete"
 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 
@@ -50,11 +51,13 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   # all_service_ips store service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service access       --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 --output text --no-cli-pager 
   sleep 75
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store ui
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store access ui
   echo " ==> Service Wait Complete"
 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 --output text --no-cli-pager 

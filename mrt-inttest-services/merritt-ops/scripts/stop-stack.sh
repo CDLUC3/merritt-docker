@@ -30,6 +30,7 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --desired-count 0 --output text --no-cli-pager 
   # all_service_ips store service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --desired-count 0 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service access       --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output text --no-cli-pager 
 
   echo " ==> Stopping AUX Services"
@@ -58,6 +59,7 @@ then
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --desired-count 0 --output text --no-cli-pager 
   # all_service_ips store service/stop?t=json
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --desired-count 0 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service access       --desired-count 0 --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --desired-count 0 --output text --no-cli-pager 
 
   echo " ==> Stopping AUX Services"

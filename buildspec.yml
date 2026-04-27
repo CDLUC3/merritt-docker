@@ -34,6 +34,7 @@ phases:
       docker compose -f mrt-inttest-services/docker-compose.yml \
         build --push --quiet
 
+      docker pull ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.0.3 --quiet
 
       # docker compose -f mrt-inttest-services/docker-compose.yml \
       #   build merritt-ops --push --quiet

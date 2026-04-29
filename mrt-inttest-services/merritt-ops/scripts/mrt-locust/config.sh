@@ -9,7 +9,7 @@ then
   export MERRITTUSER=$(aws ssm get-parameter --name ${SSMPATH}/user --query Parameter.Value --output text)
   export MERRITTPASS=$(aws ssm get-parameter --name ${SSMPATH}/password --with-decryption --query Parameter.Value --output text)
   USERCOUNT=6
-  ARKLIST=ark:/99999/fk4t16pn3j,ark:/99999/fk4xp8q22b
+  ARKLIST=${ARKLIST:-ark:/99999/fk4t16pn3j,ark:/99999/fk4xp8q22b}
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
   SSMPATH=/uc3/mrt/dev/integ-tests/for-stage

@@ -15,7 +15,9 @@ class HelloWorldUser(HttpUser):
         self.client.get("/home/choose_collection")
         self.client.get("/m/{}".format(os.environ["MNEMONIC"]))
         self.client.get("/s/{}?terms=apple&group={}&commit=Go".format(os.environ["MNEMONIC"], os.environ["MNEMONIC"]))
+        print("TESTARKS: {}".format(os.environ["TESTARKS"]))
         for ark in os.environ["TESTARKS"].split(","):
+          print("ARK: {}".format(ark))
           if ark == '':
             continue
           arkenc = urllib.parse.quote_plus(ark)

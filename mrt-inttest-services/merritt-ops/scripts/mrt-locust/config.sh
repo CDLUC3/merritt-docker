@@ -18,14 +18,14 @@ then
   USERCOUNT=6
   MS_RESP=5000
   # stage arks are purged weekly
-  ARKLIST=
+  ARKLIST=${ARKLIST:-}
 else
   export MERRITTUSER=merritt-test
   export MERRITTPASS=password
   USERCOUNT=6
   MS_RESP=5000
   # stage arks are purged weekly
-  ARKLIST=
+  ARKLIST=${ARKLIST:-}
 fi
 
 if [[ "$LOCUST_MODE" == "readonly" ]]

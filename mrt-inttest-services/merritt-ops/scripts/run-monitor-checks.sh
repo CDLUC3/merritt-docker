@@ -32,6 +32,8 @@ check_service_json() {
   local host=$2
   local endpoint=$3
   local hosts=$4
+  local conn_time=${5:-5}
+  local max_time=${6:-20}
 
   local healthycount=1
 
@@ -41,7 +43,7 @@ check_service_json() {
       continue
     fi
     local url="$hh/$endpoint"
-    if ! monitor_url_json "$url"
+    if ! monitor_url_json "$url" "$conn_time" "$max_time"
     then
       echo "Host failure for $url"
       healthycount=0
@@ -50,7 +52,7 @@ check_service_json() {
 
   local url="$host/$endpoint"
 
-  if ! monitor_url_json "$url"
+  if ! monitor_url_json "$url" "$conn_time" "$max_time"
   then
     echo "Service failure for $url"
     healthycount=0
@@ -199,11 +201,11 @@ monitor_services() {
 
   # Replication (uses status instead of state)
   check_service_json "replic" \
-    "$(replic_base)" "status?t=json" "$HOSTS_REPLIC"
+    "$(replic_base)" "status?t=json" "$HOSTS_REPLIC" 10 30
   
   validation_check_json "replic" \
     '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' \
-    "replication status not running" 30
+    "replication status not running"
 
   stack_metrics "$(admintool_base)/metrics"
 }

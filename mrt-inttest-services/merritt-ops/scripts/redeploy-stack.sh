@@ -84,15 +84,15 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service audit       --force-new-deployment --desired-count 2 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service access      --force-new-deployment --desired-count 2 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service ui          --force-new-deployment --desired-count 2 --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool   --force-new-deployment --desired-count 2 --output text --no-cli-pager 
+  service_retag_redeploy audit
+  service_retag_redeploy access
+  service_retag_redeploy ui
+  service_retag_redeploy admintool
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops --force-new-deployment --desired-count 1 --output text --no-cli-pager 
   sleep 60
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merritt-ops
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services audit access ui admintool merritt-ops
   echo " ==> Service Wait Complete"
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then

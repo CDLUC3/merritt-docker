@@ -146,6 +146,18 @@ zk_restore() {
   curl --no-progress-meter -X POST $(admintool_base)/ops/zk/restore
 }
 
+service_retag_redeploy() {
+  service=$1
+  echo "POST $(admintool_base)/infra/retag-redeploy/${service}"
+  curl --no-progress-meter -X POST $(admintool_base)/infra/retag-redeploy/${service}
+}
+
+service_redeploy() {
+  service=$1
+  echo "POST $(admintool_base)/infra/redeploy/${service}"
+  curl --no-progress-meter -X POST $(admintool_base)/infra/redeploy/${service}
+}
+
 stack_init() {
   echo "POST $(admintool_base)/stack-init"
   curl --no-progress-meter -X POST $(admintool_base)/stack-init

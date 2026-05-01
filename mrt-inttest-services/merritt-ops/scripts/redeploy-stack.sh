@@ -105,10 +105,10 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
-  service_retag_redeploy audit || service_redeploy audit
-  service_retag_redeploy access || service_redeploy access
-  service_retag_redeploy ui || service_redeploy ui
-  service_retag_redeploy admintool || service_redeploy admintool
+  service_retag_redeploy audit 
+  service_retag_redeploy access
+  service_retag_redeploy ui
+  service_retag_redeploy admintool
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops --force-new-deployment --desired-count 1 \
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
   sleep 75

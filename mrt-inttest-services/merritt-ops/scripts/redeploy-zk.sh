@@ -16,19 +16,22 @@ then
   sleep 30
 
   echo " ==> Redeploying zoo1"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo1 --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo1 --force-new-deployment --desired-count 1 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
   sleep 30
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services zoo1
 
   echo " ==> Redeploying zoo2"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo2 --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo2 --force-new-deployment --desired-count 1 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
   sleep 30
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services zoo2
 
   echo " ==> Redeploying zoo3"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo3 --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo3 --force-new-deployment --desired-count 1 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
   sleep 30
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services zoo3
@@ -40,7 +43,8 @@ then
   zk_snapshot
   sleep 30
 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo --force-new-deployment --desired-count 1 --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo --force-new-deployment --desired-count 1 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
   sleep 30
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services zoo
 

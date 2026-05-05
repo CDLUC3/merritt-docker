@@ -1,0 +1,50 @@
+# Merritt services have code builds associated with them that build docker images and push to ECR.
+# The branch or tag name is used as a docker image tag.
+# - mrt-service-repo:branch-name
+# - mrt-service-repo:tag-name
+#
+# When specific branches or tags are built, a second tag may be assigned to the docker image
+# - mrt-service-repo:stack-name
+#
+# For development stacks, the service may automatically redeploy after the image has been built.
+#
+# Deployed docker images will be rebuilt on a daily basis.
+# In the case of Java based images, the code will not be rebuilt.  Only the docker file will be rebuilt.
+# - mrt-service-repo:stack-name
+ecs-tagmap:
+  # mrt-service-repo:
+  #   dev stacks will usually use main, can temporarily be assigned to a branch
+  #   ecs-dev: main
+  #   ecs-dbsnapshot: main
+  #   ecs-ephemeral: main
+  #   stage should map to a tag, but it could temporarily use a branch
+  #   ecs-stg: 1.0.0
+  #   prod should always map to a tag
+  #   ecs-prd: 1.0.0
+  mrt-admin-sinatra:
+    ecs-dev: main
+    ecs-dbsnapshot: main
+    ecs-ephemeral: main
+    ecs-stg: main
+    ecs-prd: main
+  mrt-dashboard:
+    ecs-dev: rails8
+    ecs-dbsnapshot: rails8
+    ecs-ephemeral: main
+    ecs-stg: 1.7.26
+    ecs-prd: 1.7.26
+  mrt-ingest:
+    ecs-dev: storageState
+    ecs-ephemeral: main
+  mrt-store:
+    ecs-dev: storageState
+    ecs-ephemeral: main
+  mrt-inventory:
+    ecs-dev: main
+    ecs-ephemeral: main
+  mrt-audit:
+    ecs-dev: main
+    ecs-ephemeral: main
+  mrt-replic:
+    ecs-dev: main
+    ecs-ephemeral: main

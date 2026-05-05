@@ -46,6 +46,14 @@ services:
     build:
       context: mrt-minio-it
       dockerfile: Dockerfile
+  mrt-rustfs-it:
+    container_name: mrt-rustfs-it
+    image: ${ECR_REGISTRY}/mrt-rustfs-it:dev
+    build:
+      context: mrt-rustfs-it
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
   minio-server-with-content:
     container_name: minio-server-with-content
     image: ${ECR_REGISTRY}/mrt-minio-it-with-content:dev

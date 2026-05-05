@@ -3,6 +3,8 @@ ARG ECR_REGISTRY=ecr_registry_not_set
 FROM $ECR_REGISTRY/docker-hub/rustfs/rc AS ecr_registry
 
 FROM $ECR_REGISTRY/docker-hub/rustfs/rustfs
+ENV RUSTFS_ACCESS_KEY=minioadmin
+ENV RUSTFS_SECRET_KEY=minioadmin
 
 COPY --from=ecr_registry /usr/bin/rc /usr/bin/rc
 
@@ -19,7 +21,7 @@ USER rustfs
 
 RUN rustfs & sleep 3; \
     server_pid=$!; \
-    rc alias set local http://localhost:9000 rustfsadmin rustfsadmin; \ 
+    rc alias set local http://localhost:9000 minioadmin minioadmin; \ 
     rc cp --recursive /data-load/ local/mrt-config/; \
     kill $server_pid
 

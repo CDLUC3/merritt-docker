@@ -1,0 +1,14 @@
+services:
+  minio-server:
+    container_name: mrt-rustfs-it-with-content
+    image: ${ECR_REGISTRY}/mrt-rustfs-it-with-content:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
+    ports:
+    - published: 9000
+      target: 9000
+    - published: 8098
+      target: 9001

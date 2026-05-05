@@ -62,6 +62,14 @@ services:
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${ECR_REGISTRY}
+  mrt-rustfs-it-with-content:
+    container_name: mrt-rustfs-it-with-content
+    image: ${ECR_REGISTRY}/mrt-rustfs-it-with-content:dev
+    build:
+      context: mrt-rustfs-it-with-content
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
   mysql-ruby-lambda:
     container_name: mysql-ruby-lambda
     image: ${ECR_REGISTRY}/mysql-ruby-lambda

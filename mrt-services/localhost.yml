@@ -30,7 +30,7 @@ services:
   ldap:
     image: ${ECR_REGISTRY}/mrt-opendj
   minio:
-    image: ${ECR_REGISTRY}/mrt-minio-it:dev
+    image: ${ECR_REGISTRY}/mrt-rustfs-it:dev
     networks:
       merrittnet:
         aliases:

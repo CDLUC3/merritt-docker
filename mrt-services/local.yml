@@ -30,7 +30,7 @@ services:
   ldap:
     image: it-docker-registry/mrt-opendj
   minio:
-    image: it-docker-registry/mrt-minio-it:dev
+    image: it-docker-registry/mrt-rustfs-it:dev
     networks:
       merrittnet:
         aliases:

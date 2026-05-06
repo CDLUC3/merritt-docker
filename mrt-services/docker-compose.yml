@@ -199,13 +199,13 @@ services:
   # For pre-signed URL testing, you must create an entry in your /etc/hosts file to redirect my-minio-localhost-alias:8088 to localhost:8088.
   minio:
     container_name: minio
-    image: ${ECR_REGISTRY}/mrt-minio-it:dev
+    image: ${ECR_REGISTRY}/mrt-rustfs-it:dev
     ports:
     - published: 8088
       target: 8088
     - published: 8095
       target: 9001
-    command: server /buckets --address :8088 --console-address ":9001"
+    command: server --address :8088
     networks:
       merrittnet:
         aliases:

@@ -2,8 +2,8 @@
 
 source ./ecs-helpers.sh
 
-export label="Run LDAP Init"
-export statfile="/tmp/run-ldap-init-log.txt"
+export label="Prepare LDAP Import"
+export statfile="/tmp/prepare-ldap-import-log.txt"
 
 ldap_init() {
   echo "Initializing LDAP data for ECS environment: $MERRITT_ECS"

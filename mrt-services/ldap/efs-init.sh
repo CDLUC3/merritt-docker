@@ -35,5 +35,6 @@ cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
   --includeBranch "ou=uc3,dc=cdlib,dc=org" \
   --trustAll \
   --ldifFile /opt/import/import.ldif
+  --replaceExisting
 
 echo "import step complete"

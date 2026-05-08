@@ -1,15 +1,10 @@
 #! /bin/bash
 
-source ./ecs-helpers.sh
-
-export label="Prepare LDAP Import"
-export statfile="/tmp/prepare-ldap-import-log.txt"
-
 ldap_init() {
   echo "Initializing LDAP data for ECS environment: $MERRITT_ECS"
   rm -rf /merritt-filesys/ldap
-  mkdir -p /merritt-filesys/ldap/config /merritt-filesys/ldap/db /merritt-filesys/ldap/import
-  chmod 777 /merritt-filesys/ldap/config /merritt-filesys/ldap/db /merritt-filesys/ldap/import
+  mkdir -p /merritt-filesys/ldap/db /merritt-filesys/ldap/import
+  chmod 777 /merritt-filesys/ldap/db /merritt-filesys/ldap/import
 
   find /merritt-filesys/ldap -print
 
@@ -22,8 +17,4 @@ ldap_init() {
   fi
 }
 
-task_init
-
 ldap_init
-
-task_complete

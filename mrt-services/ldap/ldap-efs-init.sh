@@ -25,7 +25,6 @@ setup_service() {
 
 load_ldif() {
   impfile=$1
-  flags=$2
 
   # Schema data
   cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
@@ -39,7 +38,6 @@ load_ldif() {
     --backendID userRoot \
     --includeBranch "ou=uc3,dc=cdlib,dc=org" \
     --trustAll \
-    $flags \
     --ldifFile $impfile
 
   echo "import step complete"
@@ -49,7 +47,7 @@ setup_service
 
 if [ -f /opt/import/import.ldif ]
 then
-  load_ldif /opt/import/import.ldif "--replaceExisting"
+  load_ldif /opt/import/import.ldif
   mv /opt/import/import.ldif /opt/import/import.ldif.loaded
 else
   load_ldif /opt/barebones.ldif

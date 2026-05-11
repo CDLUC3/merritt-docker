@@ -3,8 +3,8 @@
 ldap_init() {
   echo "Initializing LDAP data for ECS environment: $MERRITT_ECS"
   rm -rf /merritt-filesys/ldap
-  mkdir -p /merritt-filesys/ldap/data /merritt-filesys/ldap/import
-  chmod 777 /merritt-filesys/ldap/data /merritt-filesys/ldap/import
+  mkdir -p /merritt-filesys/ldap/db /merritt-filesys/ldap/config /merritt-filesys/ldap/import
+  chmod 777 /merritt-filesys/ldap/db /merritt-filesys/ldap/config /merritt-filesys/ldap/import
 
   find /merritt-filesys/ldap -print
 

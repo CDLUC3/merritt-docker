@@ -1,6 +1,7 @@
 #!/bin/bash
 
 setup_service() {
+  echo " ===> start setup step"
   ./setup \
     --cli \
     --no-prompt \
@@ -20,11 +21,13 @@ setup_service() {
     --noPropertiesFile \
     --doNotStart
 
-  echo "setup step complete"
+  echo " ===> setup step complete"
 }
 
 load_ldif() {
   impfile=$1
+
+  echo " ===> Load LDIF file: $impfile"
 
   # Schema data
   cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
@@ -40,7 +43,7 @@ load_ldif() {
     --trustAll \
     --ldifFile $impfile
 
-  echo "import step complete"
+  echo " ===> import step complete"
 }
 
 setup_service
@@ -52,5 +55,7 @@ then
 else
   load_ldif /opt/barebones.ldif
 fi
+
+echo " ===> Start run.sh"
 
 /opt/opendj/run.sh

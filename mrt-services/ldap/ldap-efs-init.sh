@@ -48,12 +48,15 @@ load_ldif() {
 
 setup_service
 
-if [ -f /opt/import/import.ldif ]
+if [ -z "$(ls -A /opt/opendj/db)" ]
 then
-  load_ldif /opt/import/import.ldif
-  mv /opt/import/import.ldif /opt/import/import.ldif.loaded
-else
-  load_ldif /opt/barebones.ldif
+  if [ -f /opt/import/import.ldif ]
+  then
+    load_ldif /opt/import/import.ldif
+    mv /opt/import/import.ldif /opt/import/import.ldif.loaded
+  else
+    load_ldif /opt/barebones.ldif
+  fi
 fi
 
 echo " ===> Start run.sh"

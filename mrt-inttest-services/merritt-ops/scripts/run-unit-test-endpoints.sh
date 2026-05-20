@@ -18,7 +18,7 @@ mv $statfile $statfile.tmp
 
 echo "To see a formatted version of the report, copy and paste the following URL into a browser:" >> $statfile
 echo "" >> $statfile
-echo "${baseurl}ops/s3-reports/retrieve?report=unit-tests%2F${rptfile}" >> $statfile
+echo "${baseurl}ops/s3-reports/unit-test-results?report=unit-tests%2F${rptfile}" >> $statfile
 echo "" >> $statfile
 cat $statfile.tmp >> $statfile
 

@@ -62,5 +62,5 @@ if [ $FAIL -eq 1 ]
 then
   task_fail
 else
-  task_complete Y
+  task_complete
 fi

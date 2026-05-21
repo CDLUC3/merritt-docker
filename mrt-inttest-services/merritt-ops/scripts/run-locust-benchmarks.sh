@@ -16,6 +16,14 @@ set +o pipefail
 rptfile="$(date +%Y%m%d-%H%M%S).txt"
 aws s3 cp $statfile "s3://${S3REPORT_BUCKET}/locust/${rptfile}"
 
+if [ $FAIL -eq 1 ]
+then
+  echo "FAIL: #{label} for #{MERRITT_ECS} $(duration)" > $statfile.slack
+else
+  echo "COMPLETE: #{label} for #{MERRITT_ECS} $(duration)" > $statfile.slack
+fi
+echo "" >> $statfile.slack
+
 echo "To see a formatted version of the report, copy and paste the following URL into a browser:" >> $statfile
 echo "" >> $statfile.slack
 echo "${baseurl}ops/s3-reports/retrieve?report=locust%2F${rptfile}" >> $statfile.slack

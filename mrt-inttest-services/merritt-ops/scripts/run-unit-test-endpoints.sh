@@ -7,6 +7,7 @@ export statfile="/tmp/admin-unit-log.txt"
 
 task_init
 
+FAIL=0
 set -o pipefail
 admintool_test_routes | tee -a $statfile || FAIL=1
 set +o pipefail

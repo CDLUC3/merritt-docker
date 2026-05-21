@@ -7,7 +7,8 @@ export statfile="/tmp/locust-benchmarks.txt"
 
 task_init
 
-# Return Code ignores tee 
+# Return Code ignores tee
+FAIL=0
 set -o pipefail
 /mrt-locust/run_locust.sh | tee -a $statfile || FAIL=1
 set +o pipefail

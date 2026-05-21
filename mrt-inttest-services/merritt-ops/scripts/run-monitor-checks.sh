@@ -214,6 +214,14 @@ task_init
 
 monitor_services 2>&1 | tee -a "$statfile"
 
-grep -q "CRITICAL" "$statfile" && task_fail
+FAIL=0
+grep -q "CRITICAL" "$statfile" && FAIL=1
 
-task_complete
+echo "${baseurl}ops/monitoring/service-status" > $statfile.slack
+
+if [ $FAIL -eq 1 ]
+then
+  task_fail
+else
+  task_complete Y
+fi

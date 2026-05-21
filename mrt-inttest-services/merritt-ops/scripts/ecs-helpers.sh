@@ -195,7 +195,7 @@ task_complete() {
 
   if [[ "$send_sms" == "Y" ]]
   then
-    subject="Merritt ECS $label for $MERRITT_ECS $(duration)"
+    subject=":white_check_mark: Merritt ECS $label for $MERRITT_ECS $(duration)"
 
     if [[ -v SLACK_BOT_TOKEN ]]
     then
@@ -205,7 +205,7 @@ task_complete() {
       then
         cat $statfile.slack >> $statfile.message
       fi
-      ruby slack_message.rb $statfile.message ':white_check_mark:'
+      ruby slack_message.rb $statfile.message
     else
       aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
         --message "$(cat $statfile)"
@@ -219,7 +219,7 @@ task_fail() {
   TZ="America/Los_Angeles" date "+ ==> %Y-%m-%d %H:%M:%S: FAIL: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
   echo $(make_status "FAIL" "$(duration)")
 
-  subject="FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)"
+  subject=":x: FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)"
 
   if [[ "$send_sms" == "Y" ]]
   then
@@ -231,7 +231,7 @@ task_fail() {
       then
         cat $statfile.slack >> $statfile.message
       fi
-      ruby slack_message.rb $statfile.message ':x:'
+      ruby slack_message.rb $statfile.message
     else
       aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
         --message "$(cat $statfile)"

@@ -53,6 +53,14 @@ then
   run_tests 2025_10_20_0834_combo README.md '7777 8888'
 fi
 
-egrep -q "ERROR|FAIL|WARN" $statfile && task_fail
+FAIL=0
+egrep -q "ERROR|FAIL|WARN" $statfile && FAIL=1
 
-task_complete
+echo "${baseurl}ops/metrics/benchmark-retrieval" > $statfile.slack
+
+if [ $FAIL -eq 1 ]
+then
+  task_fail
+else
+  task_complete Y
+fi

@@ -181,6 +181,10 @@ task_init() {
   TZ="America/Los_Angeles" date "+ ==> %Y-%m-%d %H:%M:%S: START: $label for $MERRITT_ECS" | tee $statfile
   echo $(make_status "STARTED" "")
   export STARTTIME=$(date +%s)
+  if [[ -v SLACK_BOT_SSM ]]
+  then
+    export SLACK_BOT_TOKEN=$(aws ssm get-parameter --name "${SLACK_BOT_SSM}" --with-decryption --query "Parameter.Value" --output text)
+  fi
 }
 
 task_complete() {
@@ -193,8 +197,19 @@ task_complete() {
   then
     subject="Merritt ECS $label for $MERRITT_ECS $(duration)"
 
-    aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
-      --message "$(cat $statfile)"
+    if [[ -v SLACK_BOT_TOKEN ]]
+    then
+      echo "*${subject}*" > $statfile.message
+      echo "" >> $statfile.message
+      if [[ -f "$statfile.slack" ]]
+      then
+        cat $statfile.slack >> $statfile.message
+      fi
+      ruby slack_message.rb $statfile.message ':white_check_mark:'
+    else
+      aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
+        --message "$(cat $statfile)"
+    fi
   fi
 }
 
@@ -208,8 +223,19 @@ task_fail() {
 
   if [[ "$send_sms" == "Y" ]]
   then
-    aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
-      --message "$(cat $statfile)"
+    if [[ -v SLACK_BOT_TOKEN ]]
+    then
+      echo "*${subject}*" > $statfile.message
+      echo "" >> $statfile.message
+      if [[ -f "$statfile.slack" ]]
+      then
+        cat $statfile.slack >> $statfile.message
+      fi
+      ruby slack_message.rb $statfile.message ':x:'
+    else
+      aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
+        --message "$(cat $statfile)"
+    fi
   fi
   exit 1
 }

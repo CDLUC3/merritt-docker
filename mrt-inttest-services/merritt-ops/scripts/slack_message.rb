@@ -10,6 +10,7 @@ http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
 
 message = File.read(ARGV[0] || "*no data* provided")
+icon_emoji = ARGV[1] || ':merritt:'
 
 request = Net::HTTP::Post.new(uri)
 request["Authorization"] = "Bearer #{token}"
@@ -17,7 +18,8 @@ request["Content-Type"] = "application/json; charset=utf-8"
 request.body = {
   channel: channel,
   mrkdwn: true,
-  text: message
+  text: message,
+  icon_emoji: icon_emoji
 }.to_json
 
 response = http.request(request)

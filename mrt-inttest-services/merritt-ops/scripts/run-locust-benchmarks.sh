@@ -33,8 +33,8 @@ export SLACK_BOT_TOKEN=$(aws ssm get-parameter --name "${SLACK_BOT_SSM}" --with-
 
 if [ $FAIL -eq 1 ]
 then
-  task_fail N
   ruby slack_message.rb $statfile.slack
+  task_fail N
 else
   task_complete
   ruby slack_message.rb $statfile.slack

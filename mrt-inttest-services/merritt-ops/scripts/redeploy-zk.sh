@@ -67,4 +67,4 @@ then
   echo "No action - will cycle 1-5"
 fi
 
-task_complete Y
+task_complete

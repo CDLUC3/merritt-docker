@@ -34,9 +34,15 @@ then
   echo
   get_delete_lists
 else
+  export SLACK_ONSUCCESS=Y
   task_init
   run_delete_list $filepath 2>&1 | tee -a $statfile
-  echo "${baseurl}ops/inventory/delete-lists" > $statfile.slack
-  task_complete Y
+  echo '```' > $statfile.slack
+  egrep 'Purging' $statfile >> $statfile.slack
+  echo '```' >> $statfile.slack
+  echo "" >> $statfile.slack
+  echo "" >> $statfile.slack
+  echo "${baseurl}ops/inventory/delete-lists" >> $statfile.slack
+  task_complete
 fi
 

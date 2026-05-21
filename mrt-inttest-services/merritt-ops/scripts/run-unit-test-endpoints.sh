@@ -17,9 +17,9 @@ aws s3 cp $statfile "s3://${S3REPORT_BUCKET}/unit-tests/${rptfile}"
 
 if [ $FAIL -eq 1 ]
 then
-  echo "FAIL: #{label} for #{MERRITT_ECS} $(duration)" > $statfile.slack
+  echo "FAIL: ${label} for ${MERRITT_ECS} $(duration)" > $statfile.slack
 else
-  echo "COMPLETE: #{label} for #{MERRITT_ECS} $(duration)" > $statfile.slack
+  echo "COMPLETE: ${label} for ${MERRITT_ECS} $(duration)" > $statfile.slack
 fi
 echo "" >> $statfile.slack
 echo "To see a formatted version of the report, copy and paste the following URL into a browser:" >> $statfile.slack

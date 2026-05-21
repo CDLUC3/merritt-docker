@@ -22,9 +22,12 @@ echo "${baseurl}ops/s3-reports/unit-test-results?report=unit-tests%2F${rptfile}"
 echo "" >> $statfile
 cat $statfile.tmp >> $statfile
 
+export SLACK_BOT_TOKEN=$(aws ssm get-parameter --name "${SLACK_BOT_SSM}" --with-decryption --query "Parameter.Value" --output text)
+
 if [ $FAIL -eq 1 ]
 then
-  task_fail
+  task_fail N
+  ruby slack_message.rb $statfile
 else
   task_complete
 fi

@@ -199,13 +199,18 @@ task_complete() {
 }
 
 task_fail() {
+  local send_sms=${1:-Y}
+
   TZ="America/Los_Angeles" date "+ ==> %Y-%m-%d %H:%M:%S: FAIL: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
   echo $(make_status "FAIL" "$(duration)")
 
   subject="FAIL: Merritt ECS $label for $MERRITT_ECS $(duration)"
 
-  aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
-    --message "$(cat $statfile)"
+  if [[ "$send_sms" == "Y" ]]
+  then
+    aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \
+      --message "$(cat $statfile)"
+  fi
   exit 1
 }
 

@@ -36,6 +36,7 @@ then
 else
   task_init
   run_delete_list $filepath 2>&1 | tee -a $statfile
+  echo "${baseurl}ops/inventory/delete-lists" > $statfile.slack
   task_complete Y
 fi
 

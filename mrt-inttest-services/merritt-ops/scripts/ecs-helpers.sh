@@ -189,13 +189,14 @@ task_init() {
 
 task_complete() {
   local send_sms=${SLACK_ONSUCCESS:-N}
+  local icon=${COMPLETE_ICON:-":white_check_mark:"}
 
   TZ="America/Los_Angeles" date "+ ==> %Y-%m-%d %H:%M:%S: COMPLETE: $label for $MERRITT_ECS $(duration)" | tee -a $statfile
   echo $(make_status "COMPLETE" "$(duration)")
 
   if [[ "$send_sms" == "Y" ]]
   then
-    subject=":white_check_mark: Merritt ECS $label for $MERRITT_ECS $(duration)"
+    subject="${icon} Merritt ECS $label for $MERRITT_ECS $(duration)"
 
     if [[ -v SLACK_BOT_TOKEN ]]
     then

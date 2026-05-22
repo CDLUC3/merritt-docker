@@ -6,10 +6,18 @@ export statfile="/tmp/consistency-log.txt"
 
 task_init
 
-set -o pipefail
 FAIL=0
+set -o pipefail
 admintool_run_consistency_checks  | tee -a $statfile || FAIL=1
 set +o pipefail
+
+if [ $FAIL -eq 1 ]
+then
+  echo '```' > $statfile.slack
+  head -6 $statfile > $statfile.slack
+  echo '```' >> $statfile.slack
+  echo "" >> $statfile.slack
+fi
 
 echo "- ${baseurl}queries/consistency/daily" > $statfile.slack
 

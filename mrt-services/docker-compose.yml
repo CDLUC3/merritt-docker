@@ -190,9 +190,6 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: true
-    volumes:
-    - ./ldap/data:/opt/opendj/data
-    - ./ldap/import:/opt/import
   smtp:
     container_name: smtp 
     image: ${ECR_REGISTRY}/docker-hub/ghusta/fakesmtp

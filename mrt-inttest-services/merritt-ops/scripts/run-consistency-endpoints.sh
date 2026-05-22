@@ -14,12 +14,12 @@ set +o pipefail
 if [ $FAIL -eq 1 ]
 then
   echo '```' > $statfile.slack
-  head -6 $statfile > $statfile.slack
+  head -6 $statfile >> $statfile.slack
   echo '```' >> $statfile.slack
   echo "" >> $statfile.slack
 fi
 
-echo "- ${baseurl}queries/consistency/daily" > $statfile.slack
+echo "- ${baseurl}queries/consistency/daily" >> $statfile.slack
 
 if [ $FAIL -eq 1 ]
 then

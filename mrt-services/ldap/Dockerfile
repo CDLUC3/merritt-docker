@@ -20,36 +20,10 @@ COPY README.merritt.md /opt/opendj/README.merritt.md
 
 WORKDIR /opt/opendj
 
-RUN ./setup \
-  --cli \
-  --no-prompt \
-  --acceptLicense \
-  --backendType je \
-  --baseDN ou=uc3,dc=cdlib,dc=org \
-  --baseDN ou=healthcheck,dc=cdlib,dc=org \
-  --ldapPort 1389 \
-  --adminConnectorPort 4444 \
-  --rootUserDN 'cn=Directory Manager' \
-  --rootUserPassword "$ROOT_PASSWORD" \
-  --enableStartTLS \
-  --ldapsPort 1636 \
-  --useJavaKeystore /opt/opendj/keystore \
-  --keyStorePasswordFile /opt/opendj/keystore.pin \
-  --hostname ldap \
-  --noPropertiesFile
-
-# Schema data
-RUN cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
-
-RUN /bin/sh ./bin/import-ldif \
-  --offline \
-  --hostname localhost \
-  --port 4444 \
-  --bindDN "cn=Directory Manager" \
-  --bindPassword $ROOT_PASSWORD \
-  --backendID userRoot \
-  --includeBranch "ou=uc3,dc=cdlib,dc=org" \
-  --trustAll \
-  --ldifFile /opt/barebones.ldif
+COPY ldap-efs-init.sh /opt/ldap-efs-init.sh
 
 EXPOSE 1389 1636 4444
+
+USER opendj
+
+ENTRYPOINT ["/opt/ldap-efs-init.sh"]

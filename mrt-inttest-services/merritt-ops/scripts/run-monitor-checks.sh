@@ -217,7 +217,7 @@ monitor_services 2>&1 | tee -a "$statfile"
 FAIL=0
 grep -q "CRITICAL" "$statfile" && FAIL=1
 
-echo "${baseurl}ops/monitoring/service-status" > $statfile.slack
+echo "- ${baseurl}ops/monitoring/service-status" > $statfile.slack
 
 if [ $FAIL -eq 1 ]
 then

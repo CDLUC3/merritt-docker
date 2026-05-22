@@ -11,7 +11,7 @@ FAIL=0
 admintool_run_consistency_checks  | tee -a $statfile || FAIL=1
 set +o pipefail
 
-echo "${baseurl}queries/consistency/daily" > $statfile.slack
+echo "- ${baseurl}queries/consistency/daily" > $statfile.slack
 
 if [ $FAIL -eq 1 ]
 then

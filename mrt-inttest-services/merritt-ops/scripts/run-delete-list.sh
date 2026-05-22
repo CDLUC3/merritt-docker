@@ -41,8 +41,7 @@ else
   egrep 'Purging' $statfile >> $statfile.slack
   echo '```' >> $statfile.slack
   echo "" >> $statfile.slack
-  echo "" >> $statfile.slack
-  echo "${baseurl}ops/inventory/delete-lists" >> $statfile.slack
+  echo "- ${baseurl}ops/inventory/delete-lists" >> $statfile.slack
   task_complete
 fi
 

@@ -56,7 +56,7 @@ fi
 FAIL=0
 egrep -q "ERROR|FAIL|WARN" $statfile && FAIL=1
 
-echo "${baseurl}ops/metrics/benchmark-retrieval" > $statfile.slack
+echo "- ${baseurl}ops/metrics/benchmark-retrieval" > $statfile.slack
 
 if [ $FAIL -eq 1 ]
 then

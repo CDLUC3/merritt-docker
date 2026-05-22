@@ -1,3 +1,8 @@
+## Status
+```
+bin/status --bindDN "cn=Directory Manager" --bindPassword $ROOT_PASSWORD
+```
+
 ## List Users
 
 ```

@@ -30,7 +30,7 @@ load_ldif() {
   echo " ===> Load LDIF file: $impfile"
 
   # Schema data
-  cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
+  cp /opt/99-user.ldif /opt/opendj/template/config/schema/99-user.ldif
  
   ./bin/import-ldif \
     --offline \
@@ -46,9 +46,12 @@ load_ldif() {
   echo " ===> import step complete"
 }
 
-setup_service
+# setup_service
+./setup
 
-if [ -z "$(ls -A /opt/opendj/db)" ]
+find
+
+if [ -z "$(ls -A /opt/opendj/data)" ]
 then
   if [ -f /opt/import/import.ldif ]
   then
@@ -61,4 +64,4 @@ fi
 
 echo " ===> Start run.sh"
 
-/opt/opendj/run.sh
+/opt/opendj/run.sh -h ldap -p 4444 -l /opt/barebones.ldif

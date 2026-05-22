@@ -231,6 +231,7 @@ task_fail() {
       then
         cat $statfile.slack >> $statfile.message
       fi
+      echo "" >> $statfile.message
       ruby slack_message.rb $statfile.message
     else
       aws sns publish --topic-arn "$SNS_ARN" --subject "$subject" \

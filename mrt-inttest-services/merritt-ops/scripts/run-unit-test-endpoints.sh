@@ -15,8 +15,8 @@ set +o pipefail
 rptfile="$(date +%Y%m%d-%H%M%S).txt"
 aws s3 cp $statfile "s3://${S3REPORT_BUCKET}/unit-tests/${rptfile}"
 
-echo 'Snippet of ERRORS/500 (up to 10):' > $statfile.slack
 echo '```' >> $statfile.slack
+echo 'Snippet of ERRORS/500 (up to 10):' > $statfile.slack
 egrep "ERROR|Status: 500" $statfile | head -10 >> $statfile.slack
 echo '```' >> $statfile.slack
 echo "" >> $statfile.slack

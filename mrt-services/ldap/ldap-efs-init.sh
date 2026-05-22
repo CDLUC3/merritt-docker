@@ -1,7 +1,6 @@
 #!/bin/bash
 
 setup_service() {
-  echo " ===> start setup step"
   ./setup \
     --cli \
     --no-prompt \
@@ -21,16 +20,15 @@ setup_service() {
     --noPropertiesFile \
     --doNotStart
 
-  echo " ===> setup step complete"
+  echo "setup step complete"
 }
 
 load_ldif() {
   impfile=$1
-
-  echo " ===> Load LDIF file: $impfile"
+  flags=$2
 
   # Schema data
-  cp /opt/99-user.ldif /opt/opendj/template/config/schema/99-user.ldif
+  cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
  
   ./bin/import-ldif \
     --offline \
@@ -41,27 +39,20 @@ load_ldif() {
     --backendID userRoot \
     --includeBranch "ou=uc3,dc=cdlib,dc=org" \
     --trustAll \
+    $flags \
     --ldifFile $impfile
 
-  echo " ===> import step complete"
+  echo "import step complete"
 }
 
-# setup_service
-./setup
+setup_service
 
-find
-
-if [ -z "$(ls -A /opt/opendj/data)" ]
+if [ -f /opt/import/import.ldif ]
 then
-  if [ -f /opt/import/import.ldif ]
-  then
-    load_ldif /opt/import/import.ldif
-    mv /opt/import/import.ldif /opt/import/import.ldif.loaded
-  else
-    load_ldif /opt/barebones.ldif
-  fi
+  load_ldif /opt/import/import.ldif "--replaceExisting"
+  mv /opt/import/import.ldif /opt/import/import.ldif.loaded
+else
+  load_ldif /opt/barebones.ldif
 fi
 
-echo " ===> Start run.sh"
-
-/opt/opendj/run.sh -h ldap -p 4444 -l /opt/barebones.ldif
+/opt/opendj/run.sh

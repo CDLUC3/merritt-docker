@@ -91,8 +91,7 @@ test_route() {
   # On the other hand, "ERROR" indicates a software or enviornment bug
   if [ "${code:-0}" -ge 400 ] || [[ "$result" == "ERROR"* ]]
   then
-    echo $route | tee -a $statfile
-    echo "  Result: $result; Rows: $rows; $status; Title: $title" | tee -a $statfile
+    echo "- Result: $result; Status: $status; $route" | tee -a $statfile
     return 1
   fi
 }
@@ -114,7 +113,7 @@ post_route() {
   if [ "${code:-0}" -ge 400 ] || [[ "$result" == "ERROR"* ]]
   then
     echo $route | tee -a $statfile
-    echo "  Result: $result; Rows: $rows; $status; Title: $title" | tee -a $statfile
+    echo "- Result: $result; Status: $status; $route" | tee -a $statfile
     return 1
   fi
 }

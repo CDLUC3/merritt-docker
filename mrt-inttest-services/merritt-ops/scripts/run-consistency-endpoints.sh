@@ -14,7 +14,7 @@ set +o pipefail
 if [ $FAIL -eq 1 ]
 then
   echo '```' > $statfile.slack
-  head -6 $statfile >> $statfile.slack
+  head -10 $statfile >> $statfile.slack
   echo '```' >> $statfile.slack
   echo "" >> $statfile.slack
 fi

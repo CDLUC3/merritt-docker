@@ -337,7 +337,7 @@ dn: ou=ucb_lib_prechmat,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top
 objectClass: merrittClass
 objectClass: organizationalUnit
-submissionProfile: dWNiX2xpYl9wcmVjaG1hdF9jb250ZW50
+submissionProfile: ucb_lib_prechmat_content
 
 ou: ucb_lib_prechmat
 arkId: ark:/13030/m5vb545c

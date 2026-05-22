@@ -35,6 +35,7 @@ then
   get_delete_lists
 else
   export SLACK_ONSUCCESS=Y
+  export COMPLETE_ICON=":alert:"
   task_init
   run_delete_list $filepath 2>&1 | tee -a $statfile
   echo '```' > $statfile.slack

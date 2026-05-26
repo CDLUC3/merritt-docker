@@ -55,6 +55,22 @@ phases:
       # docker compose -f mrt-inttest-services/docker-compose.yml \
       #   build reveal-md --push --quiet
 
+      # Redeploy merritt-ops container to DEV if it is running
+      RUNNING_COUNT=$(aws ecs list-tasks \
+        --cluster mrt-ecs-dev-stack \
+        --service-name merritt-ops \
+        --desired-status RUNNING \
+        --query 'length(taskArns)' \
+        --output text)
+
+      if [ $RUNNING_COUNT -gt 0 ]
+      then
+        aws ecs update-service --cluster mrt-ecs-dev-stack --service merritt-ops \
+          --desired-count $RUNNING_COUNT --output text --no-cli-pager \
+          --query "service.deployments[0].[id,taskDefinition,status,desiredCount,createdAt]" \
+          --force-new-deployment || echo "Skip ecs-dev Deployment"
+      fi  
+
     - |
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-database \

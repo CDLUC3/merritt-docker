@@ -63,7 +63,7 @@ then
   echo '```' >> $statfile.slack
 fi
 
-echo "- ${baseurl}ops/metrics/benchmark-retrieval" > $statfile.slack
+echo "- ${baseurl}ops/metrics/benchmark-retrieval" >> $statfile.slack
 
 if [ $FAIL -eq 1 ]
 then

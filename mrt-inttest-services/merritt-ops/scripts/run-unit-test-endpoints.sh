@@ -16,7 +16,7 @@ rptfile="$(date +%Y%m%d-%H%M%S).txt"
 aws s3 cp $statfile "s3://${S3REPORT_BUCKET}/unit-tests/${rptfile}"
 
 egrep "ERROR|Status: 500" $statfile
-if [[ $? -eq 0 ]]
+if [ $? -eq 0 ]
 then
   echo '```' > $statfile.slack
   echo 'Snippet of ERRORS/500 (up to 10):' >> $statfile.slack

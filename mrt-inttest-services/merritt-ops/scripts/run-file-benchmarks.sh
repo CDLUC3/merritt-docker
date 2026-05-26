@@ -56,7 +56,7 @@ fi
 FAIL=0
 egrep -q "ERROR|FAIL|WARN" $statfile && FAIL=1
 
-if [[ $FAIL -eq 1 ]]
+if [ $FAIL -eq 1 ]
 then
   echo '```' > $statfile.slack
   egrep "ERROR|FAIL|WARN" $statfile >> $statfile.slack

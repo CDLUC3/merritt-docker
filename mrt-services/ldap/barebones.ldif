@@ -338,10 +338,9 @@ objectClass: top
 objectClass: merrittClass
 objectClass: organizationalUnit
 submissionProfile: ucb_lib_prechmat_content
-
+description: UC Berkeley Library Pre 1912 Chinese Materials
 ou: ucb_lib_prechmat
 arkId: ark:/13030/m5vb545c
-description: UC Berkeley Library Pre 1912 Chinese Materials
 createTimestamp: 20211214063844Z
 creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
 entryUUID: eb70d4b7-a9b2-4b9b-ada0-339c58d52b61

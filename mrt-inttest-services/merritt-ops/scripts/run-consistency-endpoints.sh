@@ -20,6 +20,7 @@ then
   egrep "FAIL|ERROR|Status:500" $statfile | head -10 >> $statfile.slack
   echo '```' >> $statfile.slack
   echo "" >> $statfile.slack
+  export COMPLETE_ICON=":exclamation:"
 fi
 
 echo "- ${baseurl}queries/consistency/daily" >> $statfile.slack

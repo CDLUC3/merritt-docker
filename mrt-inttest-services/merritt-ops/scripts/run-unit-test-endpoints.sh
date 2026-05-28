@@ -22,6 +22,7 @@ then
   echo 'Snippet of ERRORS/500 (up to 10):' >> $statfile.slack
   egrep "ERROR|Status: 500" $statfile | head -10 >> $statfile.slack
   echo '```' >> $statfile.slack
+  export COMPLETE_ICON=":exclamation:"
 fi
 echo "" >> $statfile.slack
 

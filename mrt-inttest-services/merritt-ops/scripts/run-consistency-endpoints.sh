@@ -11,7 +11,9 @@ set -o pipefail
 admintool_run_consistency_checks  | tee -a $statfile || FAIL=1
 set +o pipefail
 
-if [ $FAIL -eq 1 ]
+egrep -q "FAIL|ERROR|Status:500" $statfile 
+
+if [ $? -eq 0 ]
 then
   echo 'Snippet of failures (up to 10):' > $statfile.slack
   echo '```' >> $statfile.slack

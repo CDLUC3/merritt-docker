@@ -17,6 +17,7 @@ COPY 99-user.ldif /opt/99-user.ldif
 COPY keystore /opt/opendj/keystore
 COPY keystore.pin /opt/opendj/keystore.pin
 COPY README.merritt.md /opt/opendj/README.merritt.md
+COPY merritt*.sh /opt/opendj/
 
 WORKDIR /opt/opendj
 

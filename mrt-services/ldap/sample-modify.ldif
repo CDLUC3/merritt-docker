@@ -1,0 +1,32 @@
+dn: uid=ned_flanders,ou=People,ou=uc3,dc=cdlib,dc=org
+changetype: modify
+replace: cn
+cn: Edward Flanders
+-
+replace: givenName
+givenName: Edward
+-
+replace: displayName
+displayName: Edward Flanders
+
+dn: uid=crusty,ou=People,ou=uc3,dc=cdlib,dc=org
+changetype: add
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: merrittUser
+objectClass: organizationalPerson
+objectClass: person
+mail: crusty@cdlib.org
+sn: Clown
+tzRegion: America/Los_Angeles
+cn: Crusty Clown
+arkId: ark:/99999/abc
+givenName: Crusty
+userPassword: password
+uid: crusty
+displayName: Crusty Clown
+
+# Sample field delete
+# dn: uid=crusty,ou=People,ou=uc3,dc=cdlib,dc=org
+# changetype: modify
+# delete: arkId

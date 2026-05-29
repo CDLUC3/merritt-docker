@@ -1,0 +1,554 @@
+dn: ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: organizationalunit
+ou: uc3
+ds-sync-generation-id: 2401310
+entryUUID: 6af95a8d-207f-3ea8-a6a6-343990d15e6d
+
+dn: ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: organizationalUnit
+ou: mrt-classes
+description: Groups for Merritt
+createTimestamp: 20100910200452Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20101118174120Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 4a605ee7-8c91-48b4-8676-cb6ba778b178
+
+dn: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: merrittUser
+objectClass: organizationalPerson
+objectClass: person
+mail: uc3@ucop.edu
+arkId: ark:/99166/p9hd7ns0t
+givenName: Merritt
+displayName: Merritt Test
+sn: Test
+tzRegion: America/Los_Angeles
+cn: Merritt Test
+userPassword: {SSHA}STBNF3Pt2wb5/gltSyiz2W7+JB3m+sePFZ5ewg==
+uid: merritt-test
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20130924214644Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: ad36029c-a2fe-4c64-abe9-512d1222b0da
+createTimestamp: 20130924153118Z
+pwdChangedTime: 20130924153118.231Z
+
+dn: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: merrittUser
+objectClass: organizationalPerson
+objectClass: person
+mail: uc3@ucop.edu
+arkId: ark:/99166/p9qz22h0p
+givenName: Anonymous
+displayName: Guest
+sn: User
+tzRegion: America/Los_Angeles
+cn: Guest
+userPassword: {SSHA}NMGSKF007+FSLF4r2aS50oBfVOxHzSFrpecs1w==
+uid: anonymous
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20120717191641Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 3a7838db-1825-4b42-9f76-1f1a0ee2ff00
+createTimestamp: 20111117190459Z
+pwdChangedTime: 20111117190459.467Z
+
+dn: ou=merritt_demo,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: merritt_demo_content
+ou: merritt_demo
+arkId: ark:/13030/m5rn35s8
+description: Demo Merritt collection
+createTimestamp: 20100910201445Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20101119212110Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 9bb59bb5-05b4-4425-9650-6babf82a4426
+
+dn: cn=read,ou=merritt_demo,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20100910202120Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200609231838Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: ae2b1382-3bea-40cb-81c5-4280802c8d5c
+
+dn: cn=write,ou=merritt_demo,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: write
+createTimestamp: 20100910202226Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200529214809Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 47ea753d-9b4c-4835-9ec6-c8dba23496c6
+
+dn: cn=download,ou=merritt_demo,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: download
+createTimestamp: 20120529213148Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200609231826Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: bde2fb73-d03e-478f-a49e-7ba581eaa1c3
+
+dn: cn=admin,ou=merritt_demo,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: admin
+createTimestamp: 20170202225741Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210326Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: dc28d19e-bfef-4212-b0e5-c9abf87b2c68
+
+dn: ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: terry_test_content
+arkId: ark:/13030/99999999
+ou: terry_test
+description: Terry Test
+createTimestamp: 20181106182135Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20181114162350Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 8538b908-0e6c-436c-bd4a-14f8b855b001
+
+dn: cn=read,ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe4002
+
+dn: cn=write,ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: write
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe4003
+
+dn: cn=download,ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: download
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe4004
+
+dn: cn=admin,ou=terry_test,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: admin
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe4005
+
+dn: ou=cdl_dryaddev,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: cdl_dryaddev_content
+arkId: ark:/13030/m5qv8jks
+ou: cdl_dryaddev
+description: CDL Dryad Dev
+createTimestamp: 20181106182135Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20181114162350Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 8538b908-0e6c-436c-bd4a-14f8b855b978
+
+dn: cn=read,ou=cdl_dryaddev,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe407b
+
+dn: cn=write,ou=cdl_dryaddev,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: write
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe407b
+
+dn: cn=download,ou=cdl_dryaddev,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: download
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe407b
+
+dn: cn=admin,ou=cdl_dryaddev,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: admin
+createTimestamp: 20181108173914Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409210638Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: fd9f25f5-65e9-4ff1-b3d0-ffd3befe407b
+
+dn: o=institutions,ou=uc3,dc=cdlib,dc=org
+objectClass: organization
+objectClass: top
+o: institutions
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: d6765b7c-8628-404f-bb5d-42dc81466107
+createTimestamp: 20100914200152Z
+
+dn: ou=ucb_open_context,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_open_context_content
+ou: ucb_open_context
+arkId: ark:/13030/m5wd3xhm
+description: UCB Open Context collection
+createTimestamp: 20110228231838Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20110303003354Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 5fef0347-765c-47ed-85f3-f85eadfe181d
+
+dn: cn=read,ou=ucb_open_context,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20110228232026Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222301Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 498179f0-50cd-4a4a-ab83-759f5f73ff0a
+
+dn: cn=download,ou=ucb_open_context,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+uniqueMember: uid=anonymous,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: download
+createTimestamp: 20110228232026Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222301Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 498179f0-50cd-4a4a-ab83-759f5f73ff0a
+
+dn: ou=escholarship,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: escholarship_content
+ou: escholarship
+arkId: ark:/13030/m5154f09
+description: CDL eScholarship
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20101118195601Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 027869d0-5f88-4420-a423-0de80ae34815
+
+dn: cn=read,ou=escholarship,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd13e
+
+dn: cn=download,ou=escholarship,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: download
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd13e
+
+dn: cn=write,ou=escholarship,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: write
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd1ff
+
+dn: ou=ucb_lib_prechmat,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_prechmat_content
+ou: ucb_lib_prechmat
+arkId: ark:/13030/m5vb545c
+description: UC Berkeley Library Pre 1912 Chinese Materials
+createTimestamp: 20211214063844Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: eb70d4b7-a9b2-4b9b-ada0-339c58d52b61
+
+dn: cn=read,ou=ucb_lib_prechmat,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd100
+
+dn: cn=download,ou=ucb_lib_prechmat,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: download
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd1aa
+
+dn: ou=ucb_lib_metcalf,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_metcalf_content
+ou: ucb_lib_metcalf
+arkId: ark:/13030/m5sv0js2
+description: UC Berkeley Library Fritz-Metcalf Photograph collection
+createTimestamp: 20150930232551Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20151007161134Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: a48a53ee-3492-4f4e-a1d5-c331930954e3
+
+dn: cn=read,ou=ucb_lib_metcalf,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd101
+
+dn: ou=ucb_lib_jar,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_jar_content
+ou: ucb_lib_jar
+arkId: ark:/13030/m5452r7b
+description: UC Berkeley Library Japanese American Records 1930-1974
+createTimestamp: 20220516230218Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20220516230244Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: b593da37-cd6e-4c49-8f01-393be1182e6e
+
+dn: cn=read,ou=ucb_lib_jar,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd102
+
+dn: ou=ucb_lib_cal_cultures,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_cal_cultures_content
+ou: ucb_lib_cal_cultures
+arkId: ark:/13030/m51n7z82
+description: UC Berkeley Library Cal Cultures
+createTimestamp: 20110822235136Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20110824215057Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 94585ca5-1bf3-45b1-bb2a-9b3e8220f236
+
+dn: cn=read,ou=ucb_lib_cal_cultures,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd103
+
+dn: ou=ucb_lib_dcpp,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_dcpp_content
+ou: ucb_lib_dcpp
+arkId: ark:/13030/m5qc7bz1
+description: UC Berkeley Library Dobanga Copper Plate Prints
+createTimestamp: 20220830163147Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+ds-sync-hist: dn:00000182ef983b5e301c00000501:add
+entryUUID: bfdf329c-ce9c-4cb7-9b11-19b0b2706a24
+
+dn: cn=read,ou=ucb_lib_dcpp,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd104
+
+dn: ou=ucb_lib_stone_rubbings,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: merrittClass
+objectClass: organizationalUnit
+submissionProfile: ucb_lib_stone_rubbings_content
+ou: ucb_lib_stone_rubbings
+arkId: ark:/13030/m5tt4p37
+description: UC Berkeley Library Stone Rubbings
+createTimestamp: 20110823162014Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20110824231059Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 180d4e51-df5a-4942-8073-e1657a7ba0d9
+
+dn: cn=read,ou=ucb_lib_stone_rubbings,ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: groupOfUniqueNames
+uniqueMember: uid=merritt-test,ou=People,ou=uc3,dc=cdlib,dc=org
+cn: read
+createTimestamp: 20100914192017Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20200409222232Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 410da389-1db1-4753-8cff-51840e2fd105
+
+dn: o=CDL,o=institutions,ou=uc3,dc=cdlib,dc=org
+objectClass: organization
+objectClass: top
+o: CDL
+description: California Digital LIbrary
+st: CA
+postalAddress: 415 20th St., 4th Flr
+postalCode: 94612
+l: Oakland
+createTimestamp: 20100914201432Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+modifyTimestamp: 20110913153144Z
+modifiersName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 8cb6f4b4-fd7a-430d-82f5-88354754fbcc
+
+dn: ou=People,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: organizationalunit
+ou: People
+entryUUID: cf0b297e-53c9-3d1b-a714-a09afbc512ec
+
+dn: uid=lisa_simpson,ou=People,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: merrittUser
+objectClass: organizationalPerson
+objectClass: person
+mail: lisa.simpson@cdlib.org
+sn: Simpson
+tzRegion: America/Los_Angeles
+cn: Lisa Simpson
+arkId: ark:/99166/p98075088
+givenName: Lisa
+userPassword: {SSHA}6nj0xXpI5BiANDm/67xXrnYsec85/E7Jq9r3Og==
+uid: lisa_simpson
+displayName: Lisa Simpson
+createTimestamp: 20260529171451Z
+pwdChangedTime: 20260529171451.554Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: 28cbd646-4127-4b5e-a03c-5be0f675e511
+
+dn: uid=ned_flanders,ou=People,ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: merrittUser
+objectClass: organizationalPerson
+objectClass: person
+mail: ned.flanders@cdlib.org
+sn: Flanders
+tzRegion: America/Los_Angeles
+cn: Ned Flanders
+arkId: ark:/99166/p98075137
+givenName: Ned
+userPassword: {SSHA}l5mnwJBgCkXL6BiOOFIbLyhdtCwN6JJcYOW5OQ==
+uid: ned_flanders
+displayName: Ned Flanders
+createTimestamp: 20260529171540Z
+pwdChangedTime: 20260529171540.705Z
+creatorsName: cn=Directory Manager,cn=Root DNs,cn=config
+entryUUID: c5d771d2-684c-4c51-b773-a140a2d13efe
+

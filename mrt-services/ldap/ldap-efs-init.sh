@@ -45,14 +45,19 @@ load_ldif() {
   echo "import step complete"
 }
 
-setup_service
-
-if [ -f /opt/import/import.ldif ]
+if [ -d /opt/opendj/db.userRoot ]
 then
-  load_ldif /opt/import/import.ldif "--replaceExisting"
-  mv /opt/import/import.ldif /opt/import/import.ldif.loaded
+  echo "database already exists, skipping setup"
 else
-  load_ldif /opt/barebones.ldif
+  setup_service
+
+  if [ -f /opt/import/import.ldif ]
+  then
+    load_ldif /opt/import/import.ldif
+    mv /opt/import/import.ldif /opt/import/import.ldif.loaded
+  else
+    load_ldif /opt/barebones.ldif
+  fi
 fi
 
 /opt/opendj/run.sh

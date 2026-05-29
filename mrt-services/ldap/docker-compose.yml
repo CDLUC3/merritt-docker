@@ -1,0 +1,19 @@
+services:
+  ldap:
+    container_name: ldap
+    image: ${ECR_REGISTRY}/mrt-opendj
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ECR_REGISTRY: ${ECR_REGISTRY}
+    ports:
+    - published: 1389
+      target: 1389
+    - published: 1636
+      target: 1636
+    - published: 4444
+      target: 4444
+    restart: unless-stopped
+    stdin_open: true
+    tty: true

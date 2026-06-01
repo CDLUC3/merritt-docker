@@ -317,19 +317,3 @@ dn: ou=People,ou=uc3,dc=cdlib,dc=org
 objectClass: top
 objectClass: organizationalunit
 ou: People
-
-dn: ou=healthcheck,dc=cdlib,dc=org
-objectClass: top
-objectClass: organizationalUnit
-ou: healthcheck
-
-dn: uid=netscaler,ou=healthcheck,dc=cdlib,dc=org
-objectClass: top
-objectClass: inetOrgPerson
-objectClass: organizationalPerson
-objectClass: person
-sn: NetScaler
-cn: NetScaler
-userPassword: {SSHA}wY0kH5TPOa8ko9rmlVSepgwwGi2UWawu9SkXGw==
-givenName: NetScaler
-uid: netscaler

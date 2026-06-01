@@ -6,7 +6,7 @@ sanitize_exported_ldif() {
   bin/ldifmodify -c "$1" /opt/fixup.ldif | egrep -v "$EXCLUDE" > "$2"
 }
 
-if [ true ]
+if [[ "$LDAP_RESET" == "true" ]]
 then
   echo "force delete of opendj database"
   rm -rf /opt/opendj/data/*
@@ -26,7 +26,7 @@ else
     mv /opt/import/import.ldif /opt/import/import.ldif.loaded
   else
     echo "no import file found, loading data from /opt/barebones.ldif"
-    sanitize_exported_ldif /opt/barebones.export.ldif /opt/opendj/bootstrap/data/barebones.ldif
+    sanitize_exported_ldif /opt/barebones.ldif /opt/opendj/bootstrap/data/barebones.ldif
   fi
 fi
 

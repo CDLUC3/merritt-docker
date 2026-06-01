@@ -1,3 +1,5 @@
+volumes:
+  ldap-data:
 services:
   ldap:
     container_name: ldap
@@ -15,7 +17,7 @@ services:
     - published: 4444
       target: 4444
     volumes:
-    # - ./simpsons.export.ldif:/opt/import/import.ldif
+    - ldap-data:/opt/opendj/data
     - ./simpsons.ldif:/opt/import/import.ldif
     - ./sample-modify.ldif:/opt/import/sample-modify.ldif
     restart: unless-stopped

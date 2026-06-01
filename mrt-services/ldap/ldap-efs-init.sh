@@ -1,63 +1,28 @@
 #!/bin/bash
 
-setup_service() {
-  ./setup \
-    --cli \
-    --no-prompt \
-    --acceptLicense \
-    --backendType je \
-    --baseDN ou=uc3,dc=cdlib,dc=org \
-    --baseDN ou=healthcheck,dc=cdlib,dc=org \
-    --ldapPort 1389 \
-    --adminConnectorPort 4444 \
-    --rootUserDN 'cn=Directory Manager' \
-    --rootUserPassword "$ROOT_PASSWORD" \
-    --enableStartTLS \
-    --ldapsPort 1636 \
-    --useJavaKeystore /opt/opendj/keystore \
-    --keyStorePasswordFile /opt/opendj/keystore.pin \
-    --hostname ldap \
-    --noPropertiesFile \
-    --doNotStart
+EXCLUDE="^(entryUUID|creatorsName|modifyTimestamp|modifiersName|createTimestamp|pwdChangedTime|ds-sync-hist)"
 
-  echo "setup step complete"
+sanitize_exported_ldif() {
+  bin/ldifmodify -c "$1" /opt/import/fixup.ldif | egrep -v "$EXCLUDE" > "$2"
 }
 
-load_ldif() {
-  impfile=$1
-  flags=$2
-
-  # Schema data
-  cp /opt/99-user.ldif /opt/opendj/config/schema/99-user.ldif
- 
-  ./bin/import-ldif \
-    --offline \
-    --hostname localhost \
-    --port 4444 \
-    --bindDN "cn=Directory Manager" \
-    --bindPassword $ROOT_PASSWORD \
-    --backendID userRoot \
-    --includeBranch "ou=uc3,dc=cdlib,dc=org" \
-    --trustAll \
-    $flags \
-    --ldifFile $impfile
-
-  echo "import step complete"
-}
-
-if [ -d /opt/opendj/db.userRoot ]
+if [ -d /opt/opendj/data/db/userRoot ]
 then
   echo "database already exists, skipping setup"
 else
-  setup_service
+  cp /opt/99-user.ldif /opt/opendj/template/config/schema
+  mkdir -p /opt/opendj/bootstrap/data
 
   if [ -f /opt/import/import.ldif ]
   then
-    load_ldif /opt/import/import.ldif
+    echo "import file found, loading data from /opt/import/import.ldif"
+    sanitize_exported_ldif /opt/import/import.ldif /opt/opendj/bootstrap/data/import.ldif
     mv /opt/import/import.ldif /opt/import/import.ldif.loaded
   else
-    load_ldif /opt/barebones.ldif
+    echo "no import file found, loading data from /opt/barebones.ldif"
+    sanitize_exported_ldif /opt/barebones.export.ldif /opt/opendj/bootstrap/data/barebones.ldif
   fi
 fi
 
-/opt/opendj/run.sh
+#/opt/opendj/run.sh --baseDN "$BASE_DN"
+/opt/opendj/run.sh 

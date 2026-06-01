@@ -4,6 +4,7 @@ FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.0.3
 
 ARG ADMIN_PASSWORD=password
 ENV ROOT_PASSWORD=$ADMIN_PASSWORD
+ENV BASE_DN=ou=uc3,dc=cdlib,dc=org
 
 WORKDIR /opt
 
@@ -12,6 +13,8 @@ WORKDIR /opt
 
 # Merritt data
 COPY barebones.ldif /opt/barebones.ldif
+COPY barebones.export.ldif /opt/barebones.export.ldif
+COPY fixup.ldif /opt/import/fixup.ldif
 COPY 99-user.ldif /opt/99-user.ldif
 
 COPY keystore /opt/opendj/keystore

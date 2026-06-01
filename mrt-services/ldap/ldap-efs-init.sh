@@ -9,7 +9,11 @@ sanitize_exported_ldif() {
 bin/dsconfig -h localhost -p 4444 --bindPassword $ROOT_PASSWORD --baseDN "$BASE_DN" create-log-publisher \
   --publisher-name "Console-Standard-Output"   --type standard-out   --set enabled:true   --set format:json
 
-rm -rf /opt/opendj/data
+if [ true ]
+then
+  echo "force delete of opendj database"
+  rm -rf /opt/opendj/data
+fi
 
 if [ -d /opt/opendj/data/db/userRoot ]
 then

@@ -14,7 +14,7 @@ WORKDIR /opt
 # Merritt data
 COPY barebones.ldif /opt/barebones.ldif
 COPY barebones.export.ldif /opt/barebones.export.ldif
-COPY fixup.ldif /opt/import/fixup.ldif
+COPY fixup.ldif /opt/fixup.ldif
 COPY 99-user.ldif /opt/99-user.ldif
 
 COPY keystore /opt/opendj/keystore

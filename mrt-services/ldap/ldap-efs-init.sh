@@ -3,7 +3,7 @@
 EXCLUDE="^(entryUUID|creatorsName|modifyTimestamp|modifiersName|createTimestamp|pwdChangedTime|ds-sync-hist)"
 
 sanitize_exported_ldif() {
-  bin/ldifmodify -c "$1" /opt/import/fixup.ldif | egrep -v "$EXCLUDE" > "$2"
+  bin/ldifmodify -c "$1" /opt/fixup.ldif | egrep -v "$EXCLUDE" > "$2"
 }
 
 if [ -d /opt/opendj/data/db/userRoot ]

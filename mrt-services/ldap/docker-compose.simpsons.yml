@@ -15,8 +15,8 @@ services:
     - published: 4444
       target: 4444
     volumes:
-    - ./simpsons.export.ldif:/opt/import/import.ldif
-    # - ./simpsons.ldif:/opt/import/import.ldif
+    # - ./simpsons.export.ldif:/opt/import/import.ldif
+    - ./simpsons.ldif:/opt/import/import.ldif
     - ./sample-modify.ldif:/opt/import/sample-modify.ldif
     restart: unless-stopped
     stdin_open: true

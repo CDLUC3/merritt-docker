@@ -7,9 +7,9 @@ docker compose build
 ```
 
 ## Use Cases
-- LDAP starts with an empty repo and defaults to importing our barebones.ldif file
-- LDAP starts with an empty repo and loads a designated input file (ie S3 ldif backup)
 - LDAP restarts and re-uses data residing on a volume
+- LDAP starts with an empty repo and loads a designated input file (ie S3 ldif backup)
+- LDAP starts with an empty repo and defaults to importing our barebones.ldif file
 
 ## Bare Bones Import
 
@@ -64,6 +64,10 @@ Confirm the addition of
 ### Modify records
 
 ```
+docker compose -f docker-compose.simpsons.yml exec ldap /bin/bash
+```
+
+```
 bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
   -f /opt/import/sample-modify.ldif -v
 ```
@@ -75,6 +79,13 @@ docker compose -f docker-compose.simpsons.yml exec ldap ./merritt-users.sh
 Confirm the following modifications
 - Ned Flanders --> Edward Flanders
 - Crusty Clown
+
+
+### Create Export File (for future testing)
+
+```
+docker compose -f docker-compose.simpsons.yml exec ldap /bin/bash
+```
 
 ```
 bin/export-ldif --backendID userRoot --bindPassword $ROOT_PASSWORD -l simpsons.export.ldif
@@ -107,3 +118,66 @@ The stack will now contain 4 users
 - Lisa Simpson
 - Ned Flanders
 
+## Simpsons Users Import with Persistence
+
+```
+docker compose -f docker-compose.simpsons.persist.yml up -d
+```
+
+### Test the service
+
+```
+docker compose -f docker-compose.simpsons.persist.yml exec ldap ./merritt-users.sh
+```
+
+In addition to the 2 default users
+- merritt-test
+- anonymous
+
+Confirm the addition of
+- Lisa Simpson
+- Ned Flanders
+
+### Modify records
+
+```
+docker compose -f docker-compose.simpsons.persist.yml exec ldap /bin/bash
+```
+
+```
+bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
+  -f /opt/import/sample-modify.ldif -v
+```
+
+```
+docker compose -f docker-compose.simpsons.persist.yml exec ldap ./merritt-users.sh
+```
+
+Confirm the following modifications
+- Ned Flanders --> Edward Flanders
+- Crusty Clown
+
+
+### Restart the stack
+
+```
+docker compose -f docker-compose.simpsons.persist.yml down
+```
+
+
+```
+docker compose -f docker-compose.simpsons.persist.yml up -d
+```
+
+### Test the service
+
+```
+docker compose -f docker-compose.simpsons.persist.yml exec ldap ./merritt-users.sh
+```
+
+The stack will now contain 5 users
+- merritt-test
+- anonymous
+- Lisa Simpson
+- Edward Flanders
+- Crusty Clown

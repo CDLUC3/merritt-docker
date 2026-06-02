@@ -15,6 +15,7 @@ fi
 if [ -d /opt/opendj/data/db/userRoot ]
 then
   echo "database already exists, skipping setup"
+  rm -rf /opt/opendj/data/logs/*
 else
   cp /opt/99-user.ldif /opt/opendj/template/config/schema
   mkdir -p /opt/opendj/bootstrap/data
@@ -30,5 +31,4 @@ else
   fi
 fi
 
-#/opt/opendj/run.sh --baseDN "$BASE_DN"
 /opt/opendj/run.sh 

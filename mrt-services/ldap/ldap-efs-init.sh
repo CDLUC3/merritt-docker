@@ -14,7 +14,7 @@ fi
 
 if [ -d /opt/opendj/data/db/userRoot ]
 then
-  echo "database already exists, skipping setup"
+  echo "database already exists, skipping setup; cleaning logs"
   rm -rf /opt/opendj/data/logs/*
 else
   cp /opt/99-user.ldif /opt/opendj/template/config/schema

@@ -3,9 +3,9 @@
 if [[ "$REPLICA" == "true" ]]
 then
   PRIMARY=ldap
-  SECONDARY=localhost
+  SECONDARY=127.0.0.1
 else
-  PRIMARY=localhost
+  PRIMARY=127.0.0.1
   SECONDARY=ldapreplica
 fi
 

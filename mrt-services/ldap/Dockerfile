@@ -24,7 +24,7 @@ WORKDIR /opt/opendj
 
 COPY ldap-efs-init.sh /opt/ldap-efs-init.sh
 
-EXPOSE 1389 1636 4444
+EXPOSE 1389 1636 4444 8989
 
 USER opendj
 

@@ -30,6 +30,10 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
     ./aws/install && \
     rm -rf awscliv2.zip aws
 
+RUN curl -o "session-manager-plugin.deb" "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" && \
+    dpkg -i session-manager-plugin.deb || echo "Failed to install session-manager-plugin" && \
+    rm session-manager-plugin.deb
+
 COPY README.md /README.md
 COPY scripts /
 RUN chmod 744 /*.sh /mrt-locust/*.sh

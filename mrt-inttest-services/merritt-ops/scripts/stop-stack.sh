@@ -53,6 +53,8 @@ then
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --desired-count 0 \
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ldapreplica  --desired-count 0 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --desired-count 0 \
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]

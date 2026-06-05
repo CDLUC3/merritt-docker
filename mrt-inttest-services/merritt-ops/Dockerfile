@@ -45,6 +45,8 @@ COPY .awscredentials-template /root/.aws/credentials
 COPY .bashrc.append /tmp/.bashrc.append
 RUN chmod 400 /root/.aws/config /root/.aws/credentials
 
+RUN useradd -u 1001 opendj
+
 RUN cat /tmp/.bashrc.append >> /root/.bashrc
 
 # Write hello world message

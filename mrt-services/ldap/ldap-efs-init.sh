@@ -32,13 +32,11 @@ if [[ "$LDAP_RESET" == "true" ]]
 then
   echo "force delete of opendj database"
   rm -rf /opt/opendj/data/*
-fi
-
-if [[ "$REPLICA" == "true" ]]
+  initialize_data
+elif [[ "$REPLICA" == "true" ]]
 then
   echo "is REPLICA, starting cleaning up logs"
   rm -rf /opt/opendj/data/logs/*
-  /opt/opendj/run.sh
 else
   echo "is PRIMARY, initialize data"
   initialize_data

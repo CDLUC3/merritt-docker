@@ -15,11 +15,11 @@ ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query 
 aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
   --container ldap --command "/opt/opendj/merritt-export.sh" --interactive
 
-if [ -f /opt/import/${filename} ]
+if [ -f /merritt-filesys/ldap/import/${filename} ]
 then
-  echo "Exported LDAP to /opt/import/${filename}"
+  echo "Exported LDAP to /merritt-filesys/ldap/import/${filename}"
 else
-  echo "Export failed, file not found: /opt/import/${filename}"
+  echo "Export failed, file not found: /merritt-filesys/ldap/import/${filename}"
   task_fail
 fi
 
@@ -28,7 +28,7 @@ aws s3 cp /merritt-filesys/ldap/import/${filename} $path
 
 echo "Exported LDAP to $path"
 
-mv /opt/import/${filename} /opt/import/export.latest.ldif
+mv /merritt-filesys/ldap/import/${filename} /merritt-filesys/ldap/import/export.latest.ldif
 path=s3://${S3CONFIG_BUCKET}/uc3/mrt/ldap/${MERRITT_ECS/ecs-/}/backup/export.latest.ldif
 aws s3 cp /merritt-filesys/ldap/import/export.latest.ldif $path
 

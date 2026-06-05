@@ -17,27 +17,29 @@ then
 
   echo " ==> Redeploying ldap"
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager || task_fail
   sleep 120
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap || task_fail
 
   echo " ==> Redeploying ldapreplica"
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldapreplica --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+     --output text --no-cli-pager || task_fail
   sleep 120
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldapreplica
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldapreplica || task_fail
 
   echo " ==> Configure Replication"
   ldap=$(aws ecs list-tasks --cluster mrt-ecs-dev-stack --service-name ldap --query taskArns --output text)
   ldapreplica=$(aws ecs list-tasks --cluster mrt-ecs-dev-stack --service-name ldapreplica --query taskArns --output text)
 
   aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
-    --container ldap --command "/opt/opendj/merritt-replication-init.sh" --interactive
+    --container ldap --command "/opt/opendj/merritt-replication-init.sh" --interactive || task_fail
 
   aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldapreplica \
-    --container ldapreplica --command "/opt/opendj/merritt-replication-init.sh" --interactive
+    --container ldapreplica --command "/opt/opendj/merritt-replication-init.sh" --interactive || task_fail
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack

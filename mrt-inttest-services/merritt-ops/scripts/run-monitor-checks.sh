@@ -173,7 +173,7 @@ monitor_services() {
 
   # Store
   check_service_json "store" \
-    "$(store_base)" "state?t=json" "$HOSTS_STORE"
+    "$(store_base)" "state?t=json" "$HOSTS_STORE" 10 20
 
   validation_check_json "store" \
     '.["sto:storageServiceState"].["sto:failNodesCnt"] == 0' \

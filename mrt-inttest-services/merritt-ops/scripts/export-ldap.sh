@@ -12,8 +12,11 @@ filename="${1:-export.${datetime}.ldif}"
 
 ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
 
+echo aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
+  --container ldap --command "/opt/opendj/merritt-export.sh" --interactive 
+
 aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
-  --container ldap --command "/opt/opendj/merritt-export.sh" --interactive
+  --container ldap --command "/opt/opendj/merritt-export.sh" --interactive || task_fail
 
 if [ -f /merritt-filesys/ldap/import/${filename} ]
 then

@@ -40,25 +40,11 @@ services:
       dockerfile: Dockerfile
       args:
         LOAD_SQL: /tmp/audit_replic_data.sql
-  minio-server:
-    container_name: minio-server
-    image: ${ECR_REGISTRY}/mrt-minio-it:dev
-    build:
-      context: mrt-minio-it
-      dockerfile: Dockerfile
   mrt-rustfs-it:
     container_name: mrt-rustfs-it
     image: ${ECR_REGISTRY}/mrt-rustfs-it:dev
     build:
       context: mrt-rustfs-it
-      dockerfile: Dockerfile
-      args:
-        ECR_REGISTRY: ${ECR_REGISTRY}
-  minio-server-with-content:
-    container_name: minio-server-with-content
-    image: ${ECR_REGISTRY}/mrt-minio-it-with-content:dev
-    build:
-      context: mrt-minio-it-with-content
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${ECR_REGISTRY}

@@ -16,9 +16,10 @@ ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query 
 unbuffer aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
   --container ldap --command "/opt/opendj/merritt-export.sh ${filename}" --interactive || task_fail
 
-sleep 2
+echo "Export Completed"
+ls -la "/merritt-filesys/ldap/import/${filename}"
 
-if [ -f /merritt-filesys/ldap/import/${filename} ]
+if [[ -f "/merritt-filesys/ldap/import/${filename}" ]]
 then
   echo "Exported LDAP to /merritt-filesys/ldap/import/${filename}"
 else

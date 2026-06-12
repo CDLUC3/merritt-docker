@@ -17,7 +17,8 @@ unbuffer aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
   --container ldap --command "/opt/opendj/merritt-export.sh ${filename}" --interactive || task_fail
 
 echo "Export Completed"
-ls -la "/merritt-filesys/ldap/import/${filename}"
+ls -la /merritt-filesys/ldap
+ls -la /merritt-filesys/ldap/import
 
 if [[ -f "/merritt-filesys/ldap/import/${filename}" ]]
 then

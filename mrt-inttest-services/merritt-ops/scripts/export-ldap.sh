@@ -14,7 +14,7 @@ ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query 
 
 # unbuffer prevents EOF errors.  See https://stackoverflow.com/a/71728047/3846548
 unbuffer aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
-  --container ldap --command "/opt/opendj/merritt-export.sh" --interactive || task_fail
+  --container ldap --command "/opt/opendj/merritt-export.sh ${filename}" --interactive || task_fail
 
 if [ -f /merritt-filesys/ldap/import/${filename} ]
 then

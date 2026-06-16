@@ -7,7 +7,7 @@ export statfile="/tmp/redeploy-ldap.txt"
 
 task_init
 
-if [[ "$MERRITT_ECS" == "ecs-dev" ]]
+if [[ "$MERRITT_ECS" == "ecs-dev" || "$MERRITT_ECS" == "ecs-stg" || "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
@@ -32,8 +32,8 @@ then
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldapreplica || task_fail
 
   echo " ==> Configure Replication"
-  ldap=$(aws ecs list-tasks --cluster mrt-ecs-dev-stack --service-name ldap --query taskArns --output text)
-  ldapreplica=$(aws ecs list-tasks --cluster mrt-ecs-dev-stack --service-name ldapreplica --query taskArns --output text)
+  ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
+  ldapreplica=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldapreplica --query taskArns --output text)
 
   aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
     --container ldap --command "/opt/opendj/merritt-replication-init.sh" --interactive || task_fail

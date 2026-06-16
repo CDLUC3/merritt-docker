@@ -12,8 +12,11 @@ initialize_data() {
     echo "database already exists, skipping setup; cleaning logs/locks"
     rm -rf /opt/opendj/data/logs/*
     # rm -rf /opt/opendj/data/locks/*
+  elif [[ "$REPLICA" == "true" ]]
+    cp /opt/99-user.ldif /opt/opendj/template/config/schema
   else
     cp /opt/99-user.ldif /opt/opendj/template/config/schema
+
     mkdir -p /opt/opendj/bootstrap/data
 
     if [ -f /opt/import/import.ldif ]
@@ -32,17 +35,13 @@ if [[ "$LDAP_RESET" == "true" ]]
 then
   echo "force delete of opendj database"
   rm -rf /opt/opendj/data/*
-  initialize_data
-elif [[ "$REPLICA" == "true" ]]
-then
-  echo "is REPLICA, starting cleaning up logs"
-  rm -rf /opt/opendj/data/logs/*
-else
-  echo "is PRIMARY, initialize data"
-  initialize_data
-  # technique to intialize from the entrypoint...
-  # /opt/opendj/run.sh & sleep 10
-  # /opt/opendj/bin/stop-ds
 fi
+
+rm -rf /opt/opendj/data/logs/*
+initialize_data
+
+# technique to intialize from the entrypoint...
+# /opt/opendj/run.sh & sleep 10
+# /opt/opendj/bin/stop-ds
 
 /opt/opendj/run.sh

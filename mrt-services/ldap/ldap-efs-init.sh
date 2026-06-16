@@ -13,6 +13,7 @@ initialize_data() {
     rm -rf /opt/opendj/data/logs/*
     # rm -rf /opt/opendj/data/locks/*
   elif [[ "$REPLICA" == "true" ]]
+  then
     cp /opt/99-user.ldif /opt/opendj/template/config/schema
   else
     cp /opt/99-user.ldif /opt/opendj/template/config/schema

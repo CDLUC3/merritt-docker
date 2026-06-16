@@ -14,7 +14,7 @@ initialize_data() {
     # rm -rf /opt/opendj/data/locks/*
   elif [[ "$REPLICA" == "true" ]]
   then
-    # echo "replica, skipping data initialization"
+    echo "replica, skipping data initialization"
     # cp /opt/99-user.ldif /opt/opendj/template/config/schema
   else
     cp /opt/99-user.ldif /opt/opendj/template/config/schema

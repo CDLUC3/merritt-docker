@@ -7,11 +7,11 @@ sanitize_exported_ldif() {
 }
 
 initialize_data() {
+  rm -rf /opt/opendj/data/logs/*
+
   if [ -d /opt/opendj/data/db/userRoot ]
   then
-    echo "database already exists, skipping setup; cleaning logs/locks"
-    rm -rf /opt/opendj/data/logs/*
-    # rm -rf /opt/opendj/data/locks/*
+    echo "database already exists, skipping setup"
   elif [[ "$REPLICA" == "true" ]]
   then
     echo "replica, skipping data initialization"
@@ -33,13 +33,6 @@ initialize_data() {
   fi
 }
 
-if [[ "$LDAP_RESET" == "true" ]]
-then
-  echo "force delete of opendj database"
-  rm -rf /opt/opendj/data/*
-fi
-
-rm -rf /opt/opendj/data/logs/*
 initialize_data
 
 # technique to intialize from the entrypoint...

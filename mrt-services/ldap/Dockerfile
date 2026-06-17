@@ -3,8 +3,13 @@ ARG ECR_REGISTRY=ecr_registry_not_set
 FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.0.3
 
 ARG ADMIN_PASSWORD=password
+
 ENV ROOT_PASSWORD=$ADMIN_PASSWORD
 ENV BASE_DN=ou=uc3,dc=cdlib,dc=org
+
+# docker-compose will need to use 127.0.0.1
+ENV PRIMARY=ldap
+ENV REPLICA=ldapreplica
 
 WORKDIR /opt
 

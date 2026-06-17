@@ -33,13 +33,10 @@ then
 
   echo " ==> Configure Replication"
   ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
-  ldapreplica=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldapreplica --query taskArns --output text)
 
   aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
     --container ldap --command "/opt/opendj/merritt-replication-init.sh" --interactive || task_fail
 
-  aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldapreplica \
-    --container ldapreplica --command "/opt/opendj/merritt-replication-init.sh" --interactive || task_fail
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack

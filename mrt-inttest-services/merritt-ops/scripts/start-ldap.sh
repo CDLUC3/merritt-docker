@@ -20,6 +20,14 @@ then
     --force-new-deployment \
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
     --output text --no-cli-pager || task_fail
+
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap ldapreplica || task_fail 
+
+  echo " ==> Configure Replication"
+  ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
+
+  aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
+    --container ldap --command "/opt/opendj/merritt-replication-init.sh" --interactive || task_fail
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack

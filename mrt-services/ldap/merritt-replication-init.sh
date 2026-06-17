@@ -18,12 +18,12 @@ then
     --adminUID admin --adminPassword "$ROOT_PASSWORD" \
     --hostname $PRIMARY --port 4444 \
     -X -n
-else
-  # for troubleshooting, try this
-  # bin/dsreplication initialize \
-  #   --baseDN "$BASE_DN" \
-  #   --adminUID admin --adminPassword "$ROOT_PASSWORD" \
-  #   -h $PRIMARY -p 4444 \
-  #   --hostDestination $REPLICA --portDestination 4444 \
-  #   -X -n
 fi
+
+# for troubleshooting, try this from the replica
+# bin/dsreplication initialize \
+#   --baseDN "$BASE_DN" \
+#   --adminUID admin --adminPassword "$ROOT_PASSWORD" \
+#   -h $PRIMARY -p 4444 \
+#   --hostDestination $REPLICA --portDestination 4444 \
+#   -X -n

@@ -31,11 +31,16 @@ then
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldapreplica || task_fail
 
-  echo " ==> Configure Replication"
+  echo " ==> Ensure Replication Configured"
   ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
 
   aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
-    --container ldap --command "/opt/opendj/merritt-replication-init.sh" --interactive || task_fail
+    --container ldap --command "/opt/opendj/merritt-status.sh" \
+    --interactive
+    
+  aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
+    --container ldap --command "/opt/opendj/merritt-status.sh" \
+    --interactive | egrep -q "Replication:\s+Enabled" || task_fail
 
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then

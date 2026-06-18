@@ -31,17 +31,6 @@ then
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap ldapreplica smtp ezid zoo1 zoo2 zoo3
   echo " ==> Service Wait Complete"
 
-  echo " ==> Configure Replication"
-  ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
-  ldapreplica=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldapreplica --query taskArns --output text)
-
-  aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
-    --container ldap --command "/opt/opendj/merritt-replication-init.sh" --interactive
-
-  aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldapreplica \
-    --container ldapreplica --command "/opt/opendj/merritt-replication-init.sh" --interactive
-  echo " ==> Configure Replication Complete"
-
   echo " ==> Redeploying Merritt Services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 

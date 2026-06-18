@@ -34,13 +34,9 @@ then
   echo " ==> Ensure Replication Configured"
   ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
 
-  aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
+  unbuffer aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
     --container ldap --command "/opt/opendj/merritt-status.sh" \
-    --interactive
-    
-  aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
-    --container ldap --command "/opt/opendj/merritt-status.sh" \
-    --interactive | egrep -q "Replication:\s+Enabled" || task_fail
+    --interactive | tee -a $statfile | egrep -q "Replication:\s+Enabled" || task_fail
 
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then

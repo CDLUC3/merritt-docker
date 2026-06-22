@@ -11,6 +11,9 @@ if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
+  echo " ==> Redeploy LDAP"
+  /redeploy-ldap.sh || task_fail
+
   echo " ==> Redeploying Merritt Services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
@@ -103,6 +106,9 @@ then
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
+
+  echo " ==> Redeploy LDAP"
+  /redeploy-ldap.sh || task_fail
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
   service_retag_redeploy audit 

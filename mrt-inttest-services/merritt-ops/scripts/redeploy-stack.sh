@@ -128,16 +128,25 @@ elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
+  # echo " ==> Redeploy LDAP"
+  # /redeploy-ldap.sh || task_fail
+
   echo " ==> Redeploying Merritt Services and Merritt Ops"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
+  service_retag_redeploy audit 
+  service_retag_redeploy access
+  service_retag_redeploy ui
+  service_retag_redeploy replic
+  service_retag_redeploy admintool
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops --force-new-deployment --desired-count 1 \
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  sleep 60
+  sleep 120
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool merritt-ops
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services audit access ui replic admintool merritt-ops
   echo " ==> Service Wait Complete"
+
+  # consider pausing queues for inventory redeployment
+  # service_retag_redeploy inventory
 fi
 
 task_complete

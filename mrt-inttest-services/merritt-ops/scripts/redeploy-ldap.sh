@@ -11,9 +11,8 @@ if [[ "$MERRITT_ECS" == "ecs-dev" || "$MERRITT_ECS" == "ecs-stg" || "$MERRITT_EC
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
-  # echo " ==> LDAP Snapshot (cluster data will persist through re-deploy)"
-  # ldap_snapshot
-  # sleep 30
+  echo " ==> Export LDAP Snapshot to S3"
+  /export-ldap.sh || task_fail
 
   echo " ==> Redeploying ldap"
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap --force-new-deployment --desired-count 1 \

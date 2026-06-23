@@ -6,6 +6,10 @@ sanitize_exported_ldif() {
   bin/ldifmodify -c "$1" /opt/fixup.ldif | egrep -v "$EXCLUDE" > "$2"
 }
 
+sanitize_barebones_ldif() {
+  cat "$1" | egrep -v "$EXCLUDE" > "$2"
+}
+
 initialize_data() {
   rm -rf /opt/opendj/data/logs/*
 
@@ -28,7 +32,7 @@ initialize_data() {
       mv /opt/import/import.ldif /opt/import/import.ldif.loaded
     else
       echo "no import file found, loading data from /opt/barebones.ldif"
-      sanitize_exported_ldif /opt/barebones.ldif /opt/opendj/bootstrap/data/barebones.ldif
+      sanitize_barebones_ldif /opt/barebones.ldif /opt/opendj/bootstrap/data/barebones.ldif
     fi
   fi
 }

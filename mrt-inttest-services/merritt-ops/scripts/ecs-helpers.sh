@@ -153,6 +153,16 @@ service_redeploy() {
   curl --no-progress-meter -X POST $(admintool_base)/infra/ecs/redeploy/${service}
 }
 
+pause_ingest() {
+  echo "POST $(admintool_base)/ops/zk/ingest/pause"
+  curl --no-progress-meter -X POST $(admintool_base)/ops/zk/ingest/pause
+}
+
+unpause_ingest() {
+  echo "POST $(admintool_base)/ops/zk/ingest/unpause"
+  curl --no-progress-meter -X POST $(admintool_base)/ops/zk/ingest/unpause
+}
+
 stack_init() {
   echo "POST $(admintool_base)/stack-init"
   curl --no-progress-meter -X POST $(admintool_base)/stack-init

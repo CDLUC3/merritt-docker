@@ -16,35 +16,34 @@ then
   /redeploy-ldap.sh || task_fail
 
   echo " ==> Redeploying Merritt Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  # all_service_ips ingest service/stop?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  all_service_ips inventory service/stop?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  all_service_ips audit service/stop?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  all_service_ips replic service/pause?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  # all_service_ips store service/stop?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service access       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  service_redeploy admintool || task_fail
+  service_redeploy inventory || task_fail
+  service_redeploy audit || task_fail
+  service_redeploy replic || task_fail
+  service_redeploy access || task_fail
+  service_redeploy ui || task_fail
   sleep 75
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store access ui
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME \
+    --services admintool audit replic access ui || task_fail
   echo " ==> Service Wait Complete"
 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  echo " ==> Pause Ingest and Redeploy Services"
+  pause_ingest || task_fail
+  service_redeploy ingest || task_fail
+  service_redeploy inventory || task_fail
+  service_redeploy store || task_fail
+
+  echo " ==> Begin Service Wait"
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME \
+    --services ingest inventory store || task_fail
+  echo " ==> Service Wait Complete"
+
+  echo " ==> Unpause Ingest"
+  unpause_ingest || task_fail
+
+  service_redeploy merritt-ops || task_fail
   echo " ==> Merritt Ops Deployment Complete"
 
   stack_init
@@ -53,36 +52,22 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
   echo " ==> Redeploying Merritt Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  # all_service_ips ingest service/stop?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  all_service_ips inventory service/stop?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  all_service_ips audit service/stop?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  all_service_ips replic service/pause?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  # all_service_ips store service/stop?t=json
-  aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service access       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-
-  aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  service_redeploy admintool || task_fail
+  service_redeploy ingest || task_fail
+  service_redeploy inventory || task_fail
+  service_redeploy audit || task_fail
+  service_redeploy replic || task_fail
+  service_redeploy store || task_fail
+  service_redeploy access || task_fail
+  service_redeploy ui || task_fail
   sleep 75
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store access ui
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME \
+    --services admintool ingest inventory audit replic store access ui || task_fail
   echo " ==> Service Wait Complete"
 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  service_redeploy merritt-ops || task_fail
   echo " ==> Merritt Ops Deployment Complete"
   
   stack_init
@@ -91,16 +76,14 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  service_redeploy admintool || task_fail
+  service_redeploy ui || task_fail
+  service_redeploy merritt-ops || task_fail
   sleep 75
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ui merritt-ops
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME \
+  --services admintool ui merritt-ops || task_fail
   echo " ==> Service Wait Complete"
 
   stack_init
@@ -112,19 +95,30 @@ then
   /redeploy-ldap.sh || task_fail
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
-  service_retag_redeploy audit 
-  service_retag_redeploy access
-  service_retag_redeploy ui
-  service_retag_redeploy inventory
-  service_retag_redeploy replic
-  service_retag_redeploy admintool
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  service_retag_redeploy audit || task_fail
+  service_retag_redeploy access || task_fail
+  service_retag_redeploy ui || task_fail
+  service_retag_redeploy replic || task_fail
+  service_retag_redeploy admintool || task_fail
+  service_redeploy merritt-ops || task_fail
   sleep 120
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services audit access ui inventory replic admintool merritt-ops
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME \
+    --services audit access ui replic admintool merritt-ops || task_fail
   echo " ==> Service Wait Complete"
+
+  echo " ==> Pause Ingest and Redeploy Services"
+  pause_ingest || task_fail
+  service_retag_redeploy inventory || task_fail
+
+  echo " ==> Begin Service Wait"
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME \
+    --services inventory || task_fail
+  echo " ==> Service Wait Complete"
+
+  echo " ==> Unpause Ingest"
+  unpause_ingest || task_fail
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
@@ -133,21 +127,30 @@ then
   # /redeploy-ldap.sh || task_fail
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
-  service_retag_redeploy audit 
-  service_retag_redeploy access
-  service_retag_redeploy ui
-  service_retag_redeploy replic
-  service_retag_redeploy admintool
-  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  service_retag_redeploy audit || task_fail
+  service_retag_redeploy access || task_fail
+  service_retag_redeploy ui || task_fail
+  service_retag_redeploy replic || task_fail
+  service_retag_redeploy admintool || task_fail
+  service_redeploy merritt-ops || task_fail
   sleep 120
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services audit access ui replic admintool merritt-ops
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME \
+    --services audit access ui replic admintool merritt-ops || task_fail
   echo " ==> Service Wait Complete"
 
-  # consider pausing queues for inventory redeployment
-  # service_retag_redeploy inventory
+  echo " ==> Pause Ingest and Redeploy Services"
+  pause_ingest || task_fail
+  service_retag_redeploy inventory || task_fail
+
+  echo " ==> Begin Service Wait"
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME \
+    --services inventory || task_fail
+  echo " ==> Service Wait Complete"
+
+  echo " ==> Unpause Ingest"
+  unpause_ingest || task_fail
 fi
 
 task_complete

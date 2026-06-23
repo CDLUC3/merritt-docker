@@ -312,8 +312,3 @@ st: CA
 postalAddress: 415 20th St., 4th Flr
 postalCode: 94612
 l: Oakland
-
-dn: ou=People,ou=uc3,dc=cdlib,dc=org
-objectClass: top
-objectClass: organizationalunit
-ou: People

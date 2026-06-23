@@ -1,7 +1,7 @@
-# dn: ou=uc3,dc=cdlib,dc=org
-# objectClass: top
-# objectClass: organizationalunit
-# ou: uc3
+dn: ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: organizationalunit
+ou: uc3
 
 dn: ou=mrt-classes,ou=uc3,dc=cdlib,dc=org
 objectClass: top

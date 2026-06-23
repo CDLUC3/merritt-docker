@@ -9,6 +9,7 @@ task_init
 
 datetime=$(TZ="America/Los_Angeles" date "+%Y-%m-%d_%H:%M")
 filename="${1:-export.${datetime}.ldif}"
+echo "Exporting filename: ${filename}"
 
 ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
 
@@ -16,7 +17,7 @@ ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query 
 unbuffer aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
   --container ldap --command "/opt/opendj/merritt-export.sh ${filename}" --interactive || task_fail
 
-echo "Export Completed"
+echo "Export Completed, filename: ${filename}"
 
 if [[ -f "/merritt-filesys/ldap/import/${filename}" ]]
 then

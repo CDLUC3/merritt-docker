@@ -34,6 +34,7 @@ then
   service_redeploy ingest || task_fail
   service_redeploy inventory || task_fail
   service_redeploy store || task_fail
+  sleep 75
 
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME \
@@ -111,6 +112,7 @@ then
   echo " ==> Pause Ingest and Redeploy Services"
   pause_ingest || task_fail
   service_retag_redeploy inventory || task_fail
+  sleep 75
 
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME \
@@ -143,6 +145,7 @@ then
   echo " ==> Pause Ingest and Redeploy Services"
   pause_ingest || task_fail
   service_retag_redeploy inventory || task_fail
+  sleep 75
 
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME \

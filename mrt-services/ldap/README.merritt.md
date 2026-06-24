@@ -71,6 +71,7 @@ docker compose -f docker-compose.simpsons.yml exec ldap /bin/bash
 ```bash
 bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
   -f /opt/import/sample-modify.ldif -v
+exit
 ```
 
 ```bash
@@ -90,6 +91,7 @@ docker compose -f docker-compose.simpsons.yml exec ldap /bin/bash
 
 ```bash
 bin/export-ldif --backendID userRoot --bindPassword $ROOT_PASSWORD -l simpsons.export.ldif
+exit
 ```
 
 ```bash
@@ -118,6 +120,13 @@ The stack will now contain 4 users
 - Lisa Simpson
 - Ned Flanders
 
+### Stop the stack
+
+```bash
+docker compose -f docker-compose.simpsons.yml down
+```
+
+
 ## Simpsons Users Import with Persistence
 
 ```bash
@@ -144,10 +153,11 @@ Confirm the addition of
 docker compose -f docker-compose.simpsons.persist.yml exec ldap /bin/bash
 ```
 
-```bash
-bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
-  -f /opt/import/sample-modify.ldif -v
-```
+  ```bash
+  bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
+    -f /opt/import/sample-modify.ldif -v
+  exit
+  ```
 
 ```bash
 docker compose -f docker-compose.simpsons.persist.yml exec ldap ./merritt-users.sh

@@ -21,3 +21,4 @@ do
 done
 
 aws s3 cp /var/www/html/ldap.txt "s3://${S3REPORT_BUCKET}/ldap/status.txt"
+cat /var/www/html/ldap.txt

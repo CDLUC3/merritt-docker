@@ -7,7 +7,7 @@ header() {
   echo "================"
 }
 
-echo "LDAP Status as of $(date)" > /var/www/html/ldap.txt
+echo "LDAP Status as of $(TZ='America/Los_Angeles' date)" > /var/www/html/ldap.txt
 
 export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 

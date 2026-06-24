@@ -1,6 +1,8 @@
-# Key LDAP Use Cases to Test
+# LDAP Use Case Testing with docker compose
 
-## Build
+Tests cases for the [Merritt LDAP Service](README.md).
+
+## Build containers for local testing
 
 ```bash
 docker compose build
@@ -10,6 +12,9 @@ docker compose build
 - LDAP restarts and re-uses data residing on a volume
 - LDAP starts with an empty repo and loads a designated input file (ie S3 ldif backup)
 - LDAP starts with an empty repo and defaults to importing our barebones.ldif file
+- LDAP + Replica Started
+- LDAP + Replica Started, modify content in the primary instance
+- LDAP + Replica Started, modify content in the replica instance
 
 ## Bare Bones Import
 

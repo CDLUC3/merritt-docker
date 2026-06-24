@@ -39,7 +39,9 @@ elif [[ "$MERRITT_ECS" == "ecs-dbsnapshot" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
-  echo "No action"
+  aws ecs update-service --cluster $ECS_STACK_NAME --service ldap --desired-count 0 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
 fi
 
 task_complete

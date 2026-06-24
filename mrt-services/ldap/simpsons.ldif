@@ -1,3 +1,8 @@
+dn: ou=uc3,dc=cdlib,dc=org
+objectClass: top
+objectClass: organizationalunit
+ou: uc3
+
 dn: ou=People,ou=uc3,dc=cdlib,dc=org
 objectClass: top
 objectClass: organizationalUnit

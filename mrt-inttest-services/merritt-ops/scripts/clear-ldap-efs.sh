@@ -13,6 +13,11 @@ fi
 
 rm -rf /merritt-filesys/ldap/data/*
 rm -rf /merritt-filesys/ldapreplica/data/*
+
+# use the last import file...
 mv /merritt-filesys/ldap/import/import.ldif.loaded /merritt-filesys/ldap/import/import.ldif
+
+# use the last S3 export file...
+# aws s3 cp s3://${S3CONFIG_BUCKET}/uc3/mrt/ldap/${MERRITT_ECS/ecs-/}/backup/export.latest.ldif /merritt-filesys/ldap/import/import.ldif
 
 # run start-ldap.sh

@@ -16,6 +16,7 @@ services:
       target: 4444
     volumes:
     - ./export:/opt/import
+    - ./simpsons.ldif:/opt/import/import.ldif
     restart: unless-stopped
     stdin_open: true
     tty: true

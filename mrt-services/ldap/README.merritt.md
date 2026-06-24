@@ -69,6 +69,7 @@ docker compose -f docker-compose.simpsons.yml exec ldap /bin/bash
 ```
 
 ```bash
+# ~~ in container
 bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
   -f /opt/import/sample-modify.ldif -v
 exit
@@ -90,6 +91,7 @@ docker compose -f docker-compose.simpsons.yml exec ldap /bin/bash
 ```
 
 ```bash
+# ~~ in container
 bin/export-ldif --backendID userRoot --bindPassword $ROOT_PASSWORD -l simpsons.export.ldif
 exit
 ```
@@ -153,11 +155,13 @@ Confirm the addition of
 docker compose -f docker-compose.simpsons.persist.yml exec ldap /bin/bash
 ```
 
-  ```bash
-  bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
-    -f /opt/import/sample-modify.ldif -v
-  exit
-  ```
+```bash
+# ~~ in container
+bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" \
+  --bindPassword $ROOT_PASSWORD \
+  -f /opt/import/sample-modify.ldif -v
+exit
+```
 
 ```bash
 docker compose -f docker-compose.simpsons.persist.yml exec ldap ./merritt-users.sh
@@ -191,6 +195,13 @@ The stack will now contain 5 users
 - Edward Flanders
 - Crusty Clown
 
+### Stop the service and delete the persisted content
+
+```bash
+docker compose -f docker-compose.simpsons.persist.yml down --volumes
+```
+
+
 ## LDAP Replication
 
 ```bash
@@ -199,42 +210,42 @@ docker compose -f docker-compose.replication.yml up -d
 
 ### Verify users imported into each instance (note differences)
 
+Simpsons data loaded into ldap
 ```bash
-docker compose -f docker-compose.ephemeral.yml exec ldap ./merritt-users.sh
+docker compose -f docker-compose.replication.yml exec ldap ./merritt-users.sh
 ```
 
+No users loaded into ldapreplica
 ```bash
-docker compose -f docker-compose.ephemeral.yml exec ldapreplica ./merritt-users.sh
+docker compose -f docker-compose.replication.yml exec ldapreplica ./merritt-users.sh
+docker compose -f docker-compose.replication.yml exec ldapreplica ./merritt-status.sh
 ```
 
 
-### Enable replication within each running container
+### Enable replication within the primary ldap container
 
 ```bash
-docker compose -f docker-compose.ephemeral.yml exec ldap ./merritt-replication-init.sh
-```
-
-```bash
-docker compose -f docker-compose.ephemeral.yml exec ldapreplica ./merritt-replication-init.sh
+docker compose -f docker-compose.replication.yml exec ldap ./merritt-replication-init.sh
 ```
 
 ### Verify users imported into each instance (note similarities)
 
 ```bash
-docker compose -f docker-compose.ephemeral.yml exec ldap ./merritt-users.sh
+docker compose -f docker-compose.replication.yml exec ldap ./merritt-users.sh
 ```
 
 ```bash
-docker compose -f docker-compose.ephemeral.yml exec ldapreplica ./merritt-users.sh
+docker compose -f docker-compose.replication.yml exec ldapreplica ./merritt-users.sh
 ```
 
-### Modify users in one instance
+### Modify users in the primary instance
 
 ```bash
-docker compose -f docker-compose.ephemeral.yml exec ldap /bin/bash
+docker compose -f docker-compose.replication.yml exec ldap /bin/bash
 ```
 
 ```bash
+# ~~ in container
 cat > /tmp/sample-modify.ldif << HERE
 dn: uid=ned_flanders,ou=People,ou=uc3,dc=cdlib,dc=org
 changetype: modify
@@ -267,14 +278,57 @@ HERE
 
 bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
   -f /tmp/sample-modify.ldif -v
+exit
 ```
 
 ### Verify users imported into each instance (note that change has replicated)
 
 ```bash
-docker compose -f docker-compose.ephemeral.yml exec ldap ./merritt-users.sh
+docker compose -f docker-compose.replication.yml exec ldap ./merritt-users.sh
 ```
 
 ```bash
-docker compose -f docker-compose.ephemeral.yml exec ldapreplica ./merritt-users.sh
+docker compose -f docker-compose.replication.yml exec ldapreplica ./merritt-users.sh
+```
+
+### Modify users in the replica instance to ensure 2-way replication
+
+```bash
+docker compose -f docker-compose.replication.yml exec ldapreplica /bin/bash
+```
+
+```bash
+# ~~ in container
+cat > /tmp/sample-modify.ldif << HERE
+dn: uid=maude,ou=People,ou=uc3,dc=cdlib,dc=org
+changetype: add
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: merrittUser
+objectClass: organizationalPerson
+objectClass: person
+mail: maude@cdlib.org
+sn: Flanders
+tzRegion: America/Los_Angeles
+cn: Maude Flanders
+arkId: ark:/99999/def
+givenName: Maude
+userPassword: password
+uid: maude
+displayName: Maude Flanders
+HERE
+
+bin/ldapmodify -h localhost -p 1389 -D "$ROOT_USER_DN" --bindPassword $ROOT_PASSWORD \
+  -f /tmp/sample-modify.ldif -v
+exit
+```
+
+### Verify users imported into each instance (note that change has replicated)
+
+```bash
+docker compose -f docker-compose.replication.yml exec ldap ./merritt-users.sh
+```
+
+```bash
+docker compose -f docker-compose.replication.yml exec ldapreplica ./merritt-users.sh
 ```

@@ -3,7 +3,8 @@
 EXCLUDE="^(entryUUID|creatorsName|modifyTimestamp|modifiersName|createTimestamp|pwdChangedTime|ds-sync-hist)"
 
 sanitize_exported_ldif() {
-  bin/ldifmodify -c "$1" /opt/fixup.ldif | egrep -v "$EXCLUDE" > "$2"
+  # bin/ldifmodify -c "$1" /opt/fixup.ldif | egrep -v "$EXCLUDE" > "$2"
+  cat "$1" | egrep -v "$EXCLUDE" > "$2"
 }
 
 sanitize_barebones_ldif() {

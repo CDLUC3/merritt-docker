@@ -30,3 +30,7 @@ displayName: Crusty Clown
 # dn: uid=crusty,ou=People,ou=uc3,dc=cdlib,dc=org
 # changetype: modify
 # delete: arkId
+
+# Sample record delete
+# dn: uid=crusty,ou=People,ou=uc3,dc=cdlib,dc=org
+# changetype: delete

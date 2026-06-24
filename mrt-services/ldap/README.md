@@ -1,19 +1,44 @@
-This image will allow you to run a standalone Merritt LDAP server running in its own docker container.
-The OpenDJ LDAP server is prepopulated with the barebones.ldif input data file.  This file includes two users 
-(merritt-test and anonymous) and two collections.  Passwords for users are:
+# Merritt LDAP Service
 
-`merritt-test: password`
-`Admin User: password`
+This open source service runs as a part of the [Merritt Preservation System](https://github.com/CDLUC3/mrt-doc).
 
-To allow SSL request to LDAP server, use the supplied "ldap-ca.crt" CA certificate on client host.
+## Purpose
 
-The following instruction will check the status of the LDAP server.
-```
-    docker exec -it ldap /opt/opendj/bin/status -D "cn=Directory Manager" -w password
-```
+The Merritt User Interface authenticates users sessions with LDAP.
 
-## Migration
+## Details
 
-Dockerfile.opendj is likely a suitable replacement for this test container.
+Merritt uses [OpenDJ](https://hub.docker.com/r/openidentityplatform/opendj) for our LDAP service.
 
-ECS update
+We apply a minimal configuration changes to the OpenDJ container.
+
+## How is this Service Run?
+
+### Docker Compose
+
+For development testing of this component using docker compose, see [README.merritt.md](README.merritt.md).
+
+### ECS
+
+The Merritt System deploys this service to each of our ECS custers.  Some clusters run this service with replication, other clusters run the service as a single node.
+
+## Configuration Files
+
+- [99-user.ldif](99-user.ldif) contains Merritt specific LDAP schema definitions
+- [barebones.ldif](barebones.ldif) contains a predictable set of users and collections.  This is loaded into a new instance if another import file is not provided.
+- [simpsons.ldif](simpsons.ldif) contains test user entries for use in docker compose tests.
+
+## Initialization Script
+
+- [ldap-efs-init.sh](ldap-efs-init.sh) entrypoint script that handles 3 use cases
+  - new instance started with no import file (barebones is loaded)
+  - new instance started with an import file
+  - instance is started and LDAP data directory already exists
+
+Note: replication cannot be initialized until both a primary and replica instance have been started.  This requires a `docker exec` in order to initialize properly.
+
+## Internal Links
+
+### Deployment and Operations at CDL
+
+https://github.com/CDLUC3/mrt-doc-private/blob/main/uc3-mrt-ldap.md

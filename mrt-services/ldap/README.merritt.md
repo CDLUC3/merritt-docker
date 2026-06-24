@@ -332,3 +332,7 @@ docker compose -f docker-compose.replication.yml exec ldap ./merritt-users.sh
 ```bash
 docker compose -f docker-compose.replication.yml exec ldapreplica ./merritt-users.sh
 ```
+
+```bash
+docker compose -f docker-compose.replication.yml down
+```

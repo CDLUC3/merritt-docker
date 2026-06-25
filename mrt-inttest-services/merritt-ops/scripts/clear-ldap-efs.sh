@@ -20,4 +20,6 @@ mv /merritt-filesys/ldap/import/import.ldif.loaded /merritt-filesys/ldap/import/
 # use the last S3 export file...
 # aws s3 cp s3://${S3CONFIG_BUCKET}/uc3/mrt/ldap/${MERRITT_ECS/ecs-/}/backup/export.latest.ldif /merritt-filesys/ldap/import/import.ldif
 
+chown opendj:ubuntu /merritt-filesys/ldap/import/import.ldif
+
 # run start-ldap.sh

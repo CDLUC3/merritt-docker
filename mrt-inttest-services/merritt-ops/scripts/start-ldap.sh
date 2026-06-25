@@ -2,8 +2,8 @@
 
 source ./ecs-helpers.sh
 
-export label="Redeploy LDAP"
-export statfile="/tmp/redeploy-ldap.txt"
+export label="Start LDAP"
+export statfile="/tmp/start-ldap.txt"
 
 task_init
 

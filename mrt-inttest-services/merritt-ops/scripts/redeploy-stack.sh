@@ -47,6 +47,9 @@ then
   echo " ==> Merritt Ops Deployment Complete"
 
   stack_init
+
+  echo " ==> Launch End-to-End Tests"
+  launch_end2end_tests || task_fail
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
@@ -120,6 +123,9 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
+
+  echo " ==> Launch End-to-End Tests"
+  launch_end2end_tests || task_fail
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
@@ -153,6 +159,9 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
+
+  echo " ==> Launch End-to-End Tests"
+  launch_end2end_tests || task_fail
 fi
 
 export SLACK_ONSUCCESS=Y

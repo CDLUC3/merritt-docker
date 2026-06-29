@@ -163,6 +163,11 @@ unpause_ingest() {
   curl --no-progress-meter -X POST $(admintool_base)/ops/zk/ingest/unpause
 }
 
+  launch_end2end_tests() {
+    echo "POST $(admintool_base)/infra/ecs/tasks/launch/mrt-integ-tests/runEndToEndTests"
+  curl --no-progress-meter -X POST $(admintool_base)/infra/ecs/tasks/launch/mrt-integ-tests/runEndToEndTests
+}
+
 stack_init() {
   echo "POST $(admintool_base)/stack-init"
   curl --no-progress-meter -X POST $(admintool_base)/stack-init

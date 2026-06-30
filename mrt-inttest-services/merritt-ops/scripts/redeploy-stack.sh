@@ -130,8 +130,8 @@ elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
-  # echo " ==> Redeploy LDAP"
-  # /redeploy-ldap.sh || task_fail
+  echo " ==> Redeploy LDAP"
+  /redeploy-ldap.sh || task_fail
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
   service_retag_redeploy audit || task_fail

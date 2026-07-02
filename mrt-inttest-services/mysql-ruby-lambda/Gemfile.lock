@@ -10,7 +10,7 @@ GEM
   specs:
     ast (2.4.3)
     bigdecimal (4.1.2)
-    json (2.19.9)
+    json (2.20.0)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     mysql2 (0.5.7)
@@ -23,7 +23,7 @@ GEM
     racc (1.8.1)
     rainbow (3.1.1)
     regexp_parser (2.12.0)
-    rubocop (1.87.0)
+    rubocop (1.88.1)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -51,4 +51,4 @@ DEPENDENCIES
   uc3-ssm!
 
 BUNDLED WITH
-  4.0.14
+  4.0.15

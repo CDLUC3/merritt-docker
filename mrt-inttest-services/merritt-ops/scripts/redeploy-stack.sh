@@ -14,6 +14,9 @@ then
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
+  echo " ==> Redeploy ZK"
+  /redeploy-zk.sh || task_fail
+
   echo " ==> Redeploy LDAP"
   /redeploy-ldap.sh || task_fail
 

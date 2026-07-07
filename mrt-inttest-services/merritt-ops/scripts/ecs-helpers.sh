@@ -132,6 +132,7 @@ admintool_run_consistency_checks() {
 }
 
 zk_snapshot() {
+  
   echo "POST $(admintool_base)/ops/zk/snapshot... then wait 30 sec"
   curl --no-progress-meter -X POST $(admintool_base)/ops/zk/snapshot
 }
@@ -260,4 +261,28 @@ duration() {
   # Pad seconds with a leading zero when < 10
   if [ "$sec" -lt 10 ]; then sec="0$sec"; fi
   echo "($min:$sec sec)"
+}
+
+zoo_nodes() {
+  if [[ "$MERRITT_ECS" == "ecs-dev" || "$MERRITT_ECS" == "ecs-stg" ]]
+  then
+    echo "zoo1 zoo2 zoo3"
+  elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
+  then
+    echo "zoo1 zoo2 zoo3 zoo4 zoo5"
+  else
+    echo "zoo"
+  fi
+}
+
+zoo_first_node() {
+  if [[ "$MERRITT_ECS" == "ecs-dev" || "$MERRITT_ECS" == "ecs-stg" ]]
+  then
+    echo "zoo1"
+  elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
+  then
+    echo "zoo1"
+  else
+    echo "zoo"
+  fi
 }

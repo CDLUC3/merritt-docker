@@ -10,53 +10,69 @@ task_init
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
-  echo " ==> Redeploying AUX Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo1         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo2         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service zoo3         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+  echo " ==> Starting AUX Services"
+
+  for zknode in $(zoo_nodes)
+  do
+    echo " ==> Starting $zknode"
+    aws ecs update-service --cluster $ECS_STACK_NAME --service $zknode --force-new-deployment --desired-count 1 \
+      --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+      --output text --no-cli-pager 
+  done
+
   aws ecs update-service --cluster $ECS_STACK_NAME --service ezid         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldapreplica  --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   sleep 75
 
   echo " ==> Begin Service Wait"
-  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap ldapreplica smtp ezid zoo1 zoo2 zoo3
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap ldapreplica smtp ezid $(zoo_nodes)
   echo " ==> Service Wait Complete"
 
-  echo " ==> Redeploying Merritt Services"
+  echo " ==> Starting Merritt Services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service access       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   sleep 75
 
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store access ui
   echo " ==> Service Wait Complete"
 
-  echo " ==> Redeploying Merritt Ops"
+  echo " ==> Starting Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
 
   echo " ==> ZK Restore"
   zk_restore
@@ -65,51 +81,66 @@ then
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
-  echo " ==> Redeploying AUX Services"
+  echo " ==> Starting AUX Services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service zoo          --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service db-container --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service minio        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ezid         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   sleep 75
 
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap smtp ezid zoo minio db-container
   echo " ==> Service Wait Complete"
 
-  echo " ==> Redeploying Merritt Services"
+  echo " ==> Starting Merritt Services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service access       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   sleep 75
 
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool ingest inventory audit replic store access ui
   echo " ==> Service Wait Complete"
 
-  echo " ==> Redeploying Merritt Ops"
+  echo " ==> Starting Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
 
   echo " ==> Stack Init"
   stack_init
@@ -117,22 +148,26 @@ elif [[ "$MERRITT_ECS" == "ecs-dbsnapshot" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
-  echo " ==> Redeploying AUX Services"
+  echo " ==> Starting AUX Services"
   aws ecs update-service --cluster $ECS_STACK_NAME --service ldap         --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   sleep 30
 
   echo " ==> Begin Service Wait"
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap
   echo " ==> Service Wait Complete"
 
-  echo " ==> Redeploying Merritt Services and Merritt Ops"
+  echo " ==> Starting Merritt Services and Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   sleep 75
 
   echo " ==> Begin Service Wait"
@@ -144,11 +179,15 @@ elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
-  echo " ==> Redeploying Merritt Services and Merritt Ops"
+  echo "Start Stack is not fully implemented for stage."
+
+  echo " ==> Starting Merritt Admin and Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   sleep 60
 
   echo " ==> Begin Service Wait"
@@ -158,11 +197,15 @@ elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
-  echo " ==> Redeploying Merritt Services and Merritt Ops"
+  echo "Start Stack is not fully implemented for production."
+
+  echo " ==> Starting Merritt Admin and Merritt Ops"
   aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-ops   --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' --output text --no-cli-pager 
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   sleep 60
 
   echo " ==> Begin Service Wait"

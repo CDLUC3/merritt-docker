@@ -107,7 +107,9 @@ then
   service_retag_redeploy ui || task_fail
   service_retag_redeploy replic || task_fail
   service_retag_redeploy admintool || task_fail
+  service_retag_redeploy ingest || task_fail
   service_retag_redeploy inventory || task_fail
+  service_retag_redeploy store || task_fail
   sleep 120
 
   echo " ==> Begin Service Wait"

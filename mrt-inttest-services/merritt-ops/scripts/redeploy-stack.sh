@@ -7,10 +7,10 @@ export statfile="/tmp/redeploy-log.txt"
 
 task_init
 
+export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
+
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
-  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
-
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
@@ -30,6 +30,7 @@ then
   service_redeploy ingest || task_fail
   service_redeploy inventory || task_fail
   service_redeploy store || task_fail
+  aws autoscaling start-instance-refresh --auto-scaling-group-name merritt-ingest-proxy-asg
   sleep 75
 
   echo " ==> Begin Service Wait"
@@ -51,8 +52,6 @@ then
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
-  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
-
   echo " ==> Redeploying Merritt Services"
   service_redeploy admintool || task_fail
   service_redeploy ingest || task_fail
@@ -75,8 +74,6 @@ then
   stack_init
 elif [[ "$MERRITT_ECS" == "ecs-dbsnapshot" ]]
 then
-  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
-
   echo " ==> Redeploying Merritt Services and Merritt Ops"
   service_redeploy admintool || task_fail
   service_redeploy ui || task_fail
@@ -93,8 +90,6 @@ then
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
-  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
-
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
@@ -110,6 +105,7 @@ then
   service_retag_redeploy ingest || task_fail
   service_retag_redeploy inventory || task_fail
   service_retag_redeploy store || task_fail
+  # stage does not have a proxy server of its own
   sleep 120
 
   echo " ==> Begin Service Wait"
@@ -127,8 +123,6 @@ then
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
-  export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
-
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
@@ -142,6 +136,9 @@ then
   service_retag_redeploy replic || task_fail
   service_retag_redeploy admintool || task_fail
   service_retag_redeploy inventory || task_fail
+  # service_retag_redeploy ingest || task_fail
+  # service_retag_redeploy store || task_fail
+  aws autoscaling start-instance-refresh --auto-scaling-group-name merritt-ingest-proxy-asg
   sleep 120
 
   echo " ==> Begin Service Wait"

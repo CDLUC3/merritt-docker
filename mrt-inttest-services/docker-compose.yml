@@ -70,3 +70,11 @@ services:
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${ECR_REGISTRY}
+  smtp:
+    container_name: smtp
+    image: ${ECR_REGISTRY}/mrt-smtp
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SES_PARMS: '${SES_PARAMS}'

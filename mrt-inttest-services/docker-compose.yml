@@ -74,7 +74,7 @@ services:
     container_name: smtp
     image: ${ECR_REGISTRY}/mrt-smtp
     build:
-      context: .
+      context: mrt-smtp
       dockerfile: Dockerfile
       args:
         SES_PARMS: '${SES_PARAMS}'

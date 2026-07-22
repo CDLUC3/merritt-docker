@@ -30,6 +30,8 @@ phases:
     on-failure: ABORT
     commands:
     - |
+      SES_PARAMS=$(aws ssm get-parameter --name /uc3/mrt/ses-params --query Parameter.Value --output text --with-decryption)
+
       # This command stopped working on 4/16/2026, so I broke out each build.
       docker compose -f mrt-inttest-services/docker-compose.yml \
         build --push --quiet

@@ -15,6 +15,7 @@ RUN /usr/sbin/postconf -e "relayhost = [email-smtp.us-west-2.amazonaws.com]:587"
   'smtp_tls_CAfile = /etc/ssl/certs/ca-bundle.crt'
 
 RUN echo "myhostname = merritt.cdlib.org" >> /etc/postfix/main.cf
+RUN echo "maillog_file = /dev/stdout" >> /etc/postfix/main.cf
 
 RUN /usr/sbin/postconf -e "inet_interfaces = loopback-only" "inet_protocols = ipv4"
 

@@ -96,6 +96,11 @@ then
   echo " ==> Redeploy LDAP"
   /redeploy-ldap.sh || task_fail
 
+  echo " ==> Redeploy SMTP"
+  aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --force-new-deployment --desired-count 1 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
+
   echo " ==> Redeploying Merritt Services and Merritt Ops"
   service_retag_redeploy audit || task_fail
   service_retag_redeploy access || task_fail
@@ -128,6 +133,11 @@ then
 
   echo " ==> Redeploy LDAP"
   /redeploy-ldap.sh || task_fail
+
+  # echo " ==> Redeploy SMTP"
+  # aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --force-new-deployment --desired-count 1 \
+  #   --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+  #   --output text --no-cli-pager 
 
   echo " ==> Redeploying Merritt Services and Merritt Ops"
   service_retag_redeploy audit || task_fail

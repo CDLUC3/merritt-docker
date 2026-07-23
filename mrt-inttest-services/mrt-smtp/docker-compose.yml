@@ -7,3 +7,4 @@ services:
       dockerfile: Dockerfile
       args:
         SES_PARMS: '${SES_PARAMS}'
+        ECR_REGISTRY: ${ECR_REGISTRY}

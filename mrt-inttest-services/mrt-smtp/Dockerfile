@@ -22,4 +22,4 @@ RUN echo "[email-smtp.us-west-2.amazonaws.com]:587 ${SES_PARMS}" > /etc/postfix/
 
 RUN /usr/sbin/postmap hash:/etc/postfix/sasl_passwd
 
-ENTRYPOINT ['/usr/sbin/postfix', '-v', 'start-fg']
+ENTRYPOINT ["/usr/sbin/postfix", "-v", "start-fg"]

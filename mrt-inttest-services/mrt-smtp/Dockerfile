@@ -1,5 +1,5 @@
 ARG ECR_REGISTRY
-FROM ${ECR_REGISTRY}/docker-hub/almalinux:9
+FROM ${ECR_REGISTRY}/docker-hub/library/almalinux:9
 
 ARG SES_PARMS=ses_passwd_not_set
 

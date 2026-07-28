@@ -44,7 +44,7 @@ COPY scripts /
 RUN chmod 744 /*.sh /mrt-locust/*.sh
 
 RUN git clone https://github.com/CDLUC3/mrt-atom.git && cd mrt-atom && bundle install \
-    && cd mrt-atom && mkdir bin LockFile LastUpdate logs \
+    && mkdir bin LockFile LastUpdate logs \
     && aws s3 sync "s3://${S3CONFIG_BUCKET}/uc3/mrt/mrt-ingest-profiles/nuxeo/" bin
 
 RUN mkdir -p /root/.aws

@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     vim \
-    mysql-client \
+    mysql-client libmariadb-dev \
     apache2 \
     nano \
     python3-full \
@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y \
     iputils-ping \
     mandoc \
     expect \
+    csh \
     && apt-get clean
 
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
@@ -36,9 +37,17 @@ RUN curl -o "session-manager-plugin.deb" "https://s3.amazonaws.com/session-manag
     dpkg -i session-manager-plugin.deb || echo "Failed to install session-manager-plugin" && \
     rm session-manager-plugin.deb
 
+RUN gem install bundler
+
 COPY README.md /README.md
 COPY scripts /
 RUN chmod 744 /*.sh /mrt-locust/*.sh
+
+# If mrt-atom code changes significantly, you may need to force a rebuild of this image
+RUN git clone https://github.com/CDLUC3/mrt-atom.git \
+    && cd mrt-atom \
+    && bundle install \
+    && mkdir -p LockFile LastUpdate logs
 
 RUN mkdir -p /root/.aws
 COPY .awsconfig-template /root/.aws/config

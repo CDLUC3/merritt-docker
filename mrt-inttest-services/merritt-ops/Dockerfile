@@ -43,12 +43,6 @@ COPY README.md /README.md
 COPY scripts /
 RUN chmod 744 /*.sh /mrt-locust/*.sh
 
-# If mrt-atom code changes significantly, you may need to force a rebuild of this image
-RUN git clone https://github.com/CDLUC3/mrt-atom.git \
-    && cd mrt-atom \
-    && bundle install \
-    && mkdir -p LockFile LastUpdate logs
-
 RUN mkdir -p /root/.aws
 COPY .awsconfig-template /root/.aws/config
 COPY .awscredentials-template /root/.aws/credentials

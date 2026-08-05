@@ -6,6 +6,7 @@ export statfile="/tmp/nuxeo-init-log.txt"
 
 task_init
 
-/mrt-atom/bin/nuxeoInit.sh || task_fail
+NUXEO_DIR="/merritt-filesys/nuxeo/mrt-atom"
+${NUXEO_DIR}/bin/nuxeoInit.sh || task_fail
 
 task_complete

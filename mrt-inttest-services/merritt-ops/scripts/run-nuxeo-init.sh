@@ -14,6 +14,7 @@ then
   git fetch
   git pull
 else
+  mkdir -p /merritt-filesys/nuxeo
   cd /merritt-filesys/nuxeo
   git clone https://github.com/CDLUC3/mrt-atom.git
   cd ${NUXEO_DIR}

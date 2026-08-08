@@ -14,10 +14,10 @@ run_purge() {
   echo ""
 
   echo curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s \
-    "$(admintool_base)/test/purge/${coll}?days=${days}&count=50"
+    "$(admintool_base)/test/purge/${coll}?days=${days}&count=20"
 
   curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s \
-    "$(admintool_base)/test/purge/${coll}?days=${days}&count=50" || return
+    "$(admintool_base)/test/purge/${coll}?days=${days}&count=20" || return
   
   jq '.[].message' /tmp/curl.json
   count=$(jq -r '.|length' /tmp/curl.json)

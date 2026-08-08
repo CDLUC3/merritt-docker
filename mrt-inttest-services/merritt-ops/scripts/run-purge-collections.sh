@@ -19,18 +19,18 @@ run_purge() {
   curl -X POST -H "Accept: application/json" -o /tmp/curl.json -s \
     "$(admintool_base)/test/purge/${coll}?days=${days}&count=50" || return
   
-  echo "Message (if applicable)"
   jq '.[].message' /tmp/curl.json
   count=$(jq -r '.|length' /tmp/curl.json)
 
   echo "Count: [$count]"
 
-  if [[ "$count" != "" ]]
+  if [[ "$count" == "" ]]
   then
-    if [ $count -gt 0 ]
-    then
-      run_purge $coll $days
-    fi
+    echo "ERROR:Results could not be parsed"
+    cat /tmp/curl.json
+  elif [ $count -gt 0 ]
+  then
+    run_purge $coll $days
   fi
 }
 

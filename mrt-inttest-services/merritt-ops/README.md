@@ -1,4 +1,4 @@
-# Using the `merrritt-dev` container
+# Using the `merrritt-ops` container
 
 ## How to connect
 

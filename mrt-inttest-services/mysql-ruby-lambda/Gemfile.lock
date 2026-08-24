@@ -10,21 +10,21 @@ GEM
   specs:
     ast (2.4.3)
     bigdecimal (4.1.2)
-    json (2.20.0)
-    language_server-protocol (3.17.0.5)
+    json (2.21.2)
+    language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     mysql2 (0.5.7)
       bigdecimal
     parallel (2.1.0)
-    parser (3.3.11.1)
+    parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
     prism (1.9.0)
     racc (1.8.1)
     rainbow (3.1.1)
     regexp_parser (2.12.0)
-    rubocop (1.88.1)
-      json (~> 2.3)
+    rubocop (1.90.0)
+      json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
       parallel (>= 1.10)
@@ -34,7 +34,7 @@ GEM
       rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.49.1)
+    rubocop-ast (1.50.0)
       parser (>= 3.3.7.2)
       prism (~> 1.7)
     ruby-progressbar (1.13.0)
@@ -51,4 +51,4 @@ DEPENDENCIES
   uc3-ssm!
 
 BUNDLED WITH
-  4.0.15
+  4.0.19

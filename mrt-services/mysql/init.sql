@@ -539,6 +539,7 @@ CREATE TABLE daily_billing (
   billable_size bigint unsigned NOT NULL DEFAULT '0',
   INDEX billing_totals_date (billing_totals_date),
   UNIQUE INDEX collection_daily (billing_totals_date, inv_collection_id, inv_owner_id),
+  INDEX owner_date (inv_owner_id, billing_totals_date),
   INDEX inv_owner_id (inv_owner_id),
   INDEX inv_collection_id (inv_collection_id)
 );

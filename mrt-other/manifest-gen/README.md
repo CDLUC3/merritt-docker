@@ -1,5 +1,7 @@
 # Merritt Manifest Generator
 
+This will be migrated into a new repository
+
 ## Purpose
 
 Facilitate the generation of Merritt manifests using a cloud bucket or an inventory list.

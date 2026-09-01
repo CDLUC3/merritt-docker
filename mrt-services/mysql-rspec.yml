@@ -27,5 +27,4 @@ services:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: Y
     ports:
-    - published: 3306
-      target: 3306
+      - "3306:3306"

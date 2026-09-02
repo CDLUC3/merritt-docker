@@ -54,3 +54,7 @@
 	path = mrt-other/uc3-ssm
 	url = git@github.com:CDLUC3/uc3-ssm.git
 	branch = main
+[submodule "mrt-other/mrt-manifest-gen"]
+	path = mrt-other/mrt-manifest-gen
+	url = git@github.com:CDLUC3/mrt-manifest-gen.git
+	branch = main

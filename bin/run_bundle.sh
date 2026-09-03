@@ -109,6 +109,18 @@ bundle install || exit
 bundle update --all || exit
 bundle exec rubocop -A || exit
 
+cd ${ROOTDIR}/mrt-other/mrt-manifest-gen
+
+echo
+pwd
+echo '==========='
+echo '  mrt-manifest-gen'
+echo '==========='
+bundle update --bundler || exit
+bundle install || exit
+bundle update --all || exit
+bundle exec rubocop -A || exit
+
 cd ${ROOTDIR}/mrt-other/mrt-atom
 
 echo

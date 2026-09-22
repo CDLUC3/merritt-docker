@@ -49,6 +49,10 @@ then
   launch_end2end_tests || task_fail
 
   service_redeploy merritt-ops || task_fail
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-opswrite --force-new-deployment --desired-count 0 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
+
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
@@ -69,6 +73,9 @@ then
   echo " ==> Service Wait Complete"
 
   service_redeploy merritt-ops || task_fail
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-opswrite --force-new-deployment --desired-count 0 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   echo " ==> Merritt Ops Redployment Initiated"
   
   stack_init
@@ -87,6 +94,9 @@ then
   stack_init
 
   service_redeploy merritt-ops || task_fail
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-opswrite --force-new-deployment --desired-count 0 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
@@ -97,7 +107,7 @@ then
   /redeploy-ldap.sh || task_fail
 
   echo " ==> Redeploy SMTP"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service smtp         --force-new-deployment --desired-count 1 \
+  aws ecs update-service --cluster $ECS_STACK_NAME --service smtp --force-new-deployment --desired-count 1 \
     --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
     --output text --no-cli-pager 
 
@@ -125,6 +135,9 @@ then
   launch_end2end_tests || task_fail
 
   service_redeploy merritt-ops || task_fail
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-opswrite --force-new-deployment --desired-count 0 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
@@ -163,6 +176,9 @@ then
   launch_end2end_tests || task_fail
 
   service_redeploy merritt-ops || task_fail
+  aws ecs update-service --cluster $ECS_STACK_NAME --service merritt-opswrite --force-new-deployment --desired-count 0 \
+    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
+    --output text --no-cli-pager 
   echo " ==> Merritt Ops Redployment Initiated"
 fi
 

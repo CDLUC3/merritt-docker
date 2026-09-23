@@ -12,6 +12,8 @@ then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
   echo " ==> Starting AUX Services"
 
+  aws autoscaling start-instance-refresh --auto-scaling-group-name merritt-ingest-proxy-asg
+
   for zknode in $(zoo_nodes)
   do
     echo " ==> Starting $zknode"

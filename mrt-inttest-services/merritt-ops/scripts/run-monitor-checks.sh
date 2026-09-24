@@ -74,6 +74,33 @@ check_service_json() {
   return 0
 }
 
+check_service() {
+  local service=$1
+  local host=$2
+  local endpoint=$3
+  local conn_time=${4:-5}
+  local max_time=${5:-20}
+
+  local healthycount=1
+
+  local url="$host/$endpoint"
+
+  if ! monitor_url_json "$url" "$conn_time" "$max_time"
+  then
+    echo "Service failure for $url"
+    healthycount=0
+  fi
+
+  aws cloudwatch put-metric-data --region us-west-2 --namespace merritt \
+    --dimensions "stack=$MERRITT_ECS,service=$service" \
+    --unit Count --metric-name healthy-count --value $healthycount
+
+  if [ $healthycount -eq 0 ]; then
+    return 1
+  fi
+  return 0
+}
+
 validation_check_json() {
   local service=$1
   local jq_query=$2
@@ -206,6 +233,8 @@ monitor_services() {
   validation_check_json "replic" \
     '.["repsvc:replicationServiceState"].["repsvc:status"] == "running"' \
     "replication status not running"
+
+  check_service "proxy" $PROXY_PATH ""
 
   stack_metrics "$(admintool_base)/metrics"
 }

@@ -159,8 +159,8 @@ then
   service_retag_redeploy replic || task_fail
   service_retag_redeploy admintool || task_fail
   service_retag_redeploy inventory || task_fail
-  # service_retag_redeploy ingest || task_fail
-  # service_retag_redeploy store || task_fail
+  service_retag_redeploy ingest || task_fail
+  service_retag_redeploy store || task_fail
   aws autoscaling start-instance-refresh --auto-scaling-group-name merritt-ingest-proxy-asg
   sleep 120
 

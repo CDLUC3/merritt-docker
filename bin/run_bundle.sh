@@ -97,18 +97,6 @@ bundle install || exit
 bundle update --all || exit
 bundle exec rubocop -A || exit
 
-cd ${ROOTDIR}/mrt-other/s3-sinatra
-
-echo
-pwd
-echo '==========='
-echo '  s3-sinatra'
-echo '==========='
-bundle update --bundler || exit
-bundle install || exit
-bundle update --all || exit
-bundle exec rubocop -A || exit
-
 cd ${ROOTDIR}/mrt-other/mrt-manifest-gen
 
 echo

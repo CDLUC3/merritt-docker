@@ -46,10 +46,6 @@
 	path = mrt-other/mrt-atom
 	url = git@github.com:CDLUC3/mrt-atom.git
 	branch = main
-[submodule "s3-sinatra"]
-	path = mrt-other/s3-sinatra
-	url = git@github.com:CDLUC3/s3-sinatra.git
-	branch = main
 [submodule "uc3-ssm"]
 	path = mrt-other/uc3-ssm
 	url = git@github.com:CDLUC3/uc3-ssm.git

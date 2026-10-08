@@ -54,3 +54,15 @@
 	path = mrt-other/mrt-manifest-gen
 	url = git@github.com:CDLUC3/mrt-manifest-gen.git
 	branch = main
+[submodule "mrt-doc"]
+	path = mrt-other/mrt-doc
+	url = git@github.com:CDLUC3/mrt-doc.git
+[submodule "mrt-doc-private"]
+	path = mrt-other/mrt-doc-private
+	url = git@github.com:CDLUC3/mrt-doc-private.git
+[submodule "mrt-repo-tagger"]
+	path = mrt-other/mrt-repo-tagger
+	url = git@github.com:CDLUC3/mrt-repo-tagger.git
+[submodule "mrt-ingest-profiles"]
+	path = mrt-other/mrt-ingest-profiles
+	url = git@github.com:CDLUC3/mrt-ingest-profiles.git

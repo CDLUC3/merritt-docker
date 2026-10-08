@@ -120,3 +120,25 @@ bundle update --bundler || exit
 bundle install || exit
 bundle update --all || exit
 # rubocop is not applicable
+
+cd ${ROOTDIR}/mrt-other/mrt-ingest-profiles
+
+echo
+pwd
+echo '==========='
+echo '  mrt-ingest-profiles'
+echo '==========='
+bundle update --bundler || exit
+bundle install || exit
+bundle update --all || exit
+
+cd ${ROOTDIR}/mrt-other/mrt-doc-private/object-delete-files
+
+echo
+pwd
+echo '==========='
+echo '  mrt-doc-private/object-delete-files'
+echo '==========='
+bundle update --bundler || exit
+bundle install || exit
+bundle update --all || exit

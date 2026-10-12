@@ -103,6 +103,9 @@ then
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
+  echo " ==> Redeploy ZK"
+  /redeploy-zk.sh || task_fail
+
   echo " ==> Redeploy LDAP"
   /redeploy-ldap.sh || task_fail
 
@@ -130,6 +133,9 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
+
+  # echo " ==> Redeploy ZK"
+  # /redeploy-zk.sh || task_fail
 
   echo " ==> Launch End-to-End Tests"
   launch_end2end_tests || task_fail

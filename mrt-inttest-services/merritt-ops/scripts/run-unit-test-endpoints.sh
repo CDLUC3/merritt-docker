@@ -9,7 +9,7 @@ task_init
 
 FAIL=0
 set -o pipefail
-admintool_test_routes | tee -a $statfile || FAIL=1
+admintool_test_routes | tee -a $statfile || FAIL=1 && echo 'failed!!!'
 set +o pipefail
 
 rptfile="$(date +%Y%m%d-%H%M%S).txt"

@@ -28,6 +28,9 @@ then
 
   unbuffer aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
     --container ldap --command "/opt/opendj/merritt-replication-init.sh" --interactive || task_fail
+
+  unbuffer aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
+    --container ldap --command "/opt/opendj/merritt-pass-policy-init.sh" --interactive || task_fail
 elif [[ "$MERRITT_ECS" == "ecs-ephemeral" ]]
 then
   export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack

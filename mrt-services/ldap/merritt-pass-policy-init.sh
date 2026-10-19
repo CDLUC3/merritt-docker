@@ -2,7 +2,7 @@
 
 if [[ "$REPLICA" != "true" ]]
 then
-  bin/dsconfig -h localhost -p 4444 -D "ROOT_USER_DN" -X -n \
+  bin/dsconfig -h localhost -p 4444 -D "$ROOT_USER_DN" -X -n \
     -w "$ROOT_PASSWORD" \
     set-password-policy-prop \
     --policy-name "Default Password Policy" \

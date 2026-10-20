@@ -297,11 +297,14 @@ escalope_add_block() {
   created_by=$3
   comment=$4
 
+  tstart=$(TZ='America/Los_Angeles' date "+%Y-%m-%dT%H:%M:%S")
+  tend=$(TZ='America/Los_Angeles' date -d "now + ${minutes} minutes" "+%Y-%m-%dT%H:%M:%S")
+
   payload=$(jq -n \
     --arg hosts "$MERRITT_ECS" \
     --arg services "$services" \
-    --arg start_time "$(TZ="America/Los_Angeles" date "+%Y-%m-%dT%H:%M:%S")" \
-    --arg end_time "$(TZ="America/Los_Angeles" date -v+${minutes}M "+%Y-%m-%dT%H:%M:%S")" \
+    --arg start_time "$tstart" \
+    --arg end_time "$tend" \
     --arg created_by "$created_by" \
     --arg comment "$comment" \
     '$ARGS.named')

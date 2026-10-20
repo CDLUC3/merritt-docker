@@ -301,7 +301,7 @@ escalope_add_block() {
   tend=$(TZ='America/Los_Angeles' date -d "now + ${minutes} minutes" "+%Y-%m-%dT%H:%M:%S")
 
   payload=$(jq -n \
-    --arg hosts "$MERRITT_ECS" \
+    --arg hosts "merritt-$MERRITT_ECS" \
     --arg services "$services" \
     --arg start_time "$tstart" \
     --arg end_time "$tend" \
@@ -319,7 +319,7 @@ escalope_remove_block() {
   created_by=$2
 
   payload=$(jq -n \
-    --arg hosts "$MERRITT_ECS" \
+    --arg hosts "merritt-$MERRITT_ECS" \
     --arg services "$services" \
     --arg created_by "$created_by" \
     '$ARGS.named')

@@ -11,6 +11,7 @@ export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
+  escalope_add_block "ingest" 45 "redeploy-stack.sh" "redeploy beginning"
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
@@ -40,6 +41,7 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
+  escalope_remove_block "ingest" "redeploy-stack.sh"
 
   # Initialize the stack if needed
   # The dev environment has been designed to allow itself to initialize from an empty database
@@ -100,6 +102,7 @@ then
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
+  escalope_add_block "ingest" 45 "redeploy-stack.sh" "redeploy beginning"
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
@@ -133,6 +136,7 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
+  escalope_remove_block "ingest" "redeploy-stack.sh"
 
   # echo " ==> Redeploy ZK"
   # /redeploy-zk.sh || task_fail
@@ -147,6 +151,7 @@ then
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
+  escalope_add_block "ingest" 45 "redeploy-stack.sh" "redeploy beginning"
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
@@ -177,6 +182,7 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
+  escalope_remove_block "ingest" "redeploy-stack.sh"
 
   echo " ==> Launch End-to-End Tests"
   launch_end2end_tests || task_fail

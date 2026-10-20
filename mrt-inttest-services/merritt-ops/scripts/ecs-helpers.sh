@@ -286,3 +286,42 @@ zoo_first_node() {
     echo "zoo"
   fi
 }
+
+escalope_secret() {
+  aws ssm get-parameter --name "/uc3/mrt/escalope_token" --with-decryption --query "Parameter.Value" --output text
+}
+
+escalope_add_block() {
+  services=$1
+  minutes=$2
+  created_by=$3
+  comment=$4
+
+  payload=$(jq -n \
+    --arg hosts "$MERRITT_ECS" \
+    --arg services "$services" \
+    --arg start_time "$(TZ="America/Los_Angeles" date "+%Y-%m-%dT%H:%M:%S")" \
+    --arg end_time "$(TZ="America/Los_Angeles" date -v+${minutes}M "+%Y-%m-%dT%H:%M:%S")" \
+    --arg created_by "$created_by" \
+    --arg comment "$comment" \
+    '$ARGS.named')
+  
+  curl -X POST "https://escalope.cdlib.org/api/add_block?CDLCognitoBypass=$(escalope_secret)" \
+  -H "Content-Type: application/json" \
+  -d "$payload"
+}
+
+escalope_remove_block() {
+  services=$1
+  created_by=$2
+
+  payload=$(jq -n \
+    --arg hosts "$MERRITT_ECS" \
+    --arg services "$services" \
+    --arg created_by "$created_by" \
+    '$ARGS.named')
+
+  curl -X POST "https://escalope.cdlib.org/api/remove_block?CDLCognitoBypass=$(escalope_secret)" \
+  -H "Content-Type: application/json" \
+  -d "$payload"
+}

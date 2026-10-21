@@ -138,9 +138,6 @@ then
   unpause_ingest || task_fail
   escalope_remove_block "ingest" "redeploy-stack.sh"
 
-  # echo " ==> Redeploy ZK"
-  # /redeploy-zk.sh || task_fail
-
   echo " ==> Launch End-to-End Tests"
   launch_end2end_tests || task_fail
 
@@ -154,6 +151,9 @@ then
   escalope_add_block "ingest" 45 "redeploy-stack.sh" "redeploy beginning"
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
+
+  # echo " ==> Redeploy ZK"
+  # /redeploy-zk.sh || task_fail
 
   echo " ==> Redeploy LDAP"
   /redeploy-ldap.sh || task_fail

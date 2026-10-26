@@ -144,7 +144,7 @@ zk_restore() {
 
 service_retag_redeploy() {
   service=$1
-  escalope_add_block $service 7 "service_retag_redeploy" ""
+  escalope_add_block $service 12 "service_retag_redeploy" ""
   echo "POST $(admintool_base)/infra/retag-redeploy/${service}"
   curl --no-progress-meter -X POST $(admintool_base)/infra/ecs/retag-redeploy/${service}
 }

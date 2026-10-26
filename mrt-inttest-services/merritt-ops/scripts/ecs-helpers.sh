@@ -118,7 +118,7 @@ admintool_test_routes() {
   stat=0
   for route in $(curl --no-progress-meter "$(admintool_base)/test/routes" | jq -r '.[]')
   do
-    test_route $route || stat=1
+    test_route $route || stat=1 && echo "Route $route failed"
   done
   return $stat
 }

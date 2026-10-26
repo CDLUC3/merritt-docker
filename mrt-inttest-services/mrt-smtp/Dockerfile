@@ -3,7 +3,8 @@ FROM ${ECR_REGISTRY}/docker-hub/library/almalinux:9
 
 ARG SES_PARMS=ses_passwd_not_set
 
-RUN dnf -y update && \
+RUN dnf clean all && \
+    dnf -y update && \
     dnf -y install cyrus-sasl cyrus-sasl-plain cyrus-sasl-lib postfix s-nail && \
     dnf clean all
 

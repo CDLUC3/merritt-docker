@@ -5,13 +5,16 @@
 
 FROM public.ecr.aws/lambda/ruby:3.4
 
-RUN dnf -y update && dnf -y upgrade
+RUN dnf clean all && \
+    dnf -y update && \
+    dnf -y upgrade
 
 # Install an os-specific MySQL installation.  
 # gcc and make are required to build mysql.
 # UC3 ruby code pulls a common gem from github for use in Lambda code.
 # RUN yum -y install mysql-devel gcc make git
-RUN dnf -y install mariadb105-devel gcc make git
+RUN dnf -y install mariadb105-devel gcc make git && \
+    dnf clean all
 
 RUN gem update bundler
 

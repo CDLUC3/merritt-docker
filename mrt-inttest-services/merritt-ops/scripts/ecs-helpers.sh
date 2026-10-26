@@ -119,9 +119,7 @@ admintool_test_routes() {
   for route in $(curl --no-progress-meter "$(admintool_base)/test/routes" | jq -r '.[]')
   do
     test_route $route || stat=1
-    echo " ==> $route: $stat"
   done
-  echo " ==> admintool_test_routes: $stat"
   return $stat
 }
 

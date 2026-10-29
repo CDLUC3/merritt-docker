@@ -19,3 +19,4 @@ test.txt
 mrt-services/ldap/simpsons.export.ldif
 mrt-services/ldap/latest.dif
 mrt-services/ldap/export/*
+test.xml

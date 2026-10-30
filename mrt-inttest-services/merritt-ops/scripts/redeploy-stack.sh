@@ -43,7 +43,7 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
-  escalope_update_block "ingest" "redeploy-stack.sh" alarm_resolve_min
+  escalope_update_block "ingest" "redeploy-stack.sh" ${alarm_resolve_min}
 
   # Initialize the stack if needed
   # The dev environment has been designed to allow itself to initialize from an empty database
@@ -138,7 +138,7 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
-  escalope_update_block "ingest" "redeploy-stack.sh" alarm_resolve_min
+  escalope_update_block "ingest" "redeploy-stack.sh" ${alarm_resolve_min}
 
   echo " ==> Launch End-to-End Tests"
   launch_end2end_tests || task_fail
@@ -184,7 +184,7 @@ then
 
   echo " ==> Unpause Ingest"
   unpause_ingest || task_fail
-  escalope_update_block "ingest" "redeploy-stack.sh" alarm_resolve_min
+  escalope_update_block "ingest" "redeploy-stack.sh" ${alarm_resolve_min}
 
   echo " ==> Launch End-to-End Tests"
   launch_end2end_tests || task_fail

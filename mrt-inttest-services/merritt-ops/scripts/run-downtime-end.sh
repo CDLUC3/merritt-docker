@@ -5,6 +5,8 @@ source ./ecs-helpers.sh
 export label="Downtime End"
 export statfile="/tmp/downtime-end.txt"
 
+alarm_resolve_min=7
+
 task_init
 
 export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack

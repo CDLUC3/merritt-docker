@@ -330,10 +330,6 @@ escalope_remove_block() {
   -d "$payload"
 }
 
-alarm_resolve_min() {
-  echo 7
-}
-
 escalope_update_block() {
   services=$1
   created_by=$2

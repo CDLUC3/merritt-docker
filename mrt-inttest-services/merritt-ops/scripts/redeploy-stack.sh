@@ -13,7 +13,7 @@ export ECS_STACK_NAME=mrt-${MERRITT_ECS}-stack
 
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
-  escalope_add_block "ingest" 45 "redeploy-stack.sh" "redeploy beginning"
+  escalope_add_block "ingest" 60 "redeploy-stack.sh" "redeploy beginning"
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
@@ -104,7 +104,7 @@ then
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-stg" ]]
 then
-  escalope_add_block "ingest" 45 "redeploy-stack.sh" "redeploy beginning"
+  escalope_add_block "ingest" 60 "redeploy-stack.sh" "redeploy beginning"
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 
@@ -150,7 +150,7 @@ then
   echo " ==> Merritt Ops Redployment Initiated"
 elif [[ "$MERRITT_ECS" == "ecs-prd" ]]
 then
-  escalope_add_block "ingest" 45 "redeploy-stack.sh" "redeploy beginning"
+  escalope_add_block "ingest" 60 "redeploy-stack.sh" "redeploy beginning"
   echo " ==> Pause Ingest"
   pause_ingest || task_fail
 

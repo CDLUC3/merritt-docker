@@ -298,14 +298,14 @@ escalope_add_block() {
   created_by=$3
   comment=$4
 
-  tstart=$(TZ='America/Los_Angeles' date "+%Y-%m-%dT%H:%M:%S")
-  tend=$(TZ='America/Los_Angeles' date -d "now + ${minutes} minutes" "+%Y-%m-%dT%H:%M:%S")
+  # tstart=$(TZ='America/Los_Angeles' date "+%Y-%m-%dT%H:%M:%S")
+  # tend=$(TZ='America/Los_Angeles' date -d "now + ${minutes} minutes" "+%Y-%m-%dT%H:%M:%S")
 
   payload=$(jq -n \
     --arg hosts "merritt-$MERRITT_ECS" \
     --arg services "$services" \
-    --arg start_time "$tstart" \
-    --arg end_time "$tend" \
+    --arg start_time "now" \
+    --arg end_time "${minutes}m" \
     --arg created_by "$created_by" \
     --arg comment "$comment" \
     '$ARGS.named')
@@ -326,6 +326,27 @@ escalope_remove_block() {
     '$ARGS.named')
 
   curl -X POST "https://escalope.cdlib.org/api/remove_block?CDLCognitoBypass=$(escalope_secret)" \
+  -H "Content-Type: application/json" \
+  -d "$payload"
+}
+
+alarm_resolve_min() {
+  echo 7
+}
+
+escalope_update_block() {
+  services=$1
+  created_by=$2
+  minutes=$3
+
+  payload=$(jq -n \
+    --arg hosts "merritt-$MERRITT_ECS" \
+    --arg services "$services" \
+    --arg created_by "$created_by" \
+    --arg end_time "${minutes}m" \
+    '$ARGS.named')
+
+  curl -X POST "https://escalope.cdlib.org/api/update_block?CDLCognitoBypass=$(escalope_secret)" \
   -H "Content-Type: application/json" \
   -d "$payload"
 }

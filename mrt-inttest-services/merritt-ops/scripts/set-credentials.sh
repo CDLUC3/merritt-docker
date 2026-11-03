@@ -12,7 +12,7 @@ else
   OPSMODE_PARAM="cloud-readonly"
 fi
 
-rm /root/.aws/config /root/.aws/credentials
+rm -rf /root/.aws/config /root/.aws/credentials
 cp /root/.awsconfig-template /root/.aws/config
 cp /root/.awscredentials-template /root/.aws/credentials
 

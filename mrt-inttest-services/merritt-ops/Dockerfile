@@ -45,10 +45,9 @@ COPY scripts /
 RUN chmod 744 /*.sh /mrt-locust/*.sh
 
 RUN mkdir -p /root/.aws
-COPY .awsconfig-template /root/.aws/config
-COPY .awscredentials-template /root/.aws/credentials
+COPY .awsconfig-template /root/
+COPY .awscredentials-template /root/
 COPY .bashrc.append /tmp/.bashrc.append
-RUN chmod 400 /root/.aws/config /root/.aws/credentials
 
 RUN useradd -u 1001 opendj
 

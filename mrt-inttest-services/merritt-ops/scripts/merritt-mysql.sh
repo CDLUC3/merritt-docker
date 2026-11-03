@@ -7,9 +7,9 @@ DBDATABASE=inv
 
 if [[ "${OPS_MODE}" == "readwrite" ]]
 then
-  OPSMODE_PARAM="readwrite"
+  OPSMODE_PARAM=${OPSMODE_PARAM:-readwrite}
 else
-  OPSMODE_PARAM="readonly"
+  OPSMODE_PARAM=${OPSMODE_PARAM:-readonly}
 fi
 
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
@@ -36,4 +36,4 @@ then
   DBPASS=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/${OPSMODE_PARAM}/db-password --query Parameter.Value --with-decryption --output text)
 fi
 
-MYSQL_PWD=$DBPASS mysql -h $DBHOST -u $DBUSER --password=$DBPASS --database=$DBDATABASE "$@"
+MYSQL_PWD=$DBPASS mysql -h $DBHOST -u $DBUSER --database=$DBDATABASE "$@"

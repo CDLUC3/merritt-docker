@@ -12,16 +12,20 @@ done
 user=invdba
 pass=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/dba/db-password --query Parameter.Value --with-decryption --output text)
 OPSMODE_PARAM=super /merritt-mysql.sh -e "alter USER '${user}'@'%' IDENTIFIED WITH caching_sha2_password BY '$pass';"
+
 user=billingdba
 pass=$(aws ssm get-parameter --name /uc3/mrt/prd/billing/dba/db-password --query Parameter.Value --with-decryption --output text)
 OPSMODE_PARAM=super /merritt-mysql.sh -e "alter USER '${user}'@'%' IDENTIFIED WITH caching_sha2_password BY '$pass';"
-user=invro2
+
+user=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/readonly/db-user --query Parameter.Value --with-decryption --output text)
 pass=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/readonly/db-password --query Parameter.Value --with-decryption --output text)
 OPSMODE_PARAM=super /merritt-mysql.sh -e "alter USER '${user}'@'%' IDENTIFIED WITH caching_sha2_password BY '$pass';"
-user=invrw2
+
+user=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/readwrite/db-user --query Parameter.Value --with-decryption --output text)
 pass=$(aws ssm get-parameter --name /uc3/mrt/prd/inv/readwrite/db-password --query Parameter.Value --with-decryption --output text)
 OPSMODE_PARAM=super /merritt-mysql.sh -e "alter USER '${user}'@'%' IDENTIFIED WITH caching_sha2_password BY '$pass';"
-user=billingrw2
+
+user=$(aws ssm get-parameter --name /uc3/mrt/prd/billing/readwrite/db-user --query Parameter.Value --with-decryption --output text)
 pass=$(aws ssm get-parameter --name /uc3/mrt/prd/billing/readwrite/db-password --query Parameter.Value --with-decryption --output text)
 OPSMODE_PARAM=super /merritt-mysql.sh -e "alter USER '${user}'@'%' IDENTIFIED WITH caching_sha2_password BY '$pass';"
 

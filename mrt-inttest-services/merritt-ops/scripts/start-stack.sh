@@ -41,30 +41,14 @@ then
   echo " ==> Service Wait Complete"
 
   echo " ==> Starting Merritt Services"
-  aws ecs update-service --cluster $ECS_STACK_NAME --service admintool    --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
-    --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service ingest       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
-    --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service inventory    --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
-    --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service audit        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
-    --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service replic       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
-    --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service store        --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
-    --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service access       --force-new-deployment --desired-count 1 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
-    --output text --no-cli-pager 
-  aws ecs update-service --cluster $ECS_STACK_NAME --service ui           --force-new-deployment --desired-count 2 \
-    --query 'service.{service:serviceName,status:status,desired:desiredCount,running:runningCount}' \
-    --output text --no-cli-pager 
+  service_retag_redeploy audit || task_fail
+  service_retag_redeploy access || task_fail
+  service_retag_redeploy ui || task_fail
+  service_retag_redeploy replic || task_fail
+  service_retag_redeploy admintool || task_fail
+  service_retag_redeploy inventory || task_fail
+  service_retag_redeploy ingest || task_fail
+  service_retag_redeploy store || task_fail
   sleep 75
 
   echo " ==> Begin Service Wait"

@@ -40,12 +40,17 @@ then
   aws ecs wait services-stable --cluster $ECS_STACK_NAME --services ldap ldapreplica smtp ezid $(zoo_nodes)
   echo " ==> Service Wait Complete"
 
+  service_retag_redeploy admintool || task_fail
+  sleep 60
+  echo " ==> Begin Admintool Wait"
+  aws ecs wait services-stable --cluster $ECS_STACK_NAME --services admintool
+  echo " ==> Service Admintool Complete"
+
   echo " ==> Starting Merritt Services"
   service_retag_redeploy audit || task_fail
   service_retag_redeploy access || task_fail
   service_retag_redeploy ui || task_fail
   service_retag_redeploy replic || task_fail
-  service_retag_redeploy admintool || task_fail
   service_retag_redeploy inventory || task_fail
   service_retag_redeploy ingest || task_fail
   service_retag_redeploy store || task_fail

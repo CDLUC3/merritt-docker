@@ -1,6 +1,6 @@
 ARG ECR_REGISTRY=ecr_registry_not_set
 
-FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.1.2
+FROM ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.2.0
 
 ARG ADMIN_PASSWORD=password
 

@@ -149,6 +149,14 @@ service_retag_redeploy() {
   curl --no-progress-meter -X POST $(admintool_base)/infra/ecs/retag-redeploy/${service}
 }
 
+service_retag_deploy() {
+  service=$1
+  count=$2
+  escalope_add_block $service 12 "service_retag_redeploy" ""
+  echo "POST $(admintool_base)/infra/retag-deploy/${count}/${service}"
+  curl --no-progress-meter -X POST $(admintool_base)/infra/ecs/retag-deploy/${count}/${service}
+}
+
 service_redeploy() {
   service=$1
   echo "POST $(admintool_base)/infra/redeploy/${service}"

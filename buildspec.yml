@@ -71,12 +71,14 @@ phases:
           --build-arg ADMIN_PASSWORD=$(aws ssm get-parameter --name /uc3/mrt/dev/ldap/ecs-admin-password --query Parameter.Value --output text --with-decryption) \
         mrt-services/ldap
 
+      # Copy the value from the prod account to the dev account for CodeBuild.
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj:ecs-prd \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \
           --build-arg ADMIN_PASSWORD=$(aws ssm get-parameter --name /uc3/mrt/prd/ldap/ecs-admin-password --query Parameter.Value --output text --with-decryption) \
           mrt-services/ldap
 
+      # Copy the value from the prod account to the dev account for CodeBuild.
       docker build --push --quiet \
         -t ${ECR_REGISTRY}/mrt-opendj:ecs-stg \
           --build-arg ECR_REGISTRY=${ECR_REGISTRY} \

@@ -18,9 +18,9 @@ fi
 if [[ "$MERRITT_ECS" == "ecs-dev" ]]
 then
   # for dev environments, readonly credentials are not needed
-  DBHOST=$(aws ssm get-parameter --name /uc3/mrt/ecs/billing/db-host --query Parameter.Value --output text)
-  DBUSER=$(aws ssm get-parameter --name /uc3/mrt/ecs/billing/${OPSMODE_PARAM}/db-user --query Parameter.Value --output text)
-  DBPASS=$(aws ssm get-parameter --name /uc3/mrt/ecs/billing/${OPSMODE_PARAM}/db-password --query Parameter.Value --with-decryption --output text)
+  DBHOST=$(aws ssm get-parameter --name /uc3/mrt/dev/inv/db-host --query Parameter.Value --output text)
+  DBUSER=$(aws ssm get-parameter --name /uc3/mrt/dev/inv/${OPSMODE_PARAM}/db-user --query Parameter.Value --output text)
+  DBPASS=$(aws ssm get-parameter --name /uc3/mrt/dev/inv/${OPSMODE_PARAM}/db-password --query Parameter.Value --with-decryption --output text)
 elif [[ "$MERRITT_ECS" == "ecs-dbsnapshot" ]]
 then
   # for dev environments, readonly credentials are not needed

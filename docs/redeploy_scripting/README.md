@@ -16,6 +16,10 @@
 - [Downtime End Script](../../mrt-inttest-services/merritt-ops/scripts/run-downtime-end.sh)
 - [Bash Functions](../../mrt-inttest-services/merritt-ops/scripts/ecs-helpers.sh#L299-L357)
 
+## IAS Escalope Guide
+
+https://github.com/cdlib/ias-escalope
+
 ## Add Escalope Block
 
 ```bash

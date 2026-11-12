@@ -153,6 +153,27 @@ service_retag_redeploy() {
 
 ## Escalope Alerts and Escalope Blocks
 
+### Escalope Blocks - After Downtime Start
+![viewing the escalope blocks - downtime start](start_block.png)
+
+### Escalope Events - After Downtime Start (Blocked)
+![viewing the escalope events - downtime start](start_event.png)
+
+### Escalope Blocks - After Downtime End
+![viewing the escalope blocks - downtime end](end_block.png)
+
+### Escalope Events - After Downtime End (Resloved AND Blocked)
+![viewing the escalope events - downtime end](end_event.png)
+
+### Escalope Blocks - After Expiration
+![viewing the escalope blocks - after exipration](expire_block.png)
+
+### Escalope Events - After Downtime Start (Resoved and Expired)
+
+Note that the expiration does not display on the events page.
+
+![viewing the escalope events - after expiration](expire_event.png)
+
 ## Demo (time permitting)
 
 - In STAGE, run start downtime

@@ -19,7 +19,7 @@ RUN chown -R 10001:10001 /data-load
 RUN chmod -R 755 /data-load
 USER rustfs
 
-RUN rustfs & sleep 3; \
+RUN rustfs & sleep 5; \
     server_pid=$!; \
     rc alias set local http://localhost:9000 minioadmin minioadmin; \ 
     rc cp --recursive /data-load/ local/mrt-config/; \

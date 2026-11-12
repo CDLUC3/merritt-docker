@@ -126,7 +126,57 @@ service_retag_redeploy() {
 }
 ```
 
-### Servic Deployment Yaml
+### Merritt Tagging Conventions (Git Tagging, Image Tagging, Deploy Tags)
+
+```mermaid
+graph TD
+  accTitle: "Flowchart for Merritt Tagging Conventions"
+  accDescr {
+    User commits a change to Git.  User tags the repository with 1.2.3.
+    The tag triggers a CodePipeline that starts a CodeBuild.
+    CodeBuild creates a docker image that builds and image tagged with the tag name: image:1.2.3.
+    User retags the stage deployment image.
+    The retag process looks up the mapped tag for stage (ecs-stg is mapped to 1.2.3).
+    ECR imaage image:ecs-stg is updated to match image:1.2.3
+    User redeploys the service in stage.
+    ECS redeploys image:ecs-stg.
+  }
+  subgraph Git
+    Commit(commit aaa123)
+    Tag(tag 1.2.3)
+  end
+
+  build(CodeBuild builds image)
+  build --> ImageTag123
+  Tag --> build
+
+  subgraph ECR
+    ImageTag123(image:1.2.3)
+    ImageTagDev(image:ecs-dev)
+    ImageTagStg(image:ecs-stg)
+  end
+
+  subgraph YamlDeploymentMap
+    service_branch(map main to ecs-dev)
+    service_tag(map 1.2.3 to ecs-stg)
+  end
+
+  Retag(Retag Service)
+
+  service_tag --> Retag
+  ImageTag123 --> Retag
+  Retag --> ImageTagStg
+
+  subgraph ECS
+    deployed_service(deployed service image:ecs-stg)
+  end
+
+  Redeploy(Redeploy Service)
+  ImageTagStg --> Redeploy
+  Redeploy --> deployed_service
+```
+
+### Service Deployment Yaml
 
 ```yaml
   mrt-dashboard:

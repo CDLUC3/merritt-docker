@@ -96,7 +96,9 @@ escalope_update_block() {
 
 ## Communicating with ECS Services
 
-To communicate with each instance of a running service
+Merritt uses [ECS Service Discovery](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-discovery.html) to communicate between containers.  Service discovery containers run as sidecars within our ECS Cluster.
+
+To communicate with each instance of a running service, we use the [servicediscovery api](https://docs.aws.amazon.com/cli/latest/reference/servicediscovery/).
 
 ```bash
 all_service_ips() {

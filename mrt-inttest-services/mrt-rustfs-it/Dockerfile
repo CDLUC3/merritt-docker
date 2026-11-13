@@ -17,12 +17,13 @@ RUN mkdir -p /data-load/uc3/mrt
 COPY mrt-config /data-load/uc3/mrt
 RUN chown -R 10001:10001 /data-load
 RUN chmod -R 755 /data-load
+COPY config-init.sh /config-init.sh
 USER rustfs
 
-RUN rustfs & sleep 5; \
-    server_pid=$!; \
-    rc alias set local http://localhost:9000 minioadmin minioadmin; \ 
-    rc cp --recursive /data-load/ local/mrt-config/; \
-    kill $server_pid
+# RUN rustfs & sleep 5; \
+#     server_pid=$!; \
+#     rc alias set local http://localhost:9000 minioadmin minioadmin; \ 
+#     rc cp --recursive /data-load/ local/mrt-config/; \
+#     kill $server_pid
 
 EXPOSE 9000 9001

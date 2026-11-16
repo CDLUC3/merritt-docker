@@ -225,6 +225,7 @@ services:
         - ${HOSTNAME}.cdlib.org
     environment:
       - RUSTFSNAME=minio
+      - RUSTFSPORT=8088
     depends_on:
     - minio
     volumes:

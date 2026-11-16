@@ -1,3 +1,4 @@
 #!/bin/sh
-rc alias set local http://minio-server:9000 minioadmin minioadmin
+RUSTFSNAME=${RUSTFSNAME:-minio-server}
+rc alias set local http://${RUSTFSNAME}:9000 minioadmin minioadmin
 rc cp --recursive /data-load/ local/my-bucket/

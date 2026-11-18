@@ -214,6 +214,22 @@ services:
     volumes:
     - my-minio:/buckets
     restart: unless-stopped
+  minio-init:
+    container_name: minio-init
+    image: ${ECR_REGISTRY}/mrt-rustfs-it:dev
+    entrypoint: /config-init.sh
+    networks:
+      merrittnet:
+        aliases:
+        - my-minio-localhost-alias
+        - ${HOSTNAME}.cdlib.org
+    environment:
+      - RUSTFSNAME=minio
+      - RUSTFSPORT=8088
+    depends_on:
+    - minio
+    volumes:
+    - my-minio:/buckets
   ezid:
     container_name: ezid
     image: ${ECR_REGISTRY}/mock-merritt-it:dev

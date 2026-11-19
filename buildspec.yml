@@ -32,9 +32,12 @@ phases:
     - |
       SES_PARAMS=$(aws ssm get-parameter --name /uc3/mrt/ses-params --query Parameter.Value --output text --with-decryption)
 
+      docker buildx create --name multiarch --driver docker-container --use --bootstrap
+      docker buildx inspect --bootstrap
+
       # This command stopped working on 4/16/2026, so I broke out each build.
       docker compose -f mrt-inttest-services/docker-compose.yml \
-        build --push --quiet
+        build --builder multiarch --push --quiet
 
     - |
       docker pull ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.2.0 --quiet

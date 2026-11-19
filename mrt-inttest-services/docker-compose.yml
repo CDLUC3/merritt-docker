@@ -5,38 +5,45 @@ services:
     image: ${ECR_REGISTRY}/merritt-ops:dev
     build:
       context: merritt-ops
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
-  # merritt-coder:
-  #   container_name: merritt-coder
-  #   image: ${ECR_REGISTRY}/merritt-coder:dev
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #       args:
-  #         ECR_REGISTRY: ${ECR_REGISTRY}
   merritt-tomcat:
     container_name: merritt-tomcat
     image: ${ECR_REGISTRY}/merritt-tomcat:dev
     build:
       context: merritt-tomcat
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
   mock-merritt-it:
     container_name: mock-merritt-it
     image: ${ECR_REGISTRY}/mock-merritt-it:dev
     build:
       context: mock-merritt-it
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
   db-container:
     container_name: mrt-it-database
     image: ${ECR_REGISTRY}/mrt-it-database:dev
     build:
       context: mrt-it-database
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
   db-container-audit-replic:
     container_name: mrt-it-database-audit-replic
     image: ${ECR_REGISTRY}/mrt-it-database-audit-replic:dev
     build:
       context: mrt-it-database
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
       args:
         LOAD_SQL: /tmp/audit_replic_data.sql
@@ -45,6 +52,9 @@ services:
     image: ${ECR_REGISTRY}/mrt-rustfs-it:dev
     build:
       context: mrt-rustfs-it
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${ECR_REGISTRY}
@@ -53,6 +63,9 @@ services:
     image: ${ECR_REGISTRY}/mrt-rustfs-it-with-content:dev
     build:
       context: mrt-rustfs-it-with-content
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
       args:
         ECR_REGISTRY: ${ECR_REGISTRY}
@@ -61,6 +74,9 @@ services:
     image: ${ECR_REGISTRY}/mysql-ruby-lambda
     build:
       context: mysql-ruby-lambda
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
   reveal-md:
     container_name: reveal-md
@@ -75,6 +91,9 @@ services:
     image: ${ECR_REGISTRY}/mrt-smtp
     build:
       context: mrt-smtp
+      platforms:
+      - linux/amd64
+      - linux/arm64
       dockerfile: Dockerfile
       args:
         SES_PARMS: '${SES_PARAMS}'

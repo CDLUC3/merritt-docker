@@ -3,7 +3,7 @@ GEM
   specs:
     ast (2.4.3)
     base64 (0.3.0)
-    httpclient (2.10.0)
+    httpclient (2.11.0)
       mutex_m
     json (3.1.0)
     language_server-protocol (3.17.0.6)
@@ -13,15 +13,15 @@ GEM
     mutex_m (0.3.0)
     nio4r (2.7.5)
     parallel (2.3.0)
-    parser (3.3.13.0)
+    parser (3.3.14.0)
       ast (~> 2.4.1)
       racc
-    prism (1.9.0)
-    puma (8.0.2)
+    prism (2.1.0)
+    puma (8.1.2)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.8)
-    rack-protection (4.2.1)
+    rack-protection (4.2.2)
       base64 (>= 0.1.0)
       logger (>= 1.6.0)
       rack (>= 3.0.0, < 4)
@@ -31,8 +31,8 @@ GEM
     rackup (2.3.1)
       rack (>= 3)
     rainbow (3.1.1)
-    regexp_parser (2.13.1)
-    rubocop (1.92.2)
+    regexp_parser (2.13.4)
+    rubocop (1.92.3)
       json (>= 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -43,15 +43,17 @@ GEM
       rubocop-ast (>= 1.49.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.50.0)
+    rubocop-ast (1.53.0)
+      ast (~> 2.4)
       parser (>= 3.3.7.2)
-      prism (~> 1.7)
+      prism (>= 1.7)
+      racc
     ruby-progressbar (1.13.0)
-    sinatra (4.2.1)
+    sinatra (4.2.2)
       logger (>= 1.6.0)
       mustermann (~> 3.0)
       rack (>= 3.0.0, < 4)
-      rack-protection (= 4.2.1)
+      rack-protection (= 4.2.2)
       rack-session (>= 2.0.0, < 3)
       tilt (~> 2.0)
     tilt (2.9.0)
@@ -71,4 +73,4 @@ DEPENDENCIES
   sinatra (>= 4.1.0)
 
 BUNDLED WITH
-  4.1.0.beta3
+  4.1.0

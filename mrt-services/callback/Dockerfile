@@ -5,7 +5,7 @@
 
 # This image is intended to simulate an ALB fronting a Lambda
 
-FROM public.ecr.aws/docker/library/ruby:3
+FROM public.ecr.aws/docker/library/ruby:3.4
 
 RUN apt-get update -y -qq && apt-get -y upgrade
 

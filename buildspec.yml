@@ -34,7 +34,7 @@ phases:
 
       # This command stopped working on 4/16/2026, so I broke out each build.
       docker compose -f mrt-inttest-services/docker-compose.yml \
-        build --push --quiet
+        buildx build --platform linux/amd64,linux/arm64 --push --quiet
 
     - |
       docker pull ${ECR_REGISTRY}/docker-hub/openidentityplatform/opendj:5.2.0 --quiet
@@ -56,7 +56,7 @@ phases:
       fi  
 
     - |
-      docker build --push --quiet \
+      docker buildx build --platform linux/amd64,linux/arm64 --push --quiet \
         -t ${ECR_REGISTRY}/mrt-database \
         mrt-services/mysql
     - |
@@ -90,6 +90,6 @@ phases:
         -t ${ECR_REGISTRY}/mrt-init \
         mrt-services/merritt-init
     - |
-      docker build --push --quiet \
+      docker buildx build --platform linux/amd64,linux/arm64  --push --quiet \
         -t ${ECR_REGISTRY}/callback \
         mrt-services/callback

@@ -5,9 +5,6 @@ services:
     image: ${ECR_REGISTRY}/merritt-ops:dev
     build:
       context: merritt-ops
-      platforms:
-      - linux/amd64
-      - linux/arm64
       dockerfile: Dockerfile
   merritt-tomcat:
     container_name: merritt-tomcat

@@ -13,9 +13,12 @@ echo "Exporting filename: ${filename}"
 
 ldap=$(aws ecs list-tasks --cluster $ECS_STACK_NAME --service-name ldap --query taskArns --output text)
 
+echo "Exporting LDAP from ECS task: ${ldap}"
+
 # unbuffer prevents EOF errors.  See https://stackoverflow.com/a/71728047/3846548
+cmd="/opt/opendj/merritt-export.sh $filename"
 unbuffer aws ecs execute-command --cluster $ECS_STACK_NAME --task $ldap \
-  --container ldap --command "/opt/opendj/merritt-export.sh ${filename}" --interactive || task_fail
+  --container ldap --command "$cmd" --interactive || task_fail
 
 echo "Export Completed, filename: ${filename}"
 

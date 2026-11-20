@@ -6,5 +6,6 @@ if [[ "$REPLICA" == "true" ]]
 then
   echo "is REPLICA, skipping export"
 else
-  bin/export-ldif --backendID userRoot --bindPassword $ROOT_PASSWORD --ldifFile /opt/import/${filename}
+  echo "Running: bin/export-ldif --backendID userRoot --bindPassword "redacted" --ldifFile /opt/import/${filename}"
+  bin/export-ldif --backendID userRoot --bindPassword "$ROOT_PASSWORD" --ldifFile /opt/import/${filename}
 fi
